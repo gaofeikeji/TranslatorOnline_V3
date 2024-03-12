@@ -1,0 +1,3 @@
+<view class="xyui-svg-icon">
+  <image src="/icons/icon-{{iconName}}.svg" class="svg" style="width: {{size*2}}rpx; height: {{size*2}}rpx;" mode="aspectFit"></image>
+</view>

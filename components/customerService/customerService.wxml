@@ -1,0 +1,62 @@
+<block wx:if="{{miniapp_service_text}}">
+  <block wx:if="{{type == 'normal'}}">
+    <block wx:if="{{miniapp_service_type == 1 || miniapp_service_type == 3 || miniapp_service_type == 4}}">
+      <view class="sv_bk {{direction == 'left' ? 'sv_bk_left' :''}} " style="bottom:{{DistanceFromBottom}}" bindtap="sv_bk_tap">
+        <view class="sv_text" wx:if="{{direction=='left'}}">{{miniapp_service_text}}</view>
+        <view class="sv_image_back">
+          <image class="sv_image_back_img" src="{{image_src}}" />
+        </view>
+        <view class="sv_text" wx:if="{{direction=='right'}}">{{miniapp_service_text}}</view>
+      </view>
+    </block>
+    <block wx:if="{{miniapp_service_type == 2}}">
+      <button class="sv_bk_btn sv_bk  {{direction == 'left' ? 'sv_bk_left' :''}} " style="bottom:{{DistanceFromBottom}}" open-type="contact" bindtap="sv_bk_tap">
+        <view class="sv_text" wx:if="{{direction=='left'}}">{{miniapp_service_text}}</view>
+        <view class="sv_image_back">
+          <image class="sv_image_back_img" src="{{image_src}}" />
+        </view>
+        <view class="sv_text" wx:if="{{direction=='right'}}">{{miniapp_service_text}}</view>
+      </button>
+    </block>
+    <view class="image_b_back" wx:if="{{show_sv_image_pre}}" bind:tap="closeBtn"></view>
+    <view class="image_back" wx:if="{{show_sv_image_pre}}">
+      <view class="sv_image_pre" wx:if="{{show_sv_image_pre}}">
+        <image class="sv_image_pre_image" src="{{sv_image_pre}}" mode="heightFix" show-menu-by-longpress="{{true}}">
+          <!-- <image class="sv_image_pre_image" src="{{sv_image_pre}}"  show-menu-by-longpress="{{true}}"> -->
+          <image src="./closeBtn.png" class="closeBtn" bind:tap="closeBtn"></image>
+        </image>
+      </view>
+    </view>
+    <image src="{{sv_image_pre}}" mode="heightFix" class="image_proload" />
+  </block>
+  <block wx:if="{{type == 'my'}}">
+    <block wx:if="{{miniapp_service_type == 1 || miniapp_service_type == 3 || miniapp_service_type == 4}}">
+      <view class="sv_bk_my " style="bottom:{{DistanceFromBottom}}" bindtap="sv_bk_tap">
+        <view class="sv_image_back_my">
+          <image class="sv_image_back_my_img" src="./icon-kefu.svg" />
+        </view>
+        <view class="sv_text">{{miniapp_service_text}}</view>
+        <image class="sv_image_back_my_img" src="./icon-arrow-r-gray.svg" />
+      </view>
+    </block>
+    <block wx:if="{{miniapp_service_type == 2}}">
+      <button class="sv_bk_btn sv_bk_my " style="border:none" open-type="contact" bindtap="sv_bk_tap">
+        <view class="sv_image_back_my">
+          <image class="sv_image_back_my_img" src="./icon-kefu.svg" />
+        </view>
+        <view class="sv_text">{{miniapp_service_text}}</view>
+        <image class="sv_image_back_my_img2" src="./icon-arrow-r-gray.svg" />
+      </button>
+    </block>
+    <view class="image_b_back" wx:if="{{show_sv_image_pre}}" bind:tap="closeBtn"></view>
+    <view class="image_back" wx:if="{{show_sv_image_pre}}">
+      <view class="sv_image_pre" wx:if="{{show_sv_image_pre}}">
+        <image class="sv_image_pre_image" src="{{sv_image_pre}}" mode="heightFix" show-menu-by-longpress="{{true}}">
+          <!-- <image class="sv_image_pre_image" src="{{sv_image_pre}}"  show-menu-by-longpress="{{true}}"> -->
+          <image src="./closeBtn.png" class="closeBtn" bind:tap="closeBtn"></image>
+        </image>
+      </view>
+    </view>
+    <image src="{{sv_image_pre}}" mode="heightFix" class="image_proload" />
+  </block>
+</block>

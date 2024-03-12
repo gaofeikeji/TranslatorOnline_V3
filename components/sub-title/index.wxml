@@ -1,0 +1,4 @@
+<view class="sub-title">
+  <text class="ver_line"></text>
+  <text class="tit lh-22" style="font-size:{{size?size*2:'28'}}rpx; color:{{color?color:'rgba(0, 0, 0, 0.6)'}}">{{title}}</text>
+</view>

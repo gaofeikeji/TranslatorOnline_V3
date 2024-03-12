@@ -1,0 +1,215 @@
+.pay_container {
+  /* width: 100%; */
+  /* height: 100%; */
+
+  position: fixed;
+  z-index: 10000;
+}
+
+/* .pay_container .mask {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+} */
+.mask {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.pay_container .limit_time,
+.pay_container .red_packet {
+  /* position: absolute; */
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  margin: 0 auto;
+  width: 80%;
+  border-radius: 10rpx;
+  padding: 30rpx;
+}
+
+.pay_container .limit_time {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.limit_time_title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.limit_time_title .count_down {
+  margin-left: 30rpx;
+}
+
+.limit_time_title .mins,
+.limit_time_title .second {
+  background-color: rgba(250, 81, 81, 1);
+  color: rgba(255, 255, 255, 1);
+  border-radius: 4rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  padding: 0 16rpx;
+  margin: 0 4rpx;
+  font-size: 28rpx;
+}
+
+.limit_time_title .close {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.limit_time_title .close image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.limit_desc {
+  border-radius: 10rpx;
+  border: 2rpx dashed rgba(0, 0, 0, 0.15);
+  padding: 20rpx;
+  line-height: 48rpx;
+  margin-top: 30rpx;
+  background: rgba(0, 0, 0, 0.01);
+  min-height: 216rpx;
+}
+
+.limit_price {
+  display: flex;
+  /* 底部对齐 */
+  align-items: baseline;
+  justify-content: center;
+  margin: 40rpx auto;
+}
+
+.limit_price .limit_price_sale {
+  font-size: 40rpx;
+  color: rgba(255, 0, 0, 1);
+  font-weight: bold;
+  line-height: 44rpx;
+}
+
+.limit_price .limit_price_origin {
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: line-through;
+  margin-left: 20rpx;
+  line-height: 44rpx;
+}
+
+.limit_btn {
+  width: 100%;
+  height: 90rpx;
+  border-radius: 10rpx;
+  background: rgba(7, 193, 96, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0rpx 0rpx 8rpx  rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.limit_btn .limit_btn_done {
+  color: rgba(255, 255, 255, 1);
+  line-height: 44rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+}
+
+.pay_container .red_packet {
+  background-color: transparent;
+}
+
+.red_packet .red_packet_bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.red_packet .red_packet_bg image {
+  width: 100%;
+  height: 100%;
+}
+
+.red_packet .red_packet_box {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.red_packet_title {
+  margin-top: 50rpx;
+  text-align: center;
+}
+
+.red_packet_title .vouchers {
+  color: rgba(143, 98, 0, 1);
+  font-size: 28rpx;
+  line-height: 48rpx;
+  margin-bottom: 20rpx;
+}
+.red_packet_title .sale {
+  color: rgba(255, 87, 51, 1);
+  font-size: 72rpx;
+  line-height: 48rpx;
+  font-weight: bolder;
+  margin-bottom: 192rpx;
+}
+
+.red_packet_button {
+  text-align: center;
+}
+.red_packet_button .unlock {
+  width: 400rpx;
+  height: 90rpx;
+  border-radius: 400rpx;
+  background: rgba(255, 247, 171, 1);
+  border: 2rpx solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0rpx 0rpx 80rpx  rgba(0, 0, 0, 0.6);
+  color: rgba(255, 0, 0, 1);
+  font-size: 34rpx;
+  line-height: 48rpx;
+  font-weight: bold;
+  margin-bottom: 32rpx;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: scale 1s infinite;
+}
+.red_packet_button .giveup {
+  text-align: center;
+  font-size: 28rpx;
+  line-height: 48rpx;
+  color: rgba(0, 0, 0, 0.66);
+}
+
+/* 放大缩小动画 */
+@keyframes scale {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}

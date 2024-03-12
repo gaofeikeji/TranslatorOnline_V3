@@ -1,0 +1,88 @@
+<!-- 预加载图片 -->
+<image style="width:0px;height:0px;" src="https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/oFvzAVRxonxj1TznTRAa72n5Q2twxhGXbgVd0GGn.png" mode="widthFix"></image>
+<!-- 开通会员弹窗组件 -->
+<view class="container" wx:if="{{showVipView && packages_data}}">
+  <!-- 遮罩 -->
+  <view class="mask"></view>
+  <!-- vip会员 -->
+  <view class="wrapper" wx:if="{{showWrapper}}">
+    <view class="wrapper-top">
+      <view class="count-down">
+        <image src="./images/count-down.png" mode="aspectFit" />
+        <text class="count-down-text">{{countHour}}</text>
+        <text class="colon">:</text>
+        <text class="count-down-text">{{countMinute}}</text>
+        <text class="colon">:</text>
+        <text class="count-down-text">{{countSecond}}</text>
+        <text class="colon">:</text>
+        <text class="count-down-text">{{countMillisecond}}</text>
+      </view>
+      <!-- 关闭窗口 -->
+      <image src="./images/close.png" mode="widthFix" class="close" bind:tap="onClickCloseBtn" />
+    </view>
+    <view class="tips">
+      <image src="./images/vip.png" mode="widthFix"></image>
+      <text class="tips-text">{{packages_data.pay_config.title_desc}}</text>
+    </view>
+    <scroll-view scroll-x="true">
+      <view class="list-wrapper" scroll-x="true">
+        <!-- 从接口拿到数据循环处理 -->
+        <block wx:for="{{packages_data.price_list}}" wx:key="index">
+          <view class="list-item {{ isShowedCoupon && item.can_use_coupon ?'coupon_border':'' }} {{ selected_package_id == item.id ? isShowedCoupon && item.can_use_coupon ? 'coupon_selected':'selected' :'' }} " data-index="{{index}}" data-id="{{item.id}}" bind:tap="handleTap">
+            <view class="date">
+              <text class="date-days">{{item.name[0]}}</text>
+              <text class="date-text">{{item.name[1]}}</text>
+            </view>
+            <view class="price">
+              <text>￥{{isShowedCoupon && item.can_use_coupon ? item.discount_price : item.price}}</text>
+              <image src="./images/coupon.png" mode="widthFix" wx:if="{{isShowedCoupon && item.can_use_coupon}}"></image>
+            </view>
+            <view class="origin-price">原价￥{{item.origin_price}}</view>
+            <!-- 已抵扣折扣券 -->
+            <view class="unit {{isShowedCoupon && item.can_use_coupon ?'couponed':''}}">{{isShowedCoupon && item.can_use_coupon? '已抵扣折扣券':item.sale_text}}</view>
+            <view class="corner" wx:if="{{item.best_text}}">{{item.best_text}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+    <!-- 特权 展示 -->
+    <view class="privilege">
+      <!-- 使用接口数据 -->
+      <block wx:for="{{packages_data.pay_config.vip_privilege}}" wx:key="index">
+        <view class="privilege-item">
+          <image src="./images/privi.png" mode="widthFix"></image>
+          <text class="privilege-text">{{item}}</text>
+        </view>
+      </block>
+    </view>
+    <!-- 开通会员按钮 -->
+    <view class="open-btn"  bind:tap="onClickToPay">{{packages_data.pay_config.btn_text}}</view>
+  </view>
+  <!-- 折扣券 -->
+  <view class="coupon-wrapper" wx:if="{{showCoupon}}">
+    <view class="close-coupon">
+      <image src="./images/close2.png" mode="widthFix" bind:tap="closeCoupon"></image>
+    </view>
+    <view class="coupon-wrapper__bg">
+      <image src="{{couponBgImage}}" mode="widthFix"></image>
+    </view>
+    <view class="coupon-wrapper__content">
+      <view class="coupon-wrapper__content__title">{{packages_data.coupon_info.title}}</view>
+      <view class="coupon-wrapper__content__sale">{{packages_data.coupon_info.discount_text}}</view>
+    </view>
+    <view class="coupon-wrapper__btns">
+      <view class="coupon-wrapper__btns__btn" bind:tap="getCoupon">
+        {{packages_data.coupon_info.btn_text}}
+      </view>
+    </view>
+  </view>
+</view>
+<!-- wxs 处理 字符串 将字符串replaceStr 从  str 剔除 然后 返回剔除后的部分 -->
+<wxs module="utils">
+  var formatNumber = function (str, replaceStr) {
+    return str.replace(replaceStr, '')
+  }
+  module.exports = {
+    formatNumber: formatNumber
+  }
+</wxs>

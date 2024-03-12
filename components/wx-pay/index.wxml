@@ -1,0 +1,52 @@
+<view class="mask" wx:if="{{mask}}"></view>
+<!-- 限时优惠 -->
+<view class="pay_container">
+  <image style="width:0px;height:0px;position:absolute;top: -9999px;left: -9999px;" src="https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/oFvzAVRxonxj1TznTRAa72n5Q2twxhGXbgVd0GGn.png" mode="widthFix"></image>
+  <image style="width:0px;height:0px;position:absolute;top: -9999px;left: -9999px;" src="https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/2yksOjdiQldLPFWXEVcfaZhdEdcnGdq0QtJ1qqqd.png" mode="widthFix"></image>
+  <!-- 遮罩 -->
+  <!-- 支付弹窗 -->
+  <view class="limit_time" wx:if="{{showSale}}" style="bottom:{{mtop}}">
+    <!-- 标题 -->
+    <view class="limit_time_title">
+      <view>限时优惠</view>
+      <view class="count_down">
+        <text class="mins">{{minutes}}</text>
+        <text>分</text>
+        <text class="second">{{seconds}}</text>
+        <text>秒 失效</text>
+      </view>
+      <view class="close" bindtap="close">
+        <image src="./images/close.png" mode="widthFix"></image>
+      </view>
+    </view>
+    <!-- 优惠内容 -->
+    <view class="limit_desc">{{config.price_config.desc}}</view>
+    <!-- 优惠价格 -->
+    <view class="limit_price">
+      <text class="limit_price_sale">{{config.price_config.price}}元</text>
+      <text class="limit_price_origin">原价 {{config.price_config.origin_price}}元</text>
+    </view>
+    <!-- 按钮 -->
+    <view class="limit_btn" bind:tap="immediatePayment">
+      <view class="limit_btn_done">{{config.price_config.btn_text || '现在去领取'}}</view>
+    </view>
+  </view>
+  <!-- 红包 -->
+  <view class="red_packet" wx:if="{{redPacket}}" style="bottom:{{mtop}}" animation="{{animationData}}">
+    <!-- 背景图片 -->
+    <view class="red_packet_bg"  >
+      <image src="{{currentRedPacketImage}}" mode="widthFix"></image>
+    </view>
+    <!-- 内容 -->
+    <view class="red_packet_box">
+      <view class="red_packet_title">
+        <view class="vouchers">{{config.coupon_info.title}}</view>
+        <view class="sale">{{config.coupon_info.discount}}折</view>
+      </view>
+      <view class="red_packet_button">
+        <view class="unlock" bindtap="discount">{{config.coupon_info.full_desc}}</view>
+        <view class="giveup" bindtap="giveup">放弃优惠</view>
+      </view>
+    </view>
+  </view>
+</view>

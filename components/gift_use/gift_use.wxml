@@ -1,0 +1,15 @@
+<slot name="gift_use" bind:tap="showDhm"></slot>
+<view class="dhm_blackback"  bind:tap="closeBtn" wx:if="{{showGift}}"></view>
+<view class="dhm_back" wx:if="{{showGift}}">
+  <view class="dhm_tit" bind:tap="closeBtn">
+    <view>请输入兑换码：</view>
+    <view>
+      <image class="dhm_img" src="./close.png" mode="aspectFill" />
+    </view>
+  </view>
+  <view class="dhm_input_back">
+    <!-- 请再此输入兑换码 -->
+    <input class="dhm_input" value="{{dhmCode}}"hold-keyboard="{{true}}" cursor-spacing="{{cursor_spacing}}"	confirm-type="done" type="text" placeholder="请在此输入兑换码" bindinput="inputDhm"bindconfirm="giftUse"></input>
+  </view>
+  <view class="dhm_btn" bind:tap="giftUse">确认兑换</view>
+</view>

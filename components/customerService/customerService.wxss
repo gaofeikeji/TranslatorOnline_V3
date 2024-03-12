@@ -1,0 +1,146 @@
+/* components/customerService/customerService.wxss */
+page {
+  width: 100%;
+  height: 100%;
+}
+
+.sv_bk {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  right: 0;
+  z-index: 999;
+
+  width: 186rpx;
+  height: 60rpx;
+  border-radius: 80rpx 0rpx 0rpx 80rpx;
+  /* background: rgba(0, 0, 0, 0.09); */
+  background-color: #E1E1E1;
+  box-shadow: 0rpx 0rpx 20rpx rgba(0, 0, 0, 0.05);
+
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: rgba(0, 0, 0, 0.9);
+  gap: 20rpx;
+}
+.sv_bk_btn{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sv_bk_btn::after{
+  border: 0;
+}
+.sv_bk_left {
+  left: 0;
+  border-radius: 0rpx 80rpx 80rpx 0rpx;
+}
+
+.sv_image_back {
+  width: 32rpx;
+  height: 32rpx;
+}
+.sv_image_back_img{
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.sv_image_pre_b_bk {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 1500rpx;
+  bottom: 20%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sv_image_pre {
+  position: fixed;
+  z-index: 10000;
+
+  bottom: 20%;
+  /* background: rgba(0, 0, 0, 0.5); */
+}
+
+.sv_image_pre image {
+  width: 426rpx;
+  height: 518rpx;
+  border-radius: 20rpx;
+  box-shadow: 0rpx 0rpx 100rpx rgba(0, 0, 0, 0.1);
+}
+
+.sv_image_pre_image {
+  position: relative;
+}
+
+.closeBtn {
+  width: 36rpx;
+  height: 36rpx;
+  opacity: 1;
+
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  top: 30rpx;
+  right: 30rpx;
+}
+
+.image_proload {
+  position: fixed;
+  top: -100%;
+  width: 0;
+  height: 0;
+}
+
+.image_b_back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.image_back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.sv_bk_my{
+  display: flex;
+  align-items: center;
+  height: 110rpx;
+  line-height: 110rpx;
+  flex-direction: row;
+
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 32rpx;
+
+  border-top: 1rpx solid #E1E1E1;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+.sv_image_back_my{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sv_image_back_my_img{
+  width: 40rpx;
+  height: 40rpx;
+}
+.sv_image_back_my_img2{
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: auto;
+  margin-right: 30rpx;
+}

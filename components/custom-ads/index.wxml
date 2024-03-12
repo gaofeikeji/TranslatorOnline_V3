@@ -1,0 +1,70 @@
+<!-- ad_type: 1 插屏广告 2 浮动广告 3 插入广告 4 激励广告 5 固定广告 6 强制广告 7 小程序跳转广告 -->
+
+<!-- 插屏广告 ad_type=1 -->
+<view class="interstitial-ad" wx:if="{{config.isShow && ad_type == 1 && config.type == 1}}">
+  <view class="wrapper">
+    <view class="close" bindtap="closeTap">X</view>
+    <navigator target="miniProgram" open-type="navigate" app-id="{{config.target_appid}}" path="{{config.target_path}}">
+      <view class="ad-body">
+        <image class="interstitial-img" src="{{config.imageSrc}}" mode="widthFix"></image>
+      </view>
+    </navigator>
+  </view>
+  <view class="mask" bindtap="closeTap"></view>
+</view>
+
+<!-- 浮动广告 ad_type=2 -->
+<view class="fload-ad-unit" wx:if="{{ config.isShow && ad_type == 2 && config.adUnitId}}" style="{{config.position[0]}}:{{config.x}}rpx;{{config.position[1]}}:{{config.y}}rpx" >
+  <view class="wx-float-ad-unit" wx:if="{{config.type == 0}}">
+    <ad-custom unit-id="{{config.adUnitId}}"></ad-custom>
+  </view>
+  <view class="my-float-ad-unit" wx:else>
+    <view class="position-ad" >
+      <view class="close" bindtap="floatClose">广告 X</view>
+      <navigator target="miniProgram" open-type="navigate" app-id="{{config.target_appid}}" path="{{config.target_path}}">
+        <view class="float-ad-image">
+          <image class="float-img" src="{{config.imageSrc}}" mode="widthFix"></image>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</view>
+
+<!-- 插入Banner广告 ad_type=3 -->
+<view class="insert-ad-unit" wx:if="{{ config.isShow && ad_type == 3 && config.adUnitId }}">
+  <block wx:if="{{config.type == 0}}">
+    <ad-custom style="width: 100%;" unit-id="{{config.adUnitId}}"></ad-custom>
+  </block>
+  <navigator target="miniProgram" open-type="navigate" app-id="{{config.target_appid}}" path="{{config.target_path}}" wx:else>
+    <view class="bannerAd">
+      <image src="{{config.imageSrc}}" mode="widthFix"></image>
+    </view>
+  </navigator>
+</view>
+
+<!-- 激励广告 ad_type=4 -->
+<!-- 添加方法请阅读 Rewarded-Ads/readme.md 文件 -->
+
+<!-- 固定广告上下位置 ad_type=5 -->
+<view bind:tap="positionClick" class="ad_position" wx:if="{{config.isShow && config.show && ad_type == 5}}" style="{{config.position}}:{{0}}">
+  <ad-custom style="width: 100%; height: auto;" unit-id="{{config.adUnitId}}"></ad-custom>
+</view>
+<!-- 强制广告 ad_type=6 -->
+<view bind:tap="positionClick" class="ad_force" wx:if="{{config.isShow && config.show && ad_type == 6}}">
+  <ad-custom style="width: 100%; height: auto;" unit-id="{{config.adUnitId}}"></ad-custom>
+</view>
+
+<!-- 跳转小程序广告 ad_type=7 -->
+<view bind:tap="gotoMiniBind" class="mini-container" style="{{ad_type == 7 ? 'height: 100%' : 'height: auto'}}">
+  <slot></slot>
+</view>
+
+<!-- 反馈 ad_type=8 -->
+<view 
+  class="feedback {{config.position == 'left'?'fl':'fr'}}" 
+  style="bottom:{{config.margin_bottom?config.margin_bottom*2:100}}rpx;{{config.position == 'left'?'left:0;':'right:0'}}"
+  bind:tap="toFeedBack" 
+  wx:if="{{config.isShow && config.show && ad_type == 8}}"
+>
+  <text class="feedback_title">{{config.button || '建议反馈'}}</text>
+</view>

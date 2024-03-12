@@ -1,7 +1,18 @@
-<!--index.wxml-->
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<!--index.wxml-->  
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="container">
-    Weixin
+     <block wx:if="{{ initCamral }}"> 
+          <camera device-position="back" flash="on" binderror="error"
+          bindinitdone="cam_inited"
+          mode="normal" resolution="high"
+          class="start-video"></camera>
+        </block>
+        <block wx:else> 
+          <image class="start-video" src="/images/bg/bg-dark.png"></image>
+        </block>
+    <view class="home-info">
+        <text class="text-box-notice">相机加载中</text>
+    </view>
+      <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
   </view>
 </scroll-view>

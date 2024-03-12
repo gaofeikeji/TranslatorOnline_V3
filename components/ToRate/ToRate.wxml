@@ -1,0 +1,62 @@
+<block wx:if="{{request_comment.comment_show_type==2}}">
+  <!-- 邀请去评分组件 -->
+  <view class="tr_mask" wx:if="{{show}}"></view>
+  <view class="tr_container" wx:if="{{show}}">
+    <!-- <view class="tr_container" wx:if="{{true}}"> -->
+    <view class="tr_bk">
+      <view class="tr_item">
+        <image class="closeBtn_image" src="./closeBtn.png" mode="aspectFit" bind:tap="onClickClose" />
+        <view class="image_bk2">
+          <image class="rt_image2" src="{{image_config.image_2}}" mode="aspectFit">
+            <view class="text_wa_1_bk">
+              <view class="text_wa_1">{{request_comment.title}}</view>
+            </view>
+          </image>
+        </view>
+        <view class="text_con_bk">
+          <view class="text_wa_2">{{request_comment.desc}}</view>
+        </view>
+        <view class="image_bk4">
+          <view class="image_bk4_back">
+            <block wx:for="{{starArr}}" wx:key="index">
+              <view class="star_image" bind:tap="onClickStar" data-index="{{index}}" data-star="{{item}}">
+                <image src="{{item==0 ?'./nullStar.png':'./hasStar.png'}}" />
+              </view>
+            </block>
+          </view>
+        </view>
+        <view class="text_con_bk">
+          <view class="text_wa_4">{{request_comment.comment_select_star_tip}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+<block wx:else>
+  <!-- 邀请去评分组件 -->
+  <view class="tr_mask" wx:if="{{show}}"></view>
+  <view class="tr_container" wx:if="{{show}}">
+    <!-- <view class="tr_container" wx:if="{{true}}"> -->
+    <view class="tr_bk">
+      <view class="tr_item">
+        <image class="closeBtn_image" src="./closeBtn.png" mode="aspectFit" bind:tap="onClickClose" />
+        <view class="image_bk1">
+        <image class="rt_image1" src="{{image_config.image_1}}" mode="aspectFit" />
+      </view>
+        <view class="image_bk2">
+          <image class="rt_image2" src="{{image_config.image_2}}" mode="aspectFit">
+            <view class="text_wa_1_bk">
+              <view class="text_wa_1">{{request_comment.title}}</view>
+            </view>
+          </image>
+        </view>
+        <view class="text_con_bk">
+          <view class="text_wa_2">{{request_comment.desc}}</view>
+        </view>
+        <view class="text_wa_3_bk" bind:tap="goRate">
+        <view class="text_wa_3">{{request_comment.btn_text}}</view>
+      </view>
+      </view>
+    </view>
+  </view>
+</block>

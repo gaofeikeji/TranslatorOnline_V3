@@ -1,0 +1,47 @@
+<!-- 未开通 -->
+<block wx:if="{{actions.payment_status}}">
+  <view class="container" bind:tap="openVip">
+    <view class="renewal-vip-box" wx:if="{{subscribe.is_vip}}">
+      <image src="./images/vip.png" mode="widthFix" />
+      <view class="expired">
+        <view class="vip-user">尊贵的VIP用户</view>
+        <view class="expired-time">VIP到期时间：{{m1.str1(subscribe.expire_time)}}</view>
+      </view>
+      <text class="renewal-bnts">续期VIP</text>
+    </view>
+    <view class="open-vip-box" wx:else>
+      <image src="./images/vip.png" mode="widthFix" />
+      <text class="normal-user">普通用户</text>
+      <text class="open-bnts">开通VIP</text>
+    </view>
+  </view>
+</block>
+<block wx:else>
+  <view class="container">
+    <button class="user_btn" open-type="contact">
+      <view class="renewal-vip-box" wx:if="{{subscribe.is_vip}}">
+              <view class="btn_back">
+        <image src="./images/vip.png" mode="widthFix" />
+        <view class="expired">
+          <view class="vip-user">尊贵的VIP用户</view>
+          <view class="expired-time">VIP到期时间：{{m1.str1(subscribe.expire_time)}}</view>
+        </view>
+      </view>
+        <!-- <view class="renewal-bnts">续期VIP</view> -->
+      </view>
+      <view class="open-vip-box" wx:else>
+      <view class="btn_back">
+        <image src="./images/vip.png" mode="widthFix" />
+        <view class="normal-user normal-user-noBtn">普通用户</view>
+      </view>
+      </view>
+    </button>
+  </view>
+</block>
+<!-- 截取 subscribe.expire_time 的 前10位 -->
+<wxs module="m1">
+  function str1(str) {
+    return str.substring(0, 10)
+  }
+  module.exports.str1 = str1
+</wxs>

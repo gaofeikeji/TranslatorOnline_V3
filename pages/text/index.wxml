@@ -1,0 +1,16 @@
+<!--pages/text/index.wxml-->
+
+
+<navigation-bar
+    title="{{nbTitle}}"
+    loading="{{nbLoading}}" 
+    front-color="{{nbFrontColor}}"
+    background-color="{{nbBackgroundColor}}"
+    color-animation-duration="2000"
+    color-animation-timing-func="easeIn"
+  /> 
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <button type="primary">文本翻译</button>
+  </view>
+</scroll-view>

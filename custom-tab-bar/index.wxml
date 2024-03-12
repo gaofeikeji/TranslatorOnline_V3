@@ -1,0 +1,43 @@
+<view class="tab-bar tabbar tab-top">
+  <view class="current-language-box " bindtap="selectLang"> 
+    <text class="lang text-active">{{currentLang}}</text>
+    <image class="lang_switch" mode="aspectFit" src="/images/switch_gray.png"></image> 
+    <text class="lang text-active">{{currentTargetLang}}</text>
+    <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
+  </view>
+</view>
+ 
+<view class="section-box-lang {{editLang?'edit-lang':''}}">     
+    <scroll-view 	scroll-y="true" class="flex-item current-language-list"  bind:tap="fromIdxChange">
+        <view class="lang-item {{fromIdx==index?'selected':''}}" wx:for="{{lang}}" wx:key="{{langCode[index]}}" >{{item}} {{langCode[index]}}</view>
+    </scroll-view>
+    
+    <scroll-view scroll-y="true" class="flex-item  target-language-list" bind:tap="fromIdxChange"> 
+        <view class="lang-item {{fromIdx==index?'selected':''}}" wx:for="{{lang}}"  wx:key="{{langCode[index]}}" >
+        {{item}} {{langCode[index]}}</view>
+    </scroll-view>
+</view>
+
+
+
+<view class="tab-bar tabbar tab-bottom">
+    <view 
+        class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
+         wx:for="{{ list }}"  
+        wx:key="index"
+        data-page="{{ item.pagePath }}" 
+        data-index="{{ index }}"
+        data-type="{{ item.type }}"
+        bindtap="selectPage"
+    >
+        <block wx:if="{{ item.type === 0 }}">
+            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+            <text>{{ item.text }}</text>
+        </block>
+        <block wx:else>
+            <view class="publish">
+            <image src="../images/add.png"></image>
+            </view>
+        </block>
+    </view>
+</view>

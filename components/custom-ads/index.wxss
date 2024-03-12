@@ -1,0 +1,154 @@
+.ad-custom-unit {
+  position: relative;
+}
+
+/* 插屏广告样式 */
+.interstitial-ad {
+  height: 100%;
+}
+.interstitial-ad .wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  width: 640rpx;
+  margin: 100rpx auto 280rpx;
+}
+.interstitial-ad .ad-body {
+  width: 100%;
+  height: 100%;
+  border-radius: 15rpx;
+}
+.interstitial-ad .ad-body .interstitial-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15rpx;
+}
+.interstitial-ad .close {
+  align-self: flex-end;
+  border-radius: 50%;
+  width: 60rpx;
+  height: 60rpx;
+  background-color: rgba(0, 0, 0, .45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .5);
+  margin-bottom: 10rpx;
+}
+.interstitial-ad .mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+/* 浮动广告 */
+.fload-ad-unit {
+  position: fixed;
+  width: 140rpx;
+  z-index: 100000;
+}
+
+.position-ad .close {
+  width: 70%;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, .9);
+  background-color: rgba(0, 0, 0, .45);
+  border-radius: 6rpx;
+  margin-bottom: 15rpx;
+}
+.float-ad-image .float-img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 15rpx;
+}
+
+/* 插入广告 */
+.insert-ad-unit {
+  display: flex;
+  margin: 20rpx 0;
+}
+.insert-ad-unit .bannerAd {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+/* 小程序跳转广告样式 */
+.mini-container {
+  width: 100%;
+}
+
+/* 固定广告 */
+.ad_position {
+  position: fixed;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+.ad_force {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 9998;
+  width: 100%;
+  height: auto;
+}
+
+/* 反馈 */
+.feedback {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(31, 113, 255, 0.1);
+  box-shadow: 0px 0px 20rpx rgba(0, 0, 0, 0.1);
+  width: 200rpx;
+  height: 70rpx;
+  bottom: 150px;
+  right: 0;
+  z-index: 9999;
+}
+.feedback .feedback_title {
+  font-size: 32rpx;
+  font-weight: 400;
+  line-height: 32rpx;
+  color: rgba(31, 113, 255, 1);
+}
+
+.fr {
+  border-radius: 200rpx 0rpx 0rpx 200rpx;
+  border-width: 1rpx 0rpx 1rpx 1rpx;
+  border-style: solid;
+  border-color: rgba(31, 113, 255, 1);
+}
+.fr .feedback_title {
+  padding-left: 20rpx;
+}
+.fl {
+  border-radius: 0 200rpx 200rpx 0;
+  border-width: 1rpx 1rpx 1rpx 0;
+  border-style: solid;
+  border-color: rgba(31, 113, 255, 1);
+}
+.fl .feedback_title {
+  padding-right: 20rpx;
+}
