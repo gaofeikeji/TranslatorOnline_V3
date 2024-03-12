@@ -1,38 +1,6 @@
 const app = getApp();
 Component({ 
   data: {
-      select: 0, 
-      list: [
-        {
-          "iconPath": "/images/picture_translate.png",
-          "pagePath": "/pages/index/index",
-          "selectedIconPath": "/images/picture_translate.png",
-          "text": "传图翻译",
-          "type":0
-        },
-        {
-          "iconPath": "/images/text_translate.png",
-          "pagePath": "/pages/text/index",
-          "selectedIconPath": "images/text_translate.png",
-          "text": "文本翻译",
-          "type":0
-        },
-        {
-          "iconPath": "/images/file_translate.png",
-          "pagePath": "/pages/file/index",
-          "selectedIconPath": "/images/file_translate.png",
-          "text": "文件翻译",
-          "type":0
-        },
-        {
-          "iconPath": "/images/personal.png",
-          "pagePath": "/pages/personal/index",
-          "selectedIconPath": "/images/personal.png",
-          "text": "个人中心",
-          "type":0
-        }
-      ],
-     
     lang: [
       "中文",
       "英语",
@@ -86,28 +54,18 @@ Component({
       "swe",
     ],
     fromIdx: wx.getStorageSync('fromIdx') || 0,
-    toIdx: wx.getStorageSync('toIdx') || 0,
-  
+    toIdx: wx.getStorageSync('toIdx') || 0, 
     editLang:false,//是否在修改语言
       currentLang:app.globalData.currentLang,
       currentTargetLang:app.globalData.currentTargetLang
   }, 
   methods: {
-    // 页面切换
-      selectPage(e) {
-          const { index, page, type } = e.currentTarget.dataset;
-          console.warn(index, page, type ); 
-          wx.switchTab({url:page})
-          this.setData({
-            selected: index
-          })
-      }, 
       // 是否操作语言
       selectLang(e) { 
         console.warn("selectLang",this.data.editLang);  
         this.setData({
           editLang: this.data.editLang?false:true
-        });
+        }); 
       },  
       // 获取语言配置
       getLangConfig() {
@@ -143,11 +101,12 @@ Component({
       },
       // 源语言改变
       fromIdxChange(e) {
+        console.warn("fromIdxChange",e)
         const val = e.detail.value
         console.warn("fromIdxChange",val)
-        // this.setData({
-        //   fromIdx: this.data.langCode[val[0]]
-        // })
+        this.setData({
+          fromIdx: this.data.langCode[val[0]]
+        })
       }
   }
 })

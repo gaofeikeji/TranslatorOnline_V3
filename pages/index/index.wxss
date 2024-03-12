@@ -36,3 +36,58 @@ page {
   z-index: 110;
   
 }
+
+
+
+
+/* 底部选项卡 */
+.tab-bottom {
+  width: 100%;
+  display: flex;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  padding: 40rpx 0 20rpx 0;
+  z-index: 9999;
+  background-color: rgba(255，255，255，1);
+  border-top: 1px solid #ddd;
+  border-top-left-radius: 30rpx;
+  border-top-right-radius: 30rpx;
+}
+
+.tabbar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabbar-item image {
+  width: 45rpx;
+  height: 45rpx;
+  background-color: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
+}
+
+.tabbar-item text {
+  font-size: 26rpx;
+  margin-top: 16rpx;
+  font-size:  28rpx;
+}
+
+.tabbar-item .publish {
+  width: 65rpx;
+  height: 65rpx;
+  background-color: #ff90ba;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: auto; 
+}
+
+.tabbar-select {
+  color: #303030;
+}

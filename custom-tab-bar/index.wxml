@@ -18,26 +18,3 @@
     </scroll-view>
 </view>
 
-
-
-<view class="tab-bar tabbar tab-bottom">
-    <view 
-        class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
-         wx:for="{{ list }}"  
-        wx:key="index"
-        data-page="{{ item.pagePath }}" 
-        data-index="{{ index }}"
-        data-type="{{ item.type }}"
-        bindtap="selectPage"
-    >
-        <block wx:if="{{ item.type === 0 }}">
-            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
-            <text>{{ item.text }}</text>
-        </block>
-        <block wx:else>
-            <view class="publish">
-            <image src="../images/add.png"></image>
-            </view>
-        </block>
-    </view>
-</view>

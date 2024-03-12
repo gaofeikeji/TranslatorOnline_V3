@@ -1,16 +1,12 @@
 <!--pages/text/index.wxml-->
-
-
-<navigation-bar
-    title="{{nbTitle}}"
-    loading="{{nbLoading}}" 
-    front-color="{{nbFrontColor}}"
-    background-color="{{nbBackgroundColor}}"
-    color-animation-duration="2000"
-    color-animation-timing-func="easeIn"
-  /> 
+<navigation-bar title="{{nbTitle}}" loading="{{nbLoading}}" front-color="{{nbFrontColor}}" background-color="{{nbBackgroundColor}}" color-animation-duration="2000" color-animation-timing-func="easeIn" />
 <scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <button type="primary">文本翻译</button>
+  <view class="container box-text" > 
+    <textarea class="textarea-container" placeholder="请输入需要翻译的文本" focus="{{focus}}" />
+    <view class="bottom-text">
+      <text>粘贴</text>
+      <text>清空</text>
+    </view>
   </view>
 </scroll-view>
+<button class="circle-btn picture-action">确定翻译</button>

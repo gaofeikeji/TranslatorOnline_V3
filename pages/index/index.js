@@ -6,8 +6,52 @@ Page({
     notVip: false,
     nbFrontColor: '#000000',
     nbBackgroundColor: '#ffffff', 
-    initCamral:false
+    initCamral:false,
+    select: 0, 
+   
+    list: [
+      {
+        "iconPath": "/images/picture_translate.png",
+        "pagePath": "/pages/index/index",
+        "selectedIconPath": "/images/picture_translate.png",
+        "text": "传图翻译",
+        "type":0
+      },
+      {
+        "iconPath": "/images/text_translate.png",
+        "pagePath": "/pages/text/index",
+        "selectedIconPath": "images/text_translate.png",
+        "text": "文本翻译",
+        "type":0
+      },
+      {
+        "iconPath": "/images/file_translate.png",
+        "pagePath": "/pages/file/index",
+        "selectedIconPath": "/images/file_translate.png",
+        "text": "文件翻译",
+        "type":0
+      },
+      {
+        "iconPath": "/images/personal.png",
+        "pagePath": "/pages/personal/index",
+        "selectedIconPath": "/images/personal.png",
+        "text": "个人中心",
+        "type":0
+      }
+    ],
   }, 
+  // 页面切换
+    selectPage(e) {
+        const { index, page, type } = e.currentTarget.dataset;
+        console.warn(index, page, type ); 
+        wx.navigateTo({
+          url: page
+        })
+        // wx.switchTab({url:page})
+        // this.setData({
+        //   selected: index
+        // })
+    }, 
   methods: {
     error(){
       console.warn("image-load- error")
