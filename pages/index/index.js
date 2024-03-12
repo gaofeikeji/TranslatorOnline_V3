@@ -12,7 +12,7 @@ Page({
     error(){
       console.warn("image-load- error")
     },
-    cam_inited(e){ 
+    cam_inited(e){ ``
       console.log("cam inited")
     },
     takePhoto(){ 

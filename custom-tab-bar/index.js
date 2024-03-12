@@ -32,7 +32,7 @@ Component({
           "type":0
         }
       ],
-     
+      showBottomNav:true,//是否显示底部tab
     lang: [
       "中文",
       "英语",
@@ -97,10 +97,12 @@ Component({
       selectPage(e) {
           const { index, page, type } = e.currentTarget.dataset;
           console.warn(index, page, type ); 
-          wx.switchTab({url:page})
+          wx.switchTab({url:page}) 
           this.setData({
-            selected: index
-          })
+            selected: index, 
+            showBottomNav: index==0?true:false
+          }) 
+          // app.checkBootomNav(index==0?true:false);
       }, 
       // 是否操作语言
       selectLang(e) { 
@@ -143,11 +145,33 @@ Component({
       },
       // 源语言改变
       fromIdxChange(e) {
-        const val = e.detail.value
-        console.warn("fromIdxChange",val)
-        // this.setData({
-        //   fromIdx: this.data.langCode[val[0]]
-        // })
+        const dataset = e.target.dataset;
+        console.warn("fromIdxChange",e);
+        console.warn("fromIdxChange",dataset.index,dataset.langType);
+        let changeLang = dataset.langType=="fromIdx"?{
+          fromIdx: this.data.langCode.indexOf(dataset.index)
+        }:{
+          toIdx: this.data.langCode.indexOf(dataset.index)
+        };
+         this.setData(changeLang);
+      },
+      // 提交语言
+      updateTranslateLang(){
+        let changeLang = {
+          
+        };
+        //导航栏当前语言
+        this.setData({
+          currentLang: this.data.lang[this.data.fromIdx],
+          currentTargetLang: this.data.lang[this.data.toIdx]
+        })
+        this.selectLang();
+        //提交数据到服务器
+        //……………………
+      },
+      // 撤销语言修改语言
+      oldTranslateLang(){
+        this.selectLang()
       }
   }
 })

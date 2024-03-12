@@ -1,4 +1,7 @@
 /**app.wxss**/
+.page{
+  height: 100%;
+}
 .container {
   height: 100%;
   display: flex;
@@ -14,7 +17,7 @@
 }
 button.circle-btn{
   width: 300rpx !important;
-  border-radius: 40rpx;
+  border-radius: 80rpx;
   padding: 28rpx 0;
   background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
   color: #fff;
