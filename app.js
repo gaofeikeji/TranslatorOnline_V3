@@ -54,6 +54,11 @@ App({
     // // 获取当前网络状态
     // xy.getNetworkStatus((e) => (this.globalData.currentNetwork = e));
   },
+  // //检查是否显示底部导航
+  // checkBootomNav(show){
+  //   this.showBottomNav=show
+  //   console.warn("show:",show ); 
+  // },
   userCenterLogin(){
     xy.userLogin((data) => {
       this.globalData.access_token = data.token;

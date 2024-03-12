@@ -21,7 +21,7 @@
   /* padding-top: env(safe-area-inset-top);  */
   position: fixed;
   top: 0;
-  z-index: 9999; 
+  z-index: 6666; 
   background-color: rgba(255，255，255，1);
   border-bottom: 1px solid #ddd;
   border-bottom-left-radius: 30rpx;
@@ -58,11 +58,11 @@
   /* top: 180rpx; */
   top: 11%;
   left: 0;
-  z-index: 222;
   
 }   
 .edit-lang{
   display: flex; 
+  z-index: 7777;
 }
 .flex-item{
   flex: 1;
@@ -70,9 +70,13 @@
   padding: 0 30rpx;
   text-align: center;
   color: #000;
+  position: relative;
 }
 .current-language-list{
   border-right: 1px solid #ddd;
+}
+.scroll-box{ 
+  height: 90%; 
 }
 .lang-item{
   height: 80rpx;
@@ -83,8 +87,24 @@
   background:rgba(31, 113, 255, 1);
   color: #fff;
 }
-
-
+/* 语言切换的操作按钮 */
+.bootom-action{
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+}
+.bootom-action:hover,
+.bootom-action.selected{
+  background: linear-gradient(135deg, rgba(31, 113, 255, 1) 0%, rgba(31, 113, 255, 1) 100%);
+}
 
 
 
@@ -97,21 +117,24 @@
 
 /* 底部选项卡 */
 .tab-bottom {
+  display: none;  
   width: 100%;
-  display: flex;
   background-color: #fff;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  padding-bottom: env(safe-area-inset-bottom);
+  bottom: -1000px;
+  left: 0px;
+  /* padding-bottom: env(safe-area-inset-bottom); */
   padding: 40rpx 0 20rpx 0;
-  z-index: 9999;
   background-color: rgba(255，255，255，1);
   border-top: 1px solid #ddd;
   border-top-left-radius: 30rpx;
   border-top-right-radius: 30rpx;
 }
-
+.tab-bottom.see{
+  display: flex;  
+  bottom: 0;
+  z-index: 8888;
+}
 .tabbar-item {
   flex: 1;
   display: flex;

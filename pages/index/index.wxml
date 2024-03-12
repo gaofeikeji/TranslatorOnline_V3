@@ -3,7 +3,6 @@
   <view class="container">
      <block wx:if="{{ initCamral }}"> 
           <camera device-position="back" flash="on" binderror="error"
-          bindinitdone="cam_inited"
           mode="normal" resolution="high"
           class="start-video"></camera>
         </block>

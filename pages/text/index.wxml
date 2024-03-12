@@ -1,16 +1,19 @@
 <!--pages/text/index.wxml-->
 
-
-<navigation-bar
-    title="{{nbTitle}}"
-    loading="{{nbLoading}}" 
-    front-color="{{nbFrontColor}}"
-    background-color="{{nbBackgroundColor}}"
-    color-animation-duration="2000"
-    color-animation-timing-func="easeIn"
-  /> 
 <scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <button type="primary">文本翻译</button>
+  <view class="container">     
+     <block wx:if="{{ !initTextBox }}">  
+        <view>
+          <textarea placeholder="请您输入要翻译的文本"
+           focus="{{focus}}" />                    
+          <button  class="circle-btn picture-action" bindtap="submitTranslate">确认翻译</button>
+        </view>
+          
+        </block>   
+        <block wx:else> 
+        <view>
+          <button  class="circle-btn picture-action" bindtap="submitTranslate">确认翻译</button>
+        </view>
+        </block>
   </view>
 </scroll-view>
