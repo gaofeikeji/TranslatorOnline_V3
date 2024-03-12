@@ -1,95 +1,110 @@
 .page{
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.text{
-  color: rgba(255,255,255);
-}
-.text-active{
-  color: rgba(41,119,255) ;
-}
-/* 顶部导航栏(  全局语言切换) */
-.tab-top{ 
-  width: 100%;
-  min-height: 120rpx;
-  height:11%;
-  display: flex; 
-  background-color: #fff;
-  /* 刘海屏 */
-  padding-top:48rpx; 
-  /* padding-top: env(safe-area-inset-top);  */
-  position: fixed;
-  top: 0;
-  z-index: 9999; 
-  background-color: rgba(255，255，255，1);
-  border-bottom: 1px solid #ddd;
-  border-bottom-left-radius: 30rpx;
-  border-bottom-right-radius: 30rpx;
-} 
-.current-language-box{ 
-  display: flex;
-  align-items: center;
-  font-size: 24rpx;
-  flex-wrap: nowrap;
-  margin-left: 50rpx;
-}
-.lang{
-  display: inline-block;
-  font-size: 34rpx;
-  font-weight: 600;
-}
-.lang_switch{ 
-  display: inline-flex;
-  font-size: 24rpx;  
-  width: 40rpx; 
-  height: 30rpx;
-  margin:  0 40rpx;
-}
-
-/* 全局语言切换容器 */
-.section-box-lang{ 
-  width: 100%;
-  height: 72%;
-  display: none;
-  background-color: #fff;
-  padding: 70rpx 0;
-  position: fixed;
-  /* top: 180rpx; */
-  top: 11%;
-  left: 0;
-  z-index: 222;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .text{
+    color: rgba(255,255,255);
+  }
+  .text-active{
+    color: rgba(41,119,255) ;
+  }
+  /* 顶部导航栏(  全局语言切换) */
+  .tab-top{ 
+    width: 100%;
+    min-height: 110rpx;
+    height:8%;
+    display: flex; 
+    background-color: #fff;
+    /* 刘海屏 */
+    padding-top:48rpx; 
+    /* padding-top: env(safe-area-inset-top);  */
+    position: fixed;
+    top: 0;
+    z-index: 6666; 
+    background-color: rgba(255，255，255，1);
+    border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 30rpx;
+    border-bottom-right-radius: 30rpx;
+  } 
+  .current-language-box{ 
+    display: flex;
+    align-items: center;
+    font-size: 24rpx;
+    flex-wrap: nowrap;
+    margin-left: 50rpx;
+  }
+  .lang{
+    display: inline-block;
+    font-size: 34rpx;
+    font-weight: 600;
+  }
+  .lang_switch{ 
+    display: inline-flex;
+    font-size: 24rpx;  
+    width: 40rpx; 
+    height: 30rpx;
+    margin:  0 40rpx;
+  }
   
-}   
-.edit-lang{
-  display: flex; 
-}
-.flex-item{
-  flex: 1;
-  height: 100%;
-  padding: 0 30rpx;
-  text-align: center;
-  color: #000;
-}
-.current-language-list{
-  border-right: 1px solid #ddd;
-}
-.lang-item{
-  height: 80rpx;
-  line-height: 80rpx;
-  border-radius: 10rpx;
-}
-.lang-item.selected{
-  background:rgba(31, 113, 255, 1);
-  color: #fff;
-}
-
-
-
-
-
-
-
-
-
-
+  /* 全局语言切换容器 */
+  .section-box-lang{ 
+    width: 100%;
+    height: 72%;
+    min-height: 600rpx;
+    display: none;
+    background-color: #fff;
+    padding: 70rpx 0;
+    position: fixed;
+    /* top: 180rpx; */
+    top: -11111px;
+    left: 0; 
+  }   
+  .edit-lang{
+    display: flex; 
+    position: fixed;
+    z-index: 7777;
+    top: 11%;
+    left: 0;
+  }
+  .flex-item{
+    flex: 1;
+    height: 100%;
+    padding: 0 30rpx;
+    text-align: center;
+    color: #000;
+    position: relative;
+  }
+  .current-language-list{
+    border-right: 1px solid #ddd;
+  }
+  .scroll-box{ 
+    height: 90%; 
+  }
+  .lang-item{
+    height: 80rpx;
+    line-height: 80rpx;
+    border-radius: 10rpx;
+  }
+  .lang-item.selected{
+    background:rgba(31, 113, 255, 1);
+    color: #fff;
+  }
+  /* 语言切换的操作按钮 */
+  .bootom-action{
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%);
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+  }
+  .bootom-action:hover,
+  .bootom-action.selected{
+    background: linear-gradient(135deg, rgba(31, 113, 255, 1) 0%, rgba(31, 113, 255, 1) 100%);
+  }

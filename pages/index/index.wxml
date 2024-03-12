@@ -7,8 +7,8 @@
     color-animation-duration="2000"
     color-animation-timing-func="easeIn"
   /> 
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
+<scroll-view class="scrollarea include-nav" scroll-y type="list">
+  <view class="container ">
      <block wx:if="{{ initCamral }}"> 
           <camera device-position="back" flash="on" binderror="error"
           bindinitdone="cam_inited"
@@ -16,7 +16,7 @@
           class="start-video"></camera>
         </block>
         <block wx:else> 
-          <image class="start-video" src="/images/bg/bg-dark.png"></image>
+          <image class="start-video" src="{{selectPicturPath}}"></image>
         </block>
     <view class="home-info">
         <text class="text-box-notice">相机加载中</text>

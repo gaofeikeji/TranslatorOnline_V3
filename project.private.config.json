@@ -9,6 +9,28 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/personal/index",
+          "pathName": "pages/personal/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
+          "name": "pages/file/index",
+          "pathName": "pages/file/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
           "name": "pages/index/index",
           "pathName": "pages/index/index",
           "query": "",

@@ -8,6 +8,7 @@ Page({
     nbBackgroundColor: '#ffffff', 
     initCamral:false,
     select: 0, 
+    selectPicturPath:"/images/bg/bg-dark.png",
    
     list: [
       {
@@ -52,6 +53,25 @@ Page({
         //   selected: index
         // })
     }, 
+    //拍照
+    takePhoto(){ 
+        console.log("cam inited")
+        const tThis= this;
+        const ctx = wx.createCameraContext();
+        ctx.setZoom({
+            zoom:0.5
+        })
+        ctx.takePhoto({ 
+          quality: 'high',
+          success: (res) => {
+              console.warn(res)
+              tThis.setData({
+                selectPicturPath: res.tempImagePath,
+                initCamral:false
+            })
+          }
+        })
+      },
   methods: {
     error(){
       console.warn("image-load- error")
@@ -59,18 +79,6 @@ Page({
     cam_inited(e){ 
       console.log("cam inited")
     },
-    takePhoto(){ 
-      console.log("cam inited")
-      const ctx = wx.createCameraContext()
-      ctx.takePhoto({
-        quality: 'high',
-        success: (res) => {
-          this.setData({
-            src: res.tempImagePath
-          })
-        }
-      })
-    }
    
   },
   onLoad(){

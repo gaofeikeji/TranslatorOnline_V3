@@ -6,15 +6,29 @@
     <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
   </view>
 </view>
- 
+
+  <!-- 语言容器 -->
 <view class="section-box-lang {{editLang?'edit-lang':''}}">     
-    <scroll-view 	scroll-y="true" class="flex-item current-language-list"  bind:tap="fromIdxChange">
-        <view class="lang-item {{fromIdx==index?'selected':''}}" wx:for="{{lang}}" wx:key="{{langCode[index]}}" >{{item}} {{langCode[index]}}</view>
+  <!-- 源语言 -->
+   <view  class="flex-item current-language-list" >
+      <scroll-view class="scroll-box" 	scroll-y="true" bind:tap="fromIdxChange">
+          <view class="lang-item {{fromIdx==index?'selected':''}}"  
+          wx:for="{{lang}}" wx:key="*this"  data-lang-type="fromIdx"  data-index="{{langCode[index]}}">{{item}}</view>
+      </scroll-view>
+      <view class="bootom-action"  bind:tap="oldTranslateLang">
+        <text>取消选择</text>
+      </view>
+    </view>   
+    <!-- 目标语言 -->
+  <view class="flex-item  target-language-list" >
+    <scroll-view class="scroll-box" scroll-y="true" bind:tap="fromIdxChange"> 
+        <view class="lang-item {{toIdx==index?'selected':''}}" 
+        wx:for="{{lang}}"  wx:key="*this" data-lang-type="toIdx"  data-index="{{langCode[index]}}" > 
+        {{item}}</view>
     </scroll-view>
-    
-    <scroll-view scroll-y="true" class="flex-item  target-language-list" bind:tap="fromIdxChange"> 
-        <view class="lang-item {{fromIdx==index?'selected':''}}" wx:for="{{lang}}"  wx:key="{{langCode[index]}}" >
-        {{item}} {{langCode[index]}}</view>
-    </scroll-view>
+      <view class="bootom-action selected"  bind:tap="updateTranslateLang">
+        <text>确认语言</text>
+      </view>
+  </view>
 </view>
 

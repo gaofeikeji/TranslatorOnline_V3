@@ -1,2 +1,15 @@
 <!--pages/personal/index.wxml-->
-<text>pages/personal/index.wxml</text>
+<navigation-bar
+    title="{{nbTitle}}"
+    loading="{{nbLoading}}" 
+    front-color="{{nbFrontColor}}"
+    background-color="{{nbBackgroundColor}}"
+    color-animation-duration="2000"
+    color-animation-timing-func="easeIn"
+  /> 
+  
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container box-text" > 
+        <text>个人中心</text>
+  </view>
+</scroll-view>

@@ -4,8 +4,8 @@
   <view class="container box-text" > 
     <textarea class="textarea-container" placeholder="请输入需要翻译的文本" focus="{{focus}}" />
     <view class="bottom-text">
-      <text>粘贴</text>
-      <text>清空</text>
+      <text class="text-btn">粘贴</text>
+      <text class="text-btn">清空</text>
     </view>
   </view>
 </scroll-view>

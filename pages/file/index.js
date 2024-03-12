@@ -4,14 +4,64 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    nbFrontColor: '#000000',
+    nbBackgroundColor: '#ffffff', 
+    initCamral:false,
+    selectPicturPath:"/images/bg/bg-dark.png"
   },
-
+//   选择照片
+  takePhoto(){
+      let tThis= this;
+      wx.chooseMedia({
+          count: 1,
+          mediaType: ['image'],
+          sourceType: ['album'],
+          maxDuration: 30,
+          camera: 'back',
+          success(res) {
+            console.log(res)
+            console.log(res.tempFiles.size)
+            tThis.setData({
+                selectPicturPath:res.tempFiles[0]['tempFilePath']
+            })
+          },
+          fail(res) {
+            console.warn(res)
+          },
+          complete(res) {
+            console.error(res)
+          },
+        })
+  }, 
+    
+    //   选择照片
+    takePhotoWithMessage(){
+        let tThis= this;
+        wx.chooseMessageFile({
+            count: 1,
+            type: 'image',
+            success (res) {
+            // tempFilePath可以作为img标签的src属性显示图片
+            console.log(res)
+            console.log(res.tempFiles.size)
+            tThis.setData({
+                selectPicturPath:res.tempFiles[0]['tempFilePath']
+            })
+            }
+        })
+    }, 
+  methods:{
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-
+  onLoad(options) { 
+    this.setData({
+        nbTitle: '文件翻译',
+        nbLoading: false,
+        nbFrontColor: '#ffffff',
+        nbBackgroundColor: '#000000',
+      })
   },
 
   /**

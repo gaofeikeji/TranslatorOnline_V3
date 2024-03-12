@@ -10,7 +10,8 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-  background: #000;
+  background: #e5e5e5;
+  position: relative;
 } 
 .text-box-notice{
   color: #fff;
@@ -27,6 +28,34 @@ button.circle-btn{
 }
 
 .scrollarea{
+    height: 1350rpx;
+    min-height: 1350rpx;
+  }
+.scrollarea.include-nav{
   height: 1200rpx;
   min-height: 1200rpx;
+}
+
+
+/* 图片选择 */
+.bottom-picture-box{
+    width: 100%;
+    position: absolute;
+    z-index: 666;
+    bottom: -150rpx;
+    left: 0;
+    background-color: #fff;
+    color: #000;
+}
+.picture-box-item{
+    height: 90rpx;
+    line-height: 90rpx;
+    text-align: center; 
+    border: 1px solid rgba(31, 113, 255, 1);
+}
+.picture-box-cancel{ 
+    height: 130rpx;
+    line-height: 130rpx;
+    text-align: center; 
+    border-top: 4px solid #ddd;
 }
