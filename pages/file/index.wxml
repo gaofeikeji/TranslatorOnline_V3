@@ -13,10 +13,10 @@
           <camera device-position="back" flash="on" binderror="error"
           bindinitdone="cam_inited"
           mode="normal" resolution="high"
-          class="start-video"></camera>
+          class="start-media"></camera>
         </block>
         <block wx:else> 
-          <image class="start-video" src="{{selectPicturPath}}"></image>
+          <image class="start-media" src="{{selectPicturPath}}"></image>
         </block>
     <view class="home-info">
         <text class="text-box-notice">相册加载中</text>

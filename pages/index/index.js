@@ -6,7 +6,7 @@ Page({
     notVip: false,
     nbFrontColor: '#000000',
     nbBackgroundColor: '#ffffff', 
-    initCamral:false,
+    initCamral:true,
     select: 0, 
     selectPicturPath:"/images/bg/bg-dark.png",
    
@@ -68,18 +68,21 @@ Page({
               tThis.setData({
                 selectPicturPath: res.tempImagePath,
                 initCamral:false
-            })
+              })
+              wx.navigateTo({
+                url: "/pages/indexpicture/index"
+              })
           }
         })
       },
+      cam_inited(e){ 
+        console.log("cam inited")
+      },
+      cam_error(){
+        console.warn("image-load- error")
+      },      
   methods: {
-    error(){
-      console.warn("image-load- error")
-    },
-    cam_inited(e){ 
-      console.log("cam inited")
-    },
-   
+   test(){}
   },
   onLoad(){
     this.setData({

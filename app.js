@@ -19,41 +19,60 @@ App({
     url: "https://imgconvert.mp.lighthg.com",
     apiUrl: "https://aip.baidubce.com",
     
-    navHeight: 36, //导航栏高度 
-    navTop: 26, //导航栏距顶部距离 
-    navObj: 18, //胶囊的高度 
-    navObjWid: 120, //胶囊宽度+距右距离
+    navBarHeight: 0,     // 导航栏高度
+    menuBotton: 0,       // 胶囊距底部间距（保持底部间距一致）
+    menuRight: 0,        // 胶囊距右方间距（方保持左、右间距一致）
+    menuHeight: 0,       // 胶囊高度（自定义内容可与胶囊高度保证一致）
+    statusBarHeight: 0,       // 状态栏高度
+    screenHeight: 0,       // 可视区域高度
     currentLang:"自动",
     currentTargetLang:"中文"
  
   },
-  onLaunch: function () {
-    this.globalData.navTop = wx.getSystemInfoSync().statusBarHeight;
-    // // 用户中心access_token
-    // if (!this.globalData.access_token) {
-    //   xy.userLogin((data) => {
-    //     this.globalData.access_token = data.token;
-    //     this.globalData.subscribe = data.subscribe;
-    //     this.userCenterLoginCallbackOnClickVipLock  && this.userCenterLoginCallbackOnClickVipLock();
-    //     this.globalData.userInfo = {
-    //       nickname: data.nickname,
-    //       avatar: data.avatar,
-    //     };
-    //     this.globalData.introduceUrl = data.introduceUrl || "";
-    //     wx.setStorageSync("USER_INFO", data);
-    //     this.userCenterLoginCallbackIndex();
+  onLaunch: function () { 
+    // 统一导航样式
+    this.setNavBarInfo();
+    // 用户中心access_token
+    if (!this.globalData.access_token) {
+      console.log("globalData.access_token:",this.globalData.access_token);
+      xy.userLogin((data) => {
+        this.globalData.access_token = data.token;
+        this.globalData.subscribe = data.subscribe;
+        this.userCenterLoginCallbackOnClickVipLock  && this.userCenterLoginCallbackOnClickVipLock();
+        this.globalData.userInfo = {
+          nickname: data.nickname,
+          avatar: data.avatar,
+        };
+        this.globalData.introduceUrl = data.introduceUrl || "";
+        wx.setStorageSync("USER_INFO", data);
+        this.userCenterLoginCallbackIndex();
 
-    //   });
-    // }
+      });
+    }
 
-    // // 图片提取文字 token
-    // if (!this.globalData.x_access_token) {
-    //   this.getAccessToken((token) => (this.globalData.x_access_token = token));
-    // }
+    // 图片提取文字 token
+    if (!this.globalData.x_access_token) {
+      this.getAccessToken((token) => (this.globalData.x_access_token = token));
+    }
 
-    // // 获取当前网络状态
-    // xy.getNetworkStatus((e) => (this.globalData.currentNetwork = e));
+    // 获取当前网络状态
+    xy.getNetworkStatus((e) => (this.globalData.currentNetwork = e));
   },
+  setNavBarInfo() {
+    // 获取系统信息
+    const systemInfo = wx.getSystemInfoSync();
+    // 胶囊按钮位置信息
+    const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
+    // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度
+    console.warn(systemInfo);
+    console.warn(menuButtonInfo);
+    this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight)  + menuButtonInfo.height+menuButtonInfo.top/2;
+    this.globalData.statusBarHeight = systemInfo.statusBarHeight;
+    this.globalData.menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;
+    this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
+    this.globalData.menuHeight = menuButtonInfo.right;
+    this.globalData.screenHeight = systemInfo.screenHeight-systemInfo.statusBarHeight;
+ },
   userCenterLogin(){
     xy.userLogin((data) => {
       this.globalData.access_token = data.token;
@@ -288,7 +307,7 @@ App({
     let that = this;
     return new Promise((resolve, reject) => {
       wx.request({
-        url: url,
+        url:this.globalData.globalHost+ url,
         method: method,
         data: data,
         header: {

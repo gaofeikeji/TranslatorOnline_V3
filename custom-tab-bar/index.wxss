@@ -12,12 +12,12 @@
   /* 顶部导航栏(  全局语言切换) */
   .tab-top{ 
     width: 100%;
-    min-height: 110rpx;
-    height:8%;
+    /* min-height: 110rpx;
+    height:8%; */
     display: flex; 
     background-color: #fff;
     /* 刘海屏 */
-    padding-top:48rpx; 
+    /* padding-top:48rpx;  */
     /* padding-top: env(safe-area-inset-top);  */
     position: fixed;
     top: 0;
@@ -50,22 +50,15 @@
   /* 全局语言切换容器 */
   .section-box-lang{ 
     width: 100%;
-    height: 72%;
-    min-height: 600rpx;
-    display: none;
     background-color: #fff;
     padding: 70rpx 0;
     position: fixed;
-    /* top: 180rpx; */
-    top: -11111px;
-    left: 0; 
+    display: none;
   }   
   .edit-lang{
     display: flex; 
     position: fixed;
-    z-index: 7777;
-    top: 11%;
-    left: 0;
+    z-index: 99999999;
   }
   .flex-item{
     flex: 1;

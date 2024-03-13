@@ -1,0 +1,105 @@
+<!--pages/indexpicture/index.wxml--> 
+<navigation-bar
+    title="{{nbTitle}}"
+    loading="{{nbLoading}}" 
+    front-color="{{nbFrontColor}}"
+    background-color="{{nbBackgroundColor}}"
+    color-animation-duration="2000"
+    color-animation-timing-func="easeIn"
+  /> 
+
+  <!-- 当前图片展示容器 -->
+<scroll-view class="scrollarea include-nav" scroll-y type="list">
+  <view class="container "> 
+    <view class="start-media">
+      <image class="{{scale?'scale':''}}" src="{{selectPicturPath}}"></image>
+    </view>
+  </view>          
+</scroll-view>
+
+<!-- 操作容器 -->
+<view class="action-container {{action?'':'hidden'}}">
+  <!-- 仅在切换逐行查看状态下显示的切换按钮 -->
+  <block wx:if="{{ actype ==   10||actype ==   11 }}"> 
+    <view class="action-box"  >
+        <!-- <image src="/images/nav/fangxing.png"></image> 
+        <image src="/images/nav/result.png"></image> 
+        <image src="/images/nav/close.png"></image>  -->
+          <button class="text-btn" data-actype="10"  bindtap="selectFunction">左右</button> 
+          <button class="text-btn" data-actype="11"  bindtap="selectFunction">垂直</button>
+          <button class="text-btn close" data-actype="0"  bindtap="selectFunction">关闭</button>
+    </view>
+    
+  </block> 
+<!-- 朱行对比 -->
+  <block wx:if="{{ actype ==   10 }}"> 
+    <scroll-view class="scroll-translate" type="list"	scroll-y="true">
+          <view class="lang-item"  
+          wx:for="{{langList}}" wx:key="*this"   data-index="{{item[index]}}">
+          <text class="horizon-text">{{item.fromText}}</text>
+          <text class="horizon-text">{{item.toText}}</text>
+          </view>
+      </scroll-view>
+  </block> 
+  <block wx:if="{{ actype ==   11 }}">  
+    <scroll-view class="scroll-translate" type="list"	scroll-y="true">
+          <view class="lang-verticl-item"  
+          wx:for="{{langList}}" wx:key="*this"   data-index="{{item[index]}}">
+          <view ><text class="title">原文</text><text class="right-text">{{item.fromText}}</text></view>
+          <view><text class="title translate">译文</text><text class="right-text">{{item.toText}}</text></view>
+          </view>
+      </scroll-view>
+  </block> 
+<!-- 复制内容-->
+<block wx:if="{{ actype ==   20 }}">
+    <view class="action-btn-box"> 
+        <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+        <view class="action-btn">仅复制原文</view>
+        <view class="action-btn">仅复制翻译结果</view>
+        <view class="action-btn">复制原和结果</view>
+    </view>
+    </block> 
+<!-- 导出文件 -->
+<block wx:if="{{ actype ==   30 }}">
+           
+  <view class="action-btn-box"> 
+  <view>
+  
+    <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+    </view>
+        <view class="action-btn">导出TXT文件</view>
+        <view class="action-btn">导出Word文档</view>
+        <view class="action-btn">导出Excel文档</view>
+    </view>
+</block> 
+  <!-- 显示结果 -->
+  <block wx:if="{{ actype ==   40 }}">
+           
+           <view class="action-item">
+             44444444444444
+           </view>
+           </block> 
+</view>      
+
+
+
+<!-- 底部操作区域 -->
+<view class="tab-bar tabbar tab-bottom">
+    <view 
+        class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
+         wx:for="{{ list }}"  
+        wx:key="index"
+        data-index="{{ index }}"
+        data-actype="{{ item.actype }}"
+        bindtap="selectFunction">
+        <block wx:if="{{ item.type === 0 }}">
+            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+            <text>{{ select === index ?(item.selectedText||item.text):(item.text) }}</text>
+        </block>
+        <block wx:else>
+            <view class="publish">
+            <image src="/images/add.png"></image>
+            </view>
+        </block>
+    </view>
+</view>

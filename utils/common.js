@@ -27,7 +27,7 @@ export const userLogin = (callback) => {
             code: res.code,
           },
           success: (res) => {
-            console.log(res.data);
+            console.log("userLogin:",res.data);
             if (res.data.code == 1) {
               wx.setStorageSync("access_token", res.data.data.token);
               typeof callback === "function" && callback(res.data.data);
