@@ -8,11 +8,14 @@
     color-animation-timing-func="easeIn"
   /> 
 
-  <!-- 当前图片展示容器 -->
+  <!-- 当前图片展示容器 --> 
 <scroll-view class="scrollarea include-nav" scroll-y type="list">
   <view class="container "> 
     <view class="start-media">
       <image class="{{scale?'scale':''}}" src="{{selectPicturPath}}"></image>
+    </view>
+    <view class="media-info-box">
+ 
     </view>
   </view>          
 </scroll-view>
@@ -25,9 +28,9 @@
         <!-- <image src="/images/nav/fangxing.png"></image> 
         <image src="/images/nav/result.png"></image> 
         <image src="/images/nav/close.png"></image>  -->
-          <button class="text-btn" data-actype="10"  bindtap="selectFunction">左右</button> 
-          <button class="text-btn" data-actype="11"  bindtap="selectFunction">垂直</button>
-          <button class="text-btn close" data-actype="0"  bindtap="selectFunction">关闭</button>
+          <text class="text-btn" data-actype="10"  bindtap="selectFunction">田</text> 
+          <text class="text-btn" data-actype="11"  bindtap="selectFunction">三</text>
+          <text class="text-btn close" data-actype="0"  bindtap="selectFunction">X</text>
     </view>
     
   </block> 
@@ -36,8 +39,8 @@
     <scroll-view class="scroll-translate" type="list"	scroll-y="true">
           <view class="lang-item"  
           wx:for="{{langList}}" wx:key="*this"   data-index="{{item[index]}}">
-          <text class="horizon-text">{{item.fromText}}</text>
-          <text class="horizon-text">{{item.toText}}</text>
+          <text class="horizon-text">{{item.single_str_utf8}}</text>
+          <text class="horizon-text">{{item.translate}}</text>
           </view>
       </scroll-view>
   </block> 
@@ -45,8 +48,8 @@
     <scroll-view class="scroll-translate" type="list"	scroll-y="true">
           <view class="lang-verticl-item"  
           wx:for="{{langList}}" wx:key="*this"   data-index="{{item[index]}}">
-          <view ><text class="title">原文</text><text class="right-text">{{item.fromText}}</text></view>
-          <view><text class="title translate">译文</text><text class="right-text">{{item.toText}}</text></view>
+          <view ><text class="title">原文</text><text class="right-text">{{item.single_str_utf8}}</text></view>
+          <view><text class="title translate">译文</text><text class="right-text">{{item.translate}}</text></view>
           </view>
       </scroll-view>
   </block> 

@@ -26,7 +26,8 @@ App({
     statusBarHeight: 0,       // 状态栏高度
     screenHeight: 0,       // 可视区域高度
     currentLang:"自动",
-    currentTargetLang:"中文"
+    currentTargetLang:"中文",
+    selectPicturPath:"/images/bg/bg-dark.png"
  
   },
   onLaunch: function () { 
@@ -34,7 +35,6 @@ App({
     this.setNavBarInfo();
     // 用户中心access_token
     if (!this.globalData.access_token) {
-      console.log("globalData.access_token:",this.globalData.access_token);
       xy.userLogin((data) => {
         this.globalData.access_token = data.token;
         this.globalData.subscribe = data.subscribe;
@@ -45,7 +45,7 @@ App({
         };
         this.globalData.introduceUrl = data.introduceUrl || "";
         wx.setStorageSync("USER_INFO", data);
-        this.userCenterLoginCallbackIndex();
+        this.userCenterLoginCallbackIndex&&this.userCenterLoginCallbackIndex();
 
       });
     }
@@ -64,8 +64,8 @@ App({
     // 胶囊按钮位置信息
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
     // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度
-    console.warn(systemInfo);
-    console.warn(menuButtonInfo);
+    // console.warn(systemInfo);
+    // console.warn(menuButtonInfo);
     this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight)  + menuButtonInfo.height+menuButtonInfo.top/2;
     this.globalData.statusBarHeight = systemInfo.statusBarHeight;
     this.globalData.menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;

@@ -8,14 +8,13 @@
     color-animation-timing-func="easeIn"
   /> 
 <scroll-view class="scrollarea include-nav" scroll-y type="list">
-  <view class="container ">
+  <view class="container "> 
      <block wx:if="{{ initCamral }}">  
           <camera device-position="back"   flash="on"  mode="normal" binderror="cam_error"  
         class="start-image"></camera>
     </block>
     <block wx:else> 
-          <image class="start-image" src="{{selectPicturPath}}"></image>
-          
+          <image class="start-image" src="{{selectPicturPath}}"></image> 
           <view class="home-info">
               <text class="text-box-notice ">相机加载中</text>
           </view>
@@ -46,3 +45,9 @@
         </block>
     </view>
 </view>
+
+
+<!-- canvas压缩图片 -->
+<canvas canvasId="mCanvas" 
+style="position: fixed; left: -9999px; top: -9999px; width:{{ccWidth}}px;height:{{ccHeight}}px;"></canvas>
+  

@@ -1,5 +1,6 @@
 
 var app = getApp();
+import * as xy from "../../utils/common.js";
 // index.js
 Page({ 
   data:{
@@ -9,7 +10,8 @@ Page({
     initCamral:true,
     select: 0, 
     selectPicturPath:"/images/bg/bg-dark.png",
-   
+    ccWidth:0,
+    ccHeight:0,
     list: [
       {
         "iconPath": "/images/picture_translate.png",
@@ -64,14 +66,25 @@ Page({
         ctx.takePhoto({ 
           quality: 'high',
           success: (res) => {
-              console.warn(res)
-              tThis.setData({
-                selectPicturPath: res.tempImagePath,
-                initCamral:false
-              })
-              wx.navigateTo({
-                url: "/pages/indexpicture/index"
-              })
+              console.warn("takePhoto::",res)
+              xy.checkImageSync({
+                tempFilePaths: res.tempImagePath,
+                instance: tThis,
+                success: (imgRes) => { 
+                  console.warn("imgRes::",imgRes)
+                    tThis.setData({
+                      selectPicturPath: imgRes.url,
+                      initCamral:false
+                    })
+                    app.globalData.selectPicturPath=imgRes.url;
+                    wx.navigateTo({
+                      url: "/pages/indexpicture/index"
+                    })
+                },
+                fail: (err) => {
+                  xy.showTip(err.msg);
+                },
+              });
           }
         })
       },
