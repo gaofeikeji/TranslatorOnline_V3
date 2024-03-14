@@ -15,7 +15,9 @@
       <image class="{{scale?'scale':''}}" src="{{selectPicturPath}}"></image>
     </view>  -->
     <movable-area scale-area  id="zoomArea" >
-      <movable-view direction="all"  scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"   out-of-bounds="{{true}}"
+      <movable-view direction="all"  
+      touch-out-of-bounds="{{true}}" out-of-bounds="{{true}}" 
+      scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"   out-of-bounds="{{true}}"
        scale-max="5" scale="{{true}}" animation="{{false}}" scale-value="{{scale}}" 
       style="width:{{selectPicturWidth+80}}px;height:{{selectPicturHeight+50}}px;" class="zoom-area">
       <view  class="media-info-box"> 

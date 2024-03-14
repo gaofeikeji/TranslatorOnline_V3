@@ -129,6 +129,7 @@ showActionBox(actype){
 getPictureInfo(picUrl){
 //  picUrl="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg";
   const tThis=this;
+  wx.showLoading({ title: "正在翻译中...", mask: true });
   let pictureInfo = app.request("/api/translate/photo", { 
     "source": "auto", //来源语音
       "target": "en", //目标语言
@@ -136,6 +137,7 @@ getPictureInfo(picUrl){
     }, "POST"); 
     pictureInfo.then((res)=>{
         console.warn("getPictureInfo",res.data)
+        wx.hideLoading();
 
         tThis.setData({
           langList: res.data 
@@ -200,7 +202,6 @@ getMidpoint(a, b) {
     const tThis=this;
     // app.globalLogin();
     // xy.showTip("服务器正在解析资源");
-    wx.showLoading({ title: "服务器正在解析资源...", mask: true });
     wx.getImageInfo({
       src: app.globalData.selectPicturPath,
       success (res) {
@@ -224,8 +225,6 @@ getMidpoint(a, b) {
         });
         console.log("app.globalData.selectPicturPath：",tThis.data.selectPicturPath,app.globalData.selectPicturPath)
         tThis.getPictureInfo(tThis.data.selectPicturPath)
-        
-        wx.hideLoading();
        
       }
     })
