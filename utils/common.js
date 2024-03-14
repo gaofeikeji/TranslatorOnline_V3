@@ -177,6 +177,7 @@ export const checkImageSync = async ({
 
     // 图片安全检测
     const verifyRes = await verifyImage(res.data.url);
+    console.log("uploadFile:", res);
     console.log("verifyRes:", verifyRes);
     if (verifyRes.code == 1) {
       // 图片安全检测成功

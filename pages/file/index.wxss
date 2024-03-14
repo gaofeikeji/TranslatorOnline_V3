@@ -1,26 +1,24 @@
 /* pages/file/index.wxss */
 
 page {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-  }
-  .scrollarea {
-    flex: 1;
-    overflow-y: hidden;
-    margin-top: -20rpx;
+    /* display: flex;
+    flex-direction: column; */
+    height: 100%;
   }
   .container{
     position: relative;
-    height:1200rpx;
-    background-color: #000;
-    
+    height:100%;
+    padding-bottom: 80px;
+    background-color: #000; 
   } 
-  .home-info{ 
-    position: absolute;
+  .text-box-notice{ 
+    position: absolute;    
+    left:15%;
+    top: 50%;
+    right: 15%;
+    bottom: 15%;
     z-index: 100;
-    height: 800rpx;
-    line-height: 800rpx;
+    text-align: center;
   }
   
   .picture-action{

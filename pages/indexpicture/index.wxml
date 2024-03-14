@@ -15,11 +15,11 @@
       <image class="{{scale?'scale':''}}" src="{{selectPicturPath}}"></image>
     </view>  -->
     <movable-area scale-area  id="zoomArea" >
-      <movable-view direction="all"  scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"  
+      <movable-view direction="all"  scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"   out-of-bounds="{{true}}"
        scale-max="5" scale="{{true}}" animation="{{false}}" scale-value="{{scale}}" 
-      style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;" class="zoom-area">
+      style="width:{{selectPicturWidth+80}}px;height:{{selectPicturHeight+50}}px;" class="zoom-area">
       <view  class="media-info-box"> 
-        <view  
+        <view   
             class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
             wx:for="{{ langList }}"  
             wx:key="index" 

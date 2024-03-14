@@ -6,6 +6,18 @@
   .text{
     color: rgba(255,255,255);
   }
+  
+.btn-back{
+  font-size: 50rpx;
+}
+.btn-back::after{
+  content: "<";
+  display: inline-block;
+  font-size: 50rpx;
+  color: #000;
+  font-weight: 800;
+  padding: 0 30rpx 0 0;
+}
   .text-active{
     color: rgba(41,119,255) ;
   }

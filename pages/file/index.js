@@ -1,4 +1,6 @@
 // pages/file/index.js
+var app = getApp();
+import * as xy from "../../utils/common.js";
 Page({
   /**
    * 页面的初始数据
@@ -7,6 +9,8 @@ Page({
     nbFrontColor: '#000000',
     nbBackgroundColor: '#ffffff', 
     initCamral:false,
+    ccWidth:0, 
+    ccHeight:0,
     selectPicturPath:"/images/bg/bg-dark.png"
   },
 //   选择照片
@@ -14,26 +18,71 @@ Page({
       let tThis= this;
       wx.chooseMedia({
           count: 1,
-          mediaType: ['image'],
-          sourceType: ['album'],
+          mediaType: ["image"],
+          sourceType: ["album", "camera"],
           maxDuration: 30,
           camera: 'back',
           success(res) {
-            console.log(res)
-            console.log(res.tempFiles.size)
-            tThis.setData({
-                selectPicturPath:res.tempFiles[0]['tempFilePath']
+            const uploadPath = res.tempFiles[0]['tempFilePath']
+            tThis.setData({ 
+                selectPicturPath:uploadPath
             })
+            console.log(res)
+            console.log(res.tempFiles[0].size)
+            // return  false;
+            wx.showLoading({ title: "翻译中...", mask: true });
+            xy.checkImageSync({
+              tempFilePaths: uploadPath,
+              instance: tThis,
+              success: (imgRes) => {  
+                 wx.hideLoading();
+                console.warn("imgRes::",imgRes)
+                  tThis.setData({
+                    selectPicturPath: imgRes.url,
+                    initCamral:false
+                  });
+                  app.globalData.selectPicturPath=imgRes.url;
+                  wx.navigateTo({
+                    url: "/pages/indexpicture/index"
+                  })
+              },
+              fail: (err) => {
+                wx.hideLoading();
+                xy.showTip(err.msg);
+              },
+            });
           },
           fail(res) {
-            console.warn(res)
+            console.warn("cancel_fail::",res)
+            // wx.navigateTo({
+            //   url: "/pages/indexpicture/index"
+            // })
           },
           complete(res) {
             console.error(res)
           },
         })
-  }, 
-    
+  },  
+  // 查看原图
+  viewImage() {
+    wx.showActionSheet({
+      itemList: ["重新上传", "查看大图"],
+      success: (e) => {
+        this.takePhoto();
+        // if (e.tapIndex == 0) {
+        //   this.takePhoto();
+        // } else if (e.tapIndex == 1) {
+        //   wx.previewImage({
+        //     urls: [this.data.image_url],
+        //     current: this.data.image_url,
+        //   });
+        // }
+      },
+      fail: (err) => {
+        wx.showToast({ title: err, icon: "none" });
+      },
+    });
+  },
     //   选择照片
     takePhotoWithMessage(){
         let tThis= this;
@@ -51,6 +100,13 @@ Page({
         })
     }, 
   methods:{
+  },
+  // 返回
+  back() {
+    console.warn(" wx.navigateBack");
+    wx.navigateBack({
+      delta: 1,
+    }); 
   },
   /**
    * 生命周期函数--监听页面加载

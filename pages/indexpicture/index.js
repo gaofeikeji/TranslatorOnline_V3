@@ -122,7 +122,7 @@ showActionBox(actype){
     actype: actype,
     action:show,
     see:show?true:false,
-    scale:actype==0?0.2:0.5//需要添加缩放比例记录，或者采用图片等比设置，
+    scale:actype==0?(this.data.scale<0.5?0.3:0.8):1//需要添加缩放比例记录，或者采用图片等比设置，
     })
 },
 // 图片具体文字内容识别
@@ -189,6 +189,7 @@ getMidpoint(a, b) {
   /**
    * 生命周期函数--监听页面加载
    */
+  
   onLoad(options) {
     this.setData({
       nbTitle: '图片解析',
@@ -210,7 +211,7 @@ getMidpoint(a, b) {
         console.warn("sysInfo:",sysInfo)
         console.warn("picpic:",res)
         console.log("getImageInfo:",res)
-        let scale=0.9;
+        let scale=1;
         if(res.width>windowWidth){
           scale=windowWidth/res.width-0.05;
           console.warn("picpic-rate:",scale)  

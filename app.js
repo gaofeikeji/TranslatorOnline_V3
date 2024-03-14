@@ -19,6 +19,7 @@ App({
     url: "https://imgconvert.mp.lighthg.com",
     apiUrl: "https://aip.baidubce.com",
     
+    requireBack:false,
     navBarHeight: 0,     // 导航栏高度
     menuBotton: 0,       // 胶囊距底部间距（保持底部间距一致）
     menuRight: 0,        // 胶囊距右方间距（方保持左、右间距一致）

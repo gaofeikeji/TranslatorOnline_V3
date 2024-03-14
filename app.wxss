@@ -53,37 +53,32 @@ button.circle-btn{
   box-shadow: 0 0 0 4rpx rgba(31, 113, 255, 1);
   font-size: 36rpx;
 }
-
-.scrollarea{
-    height: 1350rpx;
-    min-height: 1350rpx;
-  }
-/* .scrollarea.include-nav{
-  height:100%;
-} */
+  
 
 
-/* 图片选择 */
+/*上传图片中 图片选择 */
 .bottom-picture-box{
     width: 100%;
-    position: absolute;
-    z-index: 666;
-    bottom: -150rpx;
+    position: fixed;
+    z-index: 6666;
+    bottom: 0;
     left: 0;
     background-color: #fff;
     color: #000;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 .picture-box-item{
-    height: 90rpx;
-    line-height: 90rpx;
+    height: 110rpx;
+    line-height: 110rpx;
     text-align: center; 
-    border: 1px solid rgba(31, 113, 255, 1);
+    border-bottom:2px solid rgba(0, 0, 0, 0.2);
 }
 .picture-box-cancel{ 
-    height: 130rpx;
+    min-height: 130rpx;
     line-height: 130rpx;
     text-align: center; 
-    border-top: 4px solid #ddd;
+    border-top: 6px solid rgba(0, 0, 0, 0.2);
 }
 
 
