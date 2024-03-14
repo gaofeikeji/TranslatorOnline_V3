@@ -19,11 +19,13 @@
               <text class="text-box-notice ">相机加载中</text>
           </view>
     </block> 
+    <view class="flex-center"> 
       <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
+    </view>
   </view>
 </scroll-view>
 
-
+<!-- 底部导航 -->
 <view class="tab-bar tabbar tab-bottom">
     <view 
         class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"

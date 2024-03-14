@@ -27,12 +27,16 @@ App({
     screenHeight: 0,       // 可视区域高度
     currentLang:"自动",
     currentTargetLang:"中文",
-    selectPicturPath:"/images/bg/bg-dark.png"
+    selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
  
   },
   onLaunch: function () { 
     // 统一导航样式
     this.setNavBarInfo();
+    this.globalLogin();
+  },
+  globalLogin(){
+    
     // 用户中心access_token
     if (!this.globalData.access_token) {
       xy.userLogin((data) => {

@@ -559,3 +559,18 @@ export const imageToBase64 = (url) => {
     });
   });
 };
+
+/**
+ * 
+ * @param {String} str  需要配置到剪切板的内容
+ */
+export const setClipboardData = (str) => {
+  return new Promise((resolve, reject) => {
+    wx.setClipboardData({
+      data: str,
+      success: () => {
+        console.log('设置剪贴板内容成功');
+      }
+    });
+  });
+};

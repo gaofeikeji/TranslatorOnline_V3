@@ -6,17 +6,38 @@
     background-color="{{nbBackgroundColor}}"
     color-animation-duration="2000"
     color-animation-timing-func="easeIn"
-  /> 
+  />  
 
-  <!-- 当前图片展示容器 --> 
-<scroll-view class="scrollarea include-nav" scroll-y type="list">
+  <!-- 当前图片展示容器 -->                                
+<scroll-view class="scrollarea include-nav"  scroll-y type="list">
   <view class="container "> 
-    <view class="start-media">
+    <!-- <view class="start-media">
       <image class="{{scale?'scale':''}}" src="{{selectPicturPath}}"></image>
-    </view>
-    <view class="media-info-box">
- 
-    </view>
+    </view>  -->
+    <movable-area scale-area  id="zoomArea" >
+      <movable-view direction="all"  scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"  
+       scale-max="5" scale="{{true}}" animation="{{false}}" scale-value="{{scale}}" 
+      style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;" class="zoom-area">
+      <view  class="media-info-box"> 
+        <view  
+            class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
+            wx:for="{{ langList }}"  
+            wx:key="index" 
+            data-rate="{{ item.single_rate }}"
+            style="left:{{item.left}}px;top:{{item.top}}px;"
+             >
+            <block wx:if="{{ istranslate }}">
+              <text class="media-text" >{{item.single_str_utf8}}</text> 
+            </block>
+            <block wx:else>
+              <text class="media-text">{{item.translate}}</text>
+            </block>
+        </view>
+      </view>
+    </movable-view>
+    </movable-area>
+    
+    
   </view>          
 </scroll-view>
 
@@ -34,14 +55,15 @@
     </view>
     
   </block> 
-<!-- 朱行对比 -->
+<!-- 逐行对比 -->
   <block wx:if="{{ actype ==   10 }}"> 
     <scroll-view class="scroll-translate" type="list"	scroll-y="true">
-          <view class="lang-item"  
-          wx:for="{{langList}}" wx:key="*this"   data-index="{{item[index]}}">
+      <view class="lang-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"   bindtap="toImageTextItem"
+          wx:for="{{langList}}" wx:key="*this"   
+          data-left="{{item.left}}"  data-top="{{item.top}}">
           <text class="horizon-text">{{item.single_str_utf8}}</text>
           <text class="horizon-text">{{item.translate}}</text>
-          </view>
+       </view>
       </scroll-view>
   </block> 
   <block wx:if="{{ actype ==   11 }}">  
@@ -57,9 +79,9 @@
 <block wx:if="{{ actype ==   20 }}">
     <view class="action-btn-box"> 
         <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
-        <view class="action-btn">仅复制原文</view>
-        <view class="action-btn">仅复制翻译结果</view>
-        <view class="action-btn">复制原和结果</view>
+        <view class="action-btn"  data-actype="51"  bindtap="translateFunction" >仅复制原文</view>
+        <view class="action-btn"  data-actype="52"  bindtap="translateFunction" >仅复制翻译结果</view>
+        <view class="action-btn"  data-actype="53"  bindtap="translateFunction"  >复制原和结果</view>
     </view>
     </block> 
 <!-- 导出文件 -->

@@ -57,12 +57,23 @@ Page({
     }, 
     //拍照
     takePhoto(){ 
-        console.log("cam inited")
+        console.log("cam inited") 
+        //           //模拟图片 
+        //           this.setData({
+        //             selectPicturPath: "https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg",
+        //             initCamral:false
+        //           })
+        //           app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg";
+        //           wx.navigateTo({
+        //             url: "/pages/indexpicture/index"
+        //           })
+        // return false;
         const tThis= this;
         const ctx = wx.createCameraContext();
         ctx.setZoom({
             zoom:0.5
         })
+        wx.showLoading({ title: "翻译中...", mask: true });
         ctx.takePhoto({ 
           quality: 'high',
           success: (res) => {
@@ -71,6 +82,8 @@ Page({
                 tempFilePaths: res.tempImagePath,
                 instance: tThis,
                 success: (imgRes) => { 
+                  
+                   wx.hideLoading();
                   console.warn("imgRes::",imgRes)
                     tThis.setData({
                       selectPicturPath: imgRes.url,
@@ -82,6 +95,7 @@ Page({
                     })
                 },
                 fail: (err) => {
+                  wx.hideLoading();
                   xy.showTip(err.msg);
                 },
               });
@@ -104,7 +118,7 @@ Page({
       nbFrontColor: '#ffffff',
       nbBackgroundColor: '#000000',
     })
-    this.setData({
+    this.setData({ 
       initCamral: true
     })
   },
