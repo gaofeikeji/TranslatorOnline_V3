@@ -1,0 +1,100 @@
+<!--pages/texttranslate/index.wxml-->
+<!--pages/indexpicture/index.wxml--> 
+<navigation-bar
+    title="{{nbTitle}}"
+    loading="{{nbLoading}}" 
+    front-color="{{nbFrontColor}}"
+    background-color="{{nbBackgroundColor}}"
+    color-animation-duration="2000"
+    color-animation-timing-func="easeIn"
+  />  
+
+  <!--  -->                                
+<scroll-view class="scrollarea include-nav"  scroll-y type="list">
+  <view class="container ">  
+    <!-- 仅显示译文 -->
+    <block wx:if="{{ showType ==  63 }}">  
+      <textarea class="textarea-container"  maxlength="{{isVip?-1:2000}}"  placeholder="请输入需要翻译的文本" 
+      focus="{{false}}" value="{{toText?toText:fromText}}" /> 
+    </block>
+    <!-- 左右对比显示 -->
+    <block wx:if="{{ showType ==  62 }}">  
+      <scroll-view class="scroll-translate" type="list"	scroll-y="true">
+        <view class="lang-item {{currentSelectItem==(idx)?'selected':''}}"   bindtap="toImageTextItem" wx:for-item="item"
+        wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"
+        data-left="{{item}}">
+            <text class="horizon-text">{{item}}({{idx}})</text>
+            <text class="horizon-text translate-text">{{langList[idx]}}</text> 
+         </view>
+        </scroll-view>
+    </block>
+    <!-- 逐行对比显示 -->
+    <block wx:if="{{ showType ==  61 }}">  
+      <scroll-view class="scroll-translate" type="list"	scroll-y="true">
+        <view class="lang-item {{currentSelectItem==(idx)?'selected':''}}"   bindtap="toImageTextItem"  wx:for-item="item"
+            wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"
+            data-left="{{item}}" >  
+              <text class="horizon-text">{{item}}</text>
+              <text class="horizon-text translate-text">{{langList[idx]}}</text> 
+         </view>
+        </scroll-view>
+    </block>
+  </view>          
+</scroll-view>
+   
+<!-- 操作容器 -->
+<view class="action-container {{action?'':'hidden'}}">  
+<!-- 复制内容-->
+<block wx:if="{{ actype ==   20 }}">
+    <view class="action-btn-box"> 
+        <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+        <view class="action-btn"  data-actype="51"  bindtap="translateFunction" >仅复制原文</view>
+        <view class="action-btn"  data-actype="52"  bindtap="translateFunction" >仅复制翻译结果</view>
+        <view class="action-btn"  data-actype="53"  bindtap="translateFunction"  >复制原和结果</view>
+    </view>
+    </block> 
+<!-- 导出文件 -->
+<block wx:if="{{ actype ==   30 }}">
+           
+  <view class="action-btn-box"> 
+  <view>
+  
+    <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+    </view>
+        <view class="action-btn">导出TXT文件</view>
+        <view class="action-btn">导出Word文档</view>
+        <view class="action-btn">导出Excel文档</view>
+    </view>
+</block> 
+  <!-- 显示模式 -->
+  <block wx:if="{{ actype ==   40 }}"> 
+    <view class="action-btn-box"> 
+      <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+      <view class="action-btn selected"   data-actype="61"  bindtap="translateFunction" >逐行对比显示</view> 
+      <view class="action-btn"  data-actype="62"  bindtap="translateFunction" >左右对比显示</view>
+      <view class="action-btn"  data-actype="63"  bindtap="translateFunction"  >仅显示译文</view>
+  </view>
+</block> 
+</view>      
+
+ 
+<!-- 底部操作区域 -->
+<view class="tab-bar tabbar tab-bottom  safe-area">
+    <view 
+        class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
+         wx:for="{{ list }}"  
+        wx:key="index"
+        data-index="{{ index }}"
+        data-actype="{{ item.actype }}"
+        bindtap="selectFunction">
+        <block wx:if="{{ item.type === 0 }}">
+            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+            <text>{{ select === index ?(item.selectedText||item.text):(item.text) }}</text>
+        </block>
+        <block wx:else>
+            <view class="publish">
+            <image src="/images/add.png"></image>
+            </view>
+        </block>
+    </view>
+</view>

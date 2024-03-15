@@ -6,7 +6,8 @@
     "pages/text/index",
     "custom-tab-bar/index",
     "components/top-nav/index",
-    "pages/indexpicture/index"
+    "pages/indexpicture/index",
+    "pages/texttranslate/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

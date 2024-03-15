@@ -575,3 +575,22 @@ export const setClipboardData = (str) => {
     });
   });
 };
+
+/**
+ * 
+ * @param {String} str  需要配置到剪切板的内容
+ */
+export const getClipboardData = () => {
+  return new Promise((resolve, reject) => { 
+    wx.getClipboardData({
+      success (res){ 
+        console.warn("剪切板获取",res) 
+        resolve(res);
+      },
+      fail(res){ 
+        reject("")
+      },
+    })
+
+  });
+};

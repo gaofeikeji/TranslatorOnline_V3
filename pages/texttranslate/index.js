@@ -1,0 +1,289 @@
+// pages/texttranslate/index.js
+import * as xy from "../../utils/common.js";
+const app = getApp();
+const sys = wx.getSystemInfoSync();
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    see:false,
+    fromText:"",
+    toText:"",
+    fromList:[],//原文段落
+    langList:[],//译文段落
+    focus:false,
+    action:false,
+    currentSelectItem:0,
+    showType:63,//当前原文译文的视图排版
+    actype:10,//10逐行对比左右布局,11，逐行对比垂直布局; 20复制内容，30导出文件，40显示结果，41隐藏
+    //底部功能区域
+    list: [
+      {
+        "iconPath": "/images/nav/duibi.png",
+        "selectedIconPath": "/images/nav/duibi.png",
+        "text": "返回编辑",
+        "actype": 10,
+        "type":0
+      },
+      {
+        "iconPath": "/images/copy.png",
+        "selectedIconPath": "/images/nav/copy.png",
+        "text": "复制内容",
+        "actype": 20,
+        "type":0
+      },
+      {
+        "iconPath": "/images/nav/export.png",
+        "selectedIconPath": "/images/nav/duibi.png",
+        "text": "导出文件",  
+        "actype": 30,
+        "type":0
+      },
+      {
+        "iconPath": "/images/nav/result.png",
+        "selectedIconPath": "/images/nav/result.png",
+        "text": "左右对比",  
+        "selectedText":"逐行对比",
+        "actype": 40,
+        "type":0
+      },                                                                                       
+    ],  
+    istranslate:true,  
+    scale:1, 
+
+  },
+
+// 文本具体操作
+translateFunction(e) {   
+  const { index, actype } = e.currentTarget.dataset;
+  let showType = null; 
+    if(actype==51){//仅复制原文
+      this.copyOriginal();
+    }else if(actype==52){//仅复制翻译结果
+      this.copyTranslate();
+    }else if(actype==53){//复制原和结果
+       this.copyBoth();                 
+    }else if(actype==61){//逐行对比显示
+      showType=actype;
+   }else if(actype==62){//左右对比显示
+    showType=actype;
+    }else if(actype==63){//仅显示译文
+      showType=actype;
+    }else{   
+      console.warn("translateFunction:",e);             
+    } 
+    // 是否切换当前显示模板
+    if(showType){ 
+      this.setData({
+        showType: showType,
+        })
+    }
+},  
+
+//初始化图片信息
+initialImgText(){ 
+  let originText=this.data.fromText;
+  let translateText="";  
+  let langList = this.data.toText;
+  langList=langList.split("\n")||[];
+  // langList.forEach((item,index)=>{
+  //   console.log("item,index:",item,index)
+  //   originText+=item.single_str_utf8+"\n";
+  //   translateText+=item.translate+"\n";
+  // })
+  return {
+    fromList:originText.split("\n")||[],
+    langList:langList,
+    originText:originText,
+    translateText:translateText
+  };
+},
+  // 复制原文
+  copyOriginal(){
+    const imgText = this.initialImgText();
+    console.log("copyOriginal:",imgText)
+    xy.setClipboardData(imgText.originText);
+  },
+  // 仅复制翻译结果
+  copyTranslate(){
+    const imgText = this.initialImgText();
+    console.log("copyOriginal:",imgText)
+    xy.setClipboardData(imgText.translateText);
+  },
+  // 复制原文和结果
+  copyBoth(){
+    const imgText = this.initialImgText();
+    console.log("copyOriginal:",imgText)
+    xy.setClipboardData("原文:\n"+imgText.originText + "\n译文:\n"+ imgText.translateText);   
+  },
+  // Tab切换 
+  selectFunction(e) {
+    const { index, actype } = e.currentTarget.dataset;
+    console.warn(e);  
+    console.warn(index,  actype, this.data.actype ); 
+    this.showActionBox(actype);
+}, 
+// 底部导航以及功能切换
+showActionBox(actype){  
+  let show = this.data.action?false:true;
+  if(actype===0){
+    show=false;
+  }
+  // 返回编辑
+  if(actype==10){
+    wx.navigateBack({
+      delta: 1,
+    }); 
+    return false;
+  }else if(actype==20){
+    console.log("actype====2");
+  }else if(actype==30){
+    console.log("actype====3");
+    show=true;
+  }else if(actype==40){
+    console.log("actype====3");
+    show=true;
+  }else{
+    console.error("actype====未记录",actype); 
+  }
+  console.warn("actypeactype:",  actype );   
+  this.setData({
+    actype: actype,
+    action:show,
+    see:show?true:false,
+    scale:actype==0?(this.data.scale<0.5?0.3:0.8):1//需要添加缩放比例记录，或者采用图片等比设置，
+    })
+},
+translateText(){
+  const tThis = this;
+  const fromText = this.data.fromText;
+  if(fromText.length<1){
+    wx.showLoading({ title: "翻译内容不能为空...", mask: true });
+    setTimeout(function () {
+      wx.hideLoading()
+    }, 2000)
+    return false;
+  } 
+  xy.checkTextSync({
+    content: fromText,
+    successFunc: tThis.translate,
+    failFunc: (err) => {
+      xy.showTip(err.msg);
+    },
+  });
+},
+
+  // 翻译
+  translate: function () { 
+    wx.showLoading({ title: "翻译中……", mask: true });
+    const fromText = this.data.fromText;
+    wx.request({
+      url: app.globalData.globalHost + "/api/translate/text",
+      method: "POST",
+      header: {
+        "content-type": "application/json",
+        Authorization: wx.getStorageSync("access_token"),
+        "x-device-brand": sys.brand || "unknown",
+        // 当前 页面栈 最后一个页面的路径
+        "x-device-path": getCurrentPages()[getCurrentPages().length - 1].route,
+        "x-device-model": sys.model || "unknown",
+        "x-device-system": sys.system || "unknown",
+        "x-device-network": getApp().globalData.currentNetwork || "unknown",
+      },
+      data: {
+        text: fromText,
+        target: "en",
+        source: "zh",
+      },
+      success: (res) => {
+        if (res.data.code == 1) {
+          // 把翻译结果传到下一个页面 使用全局变量 
+    //       fromText:"",
+    // toText:"",
+        this.setData({
+          toText: res.data.data.TargetText,
+          action_info:res.data.data.action_info, 
+        }) 
+       const textObj= this.initialImgText();
+       console.warn("initialImgText:::",textObj);
+        this.setData({
+          fromList:textObj.fromList,
+          langList:textObj.langList,
+          })
+          setTimeout(() => {
+            wx.hideLoading();
+            // wx.navigateTo({
+            //   url: "/pages/result/index",
+            // });
+          }, 1000);
+        } else {
+          wx.showToast({ title: "暂不支持", icon: "error" });
+        }
+      },
+      fail: (err) => {
+        console.log(err);
+      },
+    });
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) { 
+    this.setData({
+      fromText:options.text||""
+    })
+    this.translateText();
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  }
+})

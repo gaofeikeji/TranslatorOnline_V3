@@ -1,4 +1,4 @@
-/* pages/text/index.wxss */
+/* pages/texttranslate/index.wxss */ 
 .container{
   display: flex;
   flex-direction: column;
@@ -14,11 +14,17 @@
   width: 80%;
   border-radius: 4px;  
 }
-.bottom-text{
-  color: #000;
-  width: 90%;
-  padding: 20rpx;
+
+
+.action-btn-box .action-btn{ 
+  width: 100%; 
+  height: 90rpx;
+  line-height: 90rpx;
+  margin: 10rpx; 
 }
-.text-btn{
-    margin: 15rpx;
+
+
+.scroll-translate{
+  height: 100%;
+  width: 90%;
 }

@@ -42,7 +42,7 @@
     
   </view>          
 </scroll-view>
-
+   
 <!-- 操作容器 -->
 <view class="action-container {{action?'':'hidden'}}">
   <!-- 仅在切换逐行查看状态下显示的切换按钮 -->

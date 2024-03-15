@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/custom-tab-bar"
+  }
+}

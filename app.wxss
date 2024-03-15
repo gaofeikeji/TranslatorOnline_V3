@@ -1,6 +1,27 @@
-/**app.wxss**/
-.page{
-  height: 100%;
+
+/**app.wxss全局page和text内容字体大小*/
+page,text{  font-size: 30rpx;}
+page,text,view,navigator,swiper,swiper-item,image{ 
+  margin: 0px;  padding: 0px;  
+  box-sizing: border-box;
+} 
+page,text{  font-size: 30rpx;}
+
+page,text,view,navigator,swiper,swiper-item,image{  
+  /*设置组件全局边距*/  
+  margin: 0px;  padding: 0px;  /*  * 指定元素的宽或高包含padding和border，不包含mmargin。  * 如果不设置默认为content-box，元素的宽或高不包含padding和border  */ 
+   box-sizing: border-box;
+  }
+page {
+  height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.safe-area{
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+
 }
 .scrollarea {
   height: 100%;
@@ -32,26 +53,27 @@
 }
 
 .container {
-  height: 100%;
-  /* */
+  height: 100%; 
   align-items: center;
   justify-content: space-between;
   padding: 180rpx 0;
-  box-sizing: border-box;
   position: relative;
 } 
 .text-box-notice{
   color: #fff;
 }
-button.circle-btn{
-  width: 300rpx !important;
+button.circle-btn.picture-action{
+  width: 260rpx !important;
   border-radius: 40rpx;
-  padding: 22rpx 0;
+  height: 46px !important;
+  line-height: 46px !important;
+  padding:0 !important;
   background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
   color: #fff;
   border: 2rpx solid #fff; 
-  box-shadow: 0 0 0 4rpx rgba(31, 113, 255, 1);
-  font-size: 36rpx;
+  box-shadow: 0 0 0 5rpx rgba(31, 113, 255, 1);
+  font-size: 30rpx;
+  margin-bottom: 10px;
 }
   
 
@@ -92,8 +114,6 @@ button.circle-btn{
   position: fixed;
   bottom: 0;
   left: 0;
-  padding-bottom: env(safe-area-inset-bottom);
-  padding: 20px 0 10px 0;
   z-index: 9999;
   background-color: rgba(255，255，255，1);
   border-top: 1px solid #ddd;
@@ -154,4 +174,109 @@ button.circle-btn{
   width: 100%;
   display: flex;
   flex-direction: column; 
+}
+
+
+/* 操作容器 */
+.action-container{
+  background: #fff;
+  background-color: rgba(255，255，255，1);
+  border-top: 1px solid #ddd;
+  border-top-left-radius: 30rpx;
+  border-top-right-radius: 30rpx; 
+  position: fixed;
+  bottom: 0;
+  left: 0;              
+  z-index: 8888;    
+  padding-bottom: 80px;
+  width: 100%;
+}
+.action-box{
+  height: 40px;
+  line-height: 40px;
+  display: block;
+  width: 100%;
+  padding: 0 20px;
+}
+.action-box image{
+  display: inline-block;
+  width: 15rpx;
+  height: 15rpx;
+  margin:0  20px;
+}
+.action-box image:last-child{
+  float: right;
+}
+.action-box .text-btn{
+  margin:0  10rpx;
+  display: inline-block; 
+  width: 20px;
+  height: 46px;
+  font-size: 40rpx;
+  color: rgba(0, 0, 0, 0.6);
+}
+.action-box .text-btn.close{
+  float: right;
+  margin-right:60rpx;
+}
+
+.scroll-translate{
+  height: 300rpx;
+  width: 100%;
+}
+
+.scroll-translate  text{ 
+  display: inline-block; 
+  font-size: 28rpx;
+  color: #000;
+}
+.lang-item text.horizon-text{
+  display: inline-block; 
+  width: 44%;
+  /* line-height: 60rpx; */
+  border-top: 1px solid rgb(184, 184, 184);
+  border-left: 1px solid rgb(184, 184, 184);
+  vertical-align: top;
+  padding: 6rpx 2%;
+}
+.lang-item.selected text{
+  color: rgba(31, 113, 255, 0.8) ;
+}
+.lang-verticl-item{
+  border-bottom: 1px solid rgb(184, 184, 184);
+  padding: 0 16rpx;
+}
+.lang-verticl-item .title{
+  width: 100rpx;
+}
+.lang-verticl-item .title.translate{
+  color: rgba(31, 113, 255, 1);
+}
+.lang-verticl-item .right-text{
+  min-width: 400rpx;
+}
+
+/* 通用view 模式btn */
+.action-btn-box{
+  padding: 20rpx;
+}
+.action-btn-box .closeBtn{
+  margin-left: 80%;
+}
+.action-btn-box .action-btn{
+  border-radius: 2px;
+  color: #000;
+background: rgba(255, 255, 255, 1); 
+border: 1px solid rgba(0, 0, 0, 0.15);
+box-shadow: 1px 1px 2px  rgba(0, 0, 0, 0.05);
+  width: 80%;
+  /* max-width: 460rpx; */
+  height: 100rpx;
+  line-height: 100rpx;
+  margin: 30rpx;
+  text-align: center;
+}
+.action-btn-box .action-btn.selected{
+  border: 1px solid rgba(31, 113, 255, 0.8);
+  box-shadow: 0  0  2px  rgba(31, 113, 255, 0.8);
 }
