@@ -1,20 +1,18 @@
+<!-- 语言切换容器 -->
 <view class="tab-bar tabbar tab-top" style="padding-top: {{statusBarHeight}}px;">
   <view class="current-language-box " 
   style="height:{{navBarHeight}}px;padding:0 {{menuRight}}px;">  
      <block wx:if="{{!requireBack}}"> 
-        <text
-              bindtap="back"  
+        <text    bindtap="back"  
               class="btn-back"
               hover-stay-time="100"
               aria-role="button"
               aria-label="返回" ></text>
-             
-      </block>  
-      
+      </block>   
       <view class="" style="display: flex;" bindtap="selectLang">
-        <text class="lang text-active">{{currentLang}}</text>
+        <text class="lang text-active">{{langData[currentLang]}}</text>
         <image class="lang_switch" mode="aspectFit" src="/images/switch_gray.png"></image> 
-        <text class="lang text-active">{{currentTargetLang}}</text>
+        <text class="lang text-active">{{langData[currentTargetLang]}}</text>
         <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
       </view>
     
@@ -27,8 +25,9 @@
   <!-- 源语言 -->
    <view  class="flex-item current-language-list" >
       <scroll-view class="scroll-box" type="list"	scroll-y="true" bind:tap="fromIdxChange">
-          <view class="lang-item {{fromIdx==index?'selected':''}}"  
-          wx:for="{{lang}}" wx:key="*this"  data-lang-type="fromIdx"  data-index="{{langCode[index]}}">{{item}}</view>
+          <view class="lang-item {{updateLang==idx?'selected':''}}"  wx:for-index="idx" 
+          wx:for="{{langData}}" wx:key="*this"  data-lang-type="fromIdx"  
+          data-index="{{idx}}">{{item}}</view>
       </scroll-view>
       <view class="bootom-action"  bind:tap="oldTranslateLang">
         <text>取消选择</text>
@@ -37,8 +36,8 @@
     <!-- 目标语言 -->
   <view class="flex-item  target-language-list" >
     <scroll-view class="scroll-box"  type="list" scroll-y="true" bind:tap="fromIdxChange"> 
-        <view class="lang-item {{toIdx==index?'selected':''}}" 
-        wx:for="{{lang}}"  wx:key="*this" data-lang-type="toIdx"  data-index="{{langCode[index]}}" > 
+        <view class="lang-item {{updateTargetLang==idx?'selected':''}}"  wx:for-index="idx" 
+        wx:for="{{langData}}"  wx:key="*this" data-lang-type="toIdx"  data-index="{{idx}}" > 
         {{item}}</view>
     </scroll-view>
       <view class="bootom-action selected"  bind:tap="updateTranslateLang">

@@ -87,8 +87,8 @@ page{
     height: 90%; 
   }
   .lang-item{
-    height: 80rpx;
-    line-height: 80rpx;
+    height: 66rpx;
+    line-height: 66rpx;
     border-radius: 10rpx;
   }
   .lang-item.selected{

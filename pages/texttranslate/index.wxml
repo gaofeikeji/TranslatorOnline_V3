@@ -20,12 +20,14 @@
     <!-- 左右对比显示 -->
     <block wx:if="{{ showType ==  62 }}">  
       <scroll-view class="scroll-translate" type="list"	scroll-y="true">
-        <view class="lang-item {{currentSelectItem==(idx)?'selected':''}}"   bindtap="toImageTextItem" wx:for-item="item"
-        wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"
-        data-left="{{item}}">
-            <text class="horizon-text">{{item}}({{idx}})</text>
-            <text class="horizon-text translate-text">{{langList[idx]}}</text> 
-         </view>
+        <view class="lang-left-right">
+          <view class="lang-left">
+            {{fromText}}
+          </view>
+          <view class="lang-right translate-text">
+            {{toText}}
+          </view>
+        </view>
         </scroll-view>
     </block>
     <!-- 逐行对比显示 -->
@@ -34,8 +36,8 @@
         <view class="lang-item {{currentSelectItem==(idx)?'selected':''}}"   bindtap="toImageTextItem"  wx:for-item="item"
             wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"
             data-left="{{item}}" >  
-              <text class="horizon-text">{{item}}</text>
-              <text class="horizon-text translate-text">{{langList[idx]}}</text> 
+              <view class="horizon-text">{{item}}</view>
+              <view class="horizon-text translate-text translate-margin">{{langList[idx]}}</view> 
          </view>
         </scroll-view>
     </block>
@@ -70,9 +72,9 @@
   <block wx:if="{{ actype ==   40 }}"> 
     <view class="action-btn-box"> 
       <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
-      <view class="action-btn selected"   data-actype="61"  bindtap="translateFunction" >逐行对比显示</view> 
-      <view class="action-btn"  data-actype="62"  bindtap="translateFunction" >左右对比显示</view>
-      <view class="action-btn"  data-actype="63"  bindtap="translateFunction"  >仅显示译文</view>
+      <view class="action-btn {{showType==61?'selected':''}}"   data-actype="61"  bindtap="translateFunction" >逐行对比显示</view> 
+      <view class="action-btn {{showType==62?'selected':''}}"  data-actype="62"  bindtap="translateFunction" >左右对比显示</view>
+      <view class="action-btn {{showType==63?'selected':''}}"  data-actype="63"  bindtap="translateFunction"  >仅显示译文</view>
   </view>
 </block> 
 </view>      

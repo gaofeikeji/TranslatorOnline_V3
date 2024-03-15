@@ -15,8 +15,11 @@ Page({
     const { index, actype } = e.currentTarget.dataset;
     console.warn(e);  
     console.warn("textFun", actype); 
-    if(actype=="0"){//清空剪贴板
+    if(actype==3){//清空剪贴板
       xy.setClipboardData("");
+      tThis.setData({           
+        fromText:""
+      })
     }else if(actype=="1"){//粘贴内容
       const resp = xy.getClipboardData();
       resp.then(function(rep){ 
@@ -26,7 +29,8 @@ Page({
       });
     }else if(actype=="2"){//确认翻译
       const resp = tThis.data.fromText;
-      console.warn("fromText::",resp);
+      console.warn("fromText::",
+      resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
       if(resp!=""&&resp.length<1000){ 
         wx.navigateTo({
           url: "/pages/texttranslate/index?text="+resp
@@ -52,6 +56,8 @@ updateFormText(e){
       nbTitle: '文本翻译',
       nbLoading: false, 
     })
+    console.warn("text load::",wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
+    app.getCurrentLang();
     // xy.setClipboardData("少小离家老大回人之初性本善");
   },
 

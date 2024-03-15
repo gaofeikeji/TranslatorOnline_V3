@@ -17,8 +17,28 @@ App({
     currentNetwork: null,
     globalHost: "https://translate.mp.lighthg.com",
     url: "https://imgconvert.mp.lighthg.com",
-    apiUrl: "https://aip.baidubce.com",
-    
+    apiUrl: "https://aip.baidubce.com",  
+    langData: {
+      "auto": "自动",
+      "zh": "中文",
+      "en": "英语",
+      "fr": "法语",
+      "ja": "日语",
+      "ko": "韩语",
+      "de": "德语",
+      "es": "西班牙语",
+      "sq": "阿尔巴尼亚语",
+      "ar": "阿拉伯语",
+      "am": "阿姆哈拉语",
+      "acu": "阿丘雅语",
+      "agr": "阿瓜鲁纳语",
+      "ake": "阿卡瓦伊语",
+      "amu": "阿穆斯戈语",
+      "az": "阿塞拜疆语",
+      "ga": "爱尔兰语",
+      "et": "爱沙尼亚语",
+      "ee": "埃维语"
+      }, 
     requireBack:false,
     navBarHeight: 0,     // 导航栏高度
     menuBotton: 0,       // 胶囊距底部间距（保持底部间距一致）
@@ -26,8 +46,8 @@ App({
     menuHeight: 0,       // 胶囊高度（自定义内容可与胶囊高度保证一致）
     statusBarHeight: 0,       // 状态栏高度
     screenHeight: 0,       // 可视区域高度
-    currentLang:"自动",
-    currentTargetLang:"中文",
+    currentLang:wx.getStorageSync("currentLang")||"auto",
+    currentTargetLang:wx.getStorageSync("currentTargetLang")||"en",
     selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
  
   },
@@ -35,6 +55,57 @@ App({
     // 统一导航样式
     this.setNavBarInfo();
     this.globalLogin();
+  },
+  //带定时器的loading
+  showModalClose(text,during){ 
+  wx.showLoading({ title: text||"请按照使用说明操作", mask: true });
+  setTimeout(function(){
+    wx.hideLoading();
+  },during);
+  }, 
+  // 获取语言配置
+  getLangConfig(callback) { 
+    wx.request({
+      url: this.globalData.globalHost + "/api/translate/language",
+      method: "GET",
+      header: {
+        "content-type": "application/json",
+        Authorization: wx.getStorageSync("access_token"),
+      },
+      success: (res) => {
+        if (res.data.code == 1) {
+          let lang = res.data.data;
+          let langArr = [];
+          let codeArr = [];
+          // langArr.push('请选择')
+          for (let i in lang) {
+            langArr.push(lang[i]);
+            codeArr.push(i);
+          } 
+          wx.setStorageSync("langData", lang);  
+          typeof callback === "function" && callback(res.data.data);
+        } else {
+          wx.showToast({ title: res.data.msg, icon: "none" });
+        }
+      },
+      fail: (err) => {
+        console.log(err);
+      },
+    });
+  },
+  getCurrentLang(){ 
+    this.globalData.currentLang=wx.getStorageSync("currentLang");
+    this.globalData.currentTargetLang=wx.getStorageSync("currentTargetLang");
+    return {
+      currentLang:wx.getStorageSync("currentLang")||"auto",
+      currentTargetLang:wx.getStorageSync("currentTargetLang")||"en"
+    }
+  },
+  updateGlobalLang(updateLang,updateTargetLang){
+    
+    wx.setStorage("currentLang", updateLang); 
+    wx.setStorage("currentTargetLang", updateTargetLang); 
+    console.warn("updateGlobalLang::",wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
   },
   globalLogin(){
     
@@ -53,7 +124,10 @@ App({
         this.userCenterLoginCallbackIndex&&this.userCenterLoginCallbackIndex();
 
       });
-    }
+    } 
+    // 初始化语言列表
+    this.getLangConfig();
+
 
     // 图片提取文字 token
     if (!this.globalData.x_access_token) {
@@ -61,8 +135,8 @@ App({
     }
 
     // 获取当前网络状态
-    xy.getNetworkStatus((e) => (this.globalData.currentNetwork = e));
-  },
+    xy.getNetworkStatus((e) => (this.globalData.currentNetwork = e)); 
+  }, 
   setNavBarInfo() {
     // 获取系统信息
     const systemInfo = wx.getSystemInfoSync();

@@ -6,7 +6,7 @@
     focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText" />
     <view class="bottom-text">
       <text class="text-btn" data-actype="1"  bindtap="textFun">粘贴</text>
-      <text class="text-btn" data-actype="0"  bindtap="textFun">清空</text>
+      <text class="text-btn" data-actype="3"  bindtap="textFun">清空</text>
     </view>
   </view>
 </scroll-view> 

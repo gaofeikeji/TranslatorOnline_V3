@@ -106,19 +106,23 @@ initialImgText(){
     const imgText = this.initialImgText();
     console.log("copyOriginal:",imgText)
     xy.setClipboardData(imgText.originText);
+    this.showActionBox(0);
   },
   // 仅复制翻译结果
   copyTranslate(){
     const imgText = this.initialImgText();
     console.log("copyOriginal:",imgText)
     xy.setClipboardData(imgText.translateText);
+    this.showActionBox(0);
   },
   // 复制原文和结果
   copyBoth(){
     const imgText = this.initialImgText();
     console.log("copyOriginal:",imgText)
     xy.setClipboardData("原文:\n"+imgText.originText + "\n译文:\n"+ imgText.translateText);   
+    this.showActionBox(0);
   },
+  
   // Tab切换 
   selectFunction(e) {
     const { index, actype } = e.currentTarget.dataset;
@@ -195,14 +199,12 @@ translateText(){
       },
       data: {
         text: fromText,
-        target: "en",
-        source: "zh",
+        target: wx.getStorageSync("currentTargetLang")||"en",
+        source: wx.getStorageSync("currentLang")||"auto",
       },
       success: (res) => {
         if (res.data.code == 1) {
-          // 把翻译结果传到下一个页面 使用全局变量 
-    //       fromText:"",
-    // toText:"",
+          // 把翻译结果传到下一个页面 使用全局变量  
         this.setData({
           toText: res.data.data.TargetText,
           action_info:res.data.data.action_info, 

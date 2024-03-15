@@ -1,63 +1,14 @@
 const app = getApp();
 Component({ 
-  data: {
-    lang: [
-      "中文",
-      "英语",
-      "日语",
-      "韩语",
-      "法语",
-      "德语",
-      "俄语",
-      "意大利语",
-      "泰语",
-      "越南语",
-      "阿拉伯语",
-      "保加利亚语",
-      "捷克语",
-      "丹麦语",
-      "希腊语",
-      "西班牙语",
-      "芬兰语",
-      "匈牙利语",
-      "荷兰语",
-      "波兰语",
-      "葡萄牙语",
-      "罗马尼亚语",
-      "斯洛文尼亚语",
-      "瑞典语",
-    ],
-    langCode: [
-      "zh",
-      "en",
-      "jp",
-      "ko",
-      "fr",
-      "de",
-      "ru",
-      "it",
-      "th",
-      "vi",
-      "ar",
-      "bul",
-      "cs",
-      "dan",
-      "el",
-      "spa",
-      "fin",
-      "hu",
-      "nl",
-      "pl",
-      "pt",
-      "rom",
-      "slo",
-      "swe",
-    ],
-    fromIdx: wx.getStorageSync('fromIdx') || 0,
-    toIdx: wx.getStorageSync('toIdx') || 0, 
-    editLang:false,//是否在修改语言
-      currentLang:app.globalData.currentLang,
-      currentTargetLang:app.globalData.currentTargetLang,
+  data: { 
+    lang: app.globalData.lang,
+    langCode: app.globalData.langCode, 
+    langData: app.globalData.langData, 
+      currentLang:app.globalData.currentLang,//当前语言
+      currentTargetLang:app.globalData.currentTargetLang,//目标语言 
+      editLang:false,
+      updateLang:"auto",
+      updateTargetLang:"en",
       navBarHeight: app.globalData.navBarHeight, //导航栏高度
       menuBotton: app.globalData.menuBotton, //导航栏距离顶部距离
       menuRight: app.globalData.menuRight, //导航栏距离右侧距离
@@ -67,6 +18,20 @@ Component({
       requireBack:app.globalData.requireBack,
   }, 
   methods: {
+    // 读取语言数据
+    getLangList(){ 
+      const langData = wx.getStorageSync("langData");
+      const lang = wx.getStorageSync("lang");
+      const langCode = wx.getStorageSync("langCode"); 
+      if(!langData||!lang||!langCode){
+        return false;
+      }
+      this.setData({
+        langData:langData,
+        lang:lang,
+        langCode:langCode, 
+      }); 
+    },
     // 返回翻译
     back() {
       console.warn(" wx.navigateBack");
@@ -75,73 +40,61 @@ Component({
       }); 
     },
       // 是否操作语言
-      selectLang(e) { 
-        // console.warn("selectLang",this.data.editLang);  
-        this.setData({
-          editLang: this.data.editLang?false:true
-        }); 
+      selectLang(e) {  
+        const lang = wx.getStorageSync("lang");
+        const langCode = wx.getStorageSync("langCode");
+        console.warn("getLangConfig:",lang);
+        console.warn("getLangConfig:",langCode); 
+        const tThis = this;
+        if(lang&&langCode){
+          this.getLangList();
+        }else{
+          app.getLangConfig(this.getLangList);
+        }  
+        
+        this.setData({editLang:this.data.editLang?false:true});
+        
       },  
-      // 获取语言配置
-      getLangConfig() {
-        wx.request({
-          url: app.globalData.globalHost + "/api/translate/language",
-          method: "GET",
-          header: {
-            "content-type": "application/json",
-            Authorization: wx.getStorageSync("access_token"),
-          },
-          success: (res) => {
-            if (res.data.code == 1) {
-              let lang = res.data.data;
-              let langArr = [];
-              let codeArr = [];
-              langArr.push('请选择')
-              for (let i in lang) {
-                langArr.push(lang[i]);
-                codeArr.push(i);
-              }
-              this.setData({
-                lang: langArr,
-                langCode: codeArr,
-              });
-            } else {
-              wx.showToast({ title: res.data.msg, icon: "none" });
-            }
-          },
-          fail: (err) => {
-            console.log(err);
-          },
-        });
-      },
        // 源语言改变
        fromIdxChange(e) {
         const dataset = e.target.dataset;
         console.warn("fromIdxChange",e);
         console.warn("fromIdxChange",dataset.index,dataset.langType);
+        /**当前切换语言不会立即响应到全局，需要确认才会保存 */
         let changeLang = dataset.langType=="fromIdx"?{
-          fromIdx: this.data.langCode.indexOf(dataset.index)
+          updateLang: dataset.index
         }:{
-          toIdx: this.data.langCode.indexOf(dataset.index)
-        };
+          updateTargetLang: dataset.index
+        }; 
          this.setData(changeLang);
       },
-      // 提交语言
+      // 提交切换语言
       updateTranslateLang(){
-        let changeLang = {
-          
-        };
+        const updateLang = this.data.updateLang;
+        const updateTargetLang = this.data.updateTargetLang;
+        const newLang ={};
+        
         //导航栏当前语言
-        this.setData({
-          currentLang: this.data.lang[this.data.fromIdx],
-          currentTargetLang: this.data.lang[this.data.toIdx]
-        })
-        this.selectLang();
+        if(updateLang!==this.data.currentLang){
+          newLang['currentLang']=updateLang;
+        }
+        if(updateTargetLang!==this.data.currentTargetLang){
+          newLang['currentTargetLang']=updateTargetLang;
+        }
+        wx.setStorageSync("currentLang", updateLang); 
+        wx.setStorageSync("currentTargetLang", updateTargetLang); 
+        app.updateGlobalLang(updateLang,updateTargetLang);
+        newLang.editLang=this.data.editLang?false:true;
+        this.setData(newLang);
+        console.warn("updateTranslateLang::",wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang"));  
+        // this.selectLang();
         //提交数据到服务器
         //……………………
       },
       // 撤销语言修改语言
-      oldTranslateLang(){
-        this.selectLang()
+      oldTranslateLang(){ 
+        app.showModalClose("未切换语言...",300);
+        this.setData({editLang:this.data.editLang?false:true});
       } 
   }
 })
