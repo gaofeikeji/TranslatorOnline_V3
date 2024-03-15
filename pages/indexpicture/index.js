@@ -130,9 +130,10 @@ getPictureInfo(picUrl){
 //  picUrl="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg";
   const tThis=this;
   wx.showLoading({ title: "正在翻译中...", mask: true });
+  const curent = app.getCurrentLang(tThis);
   let pictureInfo = app.request("/api/translate/photo", { 
-    "source": "auto", //来源语音
-      "target": "en", //目标语言
+    "source": curent.currentLang, //来源语音
+      "target": curent.currentTargetLang, //目标语言 
       "url": picUrl  
     }, "POST"); 
     pictureInfo.then((res)=>{
@@ -192,13 +193,8 @@ getMidpoint(a, b) {
    * 生命周期函数--监听页面加载
    */
   
-  onLoad(options) {
-    this.setData({
-      nbTitle: '图片解析',
-      nbLoading: false,
-      nbFrontColor: '#ffffff',
-      nbBackgroundColor: '#000000',
-    })
+  onLoad(options) { 
+    app.getCurrentLang(this);
     const tThis=this;
     // app.globalLogin();
     // xy.showTip("服务器正在解析资源");

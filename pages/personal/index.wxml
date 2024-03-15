@@ -1,9 +1,10 @@
 <!--pages/personal/index.wxml-->
 <navigation-bar
     title="{{nbTitle}}"
-    loading="{{nbLoading}}" 
-    front-color="{{nbFrontColor}}"
-    background-color="{{nbBackgroundColor}}"
+    onytitle="{{true}}"
+    canBack="{{true}}"
+    currentLang="{{currentLang}}"
+    currentTargetLang="{{currentTargetLang}}" 
     color-animation-duration="2000"
     color-animation-timing-func="easeIn"
   /> 

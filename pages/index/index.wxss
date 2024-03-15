@@ -14,7 +14,7 @@ page {
 
 .picture-action{
   position: absolute;
-  bottom: 230rpx; 
+  bottom: 210rpx; 
   left: 0;
   right: 0;
   z-index: 1100; 

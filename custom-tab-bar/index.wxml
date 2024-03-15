@@ -2,19 +2,26 @@
 <view class="tab-bar tabbar tab-top" style="padding-top: {{statusBarHeight}}px;">
   <view class="current-language-box " 
   style="height:{{navBarHeight}}px;padding:0 {{menuRight}}px;">  
-     <block wx:if="{{!requireBack}}"> 
+     <block wx:if="{{canBack==true}}"> 
         <text    bindtap="back"  
               class="btn-back"
               hover-stay-time="100"
               aria-role="button"
               aria-label="返回" ></text>
       </block>   
-      <view class="" style="display: flex;" bindtap="selectLang">
-        <text class="lang text-active">{{langData[currentLang]}}</text>
-        <image class="lang_switch" mode="aspectFit" src="/images/switch_gray.png"></image> 
-        <text class="lang text-active">{{langData[currentTargetLang]}}</text>
-        <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
-      </view>
+      <block wx:if="{{onytitle===true}}">  
+          <text class="title">{{title}}</text>
+        </block> 
+      <block wx:else> 
+        <view class="" style="display: flex;" bindtap="selectLang">
+            <text class="lang text-active">{{langData[currentLang]}}</text>
+            <image class="lang_switch" mode="aspectFit" src="/images/switch_gray.png"></image> 
+            <text class="lang text-active">{{langData[currentTargetLang]}}</text>
+            <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
+          </view>
+    
+    </block>
+      
     
   </view>
 </view>

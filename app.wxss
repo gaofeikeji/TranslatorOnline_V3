@@ -19,15 +19,17 @@ page {
   padding-bottom: env(safe-area-inset-bottom);
 }
 .safe-area{
+    height: 85px;
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 
 }
 .scrollarea {
   height: 100%;
-  flex: 1;
-  /* overflow-y: hidden; */
+  flex: 1; 
   margin-top: -20rpx;
+  /* padding-bottom: 85px; */
+background: rgba(204, 204, 204, 0.2);
 }
 .container{
   position: relative;
@@ -65,15 +67,14 @@ page {
 button.circle-btn.picture-action{
   width: 260rpx !important;
   border-radius: 40rpx;
-  height: 46px !important;
-  line-height: 46px !important;
+  height: 70rpx !important;
+  line-height: 70rpx !important;
   padding:0 !important;
   background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
   color: #fff;
   border: 2rpx solid #fff; 
   box-shadow: 0 0 0 5rpx rgba(31, 113, 255, 1);
   font-size: 30rpx;
-  margin-bottom: 10px;
 }
   
 
@@ -127,6 +128,7 @@ button.circle-btn.picture-action{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 85px;
 }
 
 .tabbar-item image {

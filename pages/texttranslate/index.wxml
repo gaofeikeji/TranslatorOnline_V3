@@ -1,10 +1,9 @@
 <!--pages/texttranslate/index.wxml-->
 <!--pages/indexpicture/index.wxml--> 
 <navigation-bar
-    title="{{nbTitle}}"
-    loading="{{nbLoading}}" 
-    front-color="{{nbFrontColor}}"
-    background-color="{{nbBackgroundColor}}"
+    canBack="{{true}}" 
+    currentLang="{{currentLang}}"
+    currentTargetLang="{{currentTargetLang}}" 
     color-animation-duration="2000"
     color-animation-timing-func="easeIn"
   />  

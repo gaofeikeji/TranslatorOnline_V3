@@ -14,11 +14,9 @@ Page({
    */
   onLoad(options) {
     this.setData({
-      nbTitle: '个人中心',
-      nbLoading: false,
-      nbFrontColor: '#ffffff',
-      nbBackgroundColor: '#000000',
+      nbTitle: '个人中心', 
     })
+    app.getCurrentLang(this);
 
   },
 

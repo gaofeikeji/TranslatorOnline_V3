@@ -51,16 +51,21 @@ updateFormText(e){
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(){
-    this.setData({
-      nbTitle: '文本翻译',
-      nbLoading: false, 
-    })
-    console.warn("text load::",wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
-    app.getCurrentLang();
+  onLoad(){ 
+    app.getCurrentLang(this);
+    this.getInstance();
     // xy.setClipboardData("少小离家老大回人之初性本善");
   },
 
+  getInstance() {
+    if (typeof this.getTabBar === 'function' ) {
+        this.getTabBar((tabBar) => {
+            tabBar.setData({
+                selected: 0
+            })
+        })
+    }
+},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

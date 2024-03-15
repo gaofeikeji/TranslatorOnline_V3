@@ -112,12 +112,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) { 
-    this.setData({
-        nbTitle: '文件翻译',
-        nbLoading: false,
-        nbFrontColor: '#ffffff',
-        nbBackgroundColor: '#000000',
-      })
+    // this.setData({ 
+    //   })
+      app.getCurrentLang(this);
   },
 
   /**

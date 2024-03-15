@@ -1,4 +1,5 @@
 /* pages/text/index.wxss */
+
 .container{
   display: flex;
   flex-direction: column;
@@ -7,7 +8,6 @@
 }             
 .textarea-container{  
   background: rgba(0, 0, 0, 0.03);
-  background: rgba(214, 105, 105,0.3);
   margin-top: 30px;
   padding: 40rpx;
   height: 80%;
@@ -21,4 +21,7 @@
 }
 .text-btn{
     margin: 15rpx;
+}
+.picture-action{
+  transform: translateY(18px);
 }

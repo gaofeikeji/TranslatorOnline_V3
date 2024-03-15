@@ -9,12 +9,14 @@ page{
   
 .btn-back{
   font-size: 50rpx;
+  transform:scale(1.2) translateY(-5rpx);
+  cursor: pointer;
+  padding: 2rpx 10rpx; 
 }
 .btn-back::after{
   content: "<";
   display: inline-block;
-  font-size: 50rpx;
-  color: #000;
+  color: rgba(0, 0, 0, 0.6); 
   font-weight: 800;
   padding: 0 30rpx 0 0;
 }
@@ -63,28 +65,26 @@ page{
   .section-box-lang{ 
     width: 100%;
     background-color: #fff;
-    padding: 70rpx 0;
+    padding: 20rpx 0;
     position: fixed;
     display: none;
   }   
   .edit-lang{
     display: flex; 
     position: fixed;
-    z-index: 99999999;
+    z-index: 99999 ;
   }
   .flex-item{
     flex: 1;
     height: 100%;
-    padding: 0 30rpx;
+    padding:10rpx  30rpx;
     text-align: center;
     color: #000;
     position: relative;
-  }
-  .current-language-list{
-    border-right: 1px solid #ddd;
+    border: 1px solid #ddd;
   }
   .scroll-box{ 
-    height: 90%; 
+    height: 91%; 
   }
   .lang-item{
     height: 66rpx;
@@ -92,7 +92,7 @@ page{
     border-radius: 10rpx;
   }
   .lang-item.selected{
-    background:rgba(31, 113, 255, 1);
+    background:#1F71FF;
     color: #fff;
   }
   /* 语言切换的操作按钮 */
@@ -105,11 +105,10 @@ page{
     bottom: 0px;
     font-weight: 600;
     color: #fff;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%);
+    background: rgba(0, 0, 0, 0.4);
     border-bottom-left-radius: 20rpx;
     border-bottom-right-radius: 20rpx;
   }
-  .bootom-action:hover,
   .bootom-action.selected{
-    background: linear-gradient(135deg, rgba(31, 113, 255, 1) 0%, rgba(31, 113, 255, 1) 100%);
+    background:#1F71FF;
   }

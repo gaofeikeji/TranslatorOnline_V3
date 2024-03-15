@@ -112,19 +112,12 @@ Page({
    test(){}
   },
   onLoad(){
-    this.setData({
-      nbTitle: '主页',
-      nbLoading: false, 
-    })  
     this.setData({ 
-      initCamral: true
-    })
-    app.globalData.requireBack=false; //首页不需要返回功能
-    console.warn("onLoad:app.globalData.requireBack",app.globalData.requireBack)
+      initCamral: true,
+    })   
+    app.getCurrentLang(this);
   },
-  onShow(){
-    app.globalData.requireBack=false; //首页不需要返回功能
-    console.warn("onShow:app.globalData.requireBack",app.globalData.requireBack)
+  onShow(){ 
     wx.showShareMenu({
       withShareTicket: true, // 是否使用带 shareTicket 的转发
       menus: ["shareAppMessage", "shareTimeline"], // 自定义分享菜单列表
@@ -147,18 +140,13 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide() {
-    app.globalData.requireBack=true; //首页不需要返回功能
-    console.warn("onHide:app.globalData.requireBack",app.globalData.requireBack)
-
+  onHide() { 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
-    app.globalData.requireBack=true; //首页不需要返回功能
-    console.warn("onUnload:app.globalData.requireBack",app.globalData.requireBack)
+  onUnload() { 
   },
   textTranslation(){
     wx.navigateTo({

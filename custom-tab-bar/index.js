@@ -1,12 +1,25 @@
 const app = getApp();
 Component({ 
+    // 接收父组件数据
+  properties: {
+    canBack: Boolean,  
+    onytitle: Boolean,  
+    title: String,  
+    currentLang: { 
+      type: String, 
+      value: 'auto' 
+    },
+    currentTargetLang: { 
+      type: String, 
+      value: 'en' 
+    },
+  },
+
   data: { 
     lang: app.globalData.lang,
     langCode: app.globalData.langCode, 
-    langData: app.globalData.langData, 
-      currentLang:app.globalData.currentLang,//当前语言
-      currentTargetLang:app.globalData.currentTargetLang,//目标语言 
-      editLang:false,
+    langData: app.globalData.langData,  
+      editLang:false, 
       updateLang:"auto",
       updateTargetLang:"en",
       navBarHeight: app.globalData.navBarHeight, //导航栏高度
@@ -14,8 +27,7 @@ Component({
       menuRight: app.globalData.menuRight, //导航栏距离右侧距离
       menuHeight: app.globalData.menuHeight, //导航栏高度
       statusBarHeight: app.globalData.statusBarHeight, //状态栏栏高度
-      screenHeight: app.globalData.screenHeight, //可视区域高度 
-      requireBack:app.globalData.requireBack,
+      screenHeight: app.globalData.screenHeight, //可视区域高度  
   }, 
   methods: {
     // 读取语言数据

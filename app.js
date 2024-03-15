@@ -38,8 +38,7 @@ App({
       "ga": "爱尔兰语",
       "et": "爱沙尼亚语",
       "ee": "埃维语"
-      }, 
-    requireBack:false,
+      },  
     navBarHeight: 0,     // 导航栏高度
     menuBotton: 0,       // 胶囊距底部间距（保持底部间距一致）
     menuRight: 0,        // 胶囊距右方间距（方保持左、右间距一致）
@@ -93,13 +92,15 @@ App({
       },
     });
   },
-  getCurrentLang(){ 
-    this.globalData.currentLang=wx.getStorageSync("currentLang");
-    this.globalData.currentTargetLang=wx.getStorageSync("currentTargetLang");
-    return {
-      currentLang:wx.getStorageSync("currentLang")||"auto",
-      currentTargetLang:wx.getStorageSync("currentTargetLang")||"en"
-    }
+  getCurrentLang(tThis){ 
+    this.globalData.currentLang=wx.getStorageSync("currentLang")||"auto";
+    this.globalData.currentTargetLang=wx.getStorageSync("currentTargetLang")||"en";
+    const current=  {
+        currentLang: this.globalData.currentLang,
+        currentTargetLang: this.globalData.currentTargetLang, 
+      };
+    tThis&&tThis.setData(current)
+    return current
   },
   updateGlobalLang(updateLang,updateTargetLang){
     
