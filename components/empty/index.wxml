@@ -1,6 +1,0 @@
-<view class="empty__container">
-  <view class="empty_content">
-    <svg-icon iconName="no-data" size="50"></svg-icon>
-    <text class="empty_text">{{title}}</text>
-  </view>
-</view>

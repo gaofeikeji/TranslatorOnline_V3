@@ -382,19 +382,19 @@ App({
       });
     });
   },
-  dowloadWord(text){
+  dowloadFile(text,api){
     //
-    const req= this.request("/tools/text-to-word",{
+    const req= this.request(api,{
       text:text
     },"POST");
     req.then(function(data){
-      console.warn("dowloadWord:",data)
+        console.warn("dowloadWord:",data,data.data.url)
       wx.downloadFile({
-        url:data.url,
+        url:data.data.url,
         timeout:6000,
-        url:data.url, 
-        success (res) {
+        success (res) { 
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+          console.warn("wx.downloadFile:success",res)
           if (res.statusCode === 200) { 
               wx.showToast({
                 title: "下载成功",
@@ -402,6 +402,15 @@ App({
                 duration: 2000,
               });
           }
+        }, 
+        fail (res) {
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+          console.warn("wx.downloadFile:fail",res) 
+          wx.showToast({
+            title: "下载失败请稍后重试",
+            icon: "none",
+            duration: 2000,
+          });
         }
       });
     })

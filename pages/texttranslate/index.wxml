@@ -61,10 +61,10 @@
   <view>
   
     <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
-    </view>
+    </view> 
         <view class="action-btn" data-actype="71"  bindtap="translateFunction" >导出TXT文件</view>
         <view class="action-btn" data-actype="72"  bindtap="translateFunction" >导出Word文档</view>
-        <view class="action-btn" data-actype="73"  bindtap="translateFunction" >导出Excel文档</view>
+        <view class="action-btn" data-actype="73"  bindtap="translateFunction"  >导出Excel文档</view>
     </view>
 </block> 
   <!-- 显示模式 -->
