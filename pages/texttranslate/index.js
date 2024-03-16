@@ -72,6 +72,19 @@ translateFunction(e) {
     showType=actype;
     }else if(actype==63){//仅显示译文
       showType=actype;
+    }else if(actype==71){//导出TXT文件
+      
+   }else if(actype==72){//导出Word文档
+    const currentTxt = this.initialImgText();
+    console.log("actype::",currentTxt)
+      if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
+        app.showModalClose("开始下载文件……",3000);
+        app.dowloadWord(currentTxt.translateText);
+      }else{
+        app.showModalClose("转换的内容为空……",1000);
+        return false;
+      }
+    }else if(actype==73){//导出Excel文档
     }else{   
       console.warn("translateFunction:",e);             
     } 
@@ -238,6 +251,7 @@ translateText(){
       fromText:options.text||""
     })
     this.translateText();
+    app.getCurrentLang(this);
   },
 
   /**

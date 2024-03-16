@@ -382,6 +382,36 @@ App({
       });
     });
   },
+  dowloadWord(text){
+    //
+    const req= this.request("/tools/text-to-word",{
+      text:text
+    },"POST");
+    req.then(function(data){
+      console.warn("dowloadWord:",data)
+      wx.downloadFile({
+        url:data.url,
+        timeout:6000,
+        url:data.url, 
+        success (res) {
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+          if (res.statusCode === 200) { 
+              wx.showToast({
+                title: "下载成功",
+                icon: "none",
+                duration: 2000,
+              });
+          }
+        }
+      });
+    })
+  },
+  dowloadExcel(){
+
+  },
+  dowloadTxt(){
+
+  },
   // 通用请求
   request(url, data = {}, method = "GET") {
     let that = this;
