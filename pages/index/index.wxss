@@ -5,11 +5,13 @@ page {
   flex-direction: column;
   margin: 0;
 }
+.container{ 
+  display: flex;
+}
 .home-info{ 
-  position: absolute;
-  z-index: 100;
-  height: 800rpx;
-  line-height: 800rpx;
+  height:40rpx; 
+  width: 400rpx;
+  font-weight: 500;
 }
 
 .picture-action{
@@ -18,6 +20,7 @@ page {
   left: 0;
   right: 0;
   z-index: 1100; 
+  line-height: 60px;
 } 
 .start-image{  
   width: 100%;
@@ -27,3 +30,7 @@ page {
 }
 
 
+.bottom-picture-box{
+  position: absolute;
+  z-index: 11111111;
+}

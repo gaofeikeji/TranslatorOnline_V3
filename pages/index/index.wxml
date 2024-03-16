@@ -9,7 +9,7 @@ currentTargetLang="{{currentTargetLang}}"
 <scroll-view class="scrollarea include-nav" scroll-y type="list">
   <view class="container "> 
      <block wx:if="{{ initCamral }}">  
-          <camera device-position="back"   flash="on"  mode="normal" binderror="cam_error"  
+          <camera device-position="back"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
         class="start-image"></camera>
     </block>
     <block wx:else> 
@@ -31,6 +31,7 @@ currentTargetLang="{{currentTargetLang}}"
       data-page="{{ item.pagePath }}" 
       data-index="{{ index }}"
       data-type="{{ item.type }}"
+      data-notpage="{{ item.notpage }}"
       bindtap="selectPage"
   >
       <block wx:if="{{ item.type === 0 }}">
@@ -48,6 +49,11 @@ currentTargetLang="{{currentTargetLang}}"
 </scroll-view>
 
 
+<view class="bottom-picture-box {{showSelectImg?'':'hidden'}}">
+  <view class="picture-box-item" bind:tap="takePicture" >从相册选择图片</view>
+  <view class="picture-box-item" bindtap="takePhotoWithMessage">从聊天记录选择图片</view>
+  <view class="picture-box-cancel" bindtap="cancelPictureSelect">取消</view>
+</view> 
 
 <!-- canvas压缩图片 -->
 <canvas canvasId="mCanvas" 
