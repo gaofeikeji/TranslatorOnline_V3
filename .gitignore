@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+project.config.json

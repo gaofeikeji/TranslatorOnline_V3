@@ -1,6 +1,17 @@
 // pages/indexpicture/index.js
 import * as xy from "../../utils/common.js";
 const app = getApp();
+
+function debounce(func, wait) {
+    let timeoutId;
+    return function(...args) {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+        timeoutId = null;
+      }, wait);
+    };
+  }
 Page({ 
   /**                  
    * 页面的初始数据
@@ -11,6 +22,7 @@ Page({
     action:false,
     actype:10,//10逐行对比左右布局,11，逐行对比垂直布局; 20复制内容，30导出文件，40显示结果，41隐藏
     currentVisti:0,
+    showResult:0,
     //底部功能区域
     list: [
       {
@@ -67,6 +79,8 @@ Page({
     currentSelectItem:"",
     currentSelectX:0,
     currentSelectY:0,
+    lastScale: 1,
+    startTouches: [],
   }, 
   // 页面切换 
   selectFunction(e) {
@@ -173,6 +187,7 @@ showActionBox(actype){
     console.log("actype====40");
     this.setData({
       actype: actype, 
+      showResult: this.data.showResult==1?0:1, 
       see:false,
       scale:1
       })
@@ -384,5 +399,39 @@ getMidpoint(a, b) {
    */
   onShareAppMessage() {
 
+  },  
+  handleTouchStart: function(e) {
+    // 记录起始触点
+    this.setData({
+      startTouches: e.touches
+    });
+  },
+  
+  handleTouchMove: debounce(function(e) {
+    const touches = e.touches;
+    const changeX = touches[0].clientX - this.data.startTouches[0].clientX;
+    const changeY = touches[0].clientY - this.data.startTouches[0].clientY;
+    
+    // 只有在最后一次 touchmove 后才会执行这个函数体
+    this.setData({
+      movableX: this.data.movableX + changeX,
+      movableY: this.data.movableY + changeY
+    });
+  }, 100),
+
+  handleTouchEnd: function(e) {
+    // 可在此处重置初始触点
+    this.setData({
+      startTouches: []
+    });
+  },
+
+  handlePinch: function(e) {
+    // 处理捏合事件，实现缩放功能
+    const scale = e.detail.scale / this.data.lastScale;
+    this.setData({
+      scale: this.data.scale * scale,
+      lastScale: e.detail.scale
+    });
   }
 })

@@ -111,11 +111,12 @@ button.circle-btn.picture-action{
 /* 底部选项卡 */
 .tab-bottom {
   width: 100%;
+  height: 85px;
   display: flex;
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 9999; 
+  z-index: 10000; 
   background: #fff;
   border-top: 1px solid #ddd;
   border-top-left-radius: 30rpx;
@@ -123,13 +124,12 @@ button.circle-btn.picture-action{
 }
 .tab-bottom.transparent{
   background-color: transparent;
-  border-top-color: transparent;
-
+  border-top-color: transparent; 
 }
 
 .tabbar-item {
+    display: flex;
   flex: 1;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

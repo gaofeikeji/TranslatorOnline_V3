@@ -15,11 +15,18 @@ currentTargetLang="{{currentTargetLang}}"
     </view>  -->
     <movable-area scale-area  id="zoomArea" >
       <movable-view direction="all"  
-      touch-out-of-bounds="{{true}}" out-of-bounds="{{true}}" 
-      scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"   out-of-bounds="{{true}}"
-       scale-max="5" scale="{{true}}" animation="{{false}}" scale-value="{{scale}}" 
-      style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;padding:20px" class="zoom-area">
+      touch-out-of-bounds="{{true}}" out-of-bounds="{{true}}"   
+      scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"  
+       scale-max="5" scale="{{true}}" animation="{{false}}" scale-value="{{showResult==1?scale:0.8}}" 
+       
+    bindtouchstart="handleTouchStart"
+    bindtouchmove="handleTouchMove"
+    bindtouchend="handleTouchEnd" 
+    bindpinch="handlePinch"
+      style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;padding:{{showResult==1?20:0}}px" class="zoom-area">
       <view  class="media-info-box"> 
+          <!-- 显示结果 -->
+  <block wx:if="{{ showResult ==   1 }}"> 
         <view   
             class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
             wx:for="{{ langList }}"  
@@ -33,7 +40,15 @@ currentTargetLang="{{currentTargetLang}}"
             <block wx:else> 
               <text class="media-text" >{{item.translate}}</text>
             </block>
-        </view>
+        </view> 
+    </block>
+    
+        <block wx:if="{{ showResult ==   0 }}"> 
+            <image class="selected-image"
+            style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;" 
+            src="{{selectPicturPath||'/images/bg/bg-dark.png'}}"></image> 
+
+        </block>
       </view>
     </movable-view>
     </movable-area>
@@ -115,7 +130,6 @@ currentTargetLang="{{currentTargetLang}}"
 </view>      
 
 
-
 <!-- 底部操作区域 -->
 <view class="tab-bar tabbar tab-bottom">
     <view 
@@ -125,9 +139,9 @@ currentTargetLang="{{currentTargetLang}}"
         data-index="{{ index }}"
         data-actype="{{ item.actype }}"
         bindtap="selectFunction">
-        <block wx:if="{{ item.type === 0 }}">
+        <block wx:if="{{ item.type === 0 }}"> 
             <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
-            <text>{{ select === index ?(item.selectedText||item.text):(item.text) }}</text>
+            <text>{{ item.actype === 40 ?(showResult ==   1 ?item.selectedText:item.text):(item.text) }}</text>
         </block>
         <block wx:else>
             <view class="publish">
