@@ -2,27 +2,12 @@ page{
     position: relative;
     width: 100%;
     height: 100%;
+    /* padding-top: env(safe-area-inset-top);  */
   }
   .text{
     color: rgba(255,255,255);
   }
   
-.btn-back{
-  font-size: 50rpx;
-  transform:scale(1.2) translateY(-5rpx);
-  cursor: pointer;
-  padding: 2rpx 10rpx; 
-}
-.btn-back::after{
-  content: "<";
-  display: inline-block;
-  color: rgba(0, 0, 0, 0.6); 
-  font-weight: 800;
-  padding: 0 30rpx 0 0;
-}
-  .text-active{
-    color: rgba(41,119,255) ;
-  }
   /* 顶部导航栏(  全局语言切换) */
   .tab-top{ 
     width: 100%;
@@ -32,7 +17,6 @@ page{
     background-color: #fff;
     /* 刘海屏 */
     /* padding-top:48rpx;  */
-    /* padding-top: env(safe-area-inset-top);  */
     position: fixed;
     top: 0;
     z-index: 6666; 
@@ -50,22 +34,40 @@ page{
   }
   .lang{
     display: inline-block;
-    font-size: 34rpx;
+    font-size: 30rpx;
     font-weight: 600;
   }
   .lang_switch{ 
     display: inline-flex;
     font-size: 24rpx;  
-    width: 40rpx; 
+    width: 30rpx; 
     height: 30rpx;
-    margin:  0 40rpx;
+    margin:  0 30rpx;
+    transform: translateY(6rpx);
   }
   
+.btn-back{
+  transform:scale(1.2) translateY(-5rpx);
+  cursor: pointer;
+  padding: 0 10rpx; 
+}
+.btn-back::after{
+  content: "<";
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.6); 
+  font-size: 50rpx;
+  font-weight: 800;
+  padding: 0 30rpx 0 0;
+}
+  .text-active{
+    color: rgba(41,119,255) ;
+  }
   /* 全局语言切换容器 */
   .section-box-lang{ 
     width: 100%;
     background-color: #fff;
-    padding: 20rpx 0;
+    padding: 20rpx 2px;
+    margin-top: -20rpx;
     position: fixed;
     display: none;
   }   
@@ -77,11 +79,13 @@ page{
   .flex-item{
     flex: 1;
     height: 100%;
-    padding:10rpx  30rpx;
+    padding:25rpx  35rpx;
     text-align: center;
     color: #000;
-    position: relative;
-    border: 1px solid #ddd;
+    position: relative; 
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: none;
+    box-sizing: content-box;
   }
   .scroll-box{ 
     height: 91%; 
@@ -103,9 +107,10 @@ page{
     position: absolute;
     left: 0;
     bottom: 0px;
+    z-index: 8888;
     font-weight: 600;
     color: #fff;
-    background: rgba(0, 0, 0, 0.4);
+    background: #838383;
     border-bottom-left-radius: 20rpx;
     border-bottom-right-radius: 20rpx;
   }

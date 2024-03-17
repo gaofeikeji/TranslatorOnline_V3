@@ -9,7 +9,7 @@ Page({
     nbBackgroundColor: '#ffffff', 
     initCamral:false, 
     select: 0, 
-    selectPicturPath:"/images/bg/bg-dark.png",
+    selectPicturPath:"",
     ccWidth:0,
     ccHeight:0,
     showSelectImg:false,
@@ -65,17 +65,7 @@ Page({
     }, 
     //拍照
     takePhoto(){ 
-        console.log("cam inited") 
-        //           //模拟图片 
-        //           this.setData({
-        //             selectPicturPath: "https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg",
-        //             initCamral:false
-        //           })
-        //           app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg";
-        //           wx.navigateTo({
-        //             url: "/pages/indexpicture/index"
-        //           })
-        // return false;
+        console.log("cam inited")  
         const tThis= this;
         const ctx = wx.createCameraContext();
         ctx.setZoom({
@@ -92,14 +82,15 @@ Page({
                 success: (imgRes) => { 
                   
                    wx.hideLoading();
-                  console.warn("imgRes::",imgRes)
+                  console.warn("takePhoto::imgRes::",imgRes)
                     tThis.setData({
                       selectPicturPath: imgRes.url,
-                      initCamral:false
-                    })
+                      initCamral:true,
+                      showSelectImg:  false
+                    }) 
                     app.globalData.selectPicturPath=imgRes.url;
                     wx.navigateTo({
-                      url: "/pages/indexpicture/index"
+                      url: "/pages/indexpicture/index?selectPicturPath="+imgRes.url
                     })
                 },
                 fail: (err) => {
@@ -116,14 +107,16 @@ Page({
       cam_error(){
         console.warn("image-load- error")
       },      
+      initCamera(){
+        console.warn("initCamera:");
+        this.setData({ 
+          initCamral: true,
+        })   
+      },
   methods: { 
-    initCamera(){
-      this.setData({ 
-        initCamral: true,
-      })   
-    },
   },
   onLoad(){
+    this.initCamera();
     app.getCurrentLang(this);
   },
   onShow(){ 
@@ -181,30 +174,46 @@ takePicture(){
           instance: tThis,
           success: (imgRes) => {  
              wx.hideLoading();
-            console.warn("imgRes::",imgRes)
+            //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
+                  console.warn("takePicture::imgRes::",imgRes)
+
               tThis.setData({
-                selectPicturPath: imgRes.url,
-                initCamral:false
+                selectPicturPath: imgRes.url
               });
               app.globalData.selectPicturPath=imgRes.url;
-              wx.navigateTo({
-                url: "/pages/indexpicture/index"
+              wx.getImageInfo({
+                src: uploadPath,
+                success (res) {
+                  // tThis.getPictureRate(res);
+                   
+                  console.log("getImageInfo:",res)
+                  wx.setStorageSync('upload_pic_info', res) 
+                  wx.navigateTo({
+                    url: "/pages/indexpicture/index?selectPicturPath="+imgRes.url+"&height="+res.height+"&width="+res.width
+                  })
+                },fail(){
+                  app.showModalClose("获取图片信息失败，请重新上传",20000)
+                }
               })
           },
           fail: (err) => {
             wx.hideLoading();
-            xy.showTip(err.msg);
+            xy.showTip(err.msg);  
           },
         });
       },
       fail(res) {
-        console.warn("cancel_fail::",res)
+        console.warn("cancel_fail::",res) 
         // wx.navigateTo({
         //   url: "/pages/indexpicture/index"
         // })
       },
-      complete(res) {
-        console.error(res)
+      complete(res) { 
+        tThis.setData({  
+          initCamral:true,
+          showSelectImg:  false, 
+          selectPicturPath: ""
+        });
       },
     })
 },  

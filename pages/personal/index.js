@@ -1,4 +1,5 @@
 // pages/personal/index.js
+const app = getApp();
 Page({
 
   /**

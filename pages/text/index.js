@@ -31,10 +31,12 @@ Page({
       const resp = tThis.data.fromText;
       console.warn("fromText::",
       resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
-      if(resp!=""&&resp.length<1000){ 
+      if(resp!=""){ 
         wx.navigateTo({
           url: "/pages/texttranslate/index?text="+resp
         })
+      }else{
+        app.showModalClose("请填写要翻译的内容",3000);
       }
     }
     // this.setData({

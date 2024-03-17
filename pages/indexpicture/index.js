@@ -10,13 +10,14 @@ Page({
     selectPicturPath:app.globalData.selectPicturPath,
     action:false,
     actype:10,//10逐行对比左右布局,11，逐行对比垂直布局; 20复制内容，30导出文件，40显示结果，41隐藏
+    currentVisti:0,
     //底部功能区域
     list: [
       {
         "iconPath": "/images/nav/duibi.png",
         "selectedIconPath": "/images/nav/duibi.png",
         "text": "逐行对比",
-        "actype": 10,
+        "actype": 1,
         "type":0
       },
       {
@@ -74,6 +75,21 @@ Page({
     console.warn(index,  actype, this.data.actype ); 
     this.showActionBox(actype);
 }, 
+selectVerticle(e) {
+  const { index, actype } = e.currentTarget.dataset;
+  console.warn(e);  
+  console.warn(index,  actype, this.data.actype ); 
+  let currentVisti=0;
+  if(actype==10){
+    console.log("actype===10");
+    currentVisti=0; 
+  }else if(actype==11){
+    currentVisti=1; 
+  }
+  this.setData({ 
+    currentVisti:currentVisti, 
+    })
+}, 
 // 文本具体操作
 translateFunction(e) {
     const { index, actype } = e.currentTarget.dataset;
@@ -85,7 +101,38 @@ translateFunction(e) {
       this.copyTranslate();
     }else if(actype==53){//复制原和结果
                 this.copyBoth();                 
-    }
+    }else if(actype==71){//导出TXT文件
+      
+      const currentTxt = this.initialImgText();
+      console.log("actype::",currentTxt)
+        if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
+          app.showModalClose("开始下载文件……",3000);
+          app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-txt");
+        }else{
+          app.showModalClose("转换的内容为空……",1000);
+          return false;
+        }
+     }else if(actype==72){//导出Word文档
+      const currentTxt = this.initialImgText();
+      console.log("actype::",currentTxt)
+        if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
+          app.showModalClose("开始下载文件……",3000);
+          app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-word");
+        }else{
+          app.showModalClose("转换的内容为空……",1000);
+          return false;
+        }
+      }else if(actype==73){//导出Excel文档
+        const currentTxt = this.initialImgText();
+        console.log("actype::",currentTxt)
+          if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
+            app.showModalClose("开始下载文件……",3000);
+            app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-excel");
+          }else{
+            app.showModalClose("转换的内容为空……",1000);
+            return false;
+          }
+      }
 }, 
   // 当前行切换 
   toImageTextItem(e) {
@@ -102,27 +149,41 @@ translateFunction(e) {
 // 底部导航以及功能切换
 showActionBox(actype){  
   let show = this.data.action?false:true;
+  let currentVisti =0;
   if(actype===0){
     console.log("actype====0");  
     show=false;
   }
-  if(actype==10){
+  if(actype==1){
+    console.log("actype===1");
+  }if(actype==10){
     console.log("actype===10");
+    currentVisti=0;
     show=true;
   }else if(actype==11){
+    currentVisti=1;
     console.log("actype===11");
+    
     show=true;
   }else if(actype==20){
     console.log("actype====2");
   }else if(actype==30){
     console.log("actype====3");
+  }else if(actype==40){//显示隐藏结果
+    console.log("actype====40");
+    this.setData({
+      actype: actype, 
+      see:false,
+      scale:1
+      })
+      return false;
   }
   console.warn("actypeactype:",  actype );   
   this.setData({
     actype: actype,
-    action:show,
+    action:show, 
     see:show?true:false,
-    scale:actype==0?(this.data.scale<0.5?0.3:0.8):1//需要添加缩放比例记录，或者采用图片等比设置，
+    scale:actype==0?(this.data.scale<0.5?0.8:0.9):1//需要添加缩放比例记录，或者采用图片等比设置，
     })
 },
 // 图片具体文字内容识别
@@ -131,10 +192,12 @@ getPictureInfo(picUrl){
   const tThis=this;
   wx.showLoading({ title: "正在翻译中...", mask: true });
   const curent = app.getCurrentLang(tThis);
+  console.warn("getPictureInfogetPictureInfo:",  picUrl );   
   let pictureInfo = app.request("/api/translate/photo", { 
     "source": curent.currentLang, //来源语音
       "target": curent.currentTargetLang, //目标语言 
-      "url": picUrl  
+      "url": picUrl,  
+      // "url": "https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg",  
     }, "POST"); 
     pictureInfo.then((res)=>{
         console.warn("getPictureInfo",res.data)
@@ -143,7 +206,28 @@ getPictureInfo(picUrl){
         tThis.setData({
           langList: res.data 
           })
+    }).catch(err => {
+      console.log('err:', err)
+      wx.hideLoading();
+      tThis.setData({
+        langList:[{
+          "single_pos": {
+            "pos": [{
+              "x": 52.9187775,
+              "y": 18.7191887
+            }]
+          },
+          "single_str_utf8": err,
+          "single_rate": 0.9405303,
+          "left": 100,
+          "top": 80,
+          "right": 121.645035,
+          "bottom": 40.2459221,
+          "translate":err
+        }]
+      })
     })
+    
 },
 //初始化图片信息
 initialImgText(){ 
@@ -197,30 +281,41 @@ getMidpoint(a, b) {
     app.getCurrentLang(this);
     const tThis=this;
     // app.globalLogin();
-    // xy.showTip("服务器正在解析资源");
+    // xy.showTip("服务器正在解析资源"); 
+    app.globalData.selectPicturPath=options.selectPicturPath;
+    // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
+    // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
+    console.log("options.selectPicturPath:",options.selectPicturPath);
     wx.getImageInfo({
-      src: app.globalData.selectPicturPath,
+      src: options.selectPicturPath,
       success (res) {
         // tThis.getPictureRate(res);
         
         const sysInfo= wx.getSystemInfoSync()
         const windowWidth =sysInfo.windowWidth
-        console.warn("sysInfo:",sysInfo)
-        console.warn("picpic:",res)
+        console.warn("sysInfo:",sysInfo) 
         console.log("getImageInfo:",res)
         let scale=1;
+        const upload_pic_info= wx.getStorageSync('upload_pic_info') 
         if(res.width>windowWidth){
           scale=windowWidth/res.width-0.05;
           console.warn("picpic-rate:",scale)  
+        }else{
+          console.warn("picpic-upload_pic_info:",upload_pic_info)  
+          if(upload_pic_info.width/res.width>2){
+            scale=1.2;//upload_pic_info.width/res.width-0.6;
+          }
         }
         tThis.setData({ 
           selectPicturWidth: res.width, 
           selectPicturHeight: res.height, 
-          selectPicturPath: app.globalData.selectPicturPath,
+          // selectPicturWidth: upload_pic_info.width/res.width>2?upload_pic_info.width:res.width, 
+          // selectPicturHeight: upload_pic_info.width/res.width>2?upload_pic_info.height:res.height, 
+          selectPicturPath: options.selectPicturPath,
           scale: scale
         });
         console.log("app.globalData.selectPicturPath：",tThis.data.selectPicturPath,app.globalData.selectPicturPath)
-        tThis.getPictureInfo(tThis.data.selectPicturPath)
+        tThis.getPictureInfo(options.selectPicturPath)
        
       }
     })

@@ -11,16 +11,23 @@
   </page-meta>
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="container " > 
-    <textarea class="textarea-container" maxlength="{{isVip?-1:2000}}" placeholder="请输入需要翻译的文本" 
-    focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText" />
-    <view class="bottom-text">
-      <text class="text-btn" data-actype="1"  bindtap="textFun">粘贴</text>
-      <text class="text-btn" data-actype="3"  bindtap="textFun">清空</text>
+    <view class="text-container" >
+          <textarea class="textarea-container" maxlength="{{isVip?-1:2000}}" placeholder="请输入需要翻译的文本" 
+        focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText" />
+        <view class="bottom-text">
+          <view class="img-text" data-actype="1"  bindtap="textFun">
+            <image src="../../images/icon/paste.png" ></image>
+            粘贴
+          </view>
+          <view class="img-text"  data-actype="3"  bindtap="textFun">
+            <image src="../../images/icon/clear.png" ></image>清空
+          </view>
+        </view>
     </view>
   </view>
 </scroll-view> 
 
-<view class="tab-bar tabbar tab-bottom safe-area">                   
+<view class="tab-bar tabbar tab-bottom safe-area transparent">                   
   <button class="circle-btn picture-action" data-actype="2"
     bindtap="textFun">确定翻译</button>
 </view>

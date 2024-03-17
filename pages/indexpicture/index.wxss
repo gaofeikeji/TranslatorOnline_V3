@@ -2,6 +2,9 @@
 page{
   height: 100%;
 }
+.container{
+  background: rgba(204, 204, 204, 1);
+}
 .start-media{ 
   height: 900rpx;
   text-align: center;
@@ -12,6 +15,8 @@ page{
   margin:0;
   height: 100%;
   width: 100%; 
+  text-align: center;
+  display: flex;
 }
 .zoom-area{
   width: 80%;
@@ -20,7 +25,7 @@ page{
   right: 0;
   top:0;
   bottom: 0;
-  background-color: rgba(206, 206, 206, 0.2);
+  background-color: rgba(255,255,255,1);
   border: 2px solid rgb(37, 37, 37);
   color: #000;
 }
@@ -35,11 +40,8 @@ page{
   left: 0;
 }
 .media-text{
-  font-size: 26rpx;
-  /* */
-  /* font-weight: bold; */
+  font-size: 20rpx; 
   color: #000;
-  /* height: 120rpx;*/ 
 }
 
 .media-text-item.selected .media-text{
@@ -47,8 +49,10 @@ page{
   /* transform: scale(1.2); */
 }
 
-
-
+.action-container{
+  /* height: 392px; */
+}
+ 
 
 
 

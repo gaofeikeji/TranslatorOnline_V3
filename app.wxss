@@ -68,9 +68,9 @@ background: rgba(204, 204, 204, 0.2);
 button.circle-btn.picture-action{
   width: 260rpx !important;
   border-radius: 40rpx;
-  height: 70rpx !important;
-  line-height: 70rpx !important;
-  padding:0 !important;
+  height:80rpx !important;
+  line-height: 80rpx !important;
+  padding:0 !important; 
   background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
   color: #fff;
   border: 2rpx solid #fff; 
@@ -112,15 +112,19 @@ button.circle-btn.picture-action{
 .tab-bottom {
   width: 100%;
   display: flex;
-  background-color: #fff;
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 9999;
-  background-color: rgba(255，255，255，1);
+  z-index: 9999; 
+  background: #fff;
   border-top: 1px solid #ddd;
   border-top-left-radius: 30rpx;
   border-top-right-radius: 30rpx;
+}
+.tab-bottom.transparent{
+  background-color: transparent;
+  border-top-color: transparent;
+
 }
 
 .tabbar-item {
@@ -133,8 +137,8 @@ button.circle-btn.picture-action{
 }
 
 .tabbar-item image {
-  width: 45rpx;
-  height: 45rpx;
+  width: 21px;
+  height: 21px;
   background-color: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
 }
 
@@ -168,6 +172,7 @@ button.circle-btn.picture-action{
   border-radius: 50%;
   text-align: center;
   line-height: 20px;
+  margin: 8px 0;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
 }
@@ -199,13 +204,13 @@ button.circle-btn.picture-action{
   line-height: 40px;
   display: block;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 5px; 
 }
 .action-box image{
   display: inline-block;
   width: 15rpx;
   height: 15rpx;
-  margin:0  20px;
+  margin:0  10px;
 }
 .action-box image:last-child{
   float: right;
@@ -215,14 +220,17 @@ button.circle-btn.picture-action{
   display: inline-block; 
   width: 20px;
   height: 46px;
-  font-size: 40rpx;
+  font-size:30rpx;
   color: rgba(0, 0, 0, 0.6);
+  font-weight: 500;
 }
 .action-box .text-btn.close{
   float: right;
-  margin-right:60rpx;
+  margin-right:20rpx;
 }
-
+.action-box .text-btn.selected{
+  color: rgba(31, 113, 255, 0.8) ;
+}
 .scroll-translate{
   height: 300rpx;
   width: 100%;
@@ -235,19 +243,51 @@ button.circle-btn.picture-action{
 }
 .lang-item text.horizon-text{
   display: inline-block; 
-  width: 44%;
+  width: 50%;
   /* line-height: 60rpx; */
   border-top: 1px solid rgb(184, 184, 184);
   border-left: 1px solid rgb(184, 184, 184);
   vertical-align: top;
   padding: 6rpx 2%;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 18px;
+}
+.lang-item .horizon-text{
+
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.7);
+}
+.lang-item:not(.selected ) text.horizon-text.translate{
+
+  color: rgba(0, 0, 0,1);
 }
 .lang-item.selected text{
   color: rgba(31, 113, 255, 0.8) ;
 }
+
+.lang-item  .translate-text{
+  font-weight: 400;
+  color: #000;
+}
+.lang-item  .translate-margin{
+  margin: 20rpx 0 0 0;
+
+}
 .lang-verticl-item{
   border-bottom: 1px solid rgb(184, 184, 184);
   padding: 0 16rpx;
+}
+.verticle-text{
+  display: flex;
+  /* flex-direction: column; */
+}
+.lang-verticl-item{
+  padding: 10rpx 15rpx;
 }
 .lang-verticl-item .title{
   width: 100rpx;
@@ -255,8 +295,11 @@ button.circle-btn.picture-action{
 .lang-verticl-item .title.translate{
   color: rgba(31, 113, 255, 1);
 }
-.lang-verticl-item .right-text{
-  min-width: 400rpx;
+.lang-verticl-item .right-text{ 
+  flex: 1;
+}
+.verticle-text text.text-light{
+  color: rgba(0, 0, 0, 0.7);
 }
 
 /* 通用view 模式btn */
@@ -264,19 +307,26 @@ button.circle-btn.picture-action{
   padding: 20rpx;
 }
 .action-btn-box .closeBtn{
-  margin-left: 80%;
+  margin-left: 92%;
 }
+
+.selected-image{
+  width: 80%;
+  margin: 0 auto;
+}
+
+
 .action-btn-box .action-btn{
   border-radius: 2px;
   color: #000;
 background: rgba(255, 255, 255, 1); 
 border: 1px solid rgba(0, 0, 0, 0.15);
 box-shadow: 1px 1px 2px  rgba(0, 0, 0, 0.05);
-  width: 80%;
+  width: 90%;
   /* max-width: 460rpx; */
-  height: 100rpx;
-  line-height: 100rpx;
-  margin: 30rpx;
+  height:48px;
+  line-height: 48px;
+  margin: 15rpx;
   text-align: center;
 }
 .action-btn-box .action-btn.selected{

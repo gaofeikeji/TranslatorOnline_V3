@@ -1,11 +1,28 @@
 /* pages/text/index.wxss */
-
+.scrollarea{
+  margin-top: 0;
+}
 .container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-}             
+  justify-content: center;
+   background: #ccc;
+   padding-top: 58rpx ;
+
+}           
+.text-container{
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  margin: 0 15rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+}  
 .textarea-container{  
   background: rgba(0, 0, 0, 0.03);
   margin-top: 30px;
@@ -18,9 +35,20 @@
   color: #000;
   width: 90%;
   padding: 20rpx;
+  display: flex;
+  flex-direction: row;
 }
-.text-btn{
-    margin: 15rpx;
+.img-text{ 
+  flex-direction: column;
+  margin-right: 40rpx;
+  flex-wrap: nowrap;
+  height:60rpx;
+  line-height: 60rpx;
+}
+.img-text image{
+  display:inline-flex;
+    height: 26rpx;
+    width: 26rpx;
 }
 .picture-action{
   transform: translateY(18px);

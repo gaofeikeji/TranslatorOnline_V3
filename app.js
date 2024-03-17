@@ -145,8 +145,8 @@ App({
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
     // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度
     // console.warn(systemInfo);
-    // console.warn(menuButtonInfo);
-    this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight)  + menuButtonInfo.height+menuButtonInfo.top/2;
+    console.warn(menuButtonInfo);
+    this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight)  + menuButtonInfo.height+(menuButtonInfo.top-systemInfo.statusBarHeight/2)/2;
     this.globalData.statusBarHeight = systemInfo.statusBarHeight;
     this.globalData.menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;
     this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
@@ -427,6 +427,7 @@ App({
     return new Promise((resolve, reject) => {
       wx.request({
         url:this.globalData.globalHost+ url,
+        // url:"https://translate.mp.lighthg.com"+ url,
         method: method,
         data: data,
         header: {

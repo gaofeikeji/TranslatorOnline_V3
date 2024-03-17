@@ -13,14 +13,24 @@ currentTargetLang="{{currentTargetLang}}"
         class="start-image"></camera>
     </block>
     <block wx:else> 
-          <image class="start-image" src="{{selectPicturPath}}"></image> 
+      <view > 
+        <block wx:if="{{ selectPicturPath=='' }}">   
           <view class="home-info">
               <text class="text-box-notice ">相机加载中</text>
           </view>
+         </block>
+         <block wx:else>    
+          <view style="text-align: center;"> 
+            <image class="selected-image" src="{{selectPicturPath||'/images/bg/bg-dark.png'}}"></image> 
+            </view>
+         </block>
+      </view>
     </block> 
+
+
     <view class="flex-center"> 
-      <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
     </view>
+    <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
     
 <!-- 底部导航 -->
 <view class="tab-bar tabbar tab-bottom safe-area">

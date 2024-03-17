@@ -6,11 +6,13 @@ page {
   margin: 0;
 }
 .container{ 
-  display: flex;
+  /* display: flex; */
 }
 .home-info{ 
   height:40rpx; 
-  width: 400rpx;
+  margin-top: 50%;
+  width:100%;
+  text-align: center;
   font-weight: 500;
 }
 
@@ -20,7 +22,6 @@ page {
   left: 0;
   right: 0;
   z-index: 1100; 
-  line-height: 60px;
 } 
 .start-image{  
   width: 100%;

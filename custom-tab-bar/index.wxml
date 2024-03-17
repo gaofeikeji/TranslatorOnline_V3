@@ -2,26 +2,32 @@
 <view class="tab-bar tabbar tab-top" style="padding-top: {{statusBarHeight}}px;">
   <view class="current-language-box " 
   style="height:{{navBarHeight}}px;padding:0 {{menuRight}}px;">  
-     <block wx:if="{{!requireBack}}"> 
+     <block wx:if="{{canBack}}"> 
         <text    bindtap="back"  
               class="btn-back"
               hover-stay-time="100"
               aria-role="button"
               aria-label="返回" ></text>
       </block>   
-      <view class="" style="display: flex;" bindtap="selectLang">
-        <text class="lang text-active">{{langData[currentLang]}}</text>
-        <image class="lang_switch" mode="aspectFit" src="/images/switch_gray.png"></image> 
-        <text class="lang text-active">{{langData[currentTargetLang]}}</text>
-        <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
-      </view>
+      <!-- 只显示标题的特殊处理，其他的全部显示 -->
+      <block wx:if="{{onytitle}}">   
+        <view style="display: flex;" ><text  class="page-title" > {{title}}</text></view>
+      </block>    
+      <block wx:else>  
+        <view class="" style="display: flex;" bindtap="selectLang">
+          <text class="lang text-active">{{langData[currentLang]}}</text>
+          <image class="lang_switch" mode="aspectFit" src="/images/switch_gray.png"></image> 
+          <text class="lang text-active">{{langData[currentTargetLang]}}</text>
+          <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
+        </view>
+      </block>   
     
   </view>
 </view>
  
   <!-- 语言容器 -->
 <view class="section-box-lang {{editLang?'edit-lang':''}}"
- style="height: {{screenHeight-145}}px;top:{{navBarHeight+statusBarHeight}}px;left:0;">     
+ style="height: {{screenHeight-140}}px;top:{{navBarHeight+statusBarHeight}}px;left:0;">     
   <!-- 源语言 -->
    <view  class="flex-item current-language-list" >
       <scroll-view class="scroll-box" type="list"	scroll-y="true" bind:tap="fromIdxChange">

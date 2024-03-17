@@ -46,7 +46,6 @@ Page({
         "iconPath": "/images/nav/result.png",
         "selectedIconPath": "/images/nav/result.png",
         "text": "左右对比",  
-        "selectedText":"逐行对比",
         "actype": 40,
         "type":0
       },                                                                                       
