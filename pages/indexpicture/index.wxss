@@ -3,7 +3,8 @@ page{
   height: 100%;
 }
 .container{
-  background: rgba(204, 204, 204, 1);
+  background: #ccc;
+  background: rgba(0, 0, 0, 0.03);
 }
 .start-media{ 
   height: 900rpx;

@@ -10,15 +10,17 @@ currentTargetLang="{{currentTargetLang}}"
   <view class="container "> 
     
 <custom-ads ad_type="7" style="height: 100%;">
-     <block wx:if="{{ initCamral }}">  
-          <camera device-position="back"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
+     <block wx:if="{{ initCamral }}">   
+          <camera  device-position="back" style="top:{{navBarHeight}}px;width:100%;height:sysInfo.height-navBarHeight-80"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
         class="start-image"></camera>
+ 
     </block>
     <block wx:else> 
       <view > 
         <block wx:if="{{ selectPicturPath=='' }}">   
           <view class="home-info">
               <text class="text-box-notice ">相机加载中</text>
+              
           </view>
          </block>
          <block wx:else>    
@@ -31,44 +33,45 @@ currentTargetLang="{{currentTargetLang}}"
 
  
     <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
+    <!-- 收藏 -->
+    <add-tips />
     
   <!-- 底部banner广告 -->
   <view class="adcontainer">
-    <custom-ads ad_type="3" ad_pos="bottom"></custom-ads>
+    <custom-ads ad_type="3" ad_pos="bottom"></custom-ads> 
   </view>
 </custom-ads>
-<!-- 底部导航 -->
-<view class="tab-bar tabbar tab-bottom safe-area">
-  <view 
-      class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
-       wx:for="{{ list }}"  
-      wx:key="index"
-      data-page="{{ item.pagePath }}" 
-      data-index="{{ index }}"
-      data-type="{{ item.type }}"
-      data-notpage="{{ item.notpage }}"
-      bindtap="selectPage"
-  >
-      <block wx:if="{{ item.type === 0 }}">
-          <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
-          <text>{{ item.text }}</text>
-      </block>
-      <block wx:else>
-          <view class="publish">
-          <image src="/images/add.png"></image>
-          </view>
-      </block>
-  </view>
-</view>
   </view>
 </scroll-view>
-
-
-<view class="bottom-picture-box {{showSelectImg?'':'hidden'}}">
-  <view class="picture-box-item" bind:tap="takePicture" >从相册选择图片</view>
-  <view class="picture-box-item" bindtap="takePhotoWithMessage">从聊天记录选择图片</view>
-  <view class="picture-box-cancel" bindtap="cancelPictureSelect">取消</view>
-</view> 
+ 
+    <!-- 底部导航 -->
+    <view class="tab-bar tabbar tab-bottom safe-area">
+      <view 
+          class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
+          wx:for="{{ list }}"  
+          wx:key="index"
+          data-page="{{ item.pagePath }}"  
+          data-index="{{ index }}"
+          data-type="{{ item.type }}"
+          data-notpage="{{ item.notpage }}"
+          bindtap="selectPage"
+      >
+          <block wx:if="{{ item.type === 0 }}">
+              <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+              <text>{{ item.text }}</text>
+          </block>
+          <block wx:else>
+              <view class="publish">
+              <image src="/images/add.png"></image>
+              </view>
+          </block>
+      </view>
+    </view>
+  <view class="bottom-picture-box {{showSelectImg?'':'hidden'}}">
+    <view class="picture-box-item" bind:tap="takePicture" >从相册选择图片</view>
+    <view class="picture-box-item" bindtap="takePhotoWithMessage">从聊天记录选择图片</view>
+    <view class="picture-box-cancel" bindtap="cancelPictureSelect">取消</view>
+  </view>  
 
 <!-- canvas压缩图片 -->
 <canvas canvasId="mCanvas" 
@@ -78,8 +81,6 @@ style="position: fixed; left: -9999px; top: -9999px; width:{{ccWidth}}px;height:
 <view class="ad_back" wx:if="{{notVip == 1}}">
   <custom-ad ad_type="{{3}}"></custom-ad>
 </view>
+
 <!-- 隐私组件 -->
 <privacy></privacy>
-
-<!-- 收藏 -->
-<add-tips />

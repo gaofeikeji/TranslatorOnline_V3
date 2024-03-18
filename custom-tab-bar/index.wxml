@@ -11,7 +11,7 @@
       </block>   
       <!-- 只显示标题的特殊处理，其他的全部显示 -->
       <block wx:if="{{onytitle}}">   
-        <view style="display: flex;" ><text  class="page-title" > {{title}}</text></view>
+        <view style="display: flex;width:230px;" ><text  class="page-title" > {{title}}</text></view>
       </block>    
       <block wx:else>  
         <view class="" style="display: flex;" bindtap="selectLang">

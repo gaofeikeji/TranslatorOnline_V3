@@ -13,6 +13,8 @@ Page({
     ccWidth:0,
     ccHeight:0,
     showSelectImg:false,
+    navBarHeight: app.globalData.navBarHeight, 
+    sysInfo:wx.getSystemInfoSync(),
     list: [
       {
         "iconPath": "/images/picture_translate.png",
@@ -160,53 +162,17 @@ takePicture(){
       sourceType: ["album", "camera"],
       maxDuration: 30,
       camera: 'back',
-      success(res) {
-        const uploadPath = res.tempFiles[0]['tempFilePath']
-        tThis.setData({ 
-            selectPicturPath:uploadPath
-        })
-        console.log(res)
-        console.log(res.tempFiles[0].size)
-        // return  false;
-        wx.showLoading({ title: "翻译中...", mask: true });
-        xy.checkImageSync({
-          tempFilePaths: uploadPath,
-          instance: tThis,
-          success: (imgRes) => {  
-             wx.hideLoading();
-            //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
-                  console.warn("takePicture::imgRes::",imgRes)
-
-              tThis.setData({
-                selectPicturPath: imgRes.url
-              });
-              app.globalData.selectPicturPath=imgRes.url;
-              wx.getImageInfo({
-                src: uploadPath,
-                success (res) {
-                  // tThis.getPictureRate(res);
-                   
-                  console.log("getImageInfo:",res)
-                  wx.setStorageSync('upload_pic_info', res) 
-                  wx.navigateTo({
-                    url: "/pages/indexpicture/index?selectPicturPath="+imgRes.url+"&height="+res.height+"&width="+res.width
-                  })
-                },fail(){
-                  app.showModalClose("获取图片信息失败，请重新上传",20000)
-                }
-              })
-          },
-          fail: (err) => {
-            wx.hideLoading();
-            xy.showTip(err.msg);  
-          },
-        });
+      success(res) { 
+        // wx.setStorageSync('upload_pic_info', res) 
+        // console.warn(res)
+        // wx.navigateTo({
+        //   url: "/pages/indexpicture/index?selectPicturPath=https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg&height=1200&width=800"
+        // })
+        // return false;
+        tThis.confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
       },
       fail(res) {
-        console.warn("cancel_fail::",res) 
-        // wx.navigateTo({
-        //   url: "/pages/indexpicture/index"
-        // })
+        console.warn("cancel_fail::",res)  
       },
       complete(res) { 
         tThis.setData({  
@@ -237,20 +203,73 @@ wx.showActionSheet({
   },
 });
 },
+// 检查图片校验并上传
+confirmImginfo(res,uploadPath){
+  const tThis=this;
+  tThis.setData({ 
+      selectPicturPath:uploadPath
+  })
+  console.log(res)
+  console.log(res.tempFiles[0].size)
+  // return  false;
+  wx.showLoading({ title: "翻译中...", mask: true });
+  xy.checkImageSync({
+    tempFilePaths: uploadPath,
+    instance: tThis,
+    success: (imgRes) => {  
+       wx.hideLoading();
+      //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
+            console.warn("takePicture::imgRes::",imgRes)
+
+        tThis.setData({
+          selectPicturPath: imgRes.url
+        });
+        app.globalData.selectPicturPath=imgRes.url;
+        wx.getImageInfo({
+          src: uploadPath,
+          success (res) {
+            // tThis.getPictureRate(res); 
+            console.log("getImageInfo:",res)
+            wx.setStorageSync('upload_pic_info', res) 
+            wx.navigateTo({
+              url: "/pages/indexpicture/index?selectPicturPath="+imgRes.url+"&height="+res.height+"&width="+res.width
+            })
+          },fail(){
+            app.showModalClose("获取图片信息失败，请重新上传",20000)
+          }
+        })
+    },
+    fail: (err) => {
+      wx.hideLoading();
+      xy.showTip(err.msg);  
+    },
+  });
+},
 //   选择照片
 takePhotoWithMessage(){
     let tThis= this;
     wx.chooseMessageFile({
         count: 1,
-        type: 'image',
+        type: "image", 
         success (res) {
         // tempFilePath可以作为img标签的src属性显示图片
-        console.log(res)
+        console.log("chooseMessageFile:",res)
         console.log(res.tempFiles.size)
-        tThis.setData({
-            selectPicturPath:res.tempFiles[0]['tempFilePath']
-        })
-        }
+        tThis.confirmImginfo(res,res.tempFiles[0]['path']);
+        // tThis.setData({
+        //     selectPicturPath:res.tempFiles[0]['tempFilePath']
+        // })
+        },
+        fail(res) {
+          console.warn("cancel_fail::",res)  
+        },
+        complete(res) { 
+          tThis.setData({  
+            initCamral:true,
+            showSelectImg:  false, 
+            selectPicturPath: ""
+          });
+        },
     })
 }, 
   /**

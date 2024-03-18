@@ -1,0 +1,15 @@
+<ToRate
+  id="rate"
+  scene="{{scene}}"
+  canShow="{{show_rate}}"
+  rateScene="{{rateScene}}"
+  alwaysShow="{{true}}"
+  bind:RateShowSuccess="onRateShowSuccess"
+  bind:RateShowFail="onRateShowFail"
+  bind:RateSuccess="onRateSuccess"
+  bind:RateFail="onRateFail"
+/>
+<!-- 引用 支付组件 -->
+<custom-ads ad_type="1" wx:if="{{showChapinAd}}"></custom-ads>
+
+<vip-member id="pay"></vip-member>

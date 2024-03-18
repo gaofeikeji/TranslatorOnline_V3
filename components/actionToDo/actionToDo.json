@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "ToRate": "/components/ToRate/ToRate",
+    "vip-member": "/components/vip-member/vip-member",
+    "custom-ads":"/components/custom-ads/index"
+  }
+}

@@ -13,22 +13,22 @@ currentTargetLang="{{currentTargetLang}}"
     <!-- <view class="start-media">
       <image class="{{scale?'scale':''}}" src="{{selectPicturPath}}"></image>
     </view>  -->
-    <movable-area scale-area  id="zoomArea" >
+    <movable-area scale-area  id="zoomArea" style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;" >
       <movable-view direction="all"  
-      touch-out-of-bounds="{{true}}" out-of-bounds="{{true}}"   
+      touch-out-of-bounds="{{true}}" out-of-bounds="{{true}}"     scale="{{true}}"    
       scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"  
-       scale-max="5" scale="{{true}}" animation="{{false}}" scale-value="{{showResult==1?scale:0.8}}" 
-       
-   
-      style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;padding:{{showResult==1?20:0}}px" class="zoom-area">
+       scale-max="15" scale="{{true}}" animation="{{false}}" scale-value="{{showResult==1?scale:0.8}}" 
+       damping="30" inertia="{{true}}"
+       bindscale="linstenerScale"
+      style="padding:{{showResult==1?20:0}}px" class="zoom-area">
       <view  class="media-info-box"> 
           <!-- 显示结果 -->
-  <block wx:if="{{ showResult ==   1 }}"> 
+     <block wx:if="{{ showResult ==   1 }}"> 
         <view   
             class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
             wx:for="{{ langList }}"  
             wx:key="index" 
-            data-rate="{{ item.single_rate }}"
+            data-rate="{{ item.single_rate }}"  
             style="left:{{item.left}}px;top:{{item.top}}px;"
              >
             <block wx:if="{{ istranslate }}">
@@ -51,99 +51,115 @@ currentTargetLang="{{currentTargetLang}}"
     </movable-area>
     
     
-  </view>          
+  </view>    
+  
+  <view class="" wx:if="{{notVip == 1}}">
+    <custom-ad ad_type="{{3}}"></custom-ad>
+  </view>      
 </scroll-view>
    
-<!-- 操作容器 -->
-<view class="action-container {{action?'':'hidden'}}">
-  <!-- 仅在切换逐行查看状态下显示的切换按钮 -->
-  <block wx:if="{{actype==1||  actype ==   10||actype ==   11 }}"> 
-    <view class="action-box"  >
-        <!-- <image src="/images/nav/fangxing.png"></image> 
-        <image src="/images/nav/result.png"></image> 
-        <image src="/images/nav/close.png"></image>  -->
-          <text class="text-btn {{currentVisti ==   0?'selected':''}}" data-actype="10"  bindtap="selectVerticle">田</text> 
-          <text class="text-btn  {{currentVisti ==   1?'selected':''}}" data-actype="11"  bindtap="selectVerticle">三</text>
-          <text class="text-btn close" data-actype="0"  bindtap="selectFunction">X</text>
-    </view>
-    
-  </block> 
-  
-  <block wx:if="{{ actype ==   1 }}"> 
-<!-- 逐行对比 -->
-  <block wx:if="{{  currentVisti ==   0 }}"> 
-    <scroll-view class="scroll-translate" style="height: 256px;" type="list"	scroll-y="true">
-      <view class="lang-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"   bindtap="toImageTextItem"
-          wx:for="{{langList}}" wx:key="*this"   
-          data-left="{{item.left}}"  data-top="{{item.top}}">
-          <text class="horizon-text">{{item.single_str_utf8}}</text>
-          <text class="horizon-text translate">{{item.translate}}</text>
-       </view>
-      </scroll-view>
-  </block> 
-  <block wx:if="{{ currentVisti ==   1 }}">  
-    <scroll-view class="scroll-translate" style="height: 256px;" type="list"	scroll-y="true">
-          <view class="lang-verticl-item"    data-left="{{item.left}}"  data-top="{{item.top}}"
-          wx:for="{{langList}}" wx:key="*this"   data-index="{{item.single_rate}}">
-          <view  class="verticle-text ">
-            <text class="title text-light">原文</text><text class="right-text text-light">{{item.single_str_utf8}}</text>
-          </view>
-          <view class="verticle-text">
-            <text class="title translate">译文</text><text class="right-text">{{item.translate}}</text>
-          </view>
-          </view>
-      </scroll-view>
-  </block> 
-  </block>
-<!-- 复制内容-->
-<block wx:if="{{ actype ==   20 }}">
-    <view class="action-btn-box"> 
-        <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
-        <view class="action-btn"  data-actype="51"  bindtap="translateFunction" >仅复制原文</view>
-        <view class="action-btn"  data-actype="52"  bindtap="translateFunction" >仅复制翻译结果</view>
-        <view class="action-btn"  data-actype="53"  bindtap="translateFunction"  >复制原和结果</view>
-    </view>
-    </block> 
-<!-- 导出文件 -->
-<block wx:if="{{ actype ==   30 }}">
-           
-  <view class="action-btn-box"> 
-  <view>
-  
-    <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
-    </view>
-    <view class="action-btn" data-actype="71"  bindtap="translateFunction" >导出TXT文件</view>
-    <view class="action-btn" data-actype="72"  bindtap="translateFunction" >导出Word文档</view>
-    <view class="action-btn" data-actype="73"  bindtap="translateFunction"  >导出Excel文档</view>
-    </view>
-</block> 
-  <!-- 显示结果 -->
-  <!-- <block wx:if="{{ actype ==   40 }}">
-           
-           <view class="action-item">
-             44444444444444
-           </view>
-           </block>  -->
-</view>      
-
 
 <!-- 底部操作区域 -->
 <view class="tab-bar tabbar tab-bottom">
-    <view 
-        class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
-         wx:for="{{ list }}"  
-        wx:key="index"
-        data-index="{{ index }}"
-        data-actype="{{ item.actype }}"
-        bindtap="selectFunction">
-        <block wx:if="{{ item.type === 0 }}"> 
-            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
-            <text>{{ item.actype === 40 ?(showResult ==   1 ?item.selectedText:item.text):(item.text) }}</text>
-        </block>
-        <block wx:else>
-            <view class="publish">
-            <image src="/images/add.png"></image>
-            </view>
-        </block>
-    </view>
+  <view 
+      class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
+       wx:for="{{ list }}"  
+      wx:key="index"
+      data-index="{{ index }}"
+      data-actype="{{ item.actype }}"
+      bindtap="selectFunction">
+      <block wx:if="{{ item.type === 0 }}"> 
+          <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+          <text>{{ item.actype === 40 ?(showResult ==   1 ?item.selectedText:item.text):(item.text) }}</text>
+      </block>
+      <block wx:else>
+          <view class="publish">
+          <image src="/images/add.png"></image>
+          </view>
+      </block>
+  </view>
 </view>
+
+<!-- 操作容器 -->
+<block wx:if="{{action}}">
+  
+
+  <view class="action-container {{action?'':'hidden'}}">
+    <!-- 仅在切换逐行查看状态下显示的切换按钮 -->
+    <block wx:if="{{actype==1||  actype ==   10||actype ==   11 }}"> 
+      <view class="action-box"  >
+          <!-- <image src="/images/nav/fangxing.png"></image> 
+          <image src="/images/nav/result.png"></image> 
+          <image src="/images/nav/close.png"></image>  -->
+            <text class="text-btn {{currentVisti ==   0?'selected':''}}" data-actype="10"  bindtap="selectVerticle">田</text> 
+            <text class="text-btn  {{currentVisti ==   1?'selected':''}}" data-actype="11"  bindtap="selectVerticle">三</text>
+            <text class="text-btn close" data-actype="0"  bindtap="selectFunction">X</text>
+      </view>
+      
+    </block> 
+    
+    <block wx:if="{{ actype ==   1 }}"> 
+  <!-- 逐行对比 -->
+    <block wx:if="{{  currentVisti ==   0 }}"> 
+      <scroll-view class="scroll-translate" style="height: 256px;" type="list"	scroll-y="true">
+        <view class="lang-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"   bindtap="toImageTextItem"
+            wx:for="{{langList}}" wx:key="*this"   
+            data-left="{{item.left}}"  data-top="{{item.top}}">
+            <text class="horizon-text">{{item.single_str_utf8}}</text>
+            <text class="horizon-text translate">{{item.translate}}</text>
+         </view>
+        </scroll-view>
+    </block> 
+    <block wx:if="{{ currentVisti ==   1 }}">  
+      <scroll-view class="scroll-translate" style="height: 256px;" type="list"	scroll-y="true">
+            <view class="lang-verticl-item"    data-left="{{item.left}}"  data-top="{{item.top}}"
+            wx:for="{{langList}}" wx:key="*this"   data-index="{{item.single_rate}}">
+            <view  class="verticle-text ">
+              <text class="title text-light">原文</text><text class="right-text text-light">{{item.single_str_utf8}}</text>
+            </view>
+            <view class="verticle-text">
+              <text class="title translate">译文</text><text class="right-text">{{item.translate}}</text>
+            </view>
+            </view>
+        </scroll-view>
+    </block> 
+    </block>
+  <!-- 复制内容-->
+  <block wx:if="{{ actype ==   20 }}">
+      <view class="action-btn-box"> 
+          <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+          <view class="action-btn"  data-actype="51"  bindtap="translateFunction" >仅复制原文</view>
+          <view class="action-btn"  data-actype="52"  bindtap="translateFunction" >仅复制翻译结果</view>
+          <view class="action-btn"  data-actype="53"  bindtap="translateFunction"  >复制原和结果</view>
+      </view>
+      </block> 
+  <!-- 导出文件 -->
+  <block wx:if="{{ actype ==   30 }}">
+             
+    <view class="action-btn-box"> 
+    <view>
+    
+      <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+      </view>
+      <view class="action-btn" data-actype="71"  bindtap="translateFunction" >导出TXT文件</view>
+      <view class="action-btn" data-actype="72"  bindtap="translateFunction" >导出Word文档</view>
+      <view class="action-btn" data-actype="73"  bindtap="translateFunction"  >导出Excel文档</view>
+      </view>
+  </block> 
+    <!-- 显示结果 -->
+    <!-- <block wx:if="{{ actype ==   40 }}">
+             
+             <view class="action-item">
+               44444444444444
+             </view>
+             </block>  -->
+  </view>      
+  
+</block>
+
+
+<vip-member id="pay"></vip-member>
+
+<!-- 客服 -->
+<customerService direction="right" DistanceFromBottom="20%"  />
+<ToRate id="rate" scene="{{scene}}" canShow="{{show_rate}}" rateScene="{{rateScene}}" alwaysShow="{{true}}" bind:RateShowSuccess="onRateShowSuccess" bind:RateShowFail="onRateShowFail" bind:RateSuccess="onRateSuccess" bind:RateFail="onRateFail" />

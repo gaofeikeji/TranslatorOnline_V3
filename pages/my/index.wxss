@@ -1,6 +1,6 @@
 .container{
   background: rgba(247, 247, 247, 0.2);
-  padding: 60px 12rpx;
+  padding: 90px 12rpx;
 }
 
 .user_container {

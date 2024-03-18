@@ -7,7 +7,11 @@ page{
   .text{
     color: rgba(255,255,255);
   }
-  
+  .page-title{
+    text-align: center;
+    width: 100%;
+    line-height: 70px;
+  }
   /* 顶部导航栏(  全局语言切换) */
   .tab-top{ 
     width: 100%;
@@ -32,18 +36,24 @@ page{
     flex-wrap: nowrap;
     margin-left: 50rpx;
   }
-  .lang{
+  .lang{    
     display: inline-block;
-    font-size: 30rpx;
-    font-weight: 600;
+    font-size: 36rpx;
+    font-weight: bold;
+    letter-spacing: 0rpx;
+    line-height: 52.12rpx; 
+    text-align: left;
+    vertical-align: top;
   }
   .lang_switch{ 
     display: inline-flex;
-    font-size: 24rpx;  
-    width: 30rpx; 
-    height: 30rpx;
-    margin:  0 30rpx;
-    transform: translateY(6rpx);
+    font-size: 24rpx;   
+    margin:  10rpx 30rpx;
+    transform: translateY(6rpx); 
+    width: 25.89rpx;
+    height: 22.23rpx;
+    opacity: 1; 
+
   }
   
 .btn-back{
@@ -60,7 +70,7 @@ page{
   padding: 0 30rpx 0 0;
 }
   .text-active{
-    color: rgba(41,119,255) ;
+    color: rgba(31, 113, 255, 1);
   }
   /* 全局语言切换容器 */
   .section-box-lang{ 
@@ -82,8 +92,9 @@ page{
     padding:25rpx  35rpx;
     text-align: center;
     color: #000;
-    position: relative; 
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    position: relative;  
+    opacity: 1; 
+    border: 2rpx solid rgba(0, 0, 0, 0.1);
     border-bottom: none;
     box-sizing: content-box;
   }
@@ -91,29 +102,39 @@ page{
     height: 91%; 
   }
   .lang-item{
-    height: 66rpx;
-    line-height: 66rpx;
-    border-radius: 10rpx;
+    width: 314rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    opacity: 1;
+    border-radius: 8rpx; 
+    font-size: 32rpx;
+    font-weight: 700;
+    letter-spacing: 0rpx;
+    color: rgba(0, 0, 0, 1);
+    text-align: center;
+    vertical-align: top;
   }
   .lang-item.selected{
-    background:#1F71FF;
+    background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
     color: #fff;
   }
   /* 语言切换的操作按钮 */
   .bootom-action{
     width: 100%;
-    height: 100rpx;
-    line-height: 100rpx;
+    height: 110rpx;
+    line-height: 110rpx;
     position: absolute;
     left: 0;
     bottom: 0px;
-    z-index: 8888;
-    font-weight: 600;
+    z-index: 9000;
+    font-weight: bold;
     color: #fff;
-    background: #838383;
+    background: #858585;
+    /* background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%); */
     border-bottom-left-radius: 20rpx;
     border-bottom-right-radius: 20rpx;
   }
   .bootom-action.selected{
-    background:#1F71FF;
+    background:#2474FF;
+    /* background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%); */
   }

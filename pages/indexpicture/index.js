@@ -64,13 +64,13 @@ Page({
           "y": 18.7191887
         }]
       },
-      "single_str_utf8": "LUENCE",
+      "single_str_utf8": "正在加载中…………",
       "single_rate": 0.9405303,
       "left": 52.647438,
       "top": 18.7191887,
       "right": 121.645035,
       "bottom": 40.2459221,
-      "translate": "LUENCE"
+      "translate": "正在加载中…………"
     }],
     istranslate:true,  
     scale:1, 
@@ -197,7 +197,7 @@ showActionBox(actype){
       actype: actype, 
       showResult: this.data.showResult==1?0:1, 
       see:false,
-      scale:1
+      scale:this.data.showResult==1?1.8:1
       })
       return false;
   }
@@ -230,8 +230,18 @@ getPictureInfo(picUrl){
           langList: res.data 
           })
     }).catch(err => {
-      console.log('err:', err)
       wx.hideLoading();
+      // 暂时屏蔽
+      // console.log('err:', err,err.indexOf("err: OCR 服务异常"))
+      // if(err.indexOf("err: OCR 服务异常")==-1){
+      //   app.showModalClose("当前排队的人太多，请稍后重试……",2000);
+      //   setTimeout(function(){
+      //     wx.navigateTo({
+      //       url: '../index/index'
+      //     })
+      //   },2000)
+      //   return false;
+      // }
       tThis.setData({
         langList:[{
           "single_pos": {
@@ -251,6 +261,9 @@ getPictureInfo(picUrl){
       })
     })
     
+},
+linstenerScale(event){
+  console.warn("linstenerScale",event)
 },
 //初始化图片信息
 initialImgText(){ 
@@ -300,7 +313,10 @@ getMidpoint(a, b) {
    * 生命周期函数--监听页面加载
    */
   
-  onLoad(options) { 
+  onLoad(options) {  
+    // app.userCenterLogin();
+    this.payComponent = this.selectComponent("#pay");
+    this.rateComponent = this.selectComponent("#rate");
     app.getCurrentLang(this);
     const tThis=this;
     // app.globalLogin();
@@ -309,6 +325,35 @@ getMidpoint(a, b) {
     // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
     // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
     console.log("options.selectPicturPath:",options.selectPicturPath);
+    this.getImageInfo(tThis,options);
+  },
+  getPictureRate(pic){
+    const sysInfo= wx.getSystemInfoSync()
+    const windowWidth =sysInfo.windowWidth
+    console.warn("sysInfo:",sysInfo)
+    console.warn("picpic:",pic)
+    if(pic.width>windowWidth){
+      console.warn("picpic-rate:",windowWidth/pic.width) 
+      // scale
+      // this.setData({ 
+      //   scale: windowWidth/pic.width,  
+      // });
+    }
+    return {
+      width:0,
+      height:0
+    }
+  },
+  getImageInfo(tThis,options){
+    if(!options.selectPicturPath){
+      app.showModalClose("非法操作,图片不存在",2000);
+      setTimeout(function(){
+        wx.navigateTo({
+          url: '../index/index'
+        })
+      },2000)
+      return false;
+    }
     wx.getImageInfo({
       src: options.selectPicturPath,
       success (res) {
@@ -343,23 +388,6 @@ getMidpoint(a, b) {
       }
     })
   },
-  getPictureRate(pic){
-    const sysInfo= wx.getSystemInfoSync()
-    const windowWidth =sysInfo.windowWidth
-    console.warn("sysInfo:",sysInfo)
-    console.warn("picpic:",pic)
-    if(pic.width>windowWidth){
-      console.warn("picpic-rate:",windowWidth/pic.width) 
-      // scale
-      // this.setData({ 
-      //   scale: windowWidth/pic.width,  
-      // });
-    }
-    return {
-      width:0,
-      height:0
-    }
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -371,6 +399,19 @@ getMidpoint(a, b) {
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    if (app.globalData.access_token) {
+      console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+      this.setData({
+        notVip: !app.globalData.subscribe.is_vip
+      })
+    } else {
+      app.userCenterLoginCallbackIndex = () => {
+        console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+        this.setData({
+          notVip: !app.globalData.subscribe.is_vip
+        })
+      };
+    }
 
   },
 
