@@ -1,5 +1,14 @@
 {
   "usingComponents": { 
-    "navigation-bar": "/custom-tab-bar"
-  }
+    "navigation-bar": "/custom-tab-bar",
+    "svg-icon": "/components/svg-icon/index", 
+    "privacy": "/components/privacy/privacy",
+    "add-tips": "/components/add-tips/index",
+    "wxPay": "/components/wx-pay/index",
+    "ToRate": "/components/ToRate/ToRate",
+    "customerService": "/components/customerService/customerService",
+    "custom-ad": "/components/custom-ads/index",
+    "vip-member": "/components/vip-member/vip-member",
+    "user-member": "/components/user-member/user-member"
+  } 
 }

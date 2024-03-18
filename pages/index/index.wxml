@@ -8,6 +8,8 @@ currentTargetLang="{{currentTargetLang}}"
   /> 
 <scroll-view class="scrollarea include-nav" scroll-y type="list">
   <view class="container "> 
+    
+<custom-ads ad_type="7" style="height: 100%;">
      <block wx:if="{{ initCamral }}">  
           <camera device-position="back"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
         class="start-image"></camera>
@@ -27,11 +29,14 @@ currentTargetLang="{{currentTargetLang}}"
       </view>
     </block> 
 
-
-    <view class="flex-center"> 
-    </view>
+ 
     <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
     
+  <!-- 底部banner广告 -->
+  <view class="adcontainer">
+    <custom-ads ad_type="3" ad_pos="bottom"></custom-ads>
+  </view>
+</custom-ads>
 <!-- 底部导航 -->
 <view class="tab-bar tabbar tab-bottom safe-area">
   <view 
@@ -69,3 +74,12 @@ currentTargetLang="{{currentTargetLang}}"
 <canvas canvasId="mCanvas" 
 style="position: fixed; left: -9999px; top: -9999px; width:{{ccWidth}}px;height:{{ccHeight}}px;"></canvas>
   
+
+<view class="ad_back" wx:if="{{notVip == 1}}">
+  <custom-ad ad_type="{{3}}"></custom-ad>
+</view>
+<!-- 隐私组件 -->
+<privacy></privacy>
+
+<!-- 收藏 -->
+<add-tips />

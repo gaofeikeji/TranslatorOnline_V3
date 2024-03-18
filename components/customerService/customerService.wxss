@@ -127,9 +127,15 @@ page {
   box-sizing: border-box;
 }
 .sv_image_back_my{
-  width: 40rpx;
+  /* width: 40rpx;
   height: 40rpx;
-  margin-right: 20rpx;
+  margin-right: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center; */
+
+  width: 100rpx;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

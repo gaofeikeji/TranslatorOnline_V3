@@ -20,10 +20,13 @@
       <!-- 关闭窗口 -->
       <image src="./images/close.png" mode="widthFix" class="close" bind:tap="onClickCloseBtn" />
     </view>
-    <view class="tips">
+    <view class="padding_30">
+          <view class="tips">
       <image src="./images/vip.png" mode="widthFix"></image>
       <text class="tips-text">{{packages_data.pay_config.title_desc}}</text>
     </view>
+    </view>
+
     <scroll-view scroll-x="true">
       <view class="list-wrapper" scroll-x="true">
         <!-- 从接口拿到数据循环处理 -->
@@ -45,7 +48,10 @@
         </block>
       </view>
     </scroll-view>
+
     <!-- 特权 展示 -->
+    <view class="padding_30">
+
     <view class="privilege">
       <!-- 使用接口数据 -->
       <block wx:for="{{packages_data.pay_config.vip_privilege}}" wx:key="index">
@@ -53,8 +59,11 @@
           <image src="./images/privi.png" mode="widthFix"></image>
           <text class="privilege-text">{{item}}</text>
         </view>
+        
       </block>
     </view>
+    </view>
+    
     <!-- 开通会员按钮 -->
     <view class="open-btn"  bind:tap="onClickToPay">{{packages_data.pay_config.btn_text}}</view>
   </view>

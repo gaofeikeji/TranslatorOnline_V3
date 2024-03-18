@@ -1,0 +1,49 @@
+
+<navigation-bar
+title="{{nbTitle}}"
+onytitle="{{true}}"
+canBack="{{true}}" 
+color-animation-duration="2000"
+color-animation-timing-func="easeIn"
+/> 
+
+<view class="container">
+  <form bindsubmit="formSubmit">
+    <view class="edit_header">
+      <view class="sub_title_my">
+        <view class="sub_blue"></view>
+        <view class="sub_text">编辑头像和昵称</view>
+      </view>
+      <view class="random_avatar" bindtap="randomAvatar">
+        <image class="random_avatar_img" src="./icon-refresh.svg" mode="aspectFit"></image>
+        <view>随机头像昵称</view>
+      </view>
+    </view>
+    <view class="box__container">
+      <view class="update_info">
+        <view class="update_nickname">
+          <label for="nickname">我的昵称</label>
+          <input id="nickname" bindchange="submitChange" bindinput="submitInput" maxlength="20" name="nickName" placeholder="请输入昵称" placeholder-class="input__placeholder" type="{{canIUseUserFill?'nickname':'text'}}" value="{{nickName}}"></input>
+        </view>
+        <view class="update_avatar">
+          <view class="update_avatar_text">我的头像</view>
+          <view class="avatar_img" wx:if="{{!avatarUrl}}">
+            <image class="avatar_img_noava" src="./icon-avatar.svg" mode="aspectFit"></image>
+          </view>
+          <view class="avatar_img" wx:else>
+            <image class="avatar_img_has" mode="aspectFill" src="{{avatarUrl}}"></image>
+          </view>
+          <button class="setting" bindchooseavatar="onChooseAvatar" openType="chooseAvatar" plain="true">
+            设置头像
+          </button>
+        </view>
+      </view>
+    </view>
+    <!-- 保存 -->
+    <view class="footer_btn">
+      <button class="submit_btn2" disabled="{{submiting}}" formType="submit" loading="{{submiting}}">
+        {{isUpdate?'确定保存':'登录'}}
+      </button>
+    </view>
+  </form>
+</view>

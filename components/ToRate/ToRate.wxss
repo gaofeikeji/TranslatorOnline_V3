@@ -135,11 +135,14 @@
   width: 80rpx;
   height: 80rpx;
 }
-
-.star_image image {
+.star_image_image{
   width: 80rpx;
   height: 75rpx;
 }
+/* .star_image image {
+  width: 80rpx;
+  height: 75rpx;
+} */
 
 .text_wa_4 {
   font-size: 28rpx;

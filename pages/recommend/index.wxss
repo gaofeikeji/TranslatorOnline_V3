@@ -1,0 +1,64 @@
+page{ background-color:#F7F7F7;}
+
+view,text{font-size: 28rpx; line-height: 32rpx; }
+.xy_hao123_pd10{ padding: 0 20rpx 300rpx 20rpx;}
+.xy_hao123_title{  display: flex; height: 36rpx; line-height: 36rpx; align-items: center; margin: 30rpx 0 20rpx 0; color: rgba(0,0,0,.6);}
+.xy_hao123_title .l{ width: 10rpx; height: 36rpx; border-radius: 20rpx; background-color: rgba(31,113,255,1); margin-right: 16rpx; box-shadow: 0px 0px 4rpx  rgba(0, 0, 0, 0.02);}
+
+/* 有tabbar导航时 不需要安全边框 官方已经处理好了 */
+.xy_hao123_jianyi{ position: fixed; bottom: 80rpx; left: 0; width: 100%; display: flex; justify-content: center; align-items: center;}
+/* .xy_hao123_jianyi{ position: fixed; bottom: 80rpx; left: 0; width: 100%; display: flex; justify-content: center; align-items: center;padding-bottom: calc(0px + constant(safe-area-inset-bottom)); padding-bottom: calc(0px + env(safe-area-inset-bottom));} */
+.xy_hao123_jianyi .button{width: 360rpx; height: 80rpx; line-height: 34rpx; border-radius: 500px; background: rgba(31, 113, 255, 1); border: 1rpx solid rgba(0, 0, 0, 0.08); box-shadow: 0px 0px 20rpx  rgba(0, 0, 0, 0.2); text-align: center; display: flex; justify-content: center; align-items: center; font-size: 34rpx; font-weight: bold; color: rgba(255, 255, 255, 1);}
+.xy_hao123_jianyi .button:active{  background: rgba(31, 113, 255, 0.8);}
+
+.xy_hao123_waimai{display: grid; grid-template-columns: auto auto auto auto; grid-gap: 20rpx; }
+.xy_hao123_waimai .item{ width: 345rpx; height: 170rpx; border-radius: 10rpx; overflow: hidden; border: 1rpx solid rgba(0, 0, 0, 0.08); box-shadow: 0px 0px 20rpx  rgba(0, 0, 0, 0.02); box-sizing: border-box; background-color: rgba(255, 255, 255, 1); }
+.xy_hao123_waimai .item .img{ background-repeat: no-repeat; width: 100%; height: 100%; background-position: center center; background-size: 100% 100%; border-radius: 10rpx; overflow: hidden; }
+
+
+.xy_hao123_mlist{ border: 1rpx solid rgba(0, 0, 0, 0.08); box-shadow: 0px 0px 20rpx  rgba(0, 0, 0, 0.02); box-sizing: border-box; background-color: rgba(255, 255, 255, 1); border-radius: 10rpx; padding: 20rpx; display: flex; margin-bottom: 20rpx;}
+.xy_hao123_mlist:active{ background-color: rgba(255, 255, 255, 0.6);}
+.xy_hao123_mlist .m{ flex: 1; padding: 0 20rpx;}
+.xy_hao123_mlist .m,.xy_hao123_mlist .l,.xy_hao123_mlist .r{ display: flex; align-items: center;}
+.xy_hao123_mlist .r{ padding-right: 10rpx;}
+.xy_hao123_mlist .imgbox{ height: 110rpx; width: 110rpx; border-radius: 10rpx; background-color: rgba(0, 0, 0, 0.02);}
+.xy_hao123_mlist .imgbox .img{  box-shadow: 0px 0px 20rpx  rgba(0, 0, 0, 0.1); box-sizing: border-box; border-radius: 10rpx; border: 1rpx solid rgba(0, 0, 0, 0.02); background-position: center center; background-size: 100% 100%; height: 110rpx; width: 110rpx; }
+.xy_hao123_mlist .miniinfo .title{ color: rgba(0, 0, 0, 0.9);}
+.xy_hao123_mlist .miniinfo .title,.xy_hao123_mlist .miniinfo .desc{ font-size: 32rpx; line-height: 36rpx;}
+.xy_hao123_mlist .miniinfo .desc{ margin-top: 15rpx; color: rgba(0, 0, 0, 0.4);}
+.xy_hao123_mlist .button{ height: 50rpx; display: flex; justify-content: center; align-items: center; background-color: rgba(31, 113, 255, 0.1); color: rgba(31, 113, 255, 1); padding: 0 16rpx; border-radius: 4rpx; }
+.xy_hao123_mlist .button.red{ background-color: rgba(250,81,81,0.1); color: rgba(250,81,81,1);}
+
+.xy_hao123_mlist.loading .button,.xy_hao123_mlist.loading .miniinfo .title,.xy_hao123_mlist.loading .miniinfo .desc{ color: rgba(250,81,81,0); }
+.xy_hao123_mlist.loading .miniinfo .title{ background-color: rgba(0, 0, 0, 0.04); width: 200rpx;}
+.xy_hao123_mlist.loading .miniinfo .desc{ background-color: rgba(0, 0, 0, 0.02); width: 100%;}
+.xy_hao123_mlist.loading .button{  background-color: rgba(0, 0, 0, 0.03);}
+
+.xy_hao123_yjbox{ display: flex; align-items: flex-end; position: fixed; z-index: 2; width: 100%; height: 100%; top: 0; left: 0; background-color: rgba(0, 0, 0, 0.4); }
+.xy_hao123_yjbox .main{ background-color: rgba(255, 255, 255, 1); width: 100%; box-sizing: border-box; padding: 0 30rpx 0 30rpx; position: relative; bottom: 0; border-top-left-radius: 20rpx;border-top-right-radius: 20rpx;  box-shadow: 0px 0px 100rpx  rgba(0, 0, 0, 0.1);  }
+/* 有tabbar导航时 官方已经处理好了安全边距 */
+.xy_hao123_yjbox .buttonbox{ padding-bottom: 60rpx; display: flex; justify-content: center;}
+/* .xy_hao123_yjbox .buttonbox{ padding-bottom: calc(60rpx + constant(safe-area-inset-bottom)); padding-bottom: calc(60rpx + env(safe-area-inset-bottom)); display: flex; justify-content: center;} */
+.xy_hao123_yjbox .haskay .buttonbox{  padding-bottom: 60rpx; }
+.xy_hao123_yjbox .botton{ width: 340rpx; height: 80rpx; line-height: 34rpx; border-radius: 10rpx; background: rgba(31, 113, 255, 1); border: 1rpx solid rgba(0, 0, 0, 0.08); box-shadow: 0px 0px 20rpx  rgba(0, 0, 0, 0.05); text-align: center; display: flex; justify-content: center; align-items: center; font-size: 34rpx; font-weight: bold; color: rgba(255, 255, 255, 1);}
+.xy_hao123_yjbox .botton:active{  background: rgba(31, 113, 255, 0.8);}
+.xy_hao123_yjbox .title{ display: flex; align-items: center; justify-content: space-between;}
+.xy_hao123_yjbox .title .l{ display: flex; align-items: center; font-size: 32rpx; height: 110rpx; }
+.xy_hao123_yjbox .title .r{ display: flex; align-items: center; font-size: 28rpx; height: 110rpx; color: rgba(31, 113, 255, 0.8);  text-decoration: underline;}
+.xy_hao123_yjbox .buttonbox{ padding-top: 40rpx;}
+.xy_hao123_yjbox .textarea{  border: 1rpx solid rgba(0, 0, 0, 0.08); background-color: rgba(0, 0, 0, 0.02); box-sizing: border-box; width: 100%; border-radius: 10rpx; color: rgba(0,0,0,1); font-size: 32rpx; line-height: 44rpx; padding: 20rpx 30rpx; min-height: 240rpx; max-height: 400rpx; }
+
+
+
+.xy_hao123_rengong{ border: 1rpx solid rgba(0, 0, 0, 0.08); box-shadow: 0px 0px 20rpx  rgba(0, 0, 0, 0.02); box-sizing: border-box; background-color: rgba(255, 255, 255, 1); border-radius: 10rpx; padding: 20rpx; display: flex; margin-bottom: 20rpx;}
+.xy_hao123_rengong:active{ background-color: rgba(255, 255, 255, 0.6);}
+.xy_hao123_rengong .m{ flex: 1; padding: 0 20rpx; display: flex; align-items: center;}
+.xy_hao123_rengong .m,.xy_hao123_rengong .l,.xy_hao123_rengong .r{ display: flex; align-items: center;}
+.xy_hao123_rengong .r{ padding-right: 10rpx;}
+.xy_hao123_rengong .imgbox{ height: 110rpx; width: 110rpx; border-radius: 10rpx; background-color: rgba(0, 0, 0, 0.02);}
+.xy_hao123_rengong .imgbox .img{  box-shadow: 0px 0px 20rpx  rgba(0, 0, 0, 0.1); box-sizing: border-box; border-radius: 10rpx; border: 1rpx solid rgba(0, 0, 0, 0.02); background-position: center center; background-size: 100% 100%; height: 110rpx; width: 110rpx; }
+.xy_hao123_rengong .miniinfo .title{ color: rgba(0, 0, 0, 0.9);}
+.xy_hao123_rengong .miniinfo .title,.xy_hao123_rengong .miniinfo .desc{ font-size: 32rpx; line-height: 36rpx;}
+.xy_hao123_rengong .miniinfo .desc{ margin-top: 15rpx; color: rgba(0, 0, 0, 0.4);}
+.xy_hao123_rengong .button{ height: 50rpx; display: flex; justify-content: center; align-items: center; background-color: rgba(31, 113, 255, 0.1); color: rgba(31, 113, 255, 1); padding: 0 16rpx; border-radius: 4rpx; }
+.xy_hao123_rengong .button.red{ background-color: rgba(250,81,81,0.1); color: rgba(250,81,81,1);}

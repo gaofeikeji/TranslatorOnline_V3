@@ -7,6 +7,7 @@ page {
 }
 .container{ 
   /* display: flex; */
+  padding-top: 50px;
 }
 .home-info{ 
   height:40rpx; 

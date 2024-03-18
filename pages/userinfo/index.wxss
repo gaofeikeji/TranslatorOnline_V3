@@ -1,0 +1,212 @@
+page{
+  
+  height: 100%;
+}
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding-top: 70px;
+}
+
+.edit_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  
+}
+
+.update_avatar_text {
+  margin-right: 50rpx;
+
+  font-size: 32rpx;
+  line-height: 36rpx;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.random_avatar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 32rpx;
+  line-height: 36rpx;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.random_avatar_img {
+  width: 28rpx;
+  height: 24rpx;
+  margin-right: 10rpx;
+}
+
+.sub_title_my {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sub_blue {
+  width: 10rpx;
+  height: 36rpx;
+  border-radius: 20rpx;
+
+  border: 1rpx solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0rpx 0rpx 4rpx rgba(0, 0, 0, 0.25);
+  background: rgba(215, 91, 91, 0.9);
+}
+
+.sub_text {
+  font-size: 28rpx;
+  line-height: 40rpx;
+  color: rgba(0, 0, 0, 0.6);
+  margin-left: 16rpx;
+}
+
+.update_info .update_avatar .setting {
+  background-color: rgba(215, 91, 91, 0.2);
+  border: 1rpx solid rgba(215, 91, 91, 0.5);
+  color: rgba(215, 91, 91, 0.9);
+}
+
+.box__container {
+  width: 710rpx;
+  height: 260rpx;
+  opacity: 1;
+  border-radius: 10rpx;
+  background: rgba(255, 255, 255, 1);
+  border: 2rpx solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0rpx 0rpx 20rpx rgba(0, 0, 0, 0.02);
+}
+
+.update_info {
+  padding-left: 30rpx;
+}
+
+.update_nickname {
+  height: 110rpx;
+  display: flex;
+  align-items: center;
+  padding-right: 30rpx;
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.05);
+}
+
+.update_info .update_nickname label {
+  margin-right: 50rpx;
+
+  font-size: 32rpx;
+  line-height: 36rpx;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.update_info .update_nickname input {
+  flex: 1;
+  margin-top: -4rpx;
+
+  font-size: 32rpx;
+  line-height: 36rpx;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.update_info .update_avatar {
+  display: flex;
+  align-items: flex-start;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 32rpx;
+  padding-right: 30rpx;
+  margin-top: 30rpx;
+
+}
+
+.avatar_img {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 10rpx;
+  background: rgba(235, 235, 235, 1);
+  box-shadow: 0rpx 0rpx 20rpx rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.avatar_img_has {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 10rpx;
+}
+
+.avatar_img_noava {
+  width: 45rpx;
+  height: 45rpx;
+}
+
+
+.update_info .update_avatar .setting {
+  margin: 0 0 0 auto;
+  padding: 0;
+  width: 146rpx;
+  height: 50rpx;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 28rpx;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(0, 0, 0, 0.05);
+  border-radius: 4rpx;
+  background-color: rgba(235, 235, 235, 1);
+  box-shadow: 0rpx 0rpx 20rpx rgba(0, 0, 0, 0.02);
+}
+
+.update_info .update_avatar .setting {
+  background-color: rgba(31, 113, 255, 0.2);
+  border: 1rpx solid rgba(31, 113, 255, 0.5);
+  color: rgba(31, 113, 255, 0.9);
+}
+
+.footer_btn {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 1990;
+  background-color: rgba(255, 255, 255, 1);
+  /* box-shadow: 0px 0px 20rpx var(--xyui-FONT-COLOR-11); */
+  box-shadow: 0px 0px 20rpx rgba(0, 0, 0, 0.1);
+
+  height: calc(120rpx + env(safe-area-inset-bottom));
+}
+
+.submit_btn2 {
+  display: contents;
+
+  width: 690rpx;
+  height: 80rpx;
+  opacity: 1;
+  border-radius: 5px;
+  background: rgba(31, 113, 255, 0.9);
+  
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  
+  box-shadow: 0px 0px 4px  rgba(0, 0, 0, 0.2);
+
+  font-size: 34rpx;
+  font-weight: bold;
+  letter-spacing: 0rpx;
+  line-height: 44rpx;
+  color: rgba(255, 255, 255, 1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 20rpx 30rpx auto 30rpx;
+}

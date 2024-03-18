@@ -38,7 +38,7 @@ Page({
       },
       {
         "iconPath": "/images/personal.png",
-        "pagePath": "/pages/personal/index",
+        "pagePath": "/pages/my/index",
         "selectedIconPath": "/images/personal.png",
         "text": "个人中心",
         "type":0

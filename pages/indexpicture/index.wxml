@@ -19,10 +19,7 @@ currentTargetLang="{{currentTargetLang}}"
       scale-min="0.01" x="{{currentSelectX}}" y="{{currentSelectY}}"  
        scale-max="5" scale="{{true}}" animation="{{false}}" scale-value="{{showResult==1?scale:0.8}}" 
        
-    bindtouchstart="handleTouchStart"
-    bindtouchmove="handleTouchMove"
-    bindtouchend="handleTouchEnd" 
-    bindpinch="handlePinch"
+   
       style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;padding:{{showResult==1?20:0}}px" class="zoom-area">
       <view  class="media-info-box"> 
           <!-- 显示结果 -->
@@ -44,7 +41,7 @@ currentTargetLang="{{currentTargetLang}}"
     </block>
     
         <block wx:if="{{ showResult ==   0 }}"> 
-            <image class="selected-image"
+            <image class="selected-image" bind:tap="viewImage"
             style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;" 
             src="{{selectPicturPath||'/images/bg/bg-dark.png'}}"></image> 
 

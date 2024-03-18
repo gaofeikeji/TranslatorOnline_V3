@@ -1,0 +1,106 @@
+<view class="xy_hao123_pd10">
+<view class="xy_hao123_title">
+    <view class="l"></view>
+    <view class="r">{{ pageData.top_title }}</view>
+</view>
+
+<view class="xy_hao123_waimai">
+    <block wx:if="{{ pageData.top_list===false }}">
+        <view class="item" wx:for="{{ [0,1] }}">
+        </view>
+    </block>
+    <block wx:else>
+        <view class="item" wx:for="{{ pageData.top_list }}" wx:for-item="item" data-type="{{ item.type }}" data-appid="{{ item.appid }}"  data-path="{{ item.path }}" catchtap="openMiniprogram" >
+            <view class="img" style="background-image: url('{{ item.img }}');"></view>
+        </view>
+    </block>
+</view>
+
+<view class="xy_hao123_title">
+    <view class="l"></view>
+    <view class="r">{{ pageData.miniprogram_title }}</view>
+</view>
+
+<view class="xy_hao123_minilist">
+
+    <block wx:if="{{ pageData.miniprogram_list===false }}">
+        <view wx:for="{{ [1,2,3,4,5] }}" class="xy_hao123_mlist loading">
+            <view class="l">
+                <view class="imgbox">
+                </view>
+            </view>
+            <view class="m">
+                <view class="miniinfo">
+                    <view class="title">共享记账</view>
+                    <view class="desc">多人共享记账小程序</view>
+                </view>
+            </view>
+            <view class="r">
+                <view class="button">立即进入</view>
+            </view>
+        </view>
+    </block>
+    <block wx:else >
+        <view class="xy_hao123_mlist" wx:for="{{ pageData.miniprogram_list }}" wx:for-item="item" data-type="{{ item.type }}" data-appid="{{ item.appid }}"  data-path="{{ item.path }}" catchtap="openMiniprogram" >
+            <view class="l">
+                <view class="imgbox">
+                    <view class="img" style="background-image: url('{{ item.icon }}');"></view>
+                </view>
+            </view>
+            <view class="m">
+                <view class="miniinfo">
+                    <view class="title">{{ item.title }}</view>
+                    <view class="desc" wx:if="{{ item.desc && item.desc!='' }}">{{ item.desc }}</view>
+                </view>
+            </view>
+            <view class="r">
+                <view class="button {{ item.button_color?item.button_color:'' }}">{{ item.button_text }}</view>
+            </view>
+        </view>
+    </block>
+</view>
+
+<view class="xy_hao123_title" wx:if="{{ pageData.rengong_title && pageData.rengong_title!=''  }}" >
+    <view class="l"></view>
+    <view class="r">{{ pageData.rengong_title }}</view>
+</view>
+
+<view class="xy_hao123_rengong" wx:if="{{ pageData.rengong_title && pageData.rengong_title!=''  }}" data-card="{{ pageData.rengong.card }}" catchtap="openContact" >
+    <view class="l">
+            <view class="imgbox">
+                <view class="img" style="background-image: url('{{ pageData.rengong.icon }}');"></view>
+            </view>
+        </view>
+        <view class="m">
+            <view class="miniinfo">
+                <view class="title">{{ pageData.rengong.title }}</view>
+                <view class="desc" wx:if="{{ pageData.rengong.desc && pageData.rengong.desc!='' }}">{{ pageData.rengong.desc }}</view>
+            </view>
+        </view>
+        <view class="r">
+            <view class="button {{ pageData.rengong.button_color?pageData.rengong.button_color:'' }}">{{ pageData.rengong.button_text }}</view>
+        </view>
+</view>
+
+</view>
+
+<view class="xy_hao123_jianyi" wx:if="{{!hidden}}">
+    <view class="button" catchtap="changeOverture" >提建议和反馈</view>
+</view>
+
+
+<view class="xy_hao123_yjbox" wx:if="{{ showOverture }}" catchtap="changeOverture" >
+    <view class="main {{ keyboardHeight>0?' haskay':'' }}" catchtap="mainTap" style="bottom:{{ keyboardHeight }}px;"  >
+        <view class="title">
+        <view class="l">请留下您的建议：</view>
+        <view class="r" wx:if="{{ pageData.rengong_title && pageData.rengong_title!=''  }}" data-card="{{ pageData.rengong.card }}" catchtap="openContact" >{{ pageData.rengong_title }}</view>
+        </view>
+        <view class="textbox">
+            <textarea  class="textarea" auto-focus="{{ true }}" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" placeholder="说点什么..." auto-height="{{ true }}" bindfocus="changeContent" bindinput="changeContent"
+          bindblur="changeContent" value="{{content}}" />
+        </view>
+        <view class="buttonbox">
+            <view class="botton" catchtap="submit" >提交建议</view>
+        </view>
+    </view>
+</view>

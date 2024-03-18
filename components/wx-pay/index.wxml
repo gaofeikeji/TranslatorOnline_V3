@@ -16,7 +16,7 @@
         <text>秒 失效</text>
       </view>
       <view class="close" bindtap="close">
-        <image src="./images/close.png" mode="widthFix"></image>
+        <image class="close_image" src="./images/close.png" mode="widthFix"></image>
       </view>
     </view>
     <!-- 优惠内容 -->
@@ -35,7 +35,7 @@
   <view class="red_packet" wx:if="{{redPacket}}" style="bottom:{{mtop}}" animation="{{animationData}}">
     <!-- 背景图片 -->
     <view class="red_packet_bg"  >
-      <image src="{{currentRedPacketImage}}" mode="widthFix"></image>
+      <image class="red_packet_bg_image" src="{{currentRedPacketImage}}" mode="widthFix"></image>
     </view>
     <!-- 内容 -->
     <view class="red_packet_box">

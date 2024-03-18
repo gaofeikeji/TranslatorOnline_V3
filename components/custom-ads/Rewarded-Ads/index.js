@@ -1,11 +1,13 @@
 import { request } from '../http.js'
+var log = require('../../../pages/log.js')
 
 // var videoAd = null
 const date = new Date()
 const SHOW_AD_KEY = 'LAST_AD_SHOW_DATE'
-const dateStr = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+const dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 
 const jili_ad = 'JILIAD'
+
 
 // 小程序激励广告
 let adVideoUtils = {
@@ -17,7 +19,7 @@ let adVideoUtils = {
   videoAd: null,
   async videoAdLoad(adUnitId = 'videoAd', callback) {
     // 请求数据，获取激励视频广告ID 特殊情况
-    if (!wx.getStorageSync(jili_ad)) {
+    if (!wx.getStorageSync(jili_ad) || wx.getStorageSync(jili_ad).show == false) {
       const ret = await request('4', '')
       if (ret.code == 0) {
         // 存储到缓存中
@@ -35,21 +37,29 @@ let adVideoUtils = {
     if (this.videoAd) {
       this.videoAd = null
     }
-
     if (data.show == 1 && wx.createRewardedVideoAd) {
+      console.log('创建激励广告')
       this.videoAd = wx.createRewardedVideoAd({
         adUnitId: data.adUnitId,
+        multiton: true
       })
-      this.videoAd.onLoad(() => {})
-      this.videoAd.onError((err) => { 
+      console.log('激励广告', this.videoAd)
+      this.videoAd.load()
+        .then(() => { log.info('激励广告加载成功'),console.log('激励广告加载成功') })
+        .catch(err => { console.error(err); log.error('激励广告加载失败', err) })
+      this.videoAd.onLoad(() => {
+        log.info('激励广告加载成功')
+      })
+      this.videoAd.onError((err) => {
         // 激励广告拉取失败 下发奖励
-        // callback()  // 不能在这里执行，应该在关闭的时候执行
+        callback()
+        log.error('激励广告拉取失败', err.errMsg, err.errCode)
       })
       this.videoAd.onClose((status) => {
         if (status && status.isEnded || status === undefined) {
           adVideoUtils.setShowAd()
           // 视频广告播放完毕，正常执行回调函数任务
-          callback() 
+          callback()
         } else {
           // 视频播放中途退出，进行提示
           wx.showToast({ title: '广告观看完才可继续操作!', icon: 'none' })
@@ -57,16 +67,27 @@ let adVideoUtils = {
       })
     }
   },
-  showAd() {
+  showAd(callback) {
     if (this.videoAd) {
-      this.videoAd.show().catch(() => {
-        // 失败重试
-        this.videoAd.load()
-          .then(() => this.videoAd.show())
-          .catch(err => {
-            console.log('激励视频显示广告失败')
-          })
-      })
+      wx.showLoading({ title: '加载中', mask: true })
+      this.videoAd.show()
+        .then((res) => {
+          wx.hideLoading()
+        })
+        .catch(() => {
+          try {
+            log.error('激励加载成功但是播放失败')
+          } catch (error) { }
+          console.error('显示激励视频广告 失败')
+          callback();
+          wx.hideLoading();
+          // 上报失败日志
+
+        })
+    } else {
+      log.error('激励广告未加载成功')
+      wx.hideLoading()
+      callback()
     }
   },
   setShowAd() {

@@ -1,4 +1,5 @@
-
+/* @import './xyui.wxss';
+@import './components.wxss'; */
 /**app.wxss全局page和text内容字体大小*/
 page,text{  font-size: 30rpx;}
 page,text,view,navigator,swiper,swiper-item,image{ 
@@ -29,7 +30,7 @@ page {
   flex: 1; 
   margin-top: -20rpx;
   /* padding-bottom: 85px; */
-background: rgba(204, 204, 204, 0.2);
+background: rgba(204, 204, 204, 1);
 }
 .container{
   position: relative;

@@ -54,7 +54,7 @@ Component({
     starArr: [0, 0, 0, 0, 0],
     starNum: 0,
   },
-  ready() {},
+  ready() { },
   methods: {
     // ------------------------------ 事件 ------------------------------
     // 关闭
@@ -136,8 +136,8 @@ Component({
           success: function (res) {
             wx.showToast({
               title: '评价内容已复制，可直接粘贴哟',
-              icon:'none',
-          });
+              icon: 'none',
+            });
             // wx.getClipboardData({
             //   success: function (res) {
             //     console.log(res.data); // data
@@ -327,20 +327,9 @@ Component({
     },
     // 去展示评价
     judgeAndShowRate() {
-      console.log(
-        "【judgeAndShowRate】",
-        this.data.canShowGlobal,
-        this.data.canShowStorage,
-        this.data.canShow
-      );
-      if (
-        this.data.canShowGlobal &&
-        this.data.canShowStorage &&
-        this.data.canShow
-      ) {
-        this.setData({
-          show: true,
-        });
+      console.log("【judgeAndShowRate】", this.data.canShowGlobal, this.data.canShowStorage, this.data.canShow);
+      if (this.data.canShowGlobal && this.data.canShowStorage && this.data.canShow) {
+        this.setData({ show: true, });
         wx.setStorageSync("rate_time", new Date());
         return true;
       } else {

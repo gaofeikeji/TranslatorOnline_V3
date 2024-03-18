@@ -6,6 +6,10 @@
   align-items: center;
 }
 
-.xyui-svg-icon image {
+/* .xyui-svg-icon image {
   flex: 1;
+} */
+.xyui-svg-icon-img{
+  flex: 1;
+
 }

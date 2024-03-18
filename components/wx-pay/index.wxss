@@ -17,7 +17,7 @@
 .mask {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 99;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -70,7 +70,11 @@
   justify-content: center;
 }
 
-.limit_time_title .close image {
+/* .limit_time_title .close image {
+  width: 40rpx;
+  height: 40rpx;
+} */
+.limit_time_title .close_image{
   width: 40rpx;
   height: 40rpx;
 }
@@ -140,11 +144,14 @@
   z-index: -1;
 }
 
-.red_packet .red_packet_bg image {
+/* .red_packet .red_packet_bg image {
+  width: 100%;
+  height: 100%;
+} */
+.red_packet_bg_image{
   width: 100%;
   height: 100%;
 }
-
 .red_packet .red_packet_box {
   position: relative;
   z-index: 1;

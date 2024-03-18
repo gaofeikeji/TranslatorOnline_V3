@@ -2,12 +2,15 @@
   "pages": [
     "pages/index/index",
     "pages/file/index",
-    "pages/personal/index",
     "pages/text/index",
     "custom-tab-bar/index",
     "components/top-nav/index",
     "pages/indexpicture/index",
-    "pages/texttranslate/index"
+    "pages/texttranslate/index",
+    "pages/my/index", 
+    "pages/userinfo/index",
+    "pages/recommend/index",
+    "pages/introduce/introduce"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -23,10 +26,8 @@
       "sdkVersionEnd": "15.255.255"
     }
   },
-  "componentFramework": "glass-easel",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
+    "navigation-bar": "/custom-tab-bar",
     "svg-icon": "/components/svg-icon/index", 
     "privacy": "/components/privacy/privacy",
     "add-tips": "/components/add-tips/index",
@@ -36,5 +37,14 @@
     "custom-ad": "/components/custom-ads/index",
     "vip-member": "/components/vip-member/vip-member",
     "user-member": "/components/user-member/user-member"
-  }
+  },
+  "plugins": {
+    "wxacommentplugin": {
+      "version": "latest",
+      "provider": "wx82e6ae1175f264fa"
+    }
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
 }

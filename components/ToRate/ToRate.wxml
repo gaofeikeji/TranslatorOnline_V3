@@ -20,7 +20,7 @@
           <view class="image_bk4_back">
             <block wx:for="{{starArr}}" wx:key="index">
               <view class="star_image" bind:tap="onClickStar" data-index="{{index}}" data-star="{{item}}">
-                <image src="{{item==0 ?'./nullStar.png':'./hasStar.png'}}" />
+                <image class="star_image_image"  src="{{item==0 ?'./nullStar.png':'./hasStar.png'}}" />
               </view>
             </block>
           </view>

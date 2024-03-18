@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+        "gift_use": "/components/gift_use/gift_use",
+        "vip-member":"/components/vip-member/vip-member",
+        "customerService":"/components/customerService/customerService"
+    },
+    "backgroundTextStyle": "dark"
+}

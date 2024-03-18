@@ -66,4 +66,5 @@
     background: #07c160;
     color: #fff;
 }
-.btns button::after{ border: none; border-radius: 0rpx;}
+/* .btns button::after{ border: none; border-radius: 0rpx;} */
+.btns_btn::after{ border: none; border-radius: 0rpx;}

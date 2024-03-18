@@ -29,11 +29,9 @@ onRateFail 评价失败 也就是用户没有评价
 />
 <!-- 引用 支付组件 -->
 <vip-member id="pay"></vip-member>
-<user-member subscribe="{{subscribe}}" bind:openVip="openVip"></user-member>
-
 ```
 
-```javascript   获得结果.js 中
+```javascript
   // 其他需要声明的变量
   data:{
     rateScene: "",
@@ -42,7 +40,7 @@ onRateFail 评价失败 也就是用户没有评价
   }
   // 声明 评价 组件
   this.rateComponent = this.selectComponent("#rate");
-  this.payComponent = this.selectComponent("#pay");
+  this.rateComponent = this.selectComponent("#rate");
   // // test 清除评论
   // this.rateComponent.clearComment();
 
@@ -136,7 +134,7 @@ onRateFail 评价失败 也就是用户没有评价
         that.showRewardAd(() => { successFunc(); }, () => { successFunc(); }); resolve(); return;
       }
     });
-  },
+  }
   onClickAfterToJudgeActionInfo(_action_info) {
     console.log("点击了 我知道了 后去判断后端指示的动作信息"); let that = this;
     return new Promise((resolve, reject) => {
@@ -150,7 +148,7 @@ onRateFail 评价失败 也就是用户没有评价
         resolve();
       } else if (_action_info.after_action_type == 4) { resolve(); }
     });
-  },
+  }
 
   savePre: function () {
     if (!this.data.isSuccessOnce)
@@ -167,36 +165,4 @@ onRateFail 评价失败 也就是用户没有评价
       that.onClickAfterToJudgeActionInfo(that.data.action_info)
     }
   }
-```
-
-```javascript   app.js 中
-  globalData: {
-    subscribe: {},
-  },
-  that.globalData.subscribe = res.data.data.subscribe;
-  // 刷新用户的会员信息的回调
-  that.userCenterLoginCallbackUserMember && that.userCenterLoginCallbackUserMember();
-
-```
-```javascript   用户中心.js 中
-  data: {
-    subscribe:app.globalData.subscribe || {},
-  },
-  onLoad(options) {
-    this.payComponent = this.selectComponent("#pay");
-  },
-  // 监听点击支付的动作然后去发起支付  并注册 刷新会员信息的动作
-  openVip: function () {
-    this.payComponent.process(() => {
-      console.log("success");
-      app.userCenterLoginCallbackUserMember=()=>{
-        this.setData({
-          subscribe: app.globalData.subscribe || {},
-        });
-      },
-      app.userCenterLogin();
-    }, () => {
-      console.log("fail");
-    });
-  },
 ```

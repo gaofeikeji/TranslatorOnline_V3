@@ -1,0 +1,136 @@
+.container{
+  background: rgba(247, 247, 247, 0.2);
+  padding: 60px 12rpx;
+}
+
+.user_container {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5rpx; 
+  background: rgba(247, 247, 247, 1);
+}
+
+.userinfo {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  border-radius: 10rpx; 
+  width: 90rpx;
+  height: 90rpx;
+  opacity: 1;
+  border-radius: 10rpx;
+  background: rgb(126, 126, 126,0.3);
+  border: 6rpx solid #fff;
+  box-shadow: 0rpx 0rpx 20rpx  rgba(0, 0, 0, 0.04);
+  /* 边框不占据宽高 */
+  box-sizing: content-box;
+}
+
+.userinfo_image {
+  display: block;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 10rpx;
+}
+.avatar_no_img {
+  width: 45rpx;
+  height: 45rpx;
+}
+
+.userinfo_text {
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 46.34rpx;
+  color: rgba(0, 0, 0, 0.8);
+  margin-left: 15rpx;
+}
+
+.user_edit {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.user_edit image {
+  margin-left: 6rpx;
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.my_settingbox {
+  width: 710rpx;
+  opacity: 1;
+  border-radius: 10rpx;
+  background: rgba(255, 255, 255, 1);
+  border: 2rpx solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0rpx 0rpx 20rpx rgba(0, 0, 0, 0.02);
+  margin-top: 30rpx;
+
+}
+
+.my_set_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 110rpx;
+}
+
+.my_set_item image {
+  width: 42rpx;
+  height: 42rpx;
+}
+
+.my_set_item_l {
+  width: 100rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my_set_item_r {
+  width: 610rpx;
+  height: 100%;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 2rpx solid rgba(0, 0, 0, 0.05);
+}
+
+.my_set_item_r image {
+  width: 28rpx;
+  height: 28rpx;
+}
+.large_list{
+  padding-left: 30rpx;
+}
+.hover:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+.large_list button:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.version{
+  width: 100%;
+  text-align: center;
+  margin-top: 50rpx;
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 0.5);
+}

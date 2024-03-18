@@ -1,23 +1,18 @@
-// pages/personal/index.js
-const app = getApp();
+var app = getApp();
+// pages/introduce/introduce.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    nbFrontColor: '#000000',
-    nbBackgroundColor: '#ffffff', 
+    introduceUrl:app.globalData.introduceUrl || 'https://www.baidu.com',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.setData({
-      nbTitle: '个人中心', 
-    })
-    app.getCurrentLang(this);
 
   },
 

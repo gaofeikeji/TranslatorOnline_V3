@@ -3,7 +3,6 @@
   "projectname": "TranslatorOnline_V3",
   "setting": {
     "compileHotReLoad": true,
-    "skylineRenderEnable": false,
     "urlCheck": false
   },
   "condition": {
@@ -12,17 +11,6 @@
         {
           "name": "pages/indexpicture/index",
           "pathName": "pages/indexpicture/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null,
-          "partialCompile": {
-            "enabled": true,
-            "pages": []
-          }
-        },
-        {
-          "name": "pages/personal/index",
-          "pathName": "pages/personal/index",
           "query": "",
           "launchMode": "default",
           "scene": null,
@@ -56,6 +44,50 @@
         {
           "name": "pages/text/index",
           "pathName": "pages/text/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
+          "name": "pages/my/index",
+          "pathName": "pages/my/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
+          "name": "pages/userinfo/index",
+          "pathName": "pages/userinfo/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
+          "name": "pages/recommend/index",
+          "pathName": "pages/recommend/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
+          "name": "pages/introduce/introduce",
+          "pathName": "pages/introduce/introduce",
           "query": "",
           "launchMode": "default",
           "scene": null,

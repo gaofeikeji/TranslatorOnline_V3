@@ -10,13 +10,13 @@
       </view>
     </block>
     <block wx:if="{{miniapp_service_type == 2}}">
-      <button class="sv_bk_btn sv_bk  {{direction == 'left' ? 'sv_bk_left' :''}} " style="bottom:{{DistanceFromBottom}}" open-type="contact" bindtap="sv_bk_tap">
+      <view class="sv_bk_btn sv_bk  {{direction == 'left' ? 'sv_bk_left' :''}} " style="bottom:{{DistanceFromBottom}}" open-type="contact" bindtap="sv_bk_tap">
         <view class="sv_text" wx:if="{{direction=='left'}}">{{miniapp_service_text}}</view>
         <view class="sv_image_back">
           <image class="sv_image_back_img" src="{{image_src}}" />
         </view>
         <view class="sv_text" wx:if="{{direction=='right'}}">{{miniapp_service_text}}</view>
-      </button>
+      </view>
     </block>
     <view class="image_b_back" wx:if="{{show_sv_image_pre}}" bind:tap="closeBtn"></view>
     <view class="image_back" wx:if="{{show_sv_image_pre}}">
@@ -40,13 +40,13 @@
       </view>
     </block>
     <block wx:if="{{miniapp_service_type == 2}}">
-      <button class="sv_bk_btn sv_bk_my " style="border:none" open-type="contact" bindtap="sv_bk_tap">
+      <view class="sv_bk_btn sv_bk_my " style="border:none" open-type="contact" bindtap="sv_bk_tap">
         <view class="sv_image_back_my">
           <image class="sv_image_back_my_img" src="./icon-kefu.svg" />
         </view>
         <view class="sv_text">{{miniapp_service_text}}</view>
         <image class="sv_image_back_my_img2" src="./icon-arrow-r-gray.svg" />
-      </button>
+      </view>
     </block>
     <view class="image_b_back" wx:if="{{show_sv_image_pre}}" bind:tap="closeBtn"></view>
     <view class="image_back" wx:if="{{show_sv_image_pre}}">

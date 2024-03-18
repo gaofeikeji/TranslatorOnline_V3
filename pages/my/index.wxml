@@ -1,0 +1,59 @@
+
+<navigation-bar
+title="{{nbTitle}}"
+onytitle="{{true}}"
+canBack="{{true}}" 
+color-animation-duration="2000"
+color-animation-timing-func="easeIn"
+/> 
+
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">  
+    <view class="user_container" bindtap="userEdit">
+      <view class="userinfo">
+        <view class="avatar" wx:if="{{!userInfo.avatar}}">
+          <image class="avatar_no_img" mode="scaleToFit" src="./icon-avatar.svg" />
+        </view>
+        <view class="avatar" wx:else>
+          <image class="userinfo_image" mode="scaleToFit" src="{{userInfo.avatar}}"></image>
+        </view>
+        <view class="userinfo_text">{{userInfo.nickname || '微信用户9527'}}</view>
+      </view>
+      <view class="user_edit" bindtap="" wx:if="{{hasUserInfo}}">
+        <view>编辑资料</view>
+        <image mode="scaleToFill" src="./icon-arrow-r-gray.svg" />
+      </view>
+    </view>
+    <!-- 系统用户 -->
+    <user-member subscribe="{{subscribe}}" bind:openVip="openVip"></user-member>
+    <!-- 使用说明 -->
+    <view class="my_settingbox ">
+      <view class="my_set_item hover" bindtap="ToInstructions">
+        <view class="my_set_item_l">
+          <image class="" mode="scaleToFill" src="./icon-sysmRed.svg" />
+        </view>
+        <view class="my_set_item_r" style="">
+          <view>使用说明</view>
+          <image mode="scaleToFill" src="./icon-arrow-r-gray.svg" />
+        </view>
+      </view>
+      <gift_use type="my" bind:getGift="getGift">
+        <view class="my_set_item hover" slot="gift_use">
+          <view class="my_set_item_l">
+            <image class="my_set_item_l" mode="scaleToFill" src="./icon-gift_use.svg" />
+          </view>
+          <view class="my_set_item_r" style=" border-bottom: 2rpx solid  rgba(0, 0, 0, 0.05);;height: 110rpx;">
+            <view>兑换码兑换</view>
+            <image mode="scaleToFill" src="./icon-arrow-r-gray.svg" />
+          </view>
+        </view>
+      </gift_use>
+      <!-- 在线客服 -->
+        <customerService direction="right" DistanceFromBottom="80%" type="my"></customerService>
+    </view>
+    <!-- version -->
+    <view class="version">当前版本：V 1.1.0</view>
+  </view>
+</scroll-view>
+ 
+<vip-member id="pay"></vip-member>

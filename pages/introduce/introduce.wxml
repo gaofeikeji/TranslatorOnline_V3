@@ -1,0 +1,3 @@
+
+    
+    <web-view  style="height:80%;background-color: #fff;padding-top: 70px;" src="{{introduceUrl}}"></web-view>

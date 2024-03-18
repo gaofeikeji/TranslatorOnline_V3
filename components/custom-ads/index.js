@@ -137,7 +137,7 @@ Component({
     },
     toFeedBack: function() {
       wx.navigateTo({
-        url: '/pages/xunyuan_hao123/index',
+        url: '/packageA/pages/xunyuan_hao123/index',
       })
     }
   },

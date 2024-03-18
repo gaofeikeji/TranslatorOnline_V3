@@ -1,4 +1,3 @@
-const baseUrl = "https://usercenter.mp.gaofeikeji.top";
 const sys = wx.getSystemInfoSync();
 let trade_res = null,
   appId = null,
@@ -69,6 +68,7 @@ Component({
     _successPay: null,
 
     init() {
+      console.warn("初始化支付组件");
       this.setData({
         mask: false, // 遮罩层
         redPacket: false, // 红包
@@ -79,13 +79,13 @@ Component({
         isJumpToPay: false, // 是否跳转到支付页面
         isOnce: true, // 是否只显示一次
         isViewCoupon: false, // 是否有折扣券
-    
+
         pay_status: "", // 订单状态
         order_status: "", // 订单状态
-    
+
         without: 0, // 是否跳转到外部嵌入式小程序支付
         currentRedPacket: 0, // 当前 用户视角得知了第几个红包
-    
+
         redPacketInfo: {
           imageBk1:
             "https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/oFvzAVRxonxj1TznTRAa72n5Q2twxhGXbgVd0GGn.png",
@@ -94,7 +94,7 @@ Component({
         },
         currentRedPacketImage:
           "https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/oFvzAVRxonxj1TznTRAa72n5Q2twxhGXbgVd0GGn.png",
-    
+
         //动画部分
         animationData: {},
       });
@@ -206,16 +206,8 @@ Component({
       let that = this;
       let trade_no = wx.getStorageSync("trade_no");
       return new Promise((resolve, reject) => {
-        wx.request({
-          url: baseUrl + "/api/payment/check",
-          method: "GET",
-          data: {
-            trade_no: trade_no, //支付单id
-          },
-          header: {
-            Authorization: wx.getStorageSync("access_token"),
-          },
-          success(res) {
+        getApp().userCenterRequest('/api/payment/check', { trade_no: trade_no }, 'GET')
+          .then(res => {
             console.log(
               "查询到订单号为",
               trade_no,
@@ -240,12 +232,12 @@ Component({
               console.log("支付失败");
               reject(res.data.data);
             }
-          },
-          fail: (err) => {
+          })
+          .catch(err => {
             console.log(err);
             reject(err);
-          },
-        });
+          })
+
       })
         .then((res) => {
           console.log("支付成功", res);
@@ -300,6 +292,7 @@ Component({
     },
     // 关闭弹窗 显现红包
     close() {
+      console.log("关闭弹窗")
       const config = this.data.config;
       this.setData({ isOnce: false });
       if (config.coupon_info?.coupon_id) {
@@ -377,9 +370,13 @@ Component({
           that.setData({
             redPacket: false,
             mask: false,
+            // currentRedPacket: 0, //当前用户视角得知了第0个红包
+            currentRedPacketImage: that.data.redPacketInfo.imageBk1,
           });
+          that.showRedPacketAnimation();
         }, 500);
         that.closeRedPacketAnimation();
+
       }
     },
     // 红包弹出的动画
@@ -449,26 +446,18 @@ Component({
         }
         return;
       } else {
+        // 切换场景的初始化 操作
         console.log("没有创建过支付单，重新创建");
         // 清楚之前所有订单信息 sdk参数 等
         trade_res = null;
         jssdk = null;
-        // that.setData({  isOnce: true });
+        that.setData({ isOnce: true, isViewCoupon: false, currentRedPacket: 0, });
+        //初始化 计时器
+        that.setData({ minutes: 0, seconds: 0 });
+        clearInterval(this.timer);
       }
-      wx.request({
-        url: baseUrl + "/api/payment",
-        method: "POST",
-        data: {
-          scenes: this.properties.scene, //场景值
-          brand: sys.brand, // 手机品牌 iPhone
-          model: sys.model, // 手机型号 iPhone X
-          system: sys.system, // 操作系统版本 iOS 10.0.1
-          network: getApp().globalData.currentNetwork || "unknown", // 当前网络状态
-        },
-        header: {
-          Authorization: wx.getStorageSync("access_token"),
-        },
-        success(res) {
+      getApp().userCenterRequest('/api/payment', { scenes: this.properties.scene, brand: sys.brand, model: sys.model, system: sys.system, network: getApp().globalData.currentNetwork || "unknown", }, 'POST')
+        .then(res => {
           console.log(res);
           const ret = res.data;
           if (ret.code == 1) {
@@ -491,11 +480,12 @@ Component({
           } else {
             typeof failFunc == "function" && failFunc();
           }
-        },
-        fail: (err) => {
+        })
+        .catch(err => {
+          console.log(err);
           reject(err);
-        },
-      });
+        })
+
     },
     /**
      * @description 创建支付单
@@ -513,7 +503,7 @@ Component({
       //创建支付单
       return new Promise((resolve, reject) => {
         // 已经创建过支付单，直接返回支付单id信息
-        
+
         if (trade_res && trade_res.need_pay && scenes == this.properties.scene && oldscenes == this.properties.scene) {
           let _trade_res = JSON.parse(JSON.stringify(trade_res));
           let _jssdk = JSON.parse(JSON.stringify(jssdk));
@@ -522,34 +512,22 @@ Component({
         }
 
         wx.showLoading({ title: "加载中", mask: true });
-        wx.request({
-          url: baseUrl + "/api/payment",
-          method: "POST",
-          data: {
-            scenes: that.properties.scene, //场景值
-            brand: sys.brand, // 手机品牌 iPhone
-            model: sys.model, // 手机型号 iPhone X
-            system: sys.system, // 操作系统版本 iOS 10.0.1
-            network: getApp().globalData.currentNetwork, // 当前网络状态 wifi 4g 3g 2g none unknown
-          },
-          header: {
-            Authorization: wx.getStorageSync("access_token"),
-          },
-          success(res) {
-            wx.hideLoading();
+
+        getApp().userCenterRequest('/api/payment', { scenes: that.properties.scene, brand: sys.brand, model: sys.model, system: sys.system, network: getApp().globalData.currentNetwork || "unknown", }, 'POST')
+          .then(res => {
             console.log(res);
-            if (res.data.code == 1) {
-              trade_res = res.data.data;
+            const ret = res.data;
+            if (ret.code == 1) {
+              trade_res = ret.data;
               scenes = that.properties.scene;
               oldscenes = that.properties.scene;
-              resolve(res.data.data);
+              resolve(ret.data);
             }
-          },
-          fail: (err) => {
+          })
+          .catch(err => {
             console.log(err);
             reject(err);
-          },
-        });
+          })
       })
         .then((res) => {
           let need_pay = res.need_pay;
@@ -574,9 +552,11 @@ Component({
             // if (that.properties.without == 0) {
             if (that.data.without == 0) {
               console.log("内部支付，不跳转=>", _trade_no, price, coupon_id);
+              oldscenes = that.properties.scene;
               that.getPayJssdk(config.trade_no, coupon_id);
             } else {
               console.log("外部支付，携带参数跳转=>", config.trade_no, price, coupon_id);
+              oldscenes = that.properties.scene;
               this.openEmbeddedMiniProgram(config.trade_no, price, coupon_id);
               // //test
               // this.jumpToOtherMiniProgram(config.trade_no, price, coupon_id);
@@ -616,18 +596,8 @@ Component({
         return;
       }
 
-      // 没有获取到jssdk参数，调用获取jssdk参数接口
-      wx.request({
-        url: baseUrl + "/api/payment/pay",
-        method: "POST",
-        data: {
-          trade_no: trade_no,
-          coupon_id: coupon_id,
-        },
-        header: {
-          Authorization: wx.getStorageSync("access_token"),
-        },
-        success: (res) => {
+      getApp().userCenterRequest('/api/payment/pay', { trade_no: trade_no, coupon_id: coupon_id, }, 'POST')
+        .then(res => {
           console.log("发送订单号信息为：", trade_no, "支付接口返回：", res);
           if (res.data.code == 1) {
             jssdk = res.data.data.jssdk;
@@ -646,21 +616,15 @@ Component({
               showCancel: false,
             });
           }
-        },
-        fail: (err) => {
+        })
+        .catch(err => {
           wx.hideLoading();
           console.log("获取支付错误", err);
-          // wx.showToast({
-          //   title: "获取支付错误" + err,
-          //   icon: "none",
-          //   duration: 2000,
-          // });
           wx.showModal({
             content: err.msg || "网络错误",
             showCancel: false,
           });
-        },
-      });
+        })
     },
     /**
      * @description 调用微信发起支付
@@ -703,40 +667,29 @@ Component({
     // 单纯的查询支付状态
     getHasBeenPayedSelect(scenes) {
       let that = this;
-
       //创建支付单
       return new Promise((resolve, reject) => {
-        wx.request({
-          url: baseUrl + "/api/payment",
-          method: "POST",
-          data: {
-            scenes: scenes, //场景值
-            brand: sys.brand, // 手机品牌 iPhone
-            model: sys.model, // 手机型号 iPhone X
-            system: sys.system, // 操作系统版本 iOS 10.0.1
-            network: getApp().globalData.currentNetwork, // 当前网络状态 wifi 4g 3g 2g none unknown
-          },
-          header: {
-            Authorization: wx.getStorageSync("access_token"),
-          },
-          success(res) {
-            if (res.data.code == 1) {
-              // console.log('查询支付状态', res);
-              resolve(res.data.data);
+        getApp().userCenterRequest('/api/payment', { scenes: scenes, brand: sys.brand, model: sys.model, system: sys.system, network: getApp().globalData.currentNetwork || "unknown", }, 'POST')
+          .then(res => {
+            console.log(res);
+            const ret = res.data;
+            if (ret.code == 1) {
+              trade_res = ret.data;
+              scenes = that.properties.scene;
+              resolve(ret.data);
             }
-          },
-          fail: (err) => {
-            console.log('查询支付状态失败', err);
+          })
+          .catch(err => {
+            console.log(err);
             reject(err);
-          },
-        });
+          })
       })
     },
   },
   lifetimes: {
     async attached() { },
     detached() {
-      console.log("【支付组件】【初始化数据】");
+      // 在组件实例被从页面节点树移除时执行
       this.init();
     },
   },

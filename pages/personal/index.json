@@ -1,7 +1,0 @@
-{
-    "component": true,
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "navigation-bar": "/custom-tab-bar"
-  }
-}

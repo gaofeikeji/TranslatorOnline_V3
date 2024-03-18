@@ -160,6 +160,14 @@ translateFunction(e) {
       scale:1
       })
 }, 
+
+  // 查看原图
+  viewImage() {
+    wx.previewImage({
+      urls: [this.data.selectPicturPath],
+      current: this.data.selectPicturPath,
+    });
+  },
 // 底部导航以及功能切换
 showActionBox(actype){  
   let show = this.data.action?false:true;
