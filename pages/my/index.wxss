@@ -1,6 +1,7 @@
 .container{
   background: rgba(247, 247, 247, 0.2);
   padding: 0 15rpx;
+  margin-top: 60px;
 }
 
 .user_container {

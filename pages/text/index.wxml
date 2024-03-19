@@ -59,11 +59,11 @@
         </view>
     </view>
         
+  </view>
         
-    <view class="tab-bar tabbar tab-bottom safe-area transparent">                   
-      <view class="circle-btn picture-action" data-actype="2"
-        bindtap="textFun">确定翻译</view>
-    </view>
+  <view class="tab-bar tabbar tab-bottom safe-area transparent">                   
+    <view class="circle-btn picture-action" data-actype="2"
+      bindtap="textFun">确定翻译</view>
   </view>
 
   <view class="" wx:if="{{notVip == 1}}">

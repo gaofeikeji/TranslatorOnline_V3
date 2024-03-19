@@ -79,8 +79,8 @@ Page({
     selectPicturWidth: 500, 
     selectPicturHeight: 600,
     currentSelectItem:"",
-    currentSelectX:0,
-    currentSelectY:0,
+    currentSelectX:20,
+    currentSelectY:40,
     lastScale: 1,
     toBase64_url: "",
     scene: "template_unlock_image",
@@ -487,8 +487,8 @@ getMidpoint(a, b) {
   //放大缩小翻译结果
   upScalepic(event){
     console.warn("upScalepic",event)
-    if(this.data.scale>3){
-      xy.showModalClose("最大缩放比例",2100);
+    if(this.data.scale>6){
+      app.showModalClose("最大缩放比例",2100);
       return false;
     }
     this.setData({ 
@@ -498,8 +498,8 @@ getMidpoint(a, b) {
   downScalepic(event){
     console.warn("downScalepic",event)
     console.warn("upScalepic",event)
-    if(this.data.scale<0.1){
-      xy.showModalClose("最小缩放比例",2100);
+    if(this.data.scale<-2){
+      app.showModalClose("最小缩放比例",2100);
       return false;
     }
     this.setData({ 

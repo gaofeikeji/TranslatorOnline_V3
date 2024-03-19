@@ -225,7 +225,7 @@ background: rgba(204, 204, 204, 1);
   width: 15rpx;
   height: 15rpx;
   margin:0  10px;
-}
+} 
 .action-box image:last-child{
   float: right;
 }
@@ -238,8 +238,11 @@ background: rgba(204, 204, 204, 1);
    
 }
 .action-box .text-btn.close{
-  float: right;
   margin-right:20rpx;
+  width: 38.5rpx;
+  height: 38.5rpx;
+  opacity: 1;
+  float: right;
 }
 .action-box .text-btn.selected{
   color: rgba(31, 113, 255, 1) ;
@@ -337,8 +340,9 @@ color: rgba(0, 0, 0, 1);
 }
 
 .selected-image{
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
+  pointer-events: none;
 }
 
 

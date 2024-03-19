@@ -10,13 +10,13 @@ currentTargetLang="{{currentTargetLang}}"
   <!-- 当前图片展示容器 -->    
   <scroll-view class="scrollarea" scroll-y type="list">                             
   <view class="container ">  
-    <movable-area scale-area="{{true}}"  id="zoomArea" 
-    style="background: #eee; width:{{windowWidth}}px;height:{{windowHeight+140}}px;">
-      <movable-view direction="all"            
+    <movable-area scale-area="{{true}}"  id="zoomArea" class="zoomArea"
+    style=" width:{{selectPicturWidth*3}}px;height:{{selectPicturHeight*3}}px;">
+      <movable-view direction="all"        
       scale-min="0.001" x="{{currentSelectX}}" y="{{currentSelectY}}"  
-       scale-max="4"   scale-value="{{scale}}" 
-        style="background:#ddd;width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;position: absolute;:left:0;top:50px;z-index: 211;"
-       damping="5" inertia="{{false}}"
+       scale-max="6"  
+        style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;"
+       damping="5" inertia="{{false}}" 
        out-of-bounds="{{true}}"  inertia="{{true}}" scale="{{true}}" direction="all" 
        htouchmove="listenstartMove"     >
      <!-- bindscale="linstenerScale"  -->
@@ -40,7 +40,7 @@ currentTargetLang="{{currentTargetLang}}"
       </block>
       
         <block wx:if="{{ showResult ==   0 }}"> 
-            <image class="selected-image"
+            <image class="selected-image" bind:tap="viewImage"
             style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;" 
             src="{{selectPicturPath||''}}"></image> 
             <!-- bind:tap="viewImage" -->
@@ -98,10 +98,13 @@ currentTargetLang="{{currentTargetLang}}"
     <!-- 仅在切换逐行查看状态下显示的切换按钮 -->
     <block wx:if="{{actype==1||  actype ==   10||actype ==   11 }}"> 
       <view class="action-box"  >  
-            <image src="{{currentVisti ==   0?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAC6SURBVFiF7ZXNEYIwFAb3y9iHdELsCGwAbUDsSOgEGuF58OdgUEdyYJx5e91J3h7yo21tFyCyjG5stVu4FoANECWOTHSJDUQzShnHN67JGf4IgIluOCsJKPYWJfqhnXGVgfIDQu4GHvD3AdrWZkAn0b9KM0qAOXf3zdhKOQHh04BPPOJy+XYNDwDDSYfEVRZNix+wJ6ufAQ9YPeB2CAOxqCyRZpQSfVFZTGQgki75Ga39HTuO4ziO41wBEqA/B6pNfmoAAAAASUVORK5CYII=':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACLSURBVFiF7ZXRDYAgDESfxg3cgR3Y/8Md3IEd/KGJGooJSozx3u+F9iDXMgARmGkjAUvjWQCm3HzNxc7MO72khTvNzQC5uWfA0x5h7FVYBj5jwEIY8ENoehfsBVpS3ro7DlyNod3c2wPxroHXMyADrxuwEHqJtr+gpD82BYn6nNcadfukhBBCCPEfNmJLEcS1kPz4AAAAAElFTkSuQmCC'}}" class="text-btn {{currentVisti ==   0?'selected':''}}" data-actype="10"  bindtap="selectVerticle"></image> 
+            <image src="{{currentVisti ==   0?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAC6SURBVFiF7ZXNEYIwFAb3y9iHdELsCGwAbUDsSOgEGuF58OdgUEdyYJx5e91J3h7yo21tFyCyjG5stVu4FoANECWOTHSJDUQzShnHN67JGf4IgIluOCsJKPYWJfqhnXGVgfIDQu4GHvD3AdrWZkAn0b9KM0qAOXf3zdhKOQHh04BPPOJy+XYNDwDDSYfEVRZNix+wJ6ufAQ9YPeB2CAOxqCyRZpQSfVFZTGQgki75Ga39HTuO4ziO41wBEqA/B6pNfmoAAAAASUVORK5CYII=':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACLSURBVFiF7ZXRDYAgDESfxg3cgR3Y/8Md3IEd/KGJGooJSozx3u+F9iDXMgARmGkjAUvjWQCm3HzNxc7MO72khTvNzQC5uWfA0x5h7FVYBj5jwEIY8ENoehfsBVpS3ro7DlyNod3c2wPxroHXMyADrxuwEHqJtr+gpD82BYn6nNcadfukhBBCCPEfNmJLEcS1kPz4AAAAAElFTkSuQmCC'}}" 
+            class="icon-btns" data-actype="10"  bindtap="selectVerticle"></image> 
             
-            <image src="{{currentVisti ==   1?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAC6SURBVFiF7ZXNEYIwFAb3y9iHdELsCGwAbUDsSOgEGuF58OdgUEdyYJx5e91J3h7yo21tFyCyjG5stVu4FoANECWOTHSJDUQzShnHN67JGf4IgIluOCsJKPYWJfqhnXGVgfIDQu4GHvD3AdrWZkAn0b9KM0qAOXf3zdhKOQHh04BPPOJy+XYNDwDDSYfEVRZNix+wJ6ufAQ9YPeB2CAOxqCyRZpQSfVFZTGQgki75Ga39HTuO4ziO41wBEqA/B6pNfmoAAAAASUVORK5CYII=':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAABtSURBVEiJ7c0xCoNAEIbRt7A3CMYbeITcwSPb2eUuEStJikDExt44XcK8ZlmYj7+gR3XOG8PJBhRcIyEewS79uIIb2v0/Hdw3eOGDMTJYseD55f2yv2tkLP2HgkuwnSNRRRcYnXGPDKaUUkrHNiEgDdPPbaMbAAAAAElFTkSuQmCC'}}" class="text-btn  {{currentVisti ==   1?'selected':''}}" data-actype="11"  bindtap="selectVerticle"></image>
-            <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADeSURBVDiNvZXBFcMgCIa/ttnAHdwhO3TcnHvNDu7gDr1UQ4gEXvPa/+JT9AsCQfiRboE9SY0A5Qo4AbNzvlgfeRgHZiB7XrHdomrDyONnADjSIid3ZYx4aWkXNgnOF8EJkWAN1loYJ6egrv5R91qHQitzzHybW7dLAJMAWOAGk2A3bNOZ0YB70ARULxRfq3l8KHAhHVPpuQuOQLNat+AFtqqwPB5B2/y0EclfOtJ0PPXSlMmrnMc6DNVggPUiuGvUNtuGNLCNVIGXXrT6cQuJB18xkhh5mmBfFVWN/9UbFXQre304PgEAAAAASUVORK5CYII=" class="text-btn close" data-actype="0"  bindtap="selectFunction"></image>
+            <image src="{{currentVisti ==   1?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAC6SURBVFiF7ZXNEYIwFAb3y9iHdELsCGwAbUDsSOgEGuF58OdgUEdyYJx5e91J3h7yo21tFyCyjG5stVu4FoANECWOTHSJDUQzShnHN67JGf4IgIluOCsJKPYWJfqhnXGVgfIDQu4GHvD3AdrWZkAn0b9KM0qAOXf3zdhKOQHh04BPPOJy+XYNDwDDSYfEVRZNix+wJ6ufAQ9YPeB2CAOxqCyRZpQSfVFZTGQgki75Ga39HTuO4ziO41wBEqA/B6pNfmoAAAAASUVORK5CYII=':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAABtSURBVEiJ7c0xCoNAEIbRt7A3CMYbeITcwSPb2eUuEStJikDExt44XcK8ZlmYj7+gR3XOG8PJBhRcIyEewS79uIIb2v0/Hdw3eOGDMTJYseD55f2yv2tkLP2HgkuwnSNRRRcYnXGPDKaUUkrHNiEgDdPPbaMbAAAAAElFTkSuQmCC'}}"
+             class="icon-btns" data-actype="11"  bindtap="selectVerticle"></image>
+            <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADeSURBVDiNvZXBFcMgCIa/ttnAHdwhO3TcnHvNDu7gDr1UQ4gEXvPa/+JT9AsCQfiRboE9SY0A5Qo4AbNzvlgfeRgHZiB7XrHdomrDyONnADjSIid3ZYx4aWkXNgnOF8EJkWAN1loYJ6egrv5R91qHQitzzHybW7dLAJMAWOAGk2A3bNOZ0YB70ARULxRfq3l8KHAhHVPpuQuOQLNat+AFtqqwPB5B2/y0EclfOtJ0PPXSlMmrnMc6DNVggPUiuGvUNtuGNLCNVIGXXrT6cQuJB18xkhh5mmBfFVWN/9UbFXQre304PgEAAAAASUVORK5CYII=" 
+            class="icon-btns-close" data-actype="0"  bindtap="selectFunction"></image>
       </view>
       
     </block> 

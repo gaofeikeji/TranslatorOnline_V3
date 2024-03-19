@@ -19,7 +19,8 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "compileWorklet": true
+    "compileWorklet": true,
+    "ignoreUploadUnusedFiles": false
   },
   "condition": {},
   "editorSetting": {

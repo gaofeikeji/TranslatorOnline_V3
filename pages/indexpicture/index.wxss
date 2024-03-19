@@ -8,7 +8,7 @@ page{
   background: rgba(0, 0, 0, 0.03);
 } 
 /* 解析的图片内容容器 */
-#zoomArea{ 
+.zoomArea{ 
   position: relative;
   margin:0;
   height: 100%;
@@ -37,21 +37,25 @@ page{
   background-color: rgba(255,255,255,1);
   border: 4px solid rgb(37, 37, 37);
   border-radius: 6rpx;
+  pointer-events: none;
 } 
 .media-text-item{ 
   position: absolute;
   left: 0;
   box-shadow: 0 0 1px #000;
+  pointer-events: none;
 }
 .media-text{
   font-size: 20rpx; 
   color: #000;
+  pointer-events: none;
 }
 
 .media-text-item.selected .media-text{
   color: rgba(31, 113, 255, 0.8) ; 
   box-shadow: 0 0 1px rgba(31, 113, 255, 0.8);
   /* transform: scale(1.2); */
+  pointer-events: none;
 }
  
 .action-scale{
@@ -71,3 +75,18 @@ page{
 }
 
 
+.icon-btns{ 
+  display: inline-block;
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 1; 
+  margin-top: 20rpx;
+}
+.icon-btns-close{ 
+  display: inline-block;
+  margin-top: 20rpx;
+width: 38.5rpx;
+height: 38.5rpx;
+opacity: 1; 
+float: right;
+}

@@ -7,25 +7,17 @@
     "components/top-nav/index",
     "pages/indexpicture/index",
     "pages/texttranslate/index",
-    "pages/my/index", 
+    "pages/my/index",
     "pages/userinfo/index",
     "pages/recommend/index",
-    "pages/introduce/introduce"
+    "pages/introduce/introduce",
+    "pages/multiplepic/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  "style": "v2",
-  "renderer": "skyline",
-  "rendererOptions": {
-    "skyline": {
-      "defaultDisplayBlock": true,
-      "disableABTest": true,
-      "sdkVersionBegin": "3.0.0",
-      "sdkVersionEnd": "15.255.255"
-    }
-  },
+  "style": "v2", 
   "usingComponents": {
     "navigation-bar": "/custom-tab-bar",
     "privacy": "/components/privacy/privacy",

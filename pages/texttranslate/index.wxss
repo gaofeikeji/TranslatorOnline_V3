@@ -6,6 +6,7 @@
 .text-container{
   height: 80%;
   width: 100%;
+  margin-top: 80px;
   background: #fff;
   display: block;
   border-bottom-left-radius: 20rpx;
@@ -14,9 +15,10 @@
 .textarea-container{  
   background: rgba(0, 0, 0, 0.03); 
   padding: 40rpx;
-  margin: 12px 1%;
+  margin: 8rpx;
   height: 90%;
   width: 96%;
+  margin: 0 auto;
   border-radius: 4px;  
   font-size: 14px;
   color: #000;
@@ -42,6 +44,7 @@
 .scroll-translate{
   height: 90%;
   width: 90%;
+  margin: 0 auto;
   opacity: 1;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.03);
@@ -80,3 +83,6 @@
   z-index: 900;  
 }
  
+.lang-item .translate-margin { 
+   margin: 0;
+}

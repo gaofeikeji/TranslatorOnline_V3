@@ -1,0 +1,35 @@
+
+
+.textarea-container {
+    display: block;
+    margin-top: 90px;
+}
+
+.upload-img {
+    position: relative;
+    display: inline-block;
+    /* flex-direction: row;
+  justify-content: center;
+  align-items: center;  */
+    width: 158rpx;
+    height: 158rpx;
+    opacity: 1;
+    border-radius: 8rpx;
+    background: rgba(0, 0, 0, 0.05);
+    margin: 0 12rpx;
+}
+
+.upload-item-img {
+    display: inline-block;
+    width: 158rpx;
+    height: 158rpx;
+
+} 
+
+.upload-item-img  .upload-item-remove{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 15;
+
+}

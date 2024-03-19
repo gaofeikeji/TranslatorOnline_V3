@@ -3,7 +3,8 @@
   "projectname": "TranslatorOnline_V3",
   "setting": {
     "compileHotReLoad": true,
-    "urlCheck": false
+    "urlCheck": false,
+    "bigPackageSizeSupport": true
   },
   "condition": {
     "miniprogram": {

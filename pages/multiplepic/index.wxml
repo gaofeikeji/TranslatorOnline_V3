@@ -1,0 +1,40 @@
+<!--pages/text/index.wxml-->
+ 
+<navigation-bar
+canBack="{{true}}"
+currentLang="{{currentLang}}"
+currentTargetLang="{{currentTargetLang}}" 
+  color-animation-duration="2000"
+  color-animation-timing-func="easeIn"
+/>  
+<view class="container " > 
+    <view class="text-container"  > 
+        <!-- 当前输入内容调整 -->
+        <view class="textarea-container">   
+            <view  
+                class="upload-img {{ select === index ? 'uploading' : '' }}"
+                wx:for="{{ imgList }}"  
+                wx:key="index"
+                data-index="{{ index }}"  >
+                
+                <image class="upload-item-img"  src="{{ item.avatarUrl }}"></image>
+                <image class="upload-item-remove"  src="/images/uplodred.png"></image>
+
+            </view>
+        </view> 
+        
+    </view>
+        
+    
+    <view class="tab-bar tabbar tab-bottom safe-area transparent">                   
+        <view class="circle-btn picture-action" data-actype="2"
+            bindtap="textFun">确定翻译</view>
+        </view>
+    </view>
+
+<view class="" wx:if="{{notVip == 1}}">
+<custom-ad ad_type="{{3}}"></custom-ad>
+</view> 
+
+
+<vip-member id="pay"></vip-member>
