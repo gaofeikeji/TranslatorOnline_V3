@@ -3,11 +3,11 @@
   <view class="current-language-box " 
   style="height:{{navBarHeight}}px;padding:0 {{menuRight}}px;">  
      <block wx:if="{{canBack}}"> 
-        <text    bindtap="back"  
-              class="btn-back"
-              hover-stay-time="100"
-              aria-role="button"
-              aria-label="返回" ></text>
+         
+              <image class=""  class="btn-back" bindtap="back"   src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAoCAYAAAAVBmHYAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACzSURBVEiJ7dXRDYMgFIXhv6WvHaCMYdfo6nYAB6gDtAP44CUQghb08nZPYkSD39Eo0VGXp2w/4Ft5DbeKOS/Ay/hdCwNcG+AR+LTglwZ4bIH38NPwFq4Cl3A1OMW9wCGn4YB3gWH9FIcecMBnLSyPE/wB3IkvU6XQyX7qUeCSsXqBy45VC3I8FCC4l7KpMO8QDvFuPetTHCrYwlUK9vBSQXrub2r+ROmK7bbgLBaLxWKxxCwjSyY6jlMpagAAAABJRU5ErkJggg==" mode="aspectFit" lazy-load="false">
+                
+              </image>
+              
       </block>   
       <!-- 只显示标题的特殊处理，其他的全部显示 -->
       <block wx:if="{{onytitle}}">   
@@ -16,9 +16,9 @@
       <block wx:else>  
         <view class="" style="display: flex;" bindtap="selectLang">
           <text class="lang text-active">{{langData[currentLang]}}</text>
-          <image class="lang_switch" mode="aspectFit" src="/images/switch_gray.png"></image> 
+          <image class="lang_switch" mode="aspectFit" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAXCAYAAAAV1F8QAAAAAXNSR0IArs4c6QAAALxJREFUSEvtldENgzAQQ80kbTfpJl2FUdpN2ATYpPhEqsjQIkU+vhopH3zEj3N8lw7edQdwAfBS2c7LQb/qjQpzg1gRN9ew7vhwg6i5C8sAEVYs/FRWQFfzXVGvWEjpJ0GP5eJuZpDKDQTVnmbxxizr9IenrDBsnPmDmsNyqnVnxDv6qB4XzdYcHIw+0oo44mczMSrSiRuzCcDkhNVh0MqsME1dGmwv3gqzhOVbHxXY5u1vvbdfDcvHyxaIN8ewHXafuYX3AAAAAElFTkSuQmCC"></image> 
           <text class="lang text-active">{{langData[currentTargetLang]}}</text>
-          <image class="lang_switch" mode="aspectFit" src="/images/{{editLang?'up_arrow.png':'down_arrow.png'}}"></image> 
+          <image class="lang_switch" mode="aspectFit" src="{{editLang?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAWZJREFUWEfNl+0RwiAMhtP/OoAO4ALuP0IXcAA7QB3Ae7mml3IU3sTilT89BZInn8AgvnEVkZvZgt8Y8/L9LN83K3YgFz5ERJWRW2QSkSZIC+CeWcwqt+uqIDWAiNV7gAjRqzRZAoCrobzHAITmS5JfAnj20GxkjlZ+DnCk26lwWIAjEo513pqYFqC363O4FAoF+Kf1CpIqQwEi1kMAXImB7uhtVNg3AiBifamuIwmcPOAF2G0qS//weGIGgIc8Vw54DNvzXfI8ACXlejLm/Z6FSB5gErCmXLM6BMEAMMrDEEwIbO9mEtZ6onWwUUmoJxijvOSJWogpAAhFGDzlxe6ZEIKWm9gDJrIuAWAwlRBR0NqTWjEGW7ctgZ75lKynOY5B7slyj6WltcULyb9CsWlsp7uUwgs9y5K6lmvMjqwM18PEJs0RiRl+mv0KUrs5rbJbj9O8hPQGdFkm8uc5/obFm+dXrWa/W5JPhsEwnVkAAAAASUVORK5CYII=':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAXNJREFUWEfNl4kNwjAMRdNJgElgExiFUWATmATYBH4UV26Uxt/pQStVrZrGfj7iOF3wXfsQwlFNOaT3V3p+0vPBiu3IH88hBFFGTgmAMEEsgNNPCO4pVxWkBtBi9RgoQnQvDZYAEOfLFJMrc28/2W89XgK4LqRcxA7k5wBzup0KhwaYI+FY5/WJqQGWdn0OF/UJwJrWC0hcGQKwtvV9QgLgH9YLwI0FgLu8pZiZ8wKAtfQkPB5PSZZbRY0C0NWLgchrfy2/IoCVgHkdr0Hkyi3vxmVoASBhGAi3cqkDJqVqOvSOpj3RpByGMUmoK1jJExjXjQdrUPSsF6AUDg3oUR7BAWAtldIGU2owvMp7ALwwiZiDAOKZPqJR9RaqqFf2ghZ6dusd+y8m7ma2Y1AyVW6q1TK/2JBgcI1QDBJ4c00pvNCyLNnQUG25CJszHK6DibZmjsRsPppNBRm1Wgu2Dqd5bOWguksD+fEcn1EdB8evWoJ8AW8KUZwt0GoTAAAAAElFTkSuQmCC'}}"></image> 
         </view>
       </block>   
     
@@ -27,7 +27,7 @@
  
   <!-- 语言容器 -->
 <view class="section-box-lang {{editLang?'edit-lang':''}}"
- style="height: {{screenHeight-140}}px;top:{{navBarHeight+statusBarHeight}}px;left:0;">     
+ style="height: {{screenHeight-navBarHeight-86}}px;top:{{navBarHeight+statusBarHeight}}px;left:0;z-index: 11111;">     
   <!-- 源语言 -->
    <view  class="flex-item current-language-list" >
       <scroll-view class="scroll-box" type="list"	scroll-y="true" bind:tap="fromIdxChange">

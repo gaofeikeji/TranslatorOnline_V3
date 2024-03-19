@@ -7,63 +7,53 @@ currentTargetLang="{{currentTargetLang}}"
     color-animation-timing-func="easeIn"
   />  
 
-  <!-- 当前图片展示容器 -->    
-  <scroll-view class="scrollarea" scroll-y type="list">                             
+  <!-- 当前图片展示容器 -->                                 
   <view class="container ">  
     <movable-area scale-area="{{true}}"  id="zoomArea" 
-    style="background: #eee; width:{{windowWidth}}px;height:{{windowHeight+140}}px;">
+    style="background: #eee; width:{{windowWidth}}px;height:{{windowHeight-80}}px;"
+   >
       <movable-view direction="all"            
-      scale-min="0.001" x="{{currentSelectX}}" y="{{currentSelectY}}"  
-       scale-max="4"   scale-value="{{scale}}" 
-        style="background:#ddd;width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;position: absolute;:left:0;top:50px;z-index: 211;"
+      scale-min="0.001" x="0" y="0"  
+       scale-max="15"   scale-value="{{scale}}" 
+        style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;position: absolute;:left:0;top:50px;z-index: 2111;"
        damping="5" inertia="{{false}}"
        out-of-bounds="{{true}}"  inertia="{{true}}" scale="{{true}}" direction="all" 
-       htouchmove="listenstartMove"     >
+       bindchange="listentouch"
+       htouchmove="listenstartMove" 
+     >
      <!-- bindscale="linstenerScale"  -->
-      <view  class="media-info-box" style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;"> 
+      <view  class="media-info-box" style="width:{{selectPicturWidth-100}}px;height:{{selectPicturHeight-100}}px;"> 
           <!-- 显示结果 -->
-      <block wx:if="{{ showResult ==   1 }}">  
-          <view     bindtap="toVerticleHorizonTextItem"
-              class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
-              wx:for="{{ langList }}"  
-              wx:key="index" 
-              data-rate="{{ item.single_rate }}"  
-              style="left:{{item.left}}px;top:{{item.top}}px;"
-              >
-              <block wx:if="{{ istranslate }}">
-                <text class="media-text" >{{item.single_str_utf8}}</text>  
-              </block>
-              <block wx:else> 
-                <text class="media-text" >{{item.translate}}</text>
-              </block>
-          </view> 
-      </block>
-      
+     <block wx:if="{{ showResult ==   1 }}">  
+        <view     bindtap="toVerticleHorizonTextItem"
+            class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
+            wx:for="{{ langList }}"  
+            wx:key="index" 
+            data-rate="{{ item.single_rate }}"  
+            style="left:{{item.left}}px;top:{{item.top}}px;"
+             >
+            <block wx:if="{{ istranslate }}">
+              <text class="media-text" >{{item.single_str_utf8}}</text>  
+            </block>
+            <block wx:else> 
+              <text class="media-text" >{{item.translate}}</text>
+            </block>
+        </view> 
+    </block>
+    
         <block wx:if="{{ showResult ==   0 }}"> 
             <image class="selected-image"
             style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;" 
             src="{{selectPicturPath||''}}"></image> 
             <!-- bind:tap="viewImage" -->
         </block>
-
       </view>
     </movable-view>
     </movable-area>
     
     
   </view>    
-</scroll-view>
   
-<view class="action-scale" hover-class="none" hover-stop-propagation="false">
-            
-  <image bindtap="upScalepic" class="scaleAction" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACrSURBVGiB7djRCYMwFEbhP9Y9FCWhm3UAp+keHaYqSBdp0iffEyFysed7NnoPESJKBboxTL33z5I1Z2hKLnZNCpI0DPdQZ5xjiiKsIsIKIqwgwgoirHDdGKb9JK7hs66PWvfeXWMnpPxvoXj7TpLkUnq52M45a7btvRwfL09b8qDee0mSi+18xnC5LvE6EWEFEVYQYcX/RaToFumcU7gqa79rAAAAAAAAgFp+s3AjweJPdf0AAAAASUVORK5CYII=" mode="aspectFit">
-        
-  </image>
-  <image  bindtap="downScalepic" class="scaleAction" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAADCAYAAACAjW/aAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAAsSURBVBiVvcsxDQAgDACwLkHDPE0ylpDAhYbtoH8DhaXnYjcPCOQk4gzfXw/xJgMDWmhKfAAAAABJRU5ErkJggg==" mode="aspectFit" >
-    
-  </image>
-</view>
-
   <view class="" wx:if="{{notVip == 1}}">
     <custom-ad ad_type="{{3}}"></custom-ad>
   </view>       
@@ -97,11 +87,13 @@ currentTargetLang="{{currentTargetLang}}"
   <view class="action-container {{action?'':'hidden'}}">
     <!-- 仅在切换逐行查看状态下显示的切换按钮 -->
     <block wx:if="{{actype==1||  actype ==   10||actype ==   11 }}"> 
-      <view class="action-box"  >  
-            <image src="{{currentVisti ==   0?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAC6SURBVFiF7ZXNEYIwFAb3y9iHdELsCGwAbUDsSOgEGuF58OdgUEdyYJx5e91J3h7yo21tFyCyjG5stVu4FoANECWOTHSJDUQzShnHN67JGf4IgIluOCsJKPYWJfqhnXGVgfIDQu4GHvD3AdrWZkAn0b9KM0qAOXf3zdhKOQHh04BPPOJy+XYNDwDDSYfEVRZNix+wJ6ufAQ9YPeB2CAOxqCyRZpQSfVFZTGQgki75Ga39HTuO4ziO41wBEqA/B6pNfmoAAAAASUVORK5CYII=':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACLSURBVFiF7ZXRDYAgDESfxg3cgR3Y/8Md3IEd/KGJGooJSozx3u+F9iDXMgARmGkjAUvjWQCm3HzNxc7MO72khTvNzQC5uWfA0x5h7FVYBj5jwEIY8ENoehfsBVpS3ro7DlyNod3c2wPxroHXMyADrxuwEHqJtr+gpD82BYn6nNcadfukhBBCCPEfNmJLEcS1kPz4AAAAAElFTkSuQmCC'}}" class="text-btn {{currentVisti ==   0?'selected':''}}" data-actype="10"  bindtap="selectVerticle"></image> 
+      <view class="action-box"  > 
+        <!-- <image src="" mode=""/> -->
+            <text src="{{currentVisti ==   0?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAJVJREFUWEftl8sNgCAQRGdtREvBjrQCQwd2JKVYiWtQgx43gSCH4cRhP5NHwmRkmNSpYEP9E0ThpZ81Lnf1998bowC9LgKPA8EspINTxZLdmwQoxn0Vs4Dv00lOLwWQAAmQAAk04wVmEypcmNyw8FzzONrxSyDH03N6+Q+QAAmQQDsE/o5mZvsqWxjkyXgxZFZPyDFTnpLttDJ3lIWNAAAAAElFTkSuQmCC':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACLSURBVFiF7ZXRDYAgDESfxg3cgR3Y/8Md3IEd/KGJGooJSozx3u+F9iDXMgARmGkjAUvjWQCm3HzNxc7MO72khTvNzQC5uWfA0x5h7FVYBj5jwEIY8ENoehfsBVpS3ro7DlyNod3c2wPxroHXMyADrxuwEHqJtr+gpD82BYn6nNcadfukhBBCCPEfNmJLEcS1kPz4AAAAAElFTkSuQmCC'}}" 
+            class="text-btn {{currentVisti ==   0?'selected':''}}" data-actype="10"  bindtap="selectVerticle">田</text> 
             
-            <image src="{{currentVisti ==   1?'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAC6SURBVFiF7ZXNEYIwFAb3y9iHdELsCGwAbUDsSOgEGuF58OdgUEdyYJx5e91J3h7yo21tFyCyjG5stVu4FoANECWOTHSJDUQzShnHN67JGf4IgIluOCsJKPYWJfqhnXGVgfIDQu4GHvD3AdrWZkAn0b9KM0qAOXf3zdhKOQHh04BPPOJy+XYNDwDDSYfEVRZNix+wJ6ufAQ9YPeB2CAOxqCyRZpQSfVFZTGQgki75Ga39HTuO4ziO41wBEqA/B6pNfmoAAAAASUVORK5CYII=':'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAABtSURBVEiJ7c0xCoNAEIbRt7A3CMYbeITcwSPb2eUuEStJikDExt44XcK8ZlmYj7+gR3XOG8PJBhRcIyEewS79uIIb2v0/Hdw3eOGDMTJYseD55f2yv2tkLP2HgkuwnSNRRRcYnXGPDKaUUkrHNiEgDdPPbaMbAAAAAElFTkSuQmCC'}}" class="text-btn  {{currentVisti ==   1?'selected':''}}" data-actype="11"  bindtap="selectVerticle"></image>
-            <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADeSURBVDiNvZXBFcMgCIa/ttnAHdwhO3TcnHvNDu7gDr1UQ4gEXvPa/+JT9AsCQfiRboE9SY0A5Qo4AbNzvlgfeRgHZiB7XrHdomrDyONnADjSIid3ZYx4aWkXNgnOF8EJkWAN1loYJ6egrv5R91qHQitzzHybW7dLAJMAWOAGk2A3bNOZ0YB70ARULxRfq3l8KHAhHVPpuQuOQLNat+AFtqqwPB5B2/y0EclfOtJ0PPXSlMmrnMc6DNVggPUiuGvUNtuGNLCNVIGXXrT6cQuJB18xkhh5mmBfFVWN/9UbFXQre304PgEAAAAASUVORK5CYII=" class="text-btn close" data-actype="0"  bindtap="selectFunction"></image>
+            <text class="text-btn  {{currentVisti ==   1?'selected':''}}" data-actype="11"  bindtap="selectVerticle">三</text>
+            <text class="text-btn close" data-actype="0"  bindtap="selectFunction">X</text>
       </view>
       
     </block> 

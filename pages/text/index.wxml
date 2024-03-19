@@ -6,30 +6,33 @@
     currentTargetLang="{{currentTargetLang}}" 
       color-animation-duration="2000"
       color-animation-timing-func="easeIn"
-    /> 
-<scroll-view class="scrollarea" scroll-y type="list"> 
+    />  
   <view class="container " > 
     <view class="text-container"  >
        <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本" 
         focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText" />
         <!-- 当前输入内容调整 -->
         <view class="text-block text-right margin-top30"> 
-          <view></view>
-          <view></view>
-          <view></view>
+          <view class="view-inline "></view>
+          <view class="view-inline "></view> 
+          <view class="view-inline text-right">{{fromText.length}}</view>
+          <view class="view-inline text-left">/{{maxlength}}</view>
              
-          <view class="text-right">{{fromText.length}}</view>
-          <view class="text-left">/{{maxlength}}</view>
         </view> 
         <view class="bottom-text" >
           <view class="flex-cloum " hover-class="none" hover-stop-propagation="false">
             <view  class="flex-box"    > 
                 <view class="img-text" data-actype="1"  bindtap="textFun">
-                  <image src="../../images/icon/paste.png" ></image>
-                  粘贴
+                  <view class="flex-box not-wrap">
+                    <image class="flex-img-left"   src="../../images/icon/paste.png" ></image>
+                    粘贴
+                  </view>
                 </view>
                 <view class="img-text"  data-actype="3"  bindtap="textFun">
-                  <image src="../../images/icon/clear.png" ></image>清空
+                  <view class="flex-box not-wrap" >
+                    <image class="flex-img-left"  src="../../images/icon/clear.png" ></image>
+                    清空
+                  </view>
                 </view>
             </view>
           </view>
@@ -58,16 +61,14 @@
         
         
     <view class="tab-bar tabbar tab-bottom safe-area transparent">                   
-      <button class="circle-btn picture-action" data-actype="2"
-        bindtap="textFun">确定翻译</button>
+      <view class="circle-btn picture-action" data-actype="2"
+        bindtap="textFun">确定翻译</view>
     </view>
   </view>
 
   <view class="" wx:if="{{notVip == 1}}">
     <custom-ad ad_type="{{3}}"></custom-ad>
-  </view>
-</scroll-view> 
-
+  </view> 
 
 
 <vip-member id="pay"></vip-member>

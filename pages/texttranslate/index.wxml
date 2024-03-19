@@ -8,8 +8,7 @@
     color-animation-timing-func="easeIn"
   />  
 
-  <!--  -->                                
-<scroll-view class="scrollarea include-nav"  scroll-y type="list">
+  <!--  -->                                 
   <view class="container ">  
     <!-- 仅显示译文 -->
     <block wx:if="{{ showType ==  63 }}">  
@@ -47,15 +46,37 @@
         </scroll-view>
         </view>
     </block>
-  </view>          
-</scroll-view>
-   
+          
+      
+  </view>           
+   <!-- 底部操作区域 -->
+   <view class="tab-bar tabbar tab-bottom  safe-area">
+    <view 
+        class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
+        wx:for="{{ list }}"  
+        wx:key="index"
+        data-index="{{ index }}"
+        data-actype="{{ item.actype }}"
+        bindtap="selectFunction">
+        <block wx:if="{{ item.type === 0 }}">
+            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+            <text>{{ select === index ?(item.selectedText||item.text):(item.text) }}</text>
+        </block>
+        <block wx:else>
+            <view class="publish">
+            <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAAAXNSR0IArs4c6QAAARZJREFUaEPtWkEOgjAQZKsPUQLoY+QdvsYH+A59jAJBHyItKUkT7AG2SVcwGS5cNqU7OzOUCZQIXWl6LDrSJSlTkDH3V9PchB6VkNTCuzy/jtdW3ebSto9K4nk/a0JyGmhiiho+nTCJGSGBTqBTRK8FnUAn0OkbAWgCmoAmoAk+B3CK5WM1VMJiV2Ox41QicIqLl7uvRfIFuPjOAjdgU5S/b8JOg/ZZVhqiUyAAqyl/1/V5cCerC6M+h5g784ExmipFOlp4Rnr7dGEcLHY1FhuTQuO1cOwIRBaagCYCKTNVDjqBTqATggI+B/DG5mOFoGAWK9BpFiK4Ex8i0ImPlaw7+SmKTSUC98YuFzvFuhTF3qV+EXJd9lwYVIlg9NySAAAAAElFTkSuQmCC"></image>
+            </view>
+        </block>
+    </view>
+  </view>
 <!-- 操作容器 -->
 <view class="action-container {{action?'':'hidden'}}">  
 <!-- 复制内容-->
 <block wx:if="{{ actype ==   20 }}">
     <view class="action-btn-box"> 
-        <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+        <view style="display: block;text-align: right;">
+          <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+        </view>
         <view class="action-btn"  data-actype="51"  bindtap="translateFunction" >仅复制原文</view>
         <view class="action-btn"  data-actype="52"  bindtap="translateFunction" >仅复制翻译结果</view>
         <view class="action-btn"  data-actype="53"  bindtap="translateFunction"  >复制原和结果</view>
@@ -65,7 +86,7 @@
 <block wx:if="{{ actype ==   30 }}">
            
   <view class="action-btn-box"> 
-  <view>
+    <view style="display: block;text-align: right;">
   
     <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
     </view> 
@@ -77,7 +98,10 @@
   <!-- 显示模式 -->
   <block wx:if="{{ actype ==   40 }}"> 
     <view class="action-btn-box"> 
-      <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+      <view style="display: block;text-align: right;">
+        <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+        
+      </view>
       <view class="action-btn {{showType==61?'selected':''}}"   data-actype="61"  bindtap="translateFunction" >逐行对比显示</view> 
       <view class="action-btn {{showType==62?'selected':''}}"  data-actype="62"  bindtap="translateFunction" >左右对比显示</view>
       <view class="action-btn {{showType==63?'selected':''}}"  data-actype="63"  bindtap="translateFunction"  >仅显示译文</view>
@@ -86,23 +110,3 @@
 </view>      
 
  
-<!-- 底部操作区域 -->
-<view class="tab-bar tabbar tab-bottom  safe-area">
-    <view 
-        class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
-         wx:for="{{ list }}"  
-        wx:key="index"
-        data-index="{{ index }}"
-        data-actype="{{ item.actype }}"
-        bindtap="selectFunction">
-        <block wx:if="{{ item.type === 0 }}">
-            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
-            <text>{{ select === index ?(item.selectedText||item.text):(item.text) }}</text>
-        </block>
-        <block wx:else>
-            <view class="publish">
-            <image src="/images/add.png"></image>
-            </view>
-        </block>
-    </view>
-</view>

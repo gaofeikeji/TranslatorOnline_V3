@@ -11,7 +11,7 @@ Page({
     initCamral:false,
     ccWidth:0, 
     ccHeight:0,
-    selectPicturPath:"/images/bg/bg-dark.png"
+    selectPicturPath:""
   },
 //   选择照片
   takePhoto(){

@@ -28,7 +28,6 @@
   },
   "usingComponents": {
     "navigation-bar": "/custom-tab-bar",
-    "svg-icon": "/components/svg-icon/index", 
     "privacy": "/components/privacy/privacy",
     "add-tips": "/components/add-tips/index",
     "wxPay": "/components/wx-pay/index",

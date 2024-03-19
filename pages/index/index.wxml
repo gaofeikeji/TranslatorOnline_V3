@@ -5,13 +5,12 @@ currentLang="{{currentLang}}"
 currentTargetLang="{{currentTargetLang}}" 
     color-animation-duration="2000"
     color-animation-timing-func="easeIn"
-  /> 
-<scroll-view class="scrollarea include-nav" scroll-y type="list">
+    style="position: absolute;z-index: 1111111;width: 100%;"
+  />  
   <view class="container "> 
     
-<custom-ads ad_type="7" style="height: 100%;">
      <block wx:if="{{ initCamral }}">   
-          <camera  device-position="back" style="top:{{navBarHeight}}px;width:100%;height:sysInfo.height-navBarHeight-80"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
+          <camera  device-position="back" style="top:0px;width:100%;height:{{screenHeight}}px"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
         class="start-image"></camera>
  
     </block>
@@ -20,29 +19,29 @@ currentTargetLang="{{currentTargetLang}}"
         <block wx:if="{{ selectPicturPath=='' }}">   
           <view class="home-info">
               <text class="text-box-notice ">相机加载中</text>
+              <!-- 收藏 -->
+              <add-tips />
               
           </view>
          </block>
          <block wx:else>    
           <view style="text-align: center;"> 
-            <image class="selected-image" src="{{selectPicturPath||'/images/bg/bg-dark.png'}}"></image> 
+            <image class="selected-image" src="{{selectPicturPath||''}}"></image> 
             </view>
          </block>
       </view>
     </block> 
-
- 
-    <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
-    <!-- 收藏 -->
-    <add-tips />
-    
+    <custom-ads ad_type="7" style="height: 100%;">
   <!-- 底部banner广告 -->
   <view class="adcontainer">
     <custom-ads ad_type="3" ad_pos="bottom"></custom-ads> 
   </view>
 </custom-ads>
   </view>
-</scroll-view>
+
+ 
+  <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
+   
  
     <!-- 底部导航 -->
     <view class="tab-bar tabbar tab-bottom safe-area">
@@ -62,7 +61,7 @@ currentTargetLang="{{currentTargetLang}}"
           </block>
           <block wx:else>
               <view class="publish">
-              <image src="/images/add.png"></image>
+              <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAAAXNSR0IArs4c6QAAARZJREFUaEPtWkEOgjAQZKsPUQLoY+QdvsYH+A59jAJBHyItKUkT7AG2SVcwGS5cNqU7OzOUCZQIXWl6LDrSJSlTkDH3V9PchB6VkNTCuzy/jtdW3ebSto9K4nk/a0JyGmhiiho+nTCJGSGBTqBTRK8FnUAn0OkbAWgCmoAmoAk+B3CK5WM1VMJiV2Ox41QicIqLl7uvRfIFuPjOAjdgU5S/b8JOg/ZZVhqiUyAAqyl/1/V5cCerC6M+h5g784ExmipFOlp4Rnr7dGEcLHY1FhuTQuO1cOwIRBaagCYCKTNVDjqBTqATggI+B/DG5mOFoGAWK9BpFiK4Ex8i0ImPlaw7+SmKTSUC98YuFzvFuhTF3qV+EXJd9lwYVIlg9NySAAAAAElFTkSuQmCC"></image>
               </view>
           </block>
       </view>
@@ -74,7 +73,7 @@ currentTargetLang="{{currentTargetLang}}"
   </view>  
 
 <!-- canvas压缩图片 -->
-<canvas canvasId="mCanvas" 
+<canvas id="mCanvas"  type="2d"
 style="position: fixed; left: -9999px; top: -9999px; width:{{ccWidth}}px;height:{{ccHeight}}px;"></canvas>
   
 

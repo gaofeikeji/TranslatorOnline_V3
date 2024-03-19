@@ -82,10 +82,13 @@ export const uploadFile = (data) => {
         type: data.type,
       },
       success: function (res) {
+        console.log("uploadFile：resp");
+        console.log(res);
         let resData = JSON.parse(res.data);
         resolve(resData);
       },
       fail: function (err) {
+        console.error("uploadFile：resp-err");
         reject(err);
       },
     });
@@ -97,18 +100,41 @@ export const uploadData = (tempUrl) => {
   return { filePath: tempUrl, type: "images" };
 };
 
+// // 图片安全检测请求
+// export const verifyImage = (url) => {
+//   let that = this;
+//   return new Promise((resolve, reject) => {
+//     wx.request({
+//       url: `${isDevelopmentStatusUrl()}/api/mini_api/image_check`,
+//       method: "POST",
+//       header: {
+//         Authorization: wx.getStorageSync("access_token"),
+//       },
+//       data: {
+//         url: url,
+//       },
+//       success: (res) => {
+//         resolve(res.data);
+//       },
+//       reject: (err) => reject(err),
+//     });
+//   });
+// };
+// };
+
 // 图片安全检测请求
 export const verifyImage = (url) => {
   let that = this;
   return new Promise((resolve, reject) => {
     wx.request({
-      url: `${isDevelopmentStatusUrl()}/api/mini_api/image_check`,
+      url: `${isDevelopmentStatusUrl()}/api/mini_api_v2/media_check_multi`,
       method: "POST",
       header: {
         Authorization: wx.getStorageSync("access_token"),
       },
       data: {
         url: url,
+        "type": 2 
       },
       success: (res) => {
         resolve(res.data);
@@ -165,20 +191,22 @@ export const checkImageSync = async ({
     // 信息提示
     wx.showLoading({ title: message, mask: true });
     // 图片安全检测之前需要先压缩图片，主要是为了处理图片大于1M的情况
-    const compressRes = await compressImage(tempUrl, instance);
+    // const compressRes = await compressImage(tempUrl, instance);
 
-    // 拼接上传参数
-    const data = uploadData(compressRes);
+    // // 拼接上传参数
+  const data = uploadData(tempUrl);
     const res = await uploadFile(data);
     if (res.code != 1) {
       wx.showToast({ title: res.msg, icon: "none", duration: 2000 });
       return false;
     }
+    console.log("uploadFileuploadFileuploadFile：resp");
+    console.log(res);
 
     // 图片安全检测
     const verifyRes = await verifyImage(res.data.url);
-    console.log("uploadFile:", res);
-    console.log("verifyRes:", verifyRes);
+    console.log("uploadFile:------", res);
+    console.log("verifyRes:-------", verifyRes);
     if (verifyRes.code == 1) {
       // 图片安全检测成功
       typeof success === "function" && success(res.data);

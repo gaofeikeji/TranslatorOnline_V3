@@ -25,7 +25,10 @@ color-animation-timing-func="easeIn"
       </view>
     </view>
     <!-- 系统用户 -->
-    <user-member subscribe="{{subscribe}}" bind:openVip="openVip"></user-member>
+    <view class="system-container" hover-class="none" hover-stop-propagation="false">
+      
+        <user-member subscribe="{{subscribe}}" bind:openVip="openVip"></user-member>
+    </view>
     <!-- 使用说明 -->
     <view class="my_settingbox ">
       <view class="my_set_item hover" bindtap="ToInstructions">

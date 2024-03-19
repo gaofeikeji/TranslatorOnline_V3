@@ -1,6 +1,6 @@
 .container{
   background: rgba(247, 247, 247, 0.2);
-  padding: 90px 12rpx;
+  padding: 0 15rpx;
 }
 
 .user_container {
@@ -8,8 +8,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5rpx; 
-  background: rgba(247, 247, 247, 1);
+  padding: 5rpx 10rpx; 
+  background:  #fff;
 }
 
 .userinfo {
@@ -68,8 +68,15 @@
   height: 32rpx;
 }
 
+.system-container{
+  min-width: 710rpx;
+  margin:  0 auto;
+}
+
+
 .my_settingbox {
-  width: 710rpx;
+  min-width: 710rpx;
+  margin:  0 auto;
   opacity: 1;
   border-radius: 10rpx;
   background: rgba(255, 255, 255, 1);

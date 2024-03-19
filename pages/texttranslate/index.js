@@ -22,29 +22,29 @@ Page({
     //底部功能区域
     list: [
       {
-        "iconPath": "/images/nav/duibi.png",
-        "selectedIconPath": "/images/nav/duibi.png",
+        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
+        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
         "text": "返回编辑",
         "actype": 10,
         "type":0
       },
       {
-        "iconPath": "/images/copy.png",
-        "selectedIconPath": "/images/nav/copy.png",
+        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADESURBVEiJ7ZXRDYIwGITvDHvQTawbAQuAC6gbAZvgIp4vhBQC/FXBJ763Npcv7Z/mCuwIrYArVH0i7G4c8qtyl8mLqD+RP+8cnPbJM/kYqYgSgA/lm5HmqtNcCveScOEKVRLOsUISbTjjKSO5hDJW3Oe9y9R0DzarcpfJ93dqKFxNcT/jtUwyt7l0kpA0l3nLkxX4hUN+yOOZfeffQKIdN8uG8rmO+f9YYjpcVgCTz2LaxzFQuJitCACk3YYjXlis2915A9O0QEmmKMh4AAAAAElFTkSuQmCC",
+        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADESURBVEiJ7ZXRDYIwGITvDHvQTawbAQuAC6gbAZvgIp4vhBQC/FXBJ763Npcv7Z/mCuwIrYArVH0i7G4c8qtyl8mLqD+RP+8cnPbJM/kYqYgSgA/lm5HmqtNcCveScOEKVRLOsUISbTjjKSO5hDJW3Oe9y9R0DzarcpfJ93dqKFxNcT/jtUwyt7l0kpA0l3nLkxX4hUN+yOOZfeffQKIdN8uG8rmO+f9YYjpcVgCTz2LaxzFQuJitCACk3YYjXlis2915A9O0QEmmKMh4AAAAAElFTkSuQmCC",
         "text": "复制内容",
         "actype": 20,
         "type":0
       },
       {
-        "iconPath": "/images/nav/export.png",
-        "selectedIconPath": "/images/nav/duibi.png",
+        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAXRJREFUWEftWNGVAjEIBBvRTm7tSK+B0wbUjlw70Uq4lzzZt0Y2ARJ/7pLfXWAyTCAEocHa7GgghB8AGBDheD/hoYFbwFonT2DXuZ9WAKvAbb7pQBQZk9aIBMf7BUcvAW5w6z0FtoZS4BoWzeDm+ioB4+9egCZwhTSWsI6PM25LP71oV/tzJTAOYwKoZi6kE1YwEMGXsKFUe+IhQISbpcyoweUYTg/H44xN/DZx8r/BsaaW0pfTioU5S5yYVs1JRILtUrW3gFvviUoVgmOhBlhwliukWnBSH15qfaEmomYnrcAFP+q2R/AGLjZraTe5Bq5ljv1G3SWLr1xTy5PAWVuMxIanzqXyCrpL02pqL7xLK3NSZjq4wEpPa6lYds3NGPp7p7XF3PqxUqLVZu6/Ds7LYmeuM+dlwGvXNfdR5sKTgTdAjd3zmWO6vvNNWPXOVhPYYxvBaUdDTwCvDY+h6qHaG8hhN92MXh5ypJHN4bzKZD6C/gK2UJQBoyspTQAAAABJRU5ErkJggg==",
+        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
         "text": "导出文件",  
         "actype": 30,
         "type":0
       },
       {
-        "iconPath": "/images/nav/result.png",
-        "selectedIconPath": "/images/nav/result.png",
+        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAWFJREFUWEftWFEOwjAIBc+k/jpPZncy6696JlHMMNhUA9Uao+xnCaNvb4/utQVhuuaJhhnAQAQriT27I8JunzBJzmJD2zLGmEiwseJxnsZEDiwTJTKC6BcRwvqYME8ktvxMYq2YiDAKQWwFYSICpMnVYhbldI5gIJcDAAb1MFvBDiOuObdGTlXENE1KDozN5EjIaEmtBJ+R82CUFTyMiEHOomAoJ1ZiUUvndFNOGzn7npdYzWvf9kO0kCnHdFWutnx5SHcjV1u+PMS6lvXRCuEh+BHlWleZIBfKeSaz3h7JNqpx/G3X/D8mLGcQfQbwqPeRv/XrFv4w4VaPCuV+Ujm2jOn8C2HCHgOVgzXfv/IMIZ2DMGFPWcPnLm2o3GIFPZUr+3PWimZCGMvOpjbySu/PjH3tz+mvto6UvFrbVci9o2P6Uk+4R9v1ries1ZLdrEXBE0DWhjsptSrnLMdb8HjMGeMfj0YDLck0AAAAAElFTkSuQmCC",
+        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAWFJREFUWEftWFEOwjAIBc+k/jpPZncy6696JlHMMNhUA9Uao+xnCaNvb4/utQVhuuaJhhnAQAQriT27I8JunzBJzmJD2zLGmEiwseJxnsZEDiwTJTKC6BcRwvqYME8ktvxMYq2YiDAKQWwFYSICpMnVYhbldI5gIJcDAAb1MFvBDiOuObdGTlXENE1KDozN5EjIaEmtBJ+R82CUFTyMiEHOomAoJ1ZiUUvndFNOGzn7npdYzWvf9kO0kCnHdFWutnx5SHcjV1u+PMS6lvXRCuEh+BHlWleZIBfKeSaz3h7JNqpx/G3X/D8mLGcQfQbwqPeRv/XrFv4w4VaPCuV+Ujm2jOn8C2HCHgOVgzXfv/IMIZ2DMGFPWcPnLm2o3GIFPZUr+3PWimZCGMvOpjbySu/PjH3tz+mvto6UvFrbVci9o2P6Uk+4R9v1ries1ZLdrEXBE0DWhjsptSrnLMdb8HjMGeMfj0YDLck0AAAAAElFTkSuQmCC",
         "text": "左右对比",  
         "actype": 40,
         "type":0

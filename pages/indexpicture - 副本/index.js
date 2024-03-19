@@ -93,15 +93,6 @@ Page({
     console.warn(index,  actype, this.data.actype ); 
     this.showActionBox(actype);
 }, 
-handleLongPress(e) {
-  console.warn("handleLongPress",e);  
-},
-handleTouchEnd(e) {
-  console.warn("handleTouchEnd",e);   
-},
-handleTouchMove(e) {
-  console.warn("handleTouchMove",e);   
-},
 selectVerticle(e) {
   const { index, actype } = e.currentTarget.dataset;
   console.warn(e);  
@@ -167,13 +158,12 @@ toVerticleHorizonTextItem(e){
   console.warn(e);  
   console.warn(left, top); 
   this.setData({
-    currentSelectYs: "",
     currentSelectY: top,
     currentSelectX: left,
     currentSelectItem: top+":"+left,
     scale:1,
     action:true, 
-    actype:1, currentSelectItem
+    actype:1, 
     })
 },
   // 当前行切换 
@@ -476,35 +466,13 @@ getMidpoint(a, b) {
     // },
     listenstartMove(event){
       console.warn("listenstartMove",event)
-    }
-  },   
-  listentouch(event){
-    console.warn("listentouch",event)
-  },
+    },
+    listentouch(event){
+      console.warn("listentouch",event)
+    },
+  },  
   linstenerScale(event){
     console.warn("linstenerScale",event)
-  },
-  //放大缩小翻译结果
-  upScalepic(event){
-    console.warn("upScalepic",event)
-    if(this.data.scale>3){
-      xy.showModalClose("最大缩放比例",2100);
-      return false;
-    }
-    this.setData({ 
-      scale: this.data.scale+0.2
-    });
-  },
-  downScalepic(event){
-    console.warn("downScalepic",event)
-    console.warn("upScalepic",event)
-    if(this.data.scale<0.1){
-      xy.showModalClose("最小缩放比例",2100);
-      return false;
-    }
-    this.setData({ 
-      scale: this.data.scale-0.1
-    });
   },
   /**
    * 生命周期函数--监听页面隐藏
