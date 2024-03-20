@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/multiplepic/index",
+          "pathName": "pages/multiplepic/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/indexpicture/index",
           "pathName": "pages/indexpicture/index",
           "query": "",

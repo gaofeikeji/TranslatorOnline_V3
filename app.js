@@ -145,13 +145,14 @@ App({
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
     // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度
     // console.warn(systemInfo);
-    console.warn(menuButtonInfo);
     this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight)  + menuButtonInfo.height+(menuButtonInfo.top)/2;
     this.globalData.statusBarHeight = systemInfo.statusBarHeight;
     this.globalData.menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;
     this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
     this.globalData.menuHeight = menuButtonInfo.right;
+    this.globalData.screenWidth = menuButtonInfo.screenWidth;
     this.globalData.screenHeight = systemInfo.screenHeight-systemInfo.statusBarHeight;
+    console.warn("setNavBarInfo::",this.globalData);
  },
   userCenterLogin(){
     xy.userLogin((data) => {
@@ -165,8 +166,8 @@ App({
       };
       this.globalData.introduceUrl = data.introduceUrl || "";
       wx.setStorageSync("USER_INFO", data);
-      this.userCenterLoginCallbackIndex();
-      this.userCenterLoginCallbackUserMember();
+      this.userCenterLoginCallbackIndex&&this.userCenterLoginCallbackIndex();
+      this.userCenterLoginCallbackUserMember&&this.userCenterLoginCallbackUserMember();
     });
   },
   verifyImage: function (url) {
@@ -326,8 +327,7 @@ App({
   updateUserInfo(userInfo) {
     let that = this;
     return new Promise((resolve, reject) => {
-      that
-        .request(
+      that.request(
           xy.isDevelopmentStatusUrl() + "/api/user/update", {
           nickname: userInfo.nickname,
           avatar_url: userInfo.avatar_url,

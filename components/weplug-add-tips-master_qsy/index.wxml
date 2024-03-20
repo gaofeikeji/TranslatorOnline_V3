@@ -1,0 +1,40 @@
+<view class="box" wx:if="{{SHOW_TOP}}">
+  <view class="black_back"></view>
+  <view class='arrow'></view>
+  <view class='body'>
+    <view class="text">{{text}}</view>
+    <view class="down_cont">
+      <view class="down_text_bk">
+        <image class="img1" mode="widthFix" src="https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/WGPQuqCsgI9kmfVPQhAhdMe2FdGi1vat6K2RPXvi.png" />
+        <view class="down_text_bk_2">
+        <view class="text2">点击图标</view>
+        <view class="shezhi">
+          <view class="q1"></view>
+          <view class="q2"></view>
+          <view class="q1"></view>
+        </view>
+        <view class="text2">后选择 “添加”</view>
+        </view>
+      </view>
+      <view class="down_img_bk">
+        <image class="img3" mode="widthFix" src="https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/SZwEgHIoKsvQNWY9R8uUlofzfzoaFFU8sb480ZwX.png" />
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="box2_back"  wx:if="{{SHOW_MODAL}}">
+  <view class="black_back"></view>
+  <view class="box2">
+    <view class="add_title">
+      <image class="success_img" mode="widthFix" src="https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/jfI6yWIEo4N8dhn2qNDGmE1MCxdITZ5HzHb34pvL.png"/>
+      <view class="add_title_text">恭喜你 添加成功了！</view>
+    </view>
+    <view class="add_img_bk">
+      <image  mode="widthFix"  src="https://mpss-1253713495.cos.ap-shanghai.myqcloud.com/business_license/1EMAjIoroMU6jdd2qaqv2yl4hlmjPm3kEJGG2q0S.png" />
+    </view>
+    <view class="add_iknow" bind:tap="add_iknow">
+      我知道了
+    </view>
+  </view>
+</view>

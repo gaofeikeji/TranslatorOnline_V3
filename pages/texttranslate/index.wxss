@@ -2,23 +2,25 @@
 .container{
   display: block;
    background: #ccc;
+   height: 100%;
 }           
 .text-container{
-  height: 80%;
+  height: 100%;
   width: 100%;
-  margin-top: 80px;
   background: #fff;
   display: block;
   border-bottom-left-radius: 20rpx;
   border-bottom-right-radius: 20rpx;
 }  
 .textarea-container{  
+  display: inline-block;
   background: rgba(0, 0, 0, 0.03); 
-  padding: 40rpx;
+  overflow-y: auto;
+  padding: 20rpx;
   margin: 8rpx;
-  height: 90%;
-  width: 96%;
-  margin: 0 auto;
+  height: 1118rpx;
+  width: 90%;
+  margin: 20rpx;
   border-radius: 4px;  
   font-size: 14px;
   color: #000;

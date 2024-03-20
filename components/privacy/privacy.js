@@ -17,20 +17,14 @@ Component({
             if (_.compareVersion(version, '2.32.3') >= 0) {
                 wx.getPrivacySetting({
                     success(res) {
-                        console.log("隐私组件getPrivacySetting接口调用成功", res)
                         if (res.errMsg == "getPrivacySetting:ok") {
                             _.setData({
-                                showPrivacy: res.needAuthorization,
-                                privacyContractName: res.privacyContractName
+                                privacyContractName: res.privacyContractName,
+                                showPrivacy: res.needAuthorization
                             })
                         }
-                    },
-                    fail(err) {
-                        console.log("隐私组件getPrivacySetting接口调用失败", err)
                     }
                 })
-            }else{
-                console.log('隐私组件getPrivacySetting，当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。')
             }
         }
     },

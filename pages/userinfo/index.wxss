@@ -9,8 +9,7 @@ page{
   display: flex;
   flex-direction: column;
   background: rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  margin-top: 80px;
+  box-sizing: border-box; 
 }
 
 .edit_header {

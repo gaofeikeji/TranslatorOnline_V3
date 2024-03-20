@@ -6,14 +6,16 @@
     currentTargetLang="{{currentTargetLang}}" 
     color-animation-duration="2000"
     color-animation-timing-func="easeIn"
+    style="height: {{statusBarHeight+navBarHeight}}px;display:block;"
   />  
 
   <!--  -->                                 
-  <view class="container ">  
+  <view class="container " >  
     <!-- 仅显示译文 -->
     <block wx:if="{{ showType ==  63 }}">  
       <view class="text-container" > 
-          <textarea class="textarea-container"  maxlength="{{isVip?-1:2000}}"  placeholder="请输入需要翻译的文本" 
+          <textarea class="textarea-container"  maxlength="{{isVip?-1:2000}}"
+             placeholder="请输入需要翻译的文本" 
           focus="{{false}}" value="{{toText?toText:fromText}}" /> 
       </view>
     </block>

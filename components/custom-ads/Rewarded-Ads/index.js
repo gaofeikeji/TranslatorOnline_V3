@@ -52,7 +52,7 @@ let adVideoUtils = {
       })
       this.videoAd.onError((err) => {
         // 激励广告拉取失败 下发奖励
-        callback()
+        // callback()  // 修复bug 此处不应该直接执行回调函数，应该在关闭广告或者广告播放失败时执行
         log.error('激励广告拉取失败', err.errMsg, err.errCode)
       })
       this.videoAd.onClose((status) => {

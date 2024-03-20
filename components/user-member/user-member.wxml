@@ -1,6 +1,6 @@
 <!-- 未开通 -->
 <block wx:if="{{actions.payment_status}}">
-  <view class="container-comnent" bind:tap="openVip">
+  <view class="container" bind:tap="openVip">
     <view class="renewal-vip-box" wx:if="{{subscribe.is_vip}}">
       <image src="./images/vip.png" mode="widthFix" />
       <view class="expired">
@@ -17,8 +17,8 @@
   </view>
 </block>
 <block wx:else>
-  <view class="container-comnent">
-    <view class="user_btn" open-type="contact">
+  <view class="container">
+    <button class="user_btn" open-type="contact">
       <view class="renewal-vip-box" wx:if="{{subscribe.is_vip}}">
               <view class="btn_back">
         <image src="./images/vip.png" mode="widthFix" />
@@ -35,7 +35,7 @@
         <view class="normal-user normal-user-noBtn">普通用户</view>
       </view>
       </view>
-    </view>
+    </button>
   </view>
 </block>
 <!-- 截取 subscribe.expire_time 的 前10位 -->

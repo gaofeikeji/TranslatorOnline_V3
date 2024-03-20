@@ -36,7 +36,7 @@
           data-index="{{idx}}">{{item}}</view>
       </scroll-view>
       <view class="bootom-action"  bind:tap="oldTranslateLang">
-        <text>取消选择</text>
+        <text class="lang-action-btn">取消选择</text>
       </view>
     </view>   
     <!-- 目标语言 -->
@@ -47,7 +47,7 @@
         {{item}}</view>
     </scroll-view>
       <view class="bootom-action selected"  bind:tap="updateTranslateLang">
-        <text>确认语言</text>
+        <text class="lang-action-btn">确认语言</text>
       </view>
   </view>
 </view>

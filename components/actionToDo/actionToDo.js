@@ -112,7 +112,7 @@ Component({
         log.info('弹出模态框')
         wx.showModal({
           title: '温馨提示',
-          content: '观看一次视频,即可免费下载.',
+          content: '观看一次视频,即可免费获取.',
           success: (e) => {
             if (e.cancel) {
               log.info('用户点击取消')
@@ -222,7 +222,7 @@ Component({
           // // test
           // this.data.action_info = {
           //   after_action_type: 0,
-          //   before_action_type: 0,
+          //   before_action_type: 1,
           //   other_pay_type: 99,
           //   payment_status: false,
           // }

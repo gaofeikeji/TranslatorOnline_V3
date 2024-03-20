@@ -7,6 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    navBarHeight: app.globalData.navBarHeight, //导航栏高度
+    menuBotton: app.globalData.menuBotton, //导航栏距离顶部距离
+    menuRight: app.globalData.menuRight, //导航栏距离右侧距离
+    menuHeight: app.globalData.menuHeight, //导航栏高度
+    statusBarHeight: app.globalData.statusBarHeight, //状态栏栏高度
+    screenHeight: app.globalData.screenHeight, //可视区域高度 
+    screenHeight: 0,       // 可视区域高度
     notVip: false,  
 
     maxlength: 2000,

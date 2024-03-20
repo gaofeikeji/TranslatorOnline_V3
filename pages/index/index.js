@@ -1,6 +1,29 @@
 
 var app = getApp();
 import * as xy from "../../utils/common.js";
+// 检查图片校验并上传 
+export const confirmImginfo = (uploadPath) => {
+console.warn("confirmImginforesresres",uploadPath);
+return new Promise((resolve, reject) => { 
+  wx.showLoading({ title: uploadPath||"翻译中...", mask: false });
+  xy.checkImageSync({
+    tempFilePaths: uploadPath,
+    instance: null,
+    success: (imgRes) => {  
+      wx.hideLoading();
+      //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
+            console.warn("takePicture::imgRes::",imgRes) 
+            resolve(imgRes.url);  
+    },
+    fail: (err) => {
+      console.error("checkImageSync::err___");
+      wx.hideLoading();
+      xy.showTip(err);   
+      reject(err);
+    },
+  });
+});
+};
 // index.js
 Page({ 
   data:{
@@ -74,7 +97,7 @@ Page({
         //   selected: index
         // })
     }, 
-    //拍照
+    //相机拍照接口
     takePhoto(){ 
         console.log("cam inited")  
         const tThis= this;
@@ -87,30 +110,7 @@ Page({
           quality: 'high',
           success: (res) => {
               console.warn("takePhoto::",res) 
-              tThis.confirmImginfo(res,res.tempImagePath);
-              // xy.checkImageSync({
-              //   tempFilePaths: res.tempImagePath,
-              //   instance: tThis,
-              //   success: (imgRes) => { 
-              //     tThis.confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
-                  
-              //      wx.hideLoading();
-              //     console.warn("takePhoto::imgRes::",imgRes)
-              //       tThis.setData({
-              //         selectPicturPath: imgRes.url,
-              //         initCamral:true,
-              //         showSelectImg:  false
-              //       }) 
-              //       app.globalData.selectPicturPath=imgRes.url;
-              //       wx.navigateTo({
-              //         url: "/pages/indexpicture/index?selectPicturPath="+imgRes.url
-              //       })
-              //   },
-              //   fail: (err) => {
-              //     wx.hideLoading();
-              //     xy.showTip(err.msg);
-              //   },
-              // });
+              tThis.confirmImginfo(res,res.tempImagePath,0); 
           }
         })
       },
@@ -129,11 +129,11 @@ Page({
   methods: { 
   },
   onLoad(){ 
+  },
+  onShow(){ 
     this.initCamera();
     console.warn("app.sysInfo::",app.sysInfo,wx.getSystemInfoSync(),);
     app.getCurrentLang(this);
-  },
-  onShow(){ 
     wx.showShareMenu({
       withShareTicket: true, // 是否使用带 shareTicket 的转发
       menus: ["shareAppMessage", "shareTimeline"], // 自定义分享菜单列表
@@ -169,7 +169,7 @@ Page({
 takePicture(){
   let tThis= this;
   wx.chooseMedia({
-      count: 1,
+      count: 10,
       mediaType: ["image"],
       sourceType: ["album", "camera"],
       maxDuration: 30,
@@ -180,9 +180,23 @@ takePicture(){
         // wx.navigateTo({
         //   url: "/pages/indexpicture/index?selectPicturPath=https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg&height=1200&width=800"
         // })
-        // return false;
-        tThis.confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
-        // tThis.confirmImginfo(res,"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg");
+        // return false; 
+          console.warn("confirmImginfoconfirmImginfo::",res) 
+        if(res.tempFiles.length>1){
+          // const tempFiles = res.tempFiles; 
+          let tempFilesArr= [];
+          res.tempFiles.forEach(function(item){ 
+            tempFilesArr.push( item.tempFilePath);
+          }); 
+          wx.navigateTo({
+            url: "../multiplepic/index?imgupload="+tempFilesArr.join("---")
+          })
+        }else{
+            tThis.confirmImginfo(res,res.tempFiles[0]['tempFilePath'],0); 
+        } 
+          
+       
+   
       },
       fail(res) {
         console.warn("cancel_fail::",res)  
@@ -193,6 +207,61 @@ takePicture(){
           showSelectImg:  false, 
           selectPicturPath: ""
         });
+      },
+    })
+},  
+
+//   选择照片
+takePictureMultiple(){
+  let tThis= this;
+  wx.chooseMedia({
+      count: 10,
+      mediaType: ["image"],
+      sourceType: ["album", "camera"],
+      maxDuration: 30,
+      camera: 'back',
+      success(res) { 
+        // wx.setStorageSync('upload_pic_info', res) 
+        console.warn("chooseMediachooseMedia")
+        console.warn(res)
+        // wx.navigateTo({
+        //   url: "/pages/indexpicture/index?selectPicturPath=https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg&height=1200&width=800"
+        // })
+        const tempFiles = res.tempFiles;
+        tThis.setData({  
+          isuploading:true, 
+          tempFiles:tempFiles
+        });
+        let tempFilesArr=[];
+        for(let i=0;i<tempFiles.length;i++){
+          tempFilesArr.push(tempFiles[i]['tempFilePath']);
+        }
+      //  let resp= await confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
+       Promise.all(tempFilesArr.map(confirmImginfo))
+        .then(results => {
+          console.log('All images uploaded successfully:', results);
+          // let imgObj=[];
+          // results.forEach(function(item,index){
+          //   imgObj.push({
+          //     tempFilePath:item,
+          //     type:"image"
+          //   });
+          // }); 
+              wx.navigateTo({
+                url: "../indexpicture/index?selectPicturPath="+results.join("---")+"&ismultiple=1"
+              })
+        })
+        .catch(error => {
+          console.error('An error occurred while uploading images:', error);
+        });
+      },
+      fail(res) {
+        console.warn("cancel_fail::",res)  
+      },
+      complete(res) { 
+        // this.setData({  
+        //   selectPicturPath: ""
+        // });
       },
     })
 },  
@@ -217,7 +286,7 @@ wx.showActionSheet({
 });
 },
 // 检查图片校验并上传
-confirmImginfo(res,uploadPath){
+confirmImginfo(res,uploadPath,ismultiple=0){
   const tThis=this;
   tThis.setData({ 
       selectPicturPath:uploadPath
@@ -255,7 +324,7 @@ confirmImginfo(res,uploadPath){
                   wx.setStorageSync('upload_pic_info', netImginfo) 
                 
                   wx.navigateTo({
-                    url: "../indexpicture/index?selectPicturPath="+imgRes.url+"&height="+netImginfo.height+"&width="+netImginfo.width+"&ccheight="+tThis.data.height+"&ccwidth="+tThis.data.width
+                    url: "../indexpicture/index?selectPicturPath="+imgRes.url+"&ismultipl="+ismultiple+"&height="+netImginfo.height+"&width="+netImginfo.width+"&ccheight="+tThis.data.height+"&ccwidth="+tThis.data.width
                   })
                 },fail(){
                   app.showModalClose("获取图片信息失败，请重新上传",20000)
@@ -279,15 +348,23 @@ confirmImginfo(res,uploadPath){
 takePhotoWithMessage(){
     let tThis= this;
     wx.chooseMessageFile({
-        count: 1,
+        count: 10,
         type: "image", 
         success (res) {
         // tempFilePath可以作为img标签的src属性显示图片
-        console.log("chooseMessageFile:",res)
-        tThis.confirmImginfo(res,res.tempFiles[0]['path']);
-        // tThis.setData({
-        //     selectPicturPath:res.tempFiles[0]['tempFilePath']
-        // })
+        console.log("chooseMessageFile:",res) 
+        if(res.tempFiles.length>1){
+          // const tempFiles = res.tempFiles; 
+          let tempFilesArr= [];
+          res.tempFiles.forEach(function(item){ 
+            tempFilesArr.push( item.path);
+          }); 
+          wx.navigateTo({
+            url: "../multiplepic/index?imgupload="+tempFilesArr.join("---")
+          })
+        }else{
+            tThis.confirmImginfo(res,res.tempFiles[0]['path'],0); 
+        }
         },
         fail(res) {
           console.warn("cancel_fail::",res)  

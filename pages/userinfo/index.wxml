@@ -4,7 +4,7 @@ title="{{nbTitle}}"
 onytitle="{{true}}"
 canBack="{{true}}" 
 color-animation-duration="2000"
-color-animation-timing-func="easeIn"
+color-animation-timing-func="easeIn" style="height: {{statusBarHeight+navBarHeight}}px;display:block;"
 /> 
 
 <view class="container">

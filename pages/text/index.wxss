@@ -21,7 +21,6 @@ page{
 }           
 .text-container{
   height: 74%;
-  margin-top: 80px;
   width: 100%;
   background: #fff;
   display: flex;
@@ -36,7 +35,8 @@ page{
 .textarea-container{  
   background: rgba(0, 0, 0, 0.03);
   padding: 20rpx;
-  height: 84%;
+  margin: 20rpx 0;
+  height: 1118rpx;
   width: 86%;  
   opacity: 1;
   border-radius: 8rpx;
@@ -121,6 +121,8 @@ page{
   padding: 60rpx;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  z-index: 333;
 } 
 
 .circle-btn.picture-action{

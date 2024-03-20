@@ -4,11 +4,11 @@
     canBack="{{true}}"
     currentLang="{{currentLang}}"
     currentTargetLang="{{currentTargetLang}}" 
-      color-animation-duration="2000"
-      color-animation-timing-func="easeIn"
+      color-animation-duration="2000" 
+      color-animation-timing-func="easeIn"  style="height: {{statusBarHeight+navBarHeight}}px;display:block;"
     />  
   <view class="container " > 
-    <view class="text-container"  >
+    <view class="text-container" >
        <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本" 
         focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText" />
         <!-- 当前输入内容调整 -->

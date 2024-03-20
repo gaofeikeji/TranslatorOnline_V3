@@ -1,11 +1,10 @@
 .container{
-  background: rgba(247, 247, 247, 0.2);
-  padding: 0 15rpx;
-  margin-top: 60px;
+  background: rgba(247, 247, 247, 1);
+  padding: 5rpx 10rpx;
 }
 
 .user_container {
-  height: 130px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -141,4 +140,9 @@
   margin-top: 50rpx;
   font-size: 28rpx;
   color: rgba(0, 0, 0, 0.5);
+}
+
+button[open-type="contact"]{
+  display: block;
+  width: 100%!important;
 }
