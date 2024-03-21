@@ -39,6 +39,7 @@ App({
       "et": "爱沙尼亚语",
       "ee": "埃维语"
       },  
+
     navBarHeight: 0,     // 导航栏高度
     menuBotton: 0,       // 胶囊距底部间距（保持底部间距一致）
     menuRight: 0,        // 胶囊距右方间距（方保持左、右间距一致）
@@ -53,7 +54,7 @@ App({
   onLaunch: function () { 
     // 统一导航样式
     this.setNavBarInfo();
-    this.globalLogin();
+    // this.globalLogin();
   },
   //带定时器的loading
   showModalClose(text,during){ 
@@ -73,16 +74,9 @@ App({
       },
       success: (res) => {
         if (res.data.code == 1) {
-          let lang = res.data.data;
-          let langArr = [];
-          let codeArr = [];
-          // langArr.push('请选择')
-          for (let i in lang) {
-            langArr.push(lang[i]);
-            codeArr.push(i);
-          } 
+          let lang = res.data.data; 
           wx.setStorageSync("langData", lang);  
-          typeof callback === "function" && callback(res.data.data);
+          typeof callback === "function" && callback(lang);
         } else {
           wx.showToast({ title: res.data.msg, icon: "none" });
         }
@@ -100,34 +94,50 @@ App({
         currentTargetLang: this.globalData.currentTargetLang, 
       };
     tThis&&tThis.setData(current)
-    return current
+    return current;
   },
   updateGlobalLang(updateLang,updateTargetLang){
     
-    wx.setStorage("currentLang", updateLang); 
-    wx.setStorage("currentTargetLang", updateTargetLang); 
-    console.warn("updateGlobalLang::",wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
+    wx.setStorageSync("currentLang", updateLang); 
+    wx.setStorageSync("currentTargetLang", updateTargetLang);  
   },
-  globalLogin(){
-    
+globalLogin(tThis,customeCall){ 
+      tThis = tThis||this;
+      let currentInstance=this;
+      console.log("globalLoginglobalLogin",this.globalData);
     // 用户中心access_token
     if (!this.globalData.access_token) {
       xy.userLogin((data) => {
-        this.globalData.access_token = data.token;
-        this.globalData.subscribe = data.subscribe;
-        this.userCenterLoginCallbackOnClickVipLock  && this.userCenterLoginCallbackOnClickVipLock();
-        this.globalData.userInfo = {
+        currentInstance.globalData.access_token = data.token;
+        currentInstance.globalData.subscribe = data.subscribe;
+        currentInstance.userCenterLoginCallbackOnClickVipLock  && currentInstance.userCenterLoginCallbackOnClickVipLock();
+        currentInstance.globalData.userInfo = {
           nickname: data.nickname,
           avatar: data.avatar,
         };
-        this.globalData.introduceUrl = data.introduceUrl || "";
+        tThis.setData({
+          notVip: !data.subscribe.is_vip
+        }) 
+        currentInstance.globalData.introduceUrl = data.introduceUrl || "";
         wx.setStorageSync("USER_INFO", data);
-        this.userCenterLoginCallbackIndex&&this.userCenterLoginCallbackIndex();
+        currentInstance.userCenterLoginCallbackIndex&&currentInstance.userCenterLoginCallbackIndex();
+        // 添加自定义回调事件 
 
       });
+    }else{
+      
+      console.log("globalLoginglobalLogin",this.globalData);
+      currentInstance.userCenterLoginCallbackIndex = () => {
+        console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+        tThis.setData({
+          notVip: !app.globalData.subscribe.is_vip
+        }); 
+        customeCall&&customeCall(data,currentInstance);
+      };
+      //此事件会被上面异步操作覆盖（如果时间也存在异步操作请求浪费资源不建议添加回调，使用promise）
+      customeCall&&customeCall({},currentInstance);
     } 
-    // 初始化语言列表
-    this.getLangConfig();
+    tThis&&this.getCurrentLang(tThis);
 
 
     // 图片提取文字 token
@@ -152,22 +162,22 @@ App({
     this.globalData.menuHeight = menuButtonInfo.right;
     this.globalData.screenWidth = menuButtonInfo.screenWidth;
     this.globalData.screenHeight = systemInfo.screenHeight-systemInfo.statusBarHeight;
-    console.warn("setNavBarInfo::",this.globalData);
  },
-  userCenterLogin(){
+  userCenterLogin(){ 
+    const tThis =  this;
     xy.userLogin((data) => {
-      this.globalData.access_token = data.token;
-      this.globalData.subscribe = data.subscribe;
-      this.userCenterLoginCallbackOnClickVipLock  && this.userCenterLoginCallbackOnClickVipLock();
+      tThis.globalData.access_token = data.token;
+      tThis.globalData.subscribe = data.subscribe;
+      tThis.userCenterLoginCallbackOnClickVipLock  && tThis.userCenterLoginCallbackOnClickVipLock();
 
-      this.globalData.userInfo = {
+      tThis.globalData.userInfo = {
         nickname: data.nickname,
         avatar: data.avatar,
       };
-      this.globalData.introduceUrl = data.introduceUrl || "";
+      tThis.globalData.introduceUrl = data.introduceUrl || "";
       wx.setStorageSync("USER_INFO", data);
-      this.userCenterLoginCallbackIndex&&this.userCenterLoginCallbackIndex();
-      this.userCenterLoginCallbackUserMember&&this.userCenterLoginCallbackUserMember();
+      tThis.userCenterLoginCallbackIndex&&tThis.userCenterLoginCallbackIndex();
+      tThis.userCenterLoginCallbackUserMember&&tThis.userCenterLoginCallbackUserMember();
     });
   },
   verifyImage: function (url) {

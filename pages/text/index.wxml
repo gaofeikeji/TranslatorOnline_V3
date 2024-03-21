@@ -10,12 +10,12 @@
   <view class="container " > 
     <view class="text-container" >
        <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本" 
-        focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText" />
+        focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText"  />
         <!-- 当前输入内容调整 -->
         <view class="text-block text-right margin-top30"> 
           <view class="view-inline "></view>
           <view class="view-inline "></view> 
-          <view class="view-inline text-right">{{fromText.length}}</view>
+          <view class="view-inline text-right">{{fromTextLength}}</view>
           <view class="view-inline text-left">/{{maxlength}}</view>
              
         </view> 
@@ -46,7 +46,7 @@
                     </view>
                   </block>
                   <block wx:else>
-                    <view class="vip_lock_btn vip_lock " open-type="contact" wx:if="{{!subscribe.is_vip}}">
+                    <view class="vip_lock_btn vip_lock "  open-type="contact" wx:if="{{!subscribe.is_vip}}">
                       <image class="vip_lock_img" src="/images/vip.svg" />
                       升级到2000字
                     </view>

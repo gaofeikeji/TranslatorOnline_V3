@@ -9,8 +9,8 @@
             <view class="upload-img {{ select === index ? 'uploading' : '' }}  " wx:for="{{ imgList }}" wx:key="index"
                 data-index="{{ index }}" >
 
-                <image class="upload-img-bg  upload-item-img {{selectedpic==item.tempFilePath?'border-check':''}}"   bind:tap="translateCurrent" 
-                 data-path="{{ item.tempFilePath }}"   src="{{ item.tempFilePath }}"></image>
+                <image mode="aspectFit" class="upload-img-bg  upload-item-img {{selectedpic==item.tempFilePath?'border-check':''}}"   bind:tap="translateCurrent" 
+                 data-path="{{ item.tempFilePath }}" style="width: 158rpx;height: 158rpx;"  src="{{ item.tempFilePath }}"></image>
                 <view class="upload-item-remove" selectable="false" space="false" decode="false">
 
                     <text class="icon-btns  image-remove"

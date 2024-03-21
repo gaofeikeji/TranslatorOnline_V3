@@ -1,47 +1,48 @@
-<!--index.wxml-->  
+<!--index.wxml-->  <page-meta>
 <navigation-bar
 canBack="{{false}}"
 currentLang="{{currentLang}}"
 currentTargetLang="{{currentTargetLang}}" 
     color-animation-duration="2000"
     color-animation-timing-func="easeIn"
-    style="position: absolute;z-index: 1111111;width: 100%;"
-  />  
-  <view class="container "> 
+    class="topnav"
+     style="position: absolute;z-index: 111111;width: 100%;height: {{statusBarHeight+navBarHeight}}px;display:block;"
+  />  </page-meta>
     
-     <block wx:if="{{ initCamral }}">   
-          <camera  device-position="back" style="top:0px;width:100%;height:{{screenHeight}}px"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
-        class="start-image"></camera>
- 
-    </block>
-    <block wx:else> 
-      <view > 
-        <block wx:if="{{ selectPicturPath=='' }}">   
-          <view class="home-info">
-              <text class="text-box-notice ">相机加载中</text>
-              <!-- 收藏 -->
-              <add-tips />
-              
-          </view>
-         </block>
-         <block wx:else>    
-          <view style="text-align: center;"> 
-            <image class="selected-image" src="{{selectPicturPath||''}}"></image> 
+    <camera  device-position="back" style="top:{{statusBarHeight+navBarHeight}}px;width:100%;height:{{screenHeight-(statusBarHeight+navBarHeight)}}px"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
+  class="start-image"></camera>  
+      <view class="container {{initCamral?'hidden':''}}"> 
+         <view class="cloum-box" hover-class="none" hover-stop-propagation="false">
+            <view class="row-box" hover-class="none" hover-stop-propagation="false">
+              <view class="cloum-box-item"></view>
+              <view class="cloum-box-item"></view>
+              <view class="cloum-box-item"></view>
             </view>
-         </block>
-      </view>
-    </block> 
+            <view class="row-box" hover-class="none" hover-stop-propagation="false">
+              <view class="cloum-box-item"></view>
+              <view class="cloum-box-item"></view>
+              <view class="cloum-box-item"></view>
+            </view>
+            <view class="row-box" hover-class="none" hover-stop-propagation="false">
+              <view class="cloum-box-item"></view>
+              <view class="cloum-box-item"></view>
+              <view class="cloum-box-item"></view>
+            </view>
+         </view>
+         <text class="system-load-info">相机加载中</text>
+        <view class="sys-info-box">
+         </view> 
+      </view> 
     <custom-ads ad_type="7" style="height: 100%;">
-  <!-- 底部banner广告 -->
-  <view class="adcontainer">
-    <custom-ads ad_type="3" ad_pos="bottom"></custom-ads> 
-  </view>
-</custom-ads>
-  </view>
+      <!-- 底部banner广告 -->
+      <view class="adcontainer">
+           <custom-ads ad_type="3" ad_pos="bottom"></custom-ads> 
+       </view>
+    </custom-ads>
 
- 
-  <button  class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
-   
+    <block wx:if="{{ initCamral }}">   
+      <button size="mini" class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
+   </block>
  
     <!-- 底部导航 -->
     <view class="tab-bar tabbar tab-bottom safe-area">
@@ -59,6 +60,10 @@ currentTargetLang="{{currentTargetLang}}"
               <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
               <text>{{ item.text }}</text>
           </block>
+          <block wx:elif="{{ item.type === -1 }}">
+            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+            <text>{{ item.text }}</text>
+        </block>
           <block wx:else>
               <view class="publish">
               <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAAAXNSR0IArs4c6QAAARZJREFUaEPtWkEOgjAQZKsPUQLoY+QdvsYH+A59jAJBHyItKUkT7AG2SVcwGS5cNqU7OzOUCZQIXWl6LDrSJSlTkDH3V9PchB6VkNTCuzy/jtdW3ebSto9K4nk/a0JyGmhiiho+nTCJGSGBTqBTRK8FnUAn0OkbAWgCmoAmoAk+B3CK5WM1VMJiV2Ox41QicIqLl7uvRfIFuPjOAjdgU5S/b8JOg/ZZVhqiUyAAqyl/1/V5cCerC6M+h5g784ExmipFOlp4Rnr7dGEcLHY1FhuTQuO1cOwIRBaagCYCKTNVDjqBTqATggI+B/DG5mOFoGAWK9BpFiK4Ex8i0ImPlaw7+SmKTSUC98YuFzvFuhTF3qV+EXJd9lwYVIlg9NySAAAAAElFTkSuQmCC"></image>
@@ -79,7 +84,11 @@ style="position: fixed; left: -9999px; top: -9999px; width:{{ccWidth}}px;height:
 
 <view class="ad_back" wx:if="{{notVip == 1}}">
   <custom-ad ad_type="{{3}}"></custom-ad>
+          
 </view>
 
+         
 <!-- 隐私组件 -->
 <privacy></privacy>
+<!-- 客服 -->
+<customerService type="normal" customerWidth="120px"  direction="right" DistanceFromBottom="80%" />

@@ -41,6 +41,7 @@ Page({
     maxlength: 2000,
     isIOS: sys.system.indexOf('iOS') > -1,
     subscribe: app.globalData.subscribe || {},
+    imgUrlList:[],
     imgList:[ 
       // {
       //   tempFilePath: "https://jizhang-1253713495.file.myqcloud.com/miniprogram/avatar/1.jpeg",
@@ -125,8 +126,8 @@ takePicture(){
         // });
       },
     })
-},  uploadMutipleImg
-(tempFiles){ 
+}, 
+ uploadMutipleImg(tempFiles){ 
   let tThis= this;
     tThis.setData({  
       isuploading:true, 
@@ -148,7 +149,8 @@ takePicture(){
         });
       });
       tThis.setData({
-          imgList:imgObj
+          imgList:imgObj,
+          imgUrlList:results,
           }) 
     })
     .catch(error => {
@@ -175,7 +177,20 @@ translateCurrent(e){
   console.warn("path",path);  
   this.setData({
       selectedpic:path 
-      }) 
+    });
+      
+  wx.previewImage({
+    urls: [this.data.imgUrlList],
+    current: path,
+    success:function(){
+      console.warn("previewImage",path);  
+
+    },
+    fail:function(){
+      console.warn("previewImage:failss",path);  
+      
+    }
+  });
 },
 // 翻译文件
 goToTranslate(e){
@@ -224,7 +239,6 @@ goToTranslate(e){
   onLoad(options){ 
     // 注册pay组件
     this.payComponent = this.selectComponent("#pay");
-    app.getCurrentLang(this); 
     // xy.setClipboardData("少小离家老大回人之初性本善");
     // 判断是否存在用户图片
     if(options.imgupload){
@@ -237,7 +251,11 @@ goToTranslate(e){
       this.setData({
         imgList:tempFilesArr
       }); 
-      this.uploadMutipleImg(tempFilesArr);
+      const tThis=this;
+      app.globalLogin(this,function(){
+        app.getCurrentLang(tThis);
+        tempFilesArr.length&&tThis.uploadMutipleImg(tempFilesArr);
+      });
     }
   },   
   /**

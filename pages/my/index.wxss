@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 5rpx 10rpx; 
-  background:  #fff;
 }
 
 .userinfo {
@@ -140,9 +139,4 @@
   margin-top: 50rpx;
   font-size: 28rpx;
   color: rgba(0, 0, 0, 0.5);
-}
-
-button[open-type="contact"]{
-  display: block;
-  width: 100%!important;
 }

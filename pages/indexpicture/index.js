@@ -17,12 +17,16 @@ Page({
    * 页面的初始数据
    */
   data: { 
+    notVip:false,
     see:false,
     selectPicturPath:app.globalData.selectPicturPath,
     action:false,
     actype:10,//10逐行对比左右布局,11，逐行对比垂直布局; 20复制内容，30导出文件，40显示结果，41隐藏
     currentVisti:0,
     showResult:0,
+    oldfromLang:"",
+    oldtoLang:"",
+    options:{},
     //底部功能区域
     list: [
       {
@@ -205,32 +209,41 @@ showActionBox(actype){
   let show = this.data.action?false:true;
   let currentVisti =0;
   if(actype===0){
-    console.log("actype====0");  
     show=false;
   }
   if(actype==1){
-    console.log("actype===1");
   }if(actype==10){
-    console.log("actype===10");
     currentVisti=0;
     show=true;
   }else if(actype==11){
     currentVisti=1;
-    console.log("actype===11");
-    
     show=true;
   }else if(actype==20){
-    console.log("actype====2");
   }else if(actype==30){
-    console.log("actype====3");
-  }else if(actype==40){//显示隐藏结果
-    console.log("actype====40");
+  }else if(actype==40){//显示隐藏结果 
+    const oldLang = this.data.oldfromLang;
+    const oldtoLang =this.data.oldtoLang;
+    
+    const current= app.getCurrentLang(this);
+    console.log("actype====40老：",oldLang+","+oldtoLang+";新的:"+current.currentLang+"："+current.currentTargetLang);
+    // 嚴格判斷語言是否切換，切換自動幫用戶翻譯數據
+    if(oldLang==current.currentLang && oldtoLang==current.currentTargetLang){
+    }else{
+      // 用戶未修改系統不進行語言操作
+      if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")){
+        app.showModalClose("檢測到您更改了語言，正在幫您重新翻譯，請稍等",2000);
+        this.data.options&&this.reloadPicinfo(this.data.options);
+      }
+    }
     this.setData({
       actype: actype, 
       showResult: this.data.showResult==1?0:1, 
       see:false,
+      oldfromLang:current.currentLang,
+      oldtoLang:current.currentTargetLang,
+      see:false,
       scale:this.data.showResult==1?1.8:1
-      })
+    })
       return false;
   }
   console.warn("actypeactype:",  actype );   
@@ -350,26 +363,38 @@ getMidpoint(a, b) {
    */
   
   onLoad(options) {  
+    this.payComponent = this.selectComponent("#pay");
+    this.rateComponent = this.selectComponent("#rate");
     // app.userCenterLogin();
-    const tThis=this; 
-    app.getCurrentLang(this);
-    // app.globalLogin();
     // xy.showTip("服务器正在解析资源"); 
     app.globalData.selectPicturPath=options.selectPicturPath;
-    // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
-    // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
-    console.log("options.selectPicturPath:",options.selectPicturPath);
+      this.setData({
+      options: options
+    })
+   let tThis=this;
+    app.globalLogin(this,function(){
+      // app.getCurrentLang(tThis);
+      // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
+      // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
+      //主动根据请求体中的信息来判断加载资源信息
+      tThis.reloadPicinfo(options); 
+    });
+    
+  },
+  //是否重写获取数据（用户存在切换语言操作）
+  reloadPicinfo(options){
+    const tThis=this; 
     if(options.ismultiple==1){
       const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
       console.warn("imagesArr:::",imagesArr);
       imagesArr.forEach(function(item,key){
 
-        tThis.getImageInfo(tThis,{
+        tThis.getImageInfoByOption(tThis,{
           selectPicturPath:item
         });
       });
     }else{      
-      this.getImageInfo(tThis,options);
+      this.getImageInfoByOption(tThis,options);
     }
   },
   getPictureRate(pic){
@@ -408,7 +433,7 @@ getMidpoint(a, b) {
       scaledHeight: canvasHeight* canvasRatio
     }; 
   },
-getImageInfo(tThis,options){
+getImageInfoByOption(tThis,options){
     if(!options.selectPicturPath){
       app.showModalClose("非法操作,图片不存在",2000);
       setTimeout(function(){
@@ -427,21 +452,18 @@ getImageInfo(tThis,options){
         const windowWidth =sysInfo.windowWidth;
         console.warn("sysInfo:",sysInfo) ;
         app.globalData.screenWidth=windowWidth;
-        console.log("getImageInfo:",res) 
+        console.log("getImageInfoByOption:",res) 
 
         let canvasRatio = tThis.calculateCanvasDimensions(res.width,res.height,windowWidth,sysInfo.windowHeight-140);
         console.warn("canvascanvasRatioRatiocanvasRatio");
         console.warn(canvasRatio); 
-        // console.log("app.globalData.selectPicturPath：",tThis.data.selectPicturPath,app.globalData.selectPicturPath)
         tThis.getPictureInfo(options.selectPicturPath,{ 
           selectPicturWidth: res.width, 
           selectPicturHeight: res.height, 
-          currentSelectX: 0,//res.width>windowWidth?(windowWidth-res.width)/2:(res.width-windowWidth)/2, 
+          currentSelectX: 0, 
           currentSelectY: 60, 
           windowWidth: windowWidth, 
           windowHeight: sysInfo.windowHeight-140, 
-          // selectPicturWidth: upload_pic_info.width/res.width>2?upload_pic_info.width:res.width, 
-          // selectPicturHeight: upload_pic_info.width/res.width>2?upload_pic_info.height:res.height, 
           selectPicturPath: options.selectPicturPath,
           scale: (canvasRatio.canvasRatio)<0.3?0.3:(canvasRatio.canvasRatio-0.1)
         })
@@ -453,68 +475,36 @@ getImageInfo(tThis,options){
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-    this.payComponent = this.selectComponent("#pay");
-    this.rateComponent = this.selectComponent("#rate");
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-    if (app.globalData.access_token) {
-      console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-      this.setData({
-        notVip: !app.globalData.subscribe.is_vip
-      })
-    } else {
-      app.userCenterLoginCallbackIndex = () => {
-        console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-        this.setData({
-          notVip: !app.globalData.subscribe.is_vip
-        })
-      };
-    }
+  onShow() {    
+
+    // if (app.globalData.access_token) {
+    //   console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+    //   this.setData({
+    //     notVip: !app.globalData.subscribe.is_vip
+    //   })
+    // } else {
+    //   app.userCenterLoginCallbackIndex = () => {
+    //     console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+    //     this.setData({
+    //       notVip: !app.globalData.subscribe.is_vip
+    //     })
+    //   };
+    // }
 
   },
   methods: {
-    
-
-    // linstenerScale(event){
-    //   console.warn("linstenerScale",event)
-    // },
+     
     listenstartMove(event){
       console.warn("listenstartMove",event)
     }
-  },   
-  listentouch(event){
-    console.warn("listentouch",event)
-  },
-  linstenerScale(event){
-    console.warn("linstenerScale",event)
-  },
-  //放大缩小翻译结果
-  upScalepic(event){
-    console.warn("upScalepic",event)
-    if(this.data.scale>6){
-      app.showModalClose("最大缩放比例",2100);
-      return false;
-    }
-    this.setData({ 
-      scale: this.data.scale+0.2
-    });
-  },
-  downScalepic(event){
-    console.warn("downScalepic",event)
-    console.warn("upScalepic",event)
-    if(this.data.scale<-2){
-      app.showModalClose("最小缩放比例",2100);
-      return false;
-    }
-    this.setData({ 
-      scale: this.data.scale-0.1
-    });
-  },
+  },     
+   
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -548,39 +538,5 @@ getImageInfo(tThis,options){
    */
   onShareAppMessage() {
 
-  },  
-  handleTouchStart: function(e) {
-    // 记录起始触点
-    this.setData({
-      startTouches: e.touches
-    });
-  },
-  
-  handleTouchMove: debounce(function(e) {
-    const touches = e.touches;
-    const changeX = touches[0].clientX - this.data.startTouches[0].clientX;
-    const changeY = touches[0].clientY - this.data.startTouches[0].clientY;
-    
-    // 只有在最后一次 touchmove 后才会执行这个函数体
-    this.setData({
-      movableX: this.data.movableX + changeX,
-      movableY: this.data.movableY + changeY
-    });
-  }, 100),
-
-  handleTouchEnd: function(e) {
-    // 可在此处重置初始触点
-    this.setData({
-      startTouches: []
-    });
-  },
-
-  handlePinch: function(e) {
-    // 处理捏合事件，实现缩放功能
-    const scale = e.detail.scale / this.data.lastScale;
-    this.setData({
-      scale: this.data.scale * scale,
-      lastScale: e.detail.scale
-    });
-  }
+  },   
 })

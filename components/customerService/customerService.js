@@ -19,12 +19,21 @@ Component({
     type: {
       type: String,
       value: 'normal'
-    }
-
+    },
+    customerWidth: {
+      type: String,
+      value: "130px"
+    } ,
+    customerClass: {
+      type: String,
+      value: "sv_bk_customer"
+    } 
   },
 
 
   data: {
+    customerWidth:"130px",
+    customerClass:"sv_bk_customer",
     image_src: './kf.png',
     direction: 'left',
     DistanceFromBottom: '30%',

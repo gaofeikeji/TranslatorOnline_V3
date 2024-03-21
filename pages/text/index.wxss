@@ -3,6 +3,7 @@ page{
   height: 100%;
   width: 100%;
   padding: 0;
+  background: #CCCCCC;
 } 
 .scrollarea { 
   height: 100%;
@@ -14,9 +15,9 @@ page{
   /* display: flex;
   flex-direction: row;   */
   align-items: center;
-   background: #ccc;
    height: 100%;
    width: 100%;
+   background: #CCCCCC;
 
 }           
 .text-container{
@@ -104,8 +105,8 @@ page{
 }
 .text-container .margin-top30{
   position: relative;
-  top: -30px;
-  right: -15px;
+  top: -43px;
+  right: -17px;
 }
 
 
@@ -119,6 +120,9 @@ page{
   display: flex;
   text-align: center;
   padding: 60rpx;
+  margin-bottom: 0;
+  margin-bottom:constant(safe-area-inset-bottom);  
+  margin-bottom: env(safe-area-inset-bottom);  
   justify-content: center;
   align-items: center;
   position: absolute;

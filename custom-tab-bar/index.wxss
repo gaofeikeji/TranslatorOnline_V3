@@ -21,16 +21,16 @@
     /* min-height: 110rpx;
     height:8%; */
     display: flex; 
-    background-color: #fff;
+    /* background-color: #fff; */
     /* 刘海屏 */
     /* padding-top:48rpx;  */
     position: fixed;
     top: 0;
     z-index: 6666; 
     background-color: rgba(255，255，255，1);
-    border-bottom: 1px solid #ddd;
-    border-bottom-left-radius: 30rpx;
-    border-bottom-right-radius: 30rpx;
+    box-shadow: 0rpx 0rpx 20rpx  rgba(0, 0, 0, 0.02);
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
   } 
   .current-language-box{ 
     display: flex;
@@ -51,23 +51,27 @@
   .lang_switch{ 
     display: inline-flex;
     font-size: 24rpx;   
-    margin:  10rpx 30rpx;
-    transform: translateY(6rpx); 
-    width: 25.89rpx;
-    height: 22.23rpx;
+    margin:  10rpx 40rpx;
+    /* transform: translateY(6rpx);  */
+    width: 32rpx;
+    height: 32rpx;
     opacity: 1; 
 
+  }
+  .lang_switch.left-20{
+    margin-left: 20rpx;
   }
   
 .btn-back{
   /* transform:scale(1.2) translateY(-5rpx); */
   cursor: pointer;
-  width: 22.97rpx;
-  height: 39.66rpx;
-  opacity: 1;  
-  scale: 1.5;
-  transform: translateY(5px) translateX(-6px);
+  width: 48rpx;
+  height: 39.48rpx;
+  opacity: 1;   
 } 
+.nav-page-title{
+
+}
   .text-active{
     color: rgba(31, 113, 255, 1);
   }

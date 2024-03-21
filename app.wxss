@@ -10,7 +10,7 @@ page,text,view,navigator,swiper,swiper-item,image{
   letter-spacing: 0rpx;
   line-height: 49.24rpx;
   box-shadow: none;
-  border-color: transparent;
+  border-color: #fff;
 } 
 page,text{  font-size: 24rpx;}
 
@@ -20,12 +20,13 @@ page,text,view,navigator,swiper,swiper-item,image{
    box-sizing: border-box;
 }
 page {
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   box-sizing: border-box;
+  background-color: #fff;
+  display:block;
 }
 .safe-area{
-    height: 85px;
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 
@@ -35,15 +36,15 @@ page {
   height: 100%;
   width: 100%; 
   /* padding-bottom: 85px; */
-background: rgba(204, 204, 204, 1);
-overflow-y: auto;
+  overflow-y: auto;
 }
 .container{
   position: relative;
   height:100%;
   width: 100%;
-  background: rgba(51, 51, 51, 1);
-  
+  margin: 0;
+  pad: 0;
+  z-index: 111;
 } 
 .start-media{
   position: absolute;
@@ -70,9 +71,6 @@ overflow-y: auto;
   /* padding: 50rpx 0 0 0; */
   position: relative;
 } 
-.text-box-notice{
-  color: #fff;
-}
  .circle-btn.picture-action{
   display: inline-block;
   width: 260rpx !important;
@@ -126,16 +124,16 @@ overflow-y: auto;
 /* 底部选项卡 */
 .tab-bottom {
   width: 100%;
-  height: 85px;
+  height: auto;
   display: flex;
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: 999; 
   background: #fff;
-  border-top: 1px solid #ddd;
-  border-top-left-radius: 30rpx;
-  border-top-right-radius: 30rpx;
+  box-shadow: 0rpx 0rpx 20rpx  rgba(0, 0, 0, 0.02);
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
 }
 .tab-bottom.transparent{
   background-color: transparent;
@@ -149,12 +147,13 @@ overflow-y: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 85px;
+  height: 170rpx;
+  opacity: 1;
 }
 
 .tabbar-item image {
-  width: 42.09rpx;
-  height: 42rpx;
+  width: 48rpx;
+  height: 48rpx; 
   opacity: 1;
   background-color: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
 }
@@ -440,3 +439,6 @@ box-shadow: 1px 1px 2px  rgba(0, 0, 0, 0.05);
   float: right;
 }
 
+/* .sv_bk_customer{
+  
+} */

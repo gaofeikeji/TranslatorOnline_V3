@@ -52,7 +52,7 @@ color-animation-timing-func="easeIn" style="height: {{statusBarHeight+navBarHeig
         </view>
       </gift_use>
       <!-- 在线客服 -->
-        <customerService direction="right" DistanceFromBottom="80%" type="my" style="width: 100%;"></customerService> 
+        <customerService customerWidth="100%" direction="right" DistanceFromBottom="80%" type="my" ></customerService> 
     </view>
     <!-- version -->
     <view class="version">当前版本：V 1.1.0</view>

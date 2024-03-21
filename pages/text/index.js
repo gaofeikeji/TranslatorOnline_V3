@@ -7,19 +7,21 @@ Page({
    * 页面的初始数据
    */
   data: {
+    nbFrontColor: '#16724273',
+    nbBackgroundColor: '#FF0DE0',
     navBarHeight: app.globalData.navBarHeight, //导航栏高度
     menuBotton: app.globalData.menuBotton, //导航栏距离顶部距离
     menuRight: app.globalData.menuRight, //导航栏距离右侧距离
     menuHeight: app.globalData.menuHeight, //导航栏高度
     statusBarHeight: app.globalData.statusBarHeight, //状态栏栏高度
-    screenHeight: app.globalData.screenHeight, //可视区域高度 
-    screenHeight: 0,       // 可视区域高度
+    screenHeight: app.globalData.screenHeight, //可视区域高度  
     notVip: false,  
 
-    maxlength: 2000,
+    maxlength: 200,
     isIOS: sys.system.indexOf('iOS') > -1,
     subscribe: app.globalData.subscribe || {},
-    fromText:"亲爱的爸爸妈妈： 你们好！ 谢谢你们把我带到这个美丽的世界，是你们把我从小养大，教我做人的道理。妈妈你每天为我穿衣做饭，爸爸你教我完成家庭作业，还要努力的工作。为了家人的幸福，为了我的健康成长付出了很多，你们辛苦了！\n\n 记得有一次，我8岁那年的一天夜里，我突然发高烧，你们忘记了一天的疲劳，着急的把我送到医院，医生给我打了吊针，你们整整陪了我一夜。第二天早上我醒来，你们用熬红了的眼睛看着我，问我好点了吗，我感动的说不出话来，眼泪直往脸上流。\n 还记得有一次，我考试没考好，回到家，非常伤心，妈妈你仿佛看出了我的心思，亲切地对我说：“这次没考好，下次再努力，别灰心。”爸爸你走过来，细心地给我分析、教导，使我鼓起了勇气，学习成绩得到了很大的提高。 爸爸妈妈，你们为我付出了那么多的心血，我一定会报答您们，我会好好学习，绝不辜负你们对我的期望！",//输入框内容
+    fromText:"",//输入框内容
+    fromTextLength:0,//输入框内容
   },
 
   OnClickVipLock() {
@@ -53,8 +55,7 @@ Page({
       });
     }else if(actype=="2"){//确认翻译
       const resp = tThis.data.fromText;
-      console.warn("fromText::",
-      resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
+      console.warn("fromText::", resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
       if(resp!=""){ 
         wx.navigateTo({
           url: "/pages/texttranslate/index?text="+resp
@@ -70,9 +71,14 @@ Page({
 }, 
 // 监听输入框改变
 updateFormText(e){
+  const formdata= e.detail.value;
+  if(this.data.notVip==false&&formdata.length>this.data.maxlength){
+    xy.showModalClose("请充值会员享受更多服务",2000);
+  }
   this.setData({
-    fromText: e.detail.value,
-    })
+    fromText: formdata.substr(0,this.data.maxlength),
+    fromTextLength: formdata.length,
+    }) 
 },
   /**
    * 生命周期函数--监听页面加载
@@ -80,7 +86,15 @@ updateFormText(e){
   onLoad(){ 
     // 注册pay组件
     this.payComponent = this.selectComponent("#pay");
-    app.getCurrentLang(this); 
+    const tThis=this;
+    app.globalLogin(this,function(data,capp){ 
+      // console.warn("app.globalData.subscribe.is_vip",capp.globalData.subscribe.is_vip)
+      tThis.setData({
+        subscribe: capp.globalData.subscribe || {},
+        maxlength: capp.globalData.subscribe.is_vip!=0 ? 2000 : 200,
+        notVip: !capp.globalData.subscribe.is_vip
+      })
+    });
     // xy.setClipboardData("少小离家老大回人之初性本善");
   },   
   /**
@@ -94,22 +108,6 @@ updateFormText(e){
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    if (app.globalData.access_token) {
-      this.setData({
-        subscribe: app.globalData.subscribe || {},
-        maxlength: app.globalData.subscribe.is_vip ? 2000 : 200,
-        notVip: !app.globalData.subscribe.is_vip
-      })
-    } else {
-      app.userCenterLoginCallbackIndex = () => {
-        this.setData({
-          subscribe: app.globalData.subscribe || {},
-          maxlength: app.globalData.subscribe.is_vip ? 2000 : 200,
-          notVip: !app.globalData.subscribe.is_vip
-        })
-      };
-    }
-
   },
 
   /**

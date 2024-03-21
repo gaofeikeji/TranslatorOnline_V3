@@ -14,10 +14,15 @@
     "pages/multiplepic/index"
   ],
   "window": {
+    "navigationStyle": "custom",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
-  },
-  "style": "v2", 
+    "backgroundColor": "#fff", 
+    "navigationBarBackgroundColor": "#fff", 
+    "backgroundColorTop": "#fff",
+    "backgroundColorBottom": "black",
+    "disableScroll": true,
+    "backgroundColorContent": "#fff"
+  }, 
   "usingComponents": {
     "navigation-bar": "/custom-tab-bar",
     "privacy": "/components/privacy/privacy",
@@ -35,7 +40,5 @@
       "provider": "wx82e6ae1175f264fa"
     }
   },
-  "componentFramework": "glass-easel",
-  "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"
 }

@@ -1,7 +1,6 @@
 /* pages/texttranslate/index.wxss */ 
 .container{
   display: block;
-   background: #ccc;
    height: 100%;
 }           
 .text-container{
@@ -18,9 +17,10 @@
   overflow-y: auto;
   padding: 20rpx;
   margin: 8rpx;
-  height: 1118rpx;
+  height: 60%;
+  min-height: 580rpx;
   width: 90%;
-  margin: 20rpx;
+  margin: 40rpx 20rpx;
   border-radius: 4px;  
   font-size: 14px;
   color: #000;
@@ -43,23 +43,26 @@
   box-shadow: 2rpx 2rpx 4rpx  rgba(0, 0, 0, 0.05);
 }
 
-.scroll-translate{
-  height: 90%;
+.scroll-translate-left-right{
+  height: 80%;
   width: 90%;
+  max-height: 500px;
   margin: 0 auto;
   opacity: 1;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(0, 0, 0, 0.03); 
 }
 
 .lang-left-right{
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 .lang-left,.lang-right{
   display: inline-block;
+  background: rgba(0, 0, 0, 0.03);
   padding: 20px 8px;
   width: 49%;
   font-size: 26rpx;
@@ -72,9 +75,10 @@
 }
 .lang-right{
   border-left: 1px solid rgba(0, 0, 0, 0.2);
+  height: 100%;
 }
-.lang-item{
-  padding:20rpx 10rpx 0 10rpx;
+.lang-item .horizon-text   {
+  border-color: none;
 } 
 
 
@@ -85,6 +89,21 @@
   z-index: 900;  
 }
  
-.lang-item .translate-margin { 
-   margin: 0;
+.lang-item-block { 
+ display: block;
 }
+.lang-item .horizon-text {
+  border-color: transparent;
+  display: block;
+  width: 100%;
+  font-size: 28rpx;
+  font-weight: 400;
+  letter-spacing: 0rpx;
+  line-height: 40rpx;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: left;
+}
+.lang-item .horizon-text { 
+  color: rgba(0, 0, 0,1); 
+}
+  

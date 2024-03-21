@@ -9,34 +9,39 @@ currentTargetLang="{{currentTargetLang}}"
 
   <!-- 当前图片展示容器 -->    
   <scroll-view class="scrollarea" scroll-y type="list">                             
-  <view class="container ">  
+  <view class="container " style="position: relative;left:{{-selectPicturWidth*1.5}}px;top:{{-selectPicturHeight*1.5}}px;">  
     <movable-area scale-area="{{true}}"  id="zoomArea" class="zoomArea"
-    style=" width:{{selectPicturWidth*18}}px;height:{{selectPicturHeight*18}}px;background:pink">
+    style=" width:{{selectPicturWidth*6}}px;height:{{selectPicturHeight*6}}px;">
       <movable-view direction="all"        
-      scale-min="0.001" x="{{currentSelectX}}" y="{{currentSelectY}}"  
-       scale-max="5"   damping="25" inertia="{{false}}"  
-        style="width:{{selectPicturWidth}}px;height:{{selectPicturHeight}}px;background:blue"
+      scale-min="0.001"  
+       scale-max="8"   damping="20" inertia="{{false}}" friction="{{0.7}}"
+        style="width:{{selectPicturWidth*3}}px;height:{{selectPicturHeight*3}}px;" 
       
        out-of-bounds="{{true}}"  inertia="{{true}}" scale="{{true}}" direction="all"    >
      <!-- bindscale="linstenerScale"  -->
       <view  class="media-info-box" 
       wx:for="{{ langList }}"  wx:for-item="items"   wx:key="selectPicturPath" 
-      style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;background:red"> 
+      style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;background-repeat: no-repeat;background-image: url({{items['selectPicturPath']}});background-clip: text;-webkit-text-fill-color: #000;text-fill-color:#000"> 
           <!-- 显示结果 -->
             <!-- <block wx:if="{{ showResult ==   1 }}">  
             </block> -->
-          <view    wx:for="{{ items.list }}"   wx:for-item="item"  wx:key="i" 
-              class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
-               data-rate="{{ item.single_rate }}" 
-              style="left:{{item.single_pos.pos[0]['x']}}px;top:{{item.single_pos.pos[0]['y']}}px;height:{{item.bottom-item.top}}px;line-height:{{item.bottom-item.top}}px;"
-              >
-              <block wx:if="{{ showResult ==0 }}">
-                <text  bindtap="toVerticleHorizonTextItem"  data-top="{{item.top}}" data-left="{{item.left}}" class="media-text" style="font-size:{{(item.right-item.left)/item.single_str_utf8.length}}px">{{item.single_str_utf8}}</text>  
-              </block> 
-              <block wx:else> 
-                <text   bindtap="toVerticleHorizonTextItem"  data-top="{{item.top}}" data-left="{{item.left}}" class="media-text" style="font-size:{{(item.right-item.left)/item.single_str_utf8.length}}px">{{item.translate}}</text>
-              </block>
-          </view> 
+          <block    wx:for="{{ items.list }}"   wx:for-item="item"  wx:key="i"  >
+           
+                <text  data-rate="{{ item.single_rate }}"  
+                style="text-justify: distribute;text-align: justify;font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.8}}px;min-width:{{item.right-item.left}}px;line-height:{{(item.bottom-item.top)*0.8}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/2 }}px; "
+                class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
+                bindtap="toVerticleHorizonTextItem"  data-top="{{item.top}}" data-left="{{item.left}}"  
+                 > 
+                  <block wx:if="{{ showResult ==0 }}">
+                    {{item.single_str_utf8}} 
+                  </block> 
+                    <block wx:else>
+                        {{item.translate}}
+
+                      </block>
+                </text>
+              
+          </block> 
       
             <block wx:if="{{ showResult ==   0 }}"> 
             </block>
@@ -52,16 +57,7 @@ currentTargetLang="{{currentTargetLang}}"
     
   </view>    
 </scroll-view>
-<!--   
-<view class="action-scale" hover-class="none" hover-stop-propagation="false">
-            
-  <image bindtap="upScalepic" class="scaleAction" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACrSURBVGiB7djRCYMwFEbhP9Y9FCWhm3UAp+keHaYqSBdp0iffEyFysed7NnoPESJKBboxTL33z5I1Z2hKLnZNCpI0DPdQZ5xjiiKsIsIKIqwgwgoirHDdGKb9JK7hs66PWvfeXWMnpPxvoXj7TpLkUnq52M45a7btvRwfL09b8qDee0mSi+18xnC5LvE6EWEFEVYQYcX/RaToFumcU7gqa79rAAAAAAAAgFp+s3AjweJPdf0AAAAASUVORK5CYII=" mode="aspectFit">
-        
-  </image>
-  <image  bindtap="downScalepic" class="scaleAction" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAADCAYAAACAjW/aAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAAsSURBVBiVvcsxDQAgDACwLkHDPE0ylpDAhYbtoH8DhaXnYjcPCOQk4gzfXw/xJgMDWmhKfAAAAABJRU5ErkJggg==" mode="aspectFit" >
-    
-  </image>
-</view> -->
+
 
   <view class="" wx:if="{{notVip == 1}}">
     <custom-ad ad_type="{{3}}"></custom-ad>
@@ -158,20 +154,15 @@ currentTargetLang="{{currentTargetLang}}"
       <view class="action-btn" data-actype="72"  bindtap="translateFunction" >导出Word文档</view>
       <view class="action-btn" data-actype="73"  bindtap="translateFunction"  >导出Excel文档</view>
       </view>
-  </block> 
-    <!-- 显示结果 -->
-    <!-- <block wx:if="{{ actype ==   40 }}">
-             
-             <view class="action-item">
-               44444444444444
-             </view>
-             </block>  -->
+  </block>  
   </view>      
   
 </block>
 
 
+
+<!-- 支付 -->
 <vip-member id="pay"></vip-member>
-<!--  
-<customerService direction="right" DistanceFromBottom="20%"  />
-<ToRate id="rate" scene="{{scene}}" canShow="{{show_rate}}" rateScene="{{rateScene}}" alwaysShow="{{true}}" bind:RateShowSuccess="onRateShowSuccess" bind:RateShowFail="onRateShowFail" bind:RateSuccess="onRateSuccess" bind:RateFail="onRateFail" /> -->
+<!-- 客服 -->
+<customerService  direction="right" DistanceFromBottom="20%" sv_bk_left="dddd" />
+<ToRate id="rate" scene="{{scene}}" canShow="{{show_rate}}" rateScene="{{rateScene}}" alwaysShow="{{true}}" bind:RateShowSuccess="onRateShowSuccess" bind:RateShowFail="onRateShowFail" bind:RateSuccess="onRateSuccess" bind:RateFail="onRateFail" />

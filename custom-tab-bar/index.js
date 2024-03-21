@@ -83,44 +83,64 @@ Component({
       selectLang(e) {  
         const lang = wx.getStorageSync("lang");
         const langCode = wx.getStorageSync("langCode");
-        console.warn("getLangConfig:",lang);
-        console.warn("getLangConfig:",langCode); 
+        let langData = wx.setStorageSync("langData")
+        // console.warn("getLangConfig:",lang); console.warn("getLangConfig:",langCode);
         const tThis = this;
         if(lang&&langCode){
-          this.getLangList();
+          langData = this.getLangList();
         }else{
+          // 异步请求并更新语言
           app.getLangConfig(this.getLangList);
         }  
         
-        this.setData({editLang:this.data.editLang?false:true});
-        
+        this.setData({
+          editLang:this.data.editLang?false:true,
+          langData:langData
+        }); 
       },  
        // 源语言改变
        fromIdxChange(e) {
         const dataset = e.target.dataset;
-        console.warn("fromIdxChange",e);
-        console.warn("fromIdxChange",dataset.index,dataset.langType);
         /**当前切换语言不会立即响应到全局，需要确认才会保存 */
-        let changeLang = dataset.langType=="fromIdx"?{
-          updateLang: dataset.index
-        }:{
-          updateTargetLang: dataset.index
-        }; 
+        let changeLang = {};
+        const oldLang= app.getCurrentLang(this);  
+        if(dataset.langType=="fromIdx"){//源语言切换
+          if(dataset.index==oldLang.currentTargetLang){
+            wx.showToast({
+              title: '源语言和目标语言不能一致',
+              icon: 'success',
+              duration: 2000
+            })
+            return false;
+          }
+          changeLang.updateLang=dataset.index;
+        }else{//目标语言切换
+          if(dataset.index==oldLang.currentLang){
+            wx.showToast({
+              title: '源语言和目标语言不能一致',
+              icon: 'success',
+              duration: 2000
+            })
+            return false;
+          }
+
+          changeLang.updateTargetLang=dataset.index;
+        } 
+
+        if(dataset){
+
+        }
          this.setData(changeLang);
       },
       // 提交切换语言
       updateTranslateLang(){
-        const updateLang = this.data.updateLang;
-        const updateTargetLang = this.data.updateTargetLang;
+        const updateLang = this.data.updateLang||"auto";
+        const updateTargetLang = this.data.updateTargetLang||"en";
         const newLang ={};
         
         //导航栏当前语言
-        if(updateLang!==this.data.currentLang){
           newLang['currentLang']=updateLang;
-        }
-        if(updateTargetLang!==this.data.currentTargetLang){
           newLang['currentTargetLang']=updateTargetLang;
-        }
         wx.setStorageSync("currentLang", updateLang); 
         wx.setStorageSync("currentTargetLang", updateTargetLang); 
         app.updateGlobalLang(updateLang,updateTargetLang);

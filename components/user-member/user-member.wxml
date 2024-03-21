@@ -18,7 +18,7 @@
 </block>
 <block wx:else>
   <view class="container">
-    <button class="user_btn" open-type="contact">
+    <button style="width: 100%;" class="user_btn" open-type="contact">
       <view class="renewal-vip-box" wx:if="{{subscribe.is_vip}}">
               <view class="btn_back">
         <image src="./images/vip.png" mode="widthFix" />

@@ -198,7 +198,7 @@ showActionBox(actype){
     scale:actype==0?(this.data.scale<0.5?0.3:0.8):1//需要添加缩放比例记录，或者采用图片等比设置，
     })
 },
-translateText(){
+toTranslateText(){
   const tThis = this;
   const fromText = this.data.fromText;
   if(fromText.length<1){
@@ -207,10 +207,11 @@ translateText(){
       wx.hideLoading()
     }, 2000)
     return false;
-  } 
+  }  
+  wx.showLoading({ title: "正在翻译中……...", mask: true })
   xy.checkTextSync({
     content: fromText,
-    successFunc: tThis.translate,
+    successFunc: tThis.translateUpdate,
     failFunc: (err) => {
       xy.showTip(err.msg);
     },
@@ -218,7 +219,7 @@ translateText(){
 },
 
   // 翻译
-  translate: function () { 
+  translateUpdate: function () { 
     wx.showLoading({ title: "翻译中……", mask: true });
     const fromText = this.data.fromText;
     wx.request({
@@ -274,15 +275,22 @@ translateText(){
     this.setData({
       fromText:options.text||""
     })
-    this.translateText();
-    app.getCurrentLang(this);
+     
+    const tThis=this; 
+    app.globalLogin(this,function(data,capp){ 
+      tThis.setData({
+        subscribe: capp.globalData.subscribe || {},
+        maxlength: capp.globalData.subscribe.is_vip ? 2000 : 200,
+        notVip: !capp.globalData.subscribe.is_vip
+      })
+      tThis.toTranslateText(); 
+    });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-
   },
 
   /**
