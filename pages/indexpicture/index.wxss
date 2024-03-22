@@ -55,8 +55,8 @@ page{
   top: 0;
   z-index: 2;
   pointer-events: none;
-  filter: blur(1.2px);
-  opacity: 1;
+  filter: blur(1.9px);
+  opacity: 0.3;
   z-index: 22;
 }
 
@@ -68,11 +68,19 @@ page{
   display: inline-block;
   pointer-events: none;
   /* background-color: rgba(245, 33, 33, 0.81); */
- background: rgba(255,255,255,0.4);
+ border: 2rpx solid rgba(255,255,255,0.4);
   color:rgba(0,0,0,0.5);
   pointer-events: none;
   text-align: justify;
 } 
+.media-text-item:nth-child(odd){
+  border: 2rpx solid rgba(255,255,255,0.4);
+
+}
+.media-text-item:nth-child(even){
+  border: 2rpx solid rgba(227, 236, 255,1);
+
+}
 .media-text-item.selected{
   color: #fff ; 
   box-shadow: 0 0 1px rgba(31, 113, 255, 0.8);

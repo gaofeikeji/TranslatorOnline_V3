@@ -230,10 +230,18 @@ showActionBox(actype){
     if(oldLang==current.currentLang && oldtoLang==current.currentTargetLang){
     }else{
       // 用戶未修改系統不進行語言操作
-      if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")){
+      if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")&&oldLang&&oldtoLang){
         app.showModalClose("檢測到您更改了語言，正在幫您重新翻譯，請稍等",2000);
         // 此处需要校验是否重复检测相同图片
-        this.data.options&&this.reloadPicinfo(this.data.options);
+        if(this.data.options){
+          const oldLangList=this.data.langList;
+          oldLangList.list=[];
+          this.setData({
+            langList:oldLangList
+          })
+          this.reloadPicinfo(this.data.options);
+        }
+         
       }
     }
     this.setData({
@@ -376,7 +384,7 @@ getMidpoint(a, b) {
     })
    let tThis=this;
     app.globalLogin(this,function(){
-      // app.getCurrentLang(tThis);
+      app.getCurrentLang(tThis);
       // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
       // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
       //主动根据请求体中的信息来判断加载资源信息

@@ -13,14 +13,14 @@
         inertia="{{true}}" scale="{{true}}" direction="all">
         <!-- bindscale="linstenerScale"  -->
         <view class="media-info-box" wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
-          style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;background-repeat: no-repeat;background-image: url({{items['selectPicturPath']}});background-clip: text;-webkit-text-fill-color: #000;text-fill-color:#000">
+          style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;-webkit-text-fill-color: #000;text-fill-color:#000">
           <!-- 显示结果 -->
           <!-- <block wx:if="{{ showResult ==   1 }}">  
             </block> -->
           <block wx:for="{{ items.list }}" wx:for-item="item" wx:key="i">
 
             <text data-rate="{{ item.single_rate }}"
-              style="text-justify: distribute;text-align: justify;font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.8}}px;min-width:{{item.right-item.left}}px;line-height:{{(item.bottom-item.top)*0.8}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/2 }}px; "
+              style="text-justify: distribute;text-align: justify;font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.8}}px;min-width:{{item.right-item.left}}px;height:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.8}}px;line-height:{{(item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.3)}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/6 }}px; "
               class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
               bindtap="toVerticleHorizonTextItem" data-top="{{item.top}}" data-left="{{item.left}}">
               <block wx:if="{{ showResult ==0 }}">
