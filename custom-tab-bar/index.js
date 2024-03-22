@@ -25,9 +25,12 @@ Component({
       navBarHeight: app.globalData.navBarHeight, //导航栏高度
       menuBotton: app.globalData.menuBotton, //导航栏距离顶部距离
       menuRight: app.globalData.menuRight, //导航栏距离右侧距离
+      menuWidth: app.globalData.menuWidth, //导航栏距离右侧距离
       menuHeight: app.globalData.menuHeight, //导航栏高度
       statusBarHeight: app.globalData.statusBarHeight, //状态栏栏高度
       screenHeight: app.globalData.screenHeight, //可视区域高度  
+      screenWidth: app.globalData.screenWidth , //可视区域高度  
+      menuLeftwidth: app.globalData.menuLeftwidth , //可视区域高度  
   }, 
   methods: {
     // 读取语言数据

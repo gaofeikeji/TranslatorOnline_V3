@@ -142,7 +142,7 @@ translateFunction(e) {
     }else if(actype==71){//导出TXT文件
       
       const currentTxt = this.initialImgText();
-      console.log("actype::",currentTxt)
+      console.log("actype::currentTxtcurrentTxt",currentTxt)
         if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
           app.showModalClose("开始下载文件……",3000);
           app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-txt");
@@ -232,6 +232,7 @@ showActionBox(actype){
       // 用戶未修改系統不進行語言操作
       if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")){
         app.showModalClose("檢測到您更改了語言，正在幫您重新翻譯，請稍等",2000);
+        // 此处需要校验是否重复检测相同图片
         this.data.options&&this.reloadPicinfo(this.data.options);
       }
     }
@@ -260,8 +261,7 @@ getPictureInfo(picUrl,currentImgobj){
   const tThis=this;
   wx.showLoading({ title: "正在翻译中...", mask: true });
   const curent = app.getCurrentLang(tThis);
-  console.warn("getPictureInfogetPictureInfo:",  picUrl );   
-  console.warn("currentImgobjcurrentImgobj:",  currentImgobj );   
+  console.warn("getPictureInfogetPictureInfo:",  picUrl , currentImgobj);   
   let pictureInfo = app.request("/api/translate/photo", { 
     "source": curent.currentLang, //来源语音
       "target": curent.currentTargetLang, //目标语言 
@@ -280,8 +280,7 @@ getPictureInfo(picUrl,currentImgobj){
           langList: oldImageList
           }) 
     }).catch(err => {
-      wx.hideLoading();
-      // 暂时屏蔽
+      wx.hideLoading(); 
       console.log('err:', err,err.indexOf("err: OCR 服务异常"))
       if(err.indexOf("err: OCR 服务异常")==-1){
         app.showModalClose("当前排队的人太多，请稍后重试……",2000);
@@ -289,7 +288,7 @@ getPictureInfo(picUrl,currentImgobj){
           wx.navigateTo({
             url: '../index/index'
           })
-        },2000)
+        },3000)
         return false;
       }
       tThis.setData({
@@ -319,10 +318,14 @@ initialImgText(){
   let originText="";
   let translateText="";
   const langList = this.data.langList;
+  console.warn("this.data.langList:",this.data.langList);
   langList.forEach((item,index)=>{
-    console.log("item,index:",item,index)
-    originText+=item.single_str_utf8+"\n";
-    translateText+=item.translate+"\n";
+    item.list.forEach(function(picture,key){
+
+      // console.log("initialImgText:::item,index:",item,index)
+      originText+=picture.single_str_utf8+"\n";
+      translateText+=picture.translate+"\n";
+    });
   })
   return {
     originText:originText,
@@ -386,6 +389,11 @@ getMidpoint(a, b) {
     const tThis=this; 
     if(options.ismultiple==1){
       const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
+      // 需要重置当前图片信息
+      
+      tThis.setData({
+        langList: []
+        }) 
       console.warn("imagesArr:::",imagesArr);
       imagesArr.forEach(function(item,key){
 
@@ -433,6 +441,7 @@ getMidpoint(a, b) {
       scaledHeight: canvasHeight* canvasRatio
     }; 
   },
+  // 构造一张图片结构体
 getImageInfoByOption(tThis,options){
     if(!options.selectPicturPath){
       app.showModalClose("非法操作,图片不存在",2000);
@@ -445,18 +454,16 @@ getImageInfoByOption(tThis,options){
     }
     wx.getImageInfo({
       src: options.selectPicturPath,
-      success (res) {
-        // tThis.getPictureRate(res);
-        
+      success (res) { 
         const sysInfo= wx.getSystemInfoSync();
         const windowWidth =sysInfo.windowWidth;
         console.warn("sysInfo:",sysInfo) ;
         app.globalData.screenWidth=windowWidth;
         console.log("getImageInfoByOption:",res) 
 
-        let canvasRatio = tThis.calculateCanvasDimensions(res.width,res.height,windowWidth,sysInfo.windowHeight-140);
-        console.warn("canvascanvasRatioRatiocanvasRatio");
-        console.warn(canvasRatio); 
+        // let canvasRatio = tThis.calculateCanvasDimensions(res.width,res.height,windowWidth,sysInfo.windowHeight-140);
+        // console.warn("canvascanvasRatioRatiocanvasRatio",canvasRatio); 
+        // 获取所以图片信息并添加到当前的结构体中
         tThis.getPictureInfo(options.selectPicturPath,{ 
           selectPicturWidth: res.width, 
           selectPicturHeight: res.height, 
@@ -465,7 +472,7 @@ getImageInfoByOption(tThis,options){
           windowWidth: windowWidth, 
           windowHeight: sysInfo.windowHeight-140, 
           selectPicturPath: options.selectPicturPath,
-          scale: (canvasRatio.canvasRatio)<0.3?0.3:(canvasRatio.canvasRatio-0.1)
+          // scale: (canvasRatio.canvasRatio)<0.3?0.3:(canvasRatio.canvasRatio-0.1)
         })
        
       }
@@ -483,19 +490,19 @@ getImageInfoByOption(tThis,options){
    */
   onShow() {    
 
-    // if (app.globalData.access_token) {
-    //   console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-    //   this.setData({
-    //     notVip: !app.globalData.subscribe.is_vip
-    //   })
-    // } else {
-    //   app.userCenterLoginCallbackIndex = () => {
-    //     console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-    //     this.setData({
-    //       notVip: !app.globalData.subscribe.is_vip
-    //     })
-    //   };
-    // }
+    if (app.globalData.access_token) {
+      console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+      this.setData({
+        notVip: !app.globalData.subscribe.is_vip
+      })
+    } else {
+      app.userCenterLoginCallbackIndex = () => {
+        console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+        this.setData({
+          notVip: !app.globalData.subscribe.is_vip
+        })
+      };
+    }
 
   },
   methods: {

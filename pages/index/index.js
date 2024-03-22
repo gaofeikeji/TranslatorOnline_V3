@@ -2,8 +2,8 @@
 var app = getApp();
 import * as xy from "../../utils/common.js";
 // 检查图片校验并上传 
-export const confirmImginfo = (uploadPath) => {
-console.warn("confirmImginforesresres",uploadPath);
+export const asyncCheckImageInfomultiple = (uploadPath) => {
+console.warn("asyncCheckImageInfomultiple",uploadPath);
 return new Promise((resolve, reject) => { 
   wx.showLoading({ title: uploadPath||"翻译中...", mask: false });
   xy.checkImageSync({
@@ -66,7 +66,8 @@ Page({
           "pagePath": "/pages/multiplepic/index",
           "selectedIconPath": "data:image/png;base64,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",
           "text": "文件翻译",
-          "type":-1
+          // "type":-1,
+          "type":0
         },
     
       {
@@ -130,9 +131,11 @@ Page({
         wx.showLoading({ title: "翻译中...", mask: true });
         ctx.takePhoto({ 
           quality: 'high',
+          flash: "off",
+        "frame-size": "medium",
           success: (res) => {
               console.warn("takePhoto::",res) 
-              tThis.confirmImginfo(res,res.tempImagePath,0); 
+              tThis.confirmImginfoSingle(res,res.tempImagePath,0); 
           }
         })
       },
@@ -233,7 +236,8 @@ takePicture(){
             url: "../multiplepic/index?imgupload="+tempFilesArr.join("---")
           })
         }else{
-            tThis.confirmImginfo(res,res.tempFiles[0]['tempFilePath'],0); 
+          //單文件上傳
+            tThis.confirmImginfoSingle(res,res.tempFiles[0]['tempFilePath'],0); 
         } 
           
        
@@ -276,9 +280,8 @@ takePictureMultiple(){
         let tempFilesArr=[];
         for(let i=0;i<tempFiles.length;i++){
           tempFilesArr.push(tempFiles[i]['tempFilePath']);
-        }
-      //  let resp= await confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
-       Promise.all(tempFilesArr.map(confirmImginfo))
+        } 
+       Promise.all(tempFilesArr.map(asyncCheckImageInfomultiple))
         .then(results => {
           console.log('All images uploaded successfully:', results);
           // let imgObj=[];
@@ -327,7 +330,7 @@ wx.showActionSheet({
 });
 },
 // 检查图片校验并上传
-confirmImginfo(res,uploadPath,ismultiple=0){
+confirmImginfoSingle(res,uploadPath,ismultiple=0){
   const tThis=this;
   tThis.setData({ 
       selectPicturPath:uploadPath
@@ -343,7 +346,7 @@ confirmImginfo(res,uploadPath,ismultiple=0){
         ccHeight:  tempinfo.height, 
       });
       console.log("res.tempinfotempinfo:",tempinfo,uploadPath) 
-      wx.showLoading({ title: tempinfo.width||"res.tempinfotempinfo...", mask: false });
+      wx.showLoading({ title:"正在校验图片信息，请稍等", mask: false });
       
         xy.checkImageSync({
           tempFilePaths: uploadPath,
@@ -404,7 +407,7 @@ takePhotoWithMessage(){
             url: "../multiplepic/index?imgupload="+tempFilesArr.join("---")
           })
         }else{
-            tThis.confirmImginfo(res,res.tempFiles[0]['path'],0); 
+            tThis.confirmImginfoSingle(res,res.tempFiles[0]['path'],0); 
         }
         },
         fail(res) {

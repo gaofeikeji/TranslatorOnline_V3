@@ -34,19 +34,29 @@
   } 
   .current-language-box{ 
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     font-size: 24rpx;
     flex-wrap: nowrap;
     margin-left: 50rpx;
+    
+    overflow: hidden;
+  }
+  .tab-lang-switch {
+
   }
   .lang{    
-    display: inline-block;
+    /* display: inline-block; */
     font-size: 36rpx;
     font-weight: bold;
+    /* height: 30px; */
     letter-spacing: 0rpx;
-    line-height: 52.12rpx; 
+    /* line-height: 52.12rpx;  */
     text-align: left;
-    vertical-align: top;
+    /* vertical-align: top;    */
+     /* word-break: keep-all; */
+     line-height: 100%;
+     text-overflow: ellipsis;
+     overflow: hidden;
   }
   .lang_switch{ 
     display: inline-flex;
@@ -66,8 +76,9 @@
   /* transform:scale(1.2) translateY(-5rpx); */
   cursor: pointer;
   width: 48rpx;
-  height: 39.48rpx;
-  opacity: 1;   
+  height: 48rpx;
+  opacity: 1;    
+  margin:0 38rpx  0  0;
 } 
 .nav-page-title{
 

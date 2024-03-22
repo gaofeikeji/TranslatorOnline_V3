@@ -41,14 +41,15 @@ Page({
     maxlength: 2000,
     isIOS: sys.system.indexOf('iOS') > -1,
     subscribe: app.globalData.subscribe || {},
-    imgUrlList:[],
-    imgList:[ 
+    imgUrlList:[],//临时图片地址
+    imgList:[ //构造提供页面使用，均为临时路径，
       // {
       //   tempFilePath: "https://jizhang-1253713495.file.myqcloud.com/miniprogram/avatar/1.jpeg",
       //   fileType: "image",
       //   size: "哄哄哄",
       // }
     ],
+    uploadImgList:[],//上传的图片地址,用户可能频繁操作，所以节约服务器消耗
     selectedpic:""
   },
 
@@ -62,200 +63,157 @@ Page({
       }
       app.userCenterLogin();
     }, () => { });
-  },
-  // 粘贴和清空 
-  textFun(e) {
-    const tThis=this;
-    const { index, actype } = e.currentTarget.dataset;
-    console.warn(e);  
-    console.warn("textFun", actype); 
-    if(actype==3){//清空剪贴板
-      xy.setClipboardData("");
-      tThis.setData({           
-        fromText:""
+  }, 
+  //   选择照片（（用户可能多次选择相同图片:后续添加一个本地图片md5校验的方法，排除重复图片），）
+  takePicture(){
+    let tThis= this;
+    wx.chooseMedia({
+        count: 10,
+        mediaType: ["image"],
+        sourceType: ["album"],
+        maxDuration: 30,
+        camera: 'back',
+        success(res) { 
+          console.warn("chooseMediachooseMedia",res) 
+          const tempFiles = res.tempFiles;
+          const imgUrlList =tThis.data.imgUrlList;
+          tempFiles.forEach(function(item){
+            imgUrlList.push(item.tempFilePath);
+          });
+          tThis.setData({
+            imgList:tThis.data.imgList.concat(tempFiles),
+            imgUrlList:imgUrlList
+          })
+          console.log("currentTotalImages",tThis.data.imgList,tThis.data.imgUrlList);
+        },
+        fail(res) {
+          console.warn("cancel_fail::",res)  
+        },
+        complete(res) { 
+          // this.setData({  
+          //   selectPicturPath: ""
+          // });
+        },
       })
-    }else if(actype=="1"){//粘贴内容
-      const resp = xy.getClipboardData();
-      resp.then(function(rep){ 
-        tThis.setData({           
-          fromText:rep.data
-        })
-      });
-    }else if(actype=="2"){//确认翻译
-      const resp = tThis.data.fromText;
-      console.warn("fromText::",
-      resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
-      if(resp!=""){ 
-        wx.navigateTo({
-          url: "/pages/texttranslate/index?text="+resp
-        })
-      }else{
-        app.showModalClose("请填写要翻译的内容",3000);
-      }
-    }
-    // this.setData({
-    //   currentSelectY: top, 
-    //   scale:1
-    //   })
-},  
-//   选择照片
-takePicture(){
-  let tThis= this;
-  wx.chooseMedia({
-      count: 10,
-      mediaType: ["image"],
-      sourceType: ["album", "camera"],
-      maxDuration: 30,
-      camera: 'back',
-      success(res) { 
-        // wx.setStorageSync('upload_pic_info', res) 
-        console.warn("chooseMediachooseMedia")
-        console.warn(res)
-        // wx.navigateTo({
-        //   url: "/pages/indexpicture/index?selectPicturPath=https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg&height=1200&width=800"
-        // })
-        const tempFiles = res.tempFiles;
-        tThis.uploadMutipleImg(tempFiles);
-      },
-      fail(res) {
-        console.warn("cancel_fail::",res)  
-      },
-      complete(res) { 
-        // this.setData({  
-        //   selectPicturPath: ""
-        // });
-      },
-    })
-}, 
- uploadMutipleImg(tempFiles){ 
-  let tThis= this;
-    tThis.setData({  
-      isuploading:true, 
-      tempFiles:tempFiles
-    });
-    let tempFilesArr=[];
-    for(let i=0;i<tempFiles.length;i++){
-      tempFilesArr.push(tempFiles[i]['tempFilePath']);
-    }
-  //  let resp= await confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
-  Promise.all(tempFilesArr.map(confirmImginfo))
-    .then(results => {
-      console.log('All images uploaded successfully:', results);
-      let imgObj=[];
-      results.forEach(function(item,index){
-        imgObj.push({
-          tempFilePath:item,
-          type:"image"
-        });
-      });
-      tThis.setData({
-          imgList:imgObj,
-          imgUrlList:results,
-          }) 
-    })
-    .catch(error => {
-      console.error('An error occurred while uploading images:', error);
-    });
-},
-// 删除上传的图片
-removeImage(e){ 
-  const { path } = e.currentTarget.dataset;
-  console.warn("removeImage：path"); 
-  console.warn(e);  
-  const updateImgalist=this.data.imgList.filter(function(item){
-
-    return item.tempFilePath!=path
-  })
-  this.setData({
-      imgList:updateImgalist,
-      selectedpic:path==this.data.selectedpic?"":this.data.selectedpic,
-      }) 
-},
-// 记录当前选择
-translateCurrent(e){ 
-  const { path } = e.currentTarget.dataset;
-  console.warn("path",path);  
-  this.setData({
-      selectedpic:path 
-    });
-      
-  wx.previewImage({
-    urls: [this.data.imgUrlList],
-    current: path,
-    success:function(){
-      console.warn("previewImage",path);  
-
-    },
-    fail:function(){
-      console.warn("previewImage:failss",path);  
-      
-    }
-  });
-},
-// 翻译文件
-goToTranslate(e){
-  
-  console.warn("path");  
-   if(this.data.imgList.length==0){ 
-    app.showModalClose("请上传图片后操作",2000);
-    return false;
-   }
-   wx.showLoading({ title: path||"翻译中...", mask: false });
-   let imgObj=[];
-   this.data.imgList.forEach(function(item,index){
-     imgObj.push(item.tempFilePath);
-   });
- 
-   wx.navigateTo({
-     url: "../indexpicture/index?selectPicturPath="+imgObj.join("---")+"&ismultiple=1"
-   })
-  // wx.setStorageSync('upload_pic_info', netImginfo) 
-  
-  console.warn("path");  
-  const path=this.data.selectedpic;
-  const tThis=this;
-  wx.getImageInfo({
-    src: path,
-    success (tempinfo) { 
+  }, 
+  // 开始上传所以临时文件到服务器
+  uploadMutipleImg(tempFilesArr,successCallback){ 
+    let tThis= this;
       tThis.setData({  
-        ccWidth:tempinfo.width,
-        ccHeight:  tempinfo.height, 
-      }); 
+        isuploading:true, 
+        tempFilesArr:tempFilesArr
+      });
       
-      wx.navigateTo({
-        url: "../indexpicture/index?selectPicturPath="+path+"&ismultiple=1&height="+tempinfo.height+"&width="+tempinfo.width+"&ccheight="+tThis.data.height+"&ccwidth="+tThis.data.width
+    //  let resp= await confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
+    Promise.all(tempFilesArr.map(confirmImginfo)).then(uploadImgsUrls => {  
+        tThis.setData({ 
+            uploadImgList:uploadImgsUrls
+        });
+        successCallback&&successCallback(uploadImgsUrls);
       })
+      .catch(error => {
+        console.error('An error occurred while uploading images:', error);
+        app.showModalClose("请稍后在尝试，图片校验失败",2000);
+      });
+  },
+  // 删除指定临时上传的图片
+  removeImage(e){ 
+    const { path } = e.currentTarget.dataset;
+    console.warn("removeImage：path"); 
+    console.warn(e);  
+    // 删除图片地址已经更新图片地址结构体
+    const updateImgalist=this.data.imgList.filter(function(item){
+
+      return item.tempFilePath!=path;
+    });
+    const updateImgaUrls=this.data.imgUrlList.filter(function(item){
+
+      return item!=path;
+    })
+    this.setData({
+        imgList:updateImgalist,
+        imgUrlList:updateImgaUrls,
+        selectedpic:path==this.data.selectedpic?"":this.data.selectedpic,
+        }) 
+  },
+  // 记录当前选择
+  translateCurrent(e){ 
+    const { path } = e.currentTarget.dataset;
+    console.warn("path",path);  
+    this.setData({
+        selectedpic:path 
+      });
         
-    },fail(){
-      app.showModalClose("获取图片信息失败，请重新上传",2000)
-      wx.hideLoading()
+    wx.previewImage({
+      urls:this.data.imgUrlList,
+      current: path,
+      success:function(){
+        console.warn("previewImage",path);  
+
+      },
+      fail:function(){
+        console.warn("previewImage:failss",path);  
+        
+      }
+    });
+  },
+  // 翻译文件，批量上传操作，此操作消耗性能，（后续添加一个本地图片md5校验的方法，排除重复图片）
+  goToTranslate(e){
+    
+    console.warn("path");  
+    if(this.data.imgList.length==0){ 
+      app.showModalClose("请上传图片后操作",2000);
+      return false;
     }
-  })           
-},
+    wx.showLoading({ title:  "正在解析图片信息，服务器为您疯狂计算中...", mask: false });
+    this.uploadMutipleImg(this.data.imgUrlList,function(uploadImgLists){ 
+      wx.setStorageSync('currentTranslateImags', uploadImgLists) 
+        wx.navigateTo({
+          url: "../indexpicture/index?selectPicturPath="+uploadImgLists.join("---")+"&ismultiple=1"
+        })
+    })
+    
+                
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options){ 
+  onLoad(options){  
+    if (app.globalData.access_token) {
+      this.setData({
+        subscribe: app.globalData.subscribe || {},
+        notVip: !app.globalData.subscribe.is_vip
+      })
+    } else {
+      app.userCenterLoginCallbackIndex = () => {
+        this.setData({
+          subscribe: app.globalData.subscribe || {},
+          notVip: !app.globalData.subscribe.is_vip
+        })
+      };
+    }
     // 注册pay组件
     this.payComponent = this.selectComponent("#pay");
     // xy.setClipboardData("少小离家老大回人之初性本善");
     // 判断是否存在用户图片
     if(options.imgupload){
       const tempFilesArr=[];
-      options.imgupload.split("---").forEach(function(item){ 
+      const imgUrlList=options.imgupload.split("---");
+      imgUrlList.forEach(function(item){ 
         tempFilesArr.push({
           tempFilePath:item
         });
       }); 
+      // 储存临时文件即可，最后一次性上传
       this.setData({
-        imgList:tempFilesArr
+        imgList:tempFilesArr,
+        imgUrlList:imgUrlList,
       }); 
-      const tThis=this;
-      app.globalLogin(this,function(){
-        app.getCurrentLang(tThis);
-        tempFilesArr.length&&tThis.uploadMutipleImg(tempFilesArr);
-      });
+      // const tThis=this;
+      // app.globalLogin(this,function(){
+        // tempFilesArr.length&&tThis.uploadMutipleImg(tempFilesArr);
+      // });
     }
   },   
   /**
@@ -269,21 +227,6 @@ goToTranslate(e){
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    if (app.globalData.access_token) {
-      this.setData({
-        subscribe: app.globalData.subscribe || {},
-        maxlength: app.globalData.subscribe.is_vip ? 2000 : 200,
-        notVip: !app.globalData.subscribe.is_vip
-      })
-    } else {
-      app.userCenterLoginCallbackIndex = () => {
-        this.setData({
-          subscribe: app.globalData.subscribe || {},
-          maxlength: app.globalData.subscribe.is_vip ? 2000 : 200,
-          notVip: !app.globalData.subscribe.is_vip
-        })
-      };
-    }
 
   },
 

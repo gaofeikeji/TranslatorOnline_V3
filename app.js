@@ -154,12 +154,13 @@ globalLogin(tThis,customeCall){
     // 胶囊按钮位置信息
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
     // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度
-    // console.warn(systemInfo);
+    console.warn(systemInfo,menuButtonInfo);
     this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight)  + menuButtonInfo.height+(menuButtonInfo.top)/2;
     this.globalData.statusBarHeight = systemInfo.statusBarHeight;
     this.globalData.menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;
     this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
     this.globalData.menuHeight = menuButtonInfo.right;
+    this.globalData.menuLeftwidth = menuButtonInfo.left;
     this.globalData.screenWidth = menuButtonInfo.screenWidth;
     this.globalData.screenHeight = systemInfo.screenHeight-systemInfo.statusBarHeight;
  },
@@ -399,7 +400,7 @@ globalLogin(tThis,customeCall){
     },"POST");
     req.then(function(data){
         console.warn("dowloadWord:",data,data.data.url)
-      wx.downloadFile({
+        const downloadTask = wx.downloadFile({
         url:data.data.url,
         timeout:6000,
         success (res) { 
@@ -411,6 +412,21 @@ globalLogin(tThis,customeCall){
                 icon: "none",
                 duration: 2000,
               });
+              // wx.FileSystemManager.saveFile({
+              //   tempFilePath:res.tempFilePath,
+              //   success: function(){},
+              //   fail: function(){},
+              //     complete: function(){},
+              // })
+              wx.saveFileToDisk({
+                filePath: res.tempFilePath,
+                success(res) {
+                  console.log("saveFileToDisksaveFileToDisk",res)
+                },
+                fail(res) {
+                  console.error(res)
+                }
+              })
           }
         }, 
         fail (res) {
@@ -423,6 +439,14 @@ globalLogin(tThis,customeCall){
           });
         }
       });
+      downloadTask.onProgressUpdate((res) => {
+        console.log('下载进度',res)
+        console.log('下载进度', res.progress)
+        console.log('已经下载的数据长度', res.totalBytesWritten)
+        console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+      })
+      
+      // downloadTask.abort() // 取消下载任务
     })
   },
   dowloadExcel(){
@@ -467,5 +491,31 @@ globalLogin(tThis,customeCall){
       });
     });
   },
+  // 申请相机权限
+  requestCameraSystemPower(){ 
+    wx.authorize({
+      scope: 'scope.camera',
+      success(res) {
+        // 用户已授权，可以调用相机相关的API
+          console.warn("confirmImginfoconfirmImginfo::","用户已授权，可以调用相机相关的API") 
+          
+      },
+      fail() {
+        // 用户拒绝授权或无权限，可以提示用户去设置中开启权限
+          console.warn("confirmImginfoconfirmImginfo::","用户拒绝授权或无权限，可以提示用户去设置中开启权限") 
+          wx.showModal({
+            title: '提示',
+            content: '请前往系统配置打开相机权限享受更佳的体验',
+            success (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+      }
+    })
+  }
    
 })
