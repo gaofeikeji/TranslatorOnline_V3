@@ -96,6 +96,7 @@
   }
   .lang-box{
     display: inline-block;
+    height: 100%;
     overflow-y: auto;
     width: 50%;
     box-sizing: border-box;
@@ -167,5 +168,7 @@
 
   .bootom-action .lang-action-btn.selected{
     background:#2474FF;
+    box-sizing: border-box;
+    border-bottom-right-radius: 20rpx; 
     /* background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%); */
   }

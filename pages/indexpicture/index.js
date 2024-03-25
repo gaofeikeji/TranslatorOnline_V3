@@ -179,16 +179,32 @@ toVerticleHorizonTextItem(e){
 },
   // 当前行切换 
   toImageTextItem(e) {
-    const { left, top ,index,key} = e.currentTarget.dataset;
+    const { left, top ,rate,img,index,key} = e.currentTarget.dataset;
     //console.warn(e);  
-    //console.warn( left, top ,index,key); 
+    console.warn( left, top ,index,key,rate,img,"text-item"+top+'-'+left); 
+    // wx.createSelectorQuery().in(this).select(".text-item"+img).boundingClientRect((rect)=>{
+    //   console.log(rect)
+    //   this.setData({scrollViewWidth:Math.round(rect.width)}) // scroll-view元素长度
+
+    //   }).exec((res) => {
+    //     const scrollView = res[0].node;
+    //       console.warn("toImageTextItem:",res);
+    //     })
+    let currentScrollView = wx.createSelectorQuery().in(this).select(".text-item"+img);
+
+    
+    // wx.ScrollViewContext.scrollIntoView({
+    //   selector: ".text-item"+rate,
+    //   duration: 300
+    // })
     this.setData({
       currentSelectY: 0,
       currentSelectX: 0,
       currentSelectItem: top+":"+left,
       scale:1
-      }) 
-}, 
+      });
+      xy.setClipboardData(top+":"+left);
+},  
   // 查看原图
   viewImage() {
     wx.previewImage({

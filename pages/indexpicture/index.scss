@@ -72,9 +72,9 @@ page{
   top: 0;
   z-index: 2;
   pointer-events: none;
-  filter: blur(1.9px);
-  opacity: 0.3;
-  z-index: 22;
+  filter: blur(1.3px);
+  // opacity: 0.3;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -90,7 +90,8 @@ page{
   color:rgba(0,0,0,0.5);
   pointer-events: none;
   text-align: justify;
-  pointer-events: none;
+  pointer-events: none; 
+  word-wrap: break-word;
 } 
 .media-text-item:nth-child(odd){
   border: 2rpx solid rgba(169,236,125,1);
@@ -106,7 +107,6 @@ page{
   background: rgba(56, 148, 209, 0.781);
   /* background: var(--bg); color: rgb(from var(--bg) calc(1 - r) calc(1 - g) calc(1 - b)); */
   /* transform: scale(1.2); */
-  pointer-events: none;
   pointer-events: none;
 }
 .action-scale{
@@ -153,7 +153,8 @@ float: right;
 
 .action-container {
   z-index: 1;
-  bottom: 170rpx;
+  bottom: 150rpx;
+  // bottom: 170rpx;
   margin-bottom:0;
   .action-only-close{
     padding:0  11rpx  29rpx 33rpx;
@@ -173,10 +174,14 @@ float: right;
   .flex-scroll{
     display: block; 
   }
+  .lang-item-box{
+    position: relative;
+  }
   .lang-item{
     position: relative;
     flex-shrink: 0;
     display: block;
+
     // flex: 1;
     // flex-direction: cloum;此处弹性布局移动端会出现无效滚动条情况
       .horizon-text{
@@ -192,11 +197,13 @@ float: right;
       }
   }
   .lang-verticl-item{
+    position: relative;
     display: block;
     .verticle-text{
       display: block;
       .title{
         display: inline-block;
+        vertical-align: top;
       }
     }
   }
@@ -209,10 +216,12 @@ float: right;
   height: 24rpx;
   display: inline-block;
   z-index: 120;
+  pointer-events: none;
   image{ 
   width:24rpx;
   height: 24rpx;
   display: inline-block;
+  vertical-align: top;
   // background-color: rgba(0, 0, 0, 0.01);
   }
 }

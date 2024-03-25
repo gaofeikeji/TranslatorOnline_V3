@@ -597,7 +597,7 @@ export const setClipboardData = (str) => {
     wx.setClipboardData({
       data: str,
       success: () => {
-        wx.hideLoading();
+        // wx.hideLoading();
         console.log('设置剪贴板内容成功');
       }
     });

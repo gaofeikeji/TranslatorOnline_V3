@@ -18,7 +18,7 @@
                 style="width:{{selectPicturWidth*(langList.length)}}px;height:{{selectPicturHeight*(langList.length)+20*(langList.length)}}px;" out-of-bounds="{{true}}"
                 inertia="{{true}}" scale="{{true}}" direction="all">
                 <!-- bindscale="linstenerScale"  -->
-                <view class="media-info-box " wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
+                <view class="media-info-box  {{'text-item'+items.selectPicturPath}}" wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
                   style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;">
                   <!-- 显示结果 -->
                   <!-- <block wx:if="{{ showResult ==   1 }}">  
@@ -27,7 +27,7 @@
     
                     <text data-rate="{{ item.single_rate }}"
                       style="text-justify: distribute;text-align: justify;font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.8}}px;min-width:{{item.right-item.left}}px;height:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.8}}px;line-height:{{(item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.3)}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/6 }}px; "
-                      class="media-text-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
+                      class="media-text-item {{'text-item'+single_rate}}  {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
                       bindtap="toVerticleHorizonTextItem" data-top="{{item.top}}" data-left="{{item.left}}">
                       <block wx:if="{{ showResult ==0 }}">
                         {{item.single_str_utf8}}
@@ -103,16 +103,15 @@
        <view style="height: 256px;" class="scroll-translate"  scroll-y="{{true}}" >
         <view  class="flex-scroll" style="display: block;" >
           <block wx:for="{{langList}}" wx:for-item="items">
-            <view class="lang-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
-              bindtap="toImageTextItem" wx:for="{{items.list}}" 
-              wx:for-item="item"  wx:key="*this"
-              data-left="{{item.left}}" data-top="{{item.top}}">
-              <text class="horizon-text">{{item.single_str_utf8}}</text>
-              <text class="horizon-text translate">{{item.translate}}</text>
-              <view class="horizon-item-copy" >
-                <image mode="aspectFit" src="/images/icon/copy.png"  /> 
-              </view>
-            </view>
+              <view class="lang-item {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
+                  wx:for="{{items.list}}"  bindtap="toImageTextItem"  data-img="{{'text-item'+items.selectPicturPath}}"   data-left="{{item.left}}" data-top="{{item.top}}"
+                  wx:for-item="item"  wx:key="*this"  >
+                  <text   class="horizon-text">{{item.single_str_utf8}}</text>
+                  <text  class="horizon-text translate">{{item.translate}}</text> 
+                  <view class="horizon-item-copy" data-text="{{(item.single_str_utf8 )+item.translate}}"   >
+                    <image mode="aspectFit" src="/images/icon/copy.png"  /> 
+                  </view>
+                </view> 
           </block>
 
         </view>
@@ -131,6 +130,10 @@
               </view>
               <view class="verticle-text">
                 <text class="title translate">译文</text><text class="right-text text-dark">{{item.translate}}</text>
+              </view>
+              
+              <view class="horizon-item-copy" data-text="{{(item.single_str_utf8 )+item.translate}}"   >
+                <image mode="aspectFit" src="/images/icon/copy.png"  /> 
               </view>
             </view>
           </block>

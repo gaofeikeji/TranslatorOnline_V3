@@ -16,7 +16,7 @@ page{
   bottom:50rpx;
   left: 0;
   right: 0;
-  z-index: 10; 
+  z-index: 210; 
 } 
 .start-camera{    
   position: absolute;
@@ -32,7 +32,6 @@ page{
   position: fixed;
   z-index: 20;
 }
- 
 .customer-select-img{
   position: absolute;
   z-index: 20;
@@ -40,6 +39,10 @@ page{
   height: 100%;
 }
 
+.hidden-bg{
+   display: none!important;
+ 
+ }
 .camral-info-box{ 
   position: absolute;
   z-index:21;
@@ -50,13 +53,16 @@ page{
     width: 100%;
     gap: 2px;  
     position: absolute;
+    &.loading-bg{
+      // background: rgba(51,51,51,1);
+
+    }
     z-index: 21;
     .row-box{
       display: flex;
       height: 33.3%;
       width: 100%; 
           .cloum-box-item {
-            background: rgba(51,51,51,1);
             border: 1px solid #fff;
             display: flex;
             justify-content: center;
