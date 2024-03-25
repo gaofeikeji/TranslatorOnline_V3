@@ -56,9 +56,18 @@ Page({
       const resp = tThis.data.fromText;
       console.warn("fromText::", resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
       if(resp!=""){ 
-        wx.navigateTo({
-          url: "/pages/texttranslate/index?text="+resp
-        })
+        xy.checkTextSync({
+          content: resp,
+          successFunc: function(){
+            wx.navigateTo({
+              url: "/pages/texttranslate/index?text="+resp
+            })
+          },
+          failFunc: (err) => {
+            xy.showTip(err.msg);
+          },
+        });
+       
       }else{ 
         wx.showModal({
           title: '提示',

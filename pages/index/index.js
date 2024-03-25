@@ -244,9 +244,10 @@ Page({
         maxDuration: 30,
         camera: 'back',
         success(res) {  
+          app.showModalClose("正在为您校对图片信息",600);
           tThis.setData({  
-            initCamral:false, 
-            selectPicturPath: res.tempFiles&&res.tempFiles[0]['tempFilePath'],
+            initCamral:true, 
+            selectPicturPath: res.tempFiles[0]['tempFilePath'],
           });
             console.warn("当前选中的照片，一张就上传::",res) 
           if(res.tempFiles.length>1){ 
@@ -262,7 +263,7 @@ Page({
                 wx.navigateTo({
                   url: "../multiplepic/index?imgupload="+tempFilesArr.join("---")
                 })
-            },1000);
+            },300);
           }else{
             //單文件上傳(或者拍照)
               tThis.confirmImginfoSingle(res,res.tempFiles[0]['tempFilePath'],0); 

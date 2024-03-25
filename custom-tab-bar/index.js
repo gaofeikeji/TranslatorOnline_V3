@@ -43,6 +43,7 @@ Component({
       this.setData({
         langData:langData,
       }); 
+      return langData;
     },
     // 返回翻译
     back(e) {
@@ -81,43 +82,49 @@ Component({
       // 是否操作语言
       selectLang(e) {  
         let langData = wx.getStorageSync("langData");
+        const tThis=this;
         if(langData){
-          langData = this.getLangList();
+          langData = tThis.getLangList(); 
+          tThis.setData({
+            editLang:this.data.editLang?false:true,
+            langData:langData
+          }); 
         }else{
           // 异步请求并更新语言
-          app.getLangConfig(this.getLangList);
+          app.getLangConfig(function(){
+            langData = tThis.getLangList();
+            tThis.setData({
+              editLang:tThis.data.editLang?false:true,
+              langData:langData
+            });
+          });
         }  
-        
-        this.setData({
-          editLang:this.data.editLang?false:true,
-          langData:langData
-        }); 
       },  
        // 源语言改变
        fromIdxChange(e) {
         const dataset = e.target.dataset;
         /**当前切换语言不会立即响应到全局，需要确认才会保存 */
         let changeLang = {};
-        const oldLang= app.getCurrentLang(this);  
+        // const oldLang= app.getCurrentLang(this);  
         if(dataset.langType=="fromIdx"){//源语言切换
-          if(dataset.index==this.data.updateTargetLang){
-            wx.showToast({
-              title: '源语言和目标语言不能一致',
-              icon: 'success',
-              duration: 2000
-            })
-            return false;
-          }
+          // if(dataset.index==this.data.updateTargetLang){
+          //   wx.showToast({
+          //     title: '源语言和目标语言不能一致',
+          //     icon: 'success',
+          //     duration: 2000
+          //   })
+          //   return false;
+          // }
           changeLang.updateLang=dataset.index;
         }else{//目标语言切换
-          if(dataset.index==this.data.updateLang){
-            wx.showToast({
-              title: '源语言和目标语言不能一致',
-              icon: 'success',
-              duration: 2000
-            })
-            return false;
-          }
+          // if(dataset.index==this.data.updateLang){
+          //   wx.showToast({
+          //     title: '源语言和目标语言不能一致',
+          //     icon: 'success',
+          //     duration: 2000
+          //   })
+          //   return false;
+          // }
 
           changeLang.updateTargetLang=dataset.index;
         } 
@@ -128,6 +135,14 @@ Component({
       updateTranslateLang(){
         const updateLang = this.data.updateLang||"auto";
         const updateTargetLang = this.data.updateTargetLang||"en";
+        if(updateLang==updateTargetLang){
+                wx.showToast({
+              title: '源语言和目标语言不能一致',
+              icon: 'error',
+              duration: 2000
+            })
+          return false;
+        }
         const newLang ={};
         
         //导航栏当前语言

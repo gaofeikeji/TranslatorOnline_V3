@@ -8,7 +8,7 @@
    <view class="section"> 
       <camera  device-position="back"   flash="off"  mode="normal"
        binderror="cam_error"  bindinitdone="initCamera"   class="start-camera "></camera>  
-        <view class=" {{initCamral?(selectPicturPath?'':'hidden'):''}}"> 
+        <view class="camral-info-box {{initCamral?(selectPicturPath?'':'hidden'):''}}"> 
           <view class="cloum-box" hover-class="none" hover-stop-propagation="false">
               <view class="row-box" hover-class="none" hover-stop-propagation="false">
                 <view class="cloum-box-item"></view>

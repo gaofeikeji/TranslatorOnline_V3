@@ -12,14 +12,14 @@
         <scroll-view scroll-y type="list" class="section"
         style="height:{{screenHeight-85}}px;">
               <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
-              style=" width:{{selectPicturWidth*(3+langList.length)}}px;height:{{selectPicturHeight*(3+langList.length)}}px;top:{{-selectPicturHeight*(langList.length)}};left: {{-selectPicturWidth*(langList.length)}}rpx;">
+              style=" width:{{selectPicturWidth*(3+langList.length)}}px;height:{{selectPicturHeight*(3+langList.length)}}px;top:{{-selectPicturHeight*(langList.length+1)}};left: {{-selectPicturWidth*(langList.length)/2}}rpx;">
               <movable-view direction="all" scale-min="0.001" scale-max="6" 
               damping="20" inertia="{{false}}" friction="{{0.7}}" class="zoomview-box"
                 style="width:{{selectPicturWidth*(langList.length)}}px;height:{{selectPicturHeight*(langList.length)+20*(langList.length)}}px;" out-of-bounds="{{true}}"
                 inertia="{{true}}" scale="{{true}}" direction="all">
                 <!-- bindscale="linstenerScale"  -->
                 <view class="media-info-box " wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
-                  style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;-webkit-text-fill-color: #000;text-fill-color:#000;z-index:400;">
+                  style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;">
                   <!-- 显示结果 -->
                   <!-- <block wx:if="{{ showResult ==   1 }}">  
                     </block> -->
@@ -109,6 +109,9 @@
               data-left="{{item.left}}" data-top="{{item.top}}">
               <text class="horizon-text">{{item.single_str_utf8}}</text>
               <text class="horizon-text translate">{{item.translate}}</text>
+              <view class="horizon-item-copy" >
+                <image mode="aspectFit" src="/images/icon/copy.png"  /> 
+              </view>
             </view>
           </block>
 

@@ -60,6 +60,7 @@ page{
 // 左右对比
 .scroll-translate-left-right{ 
   display: flex;
+  flex: 1;
   margin: 0 auto;
   opacity: 1;
   border-radius: 8px;
@@ -117,7 +118,7 @@ page{
   color: rgba(0, 0, 0, 0.7);
   text-align: left;
 }
-.lang-item .horizon-text { 
+.lang-item .horizon-text.translate { 
   color: rgba(0, 0, 0,1); 
 }
   

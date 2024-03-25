@@ -34,14 +34,16 @@
           <!-- 逐行对比显示 -->
           <block wx:if="{{ showType ==  61 }}">  
             <view class="text-container">
-            <scroll-view class="scroll-translate-left-right" type="list"	scroll-y="true" style="min-height: 256px;" >
-              
-              <view class=" lang-item  "   bindtap="toImageTextItem"  wx:for-item="item"
-                  wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"
-                  data-left="{{item}}" >   
-                    <text class="horizon-text">{{item}}</text>
-                    <text class="horizon-text translate">{{langList[idx]}}</text>
-              </view> 
+            <scroll-view class="scroll-translate-left-right" type="list"	scroll-y="true" >
+              <view class="lang-left-right" style="min-height: {{screenHeight-150}}px;" >
+                  
+                <view class=" lang-item  "   bindtap="toImageTextItem"  wx:for-item="item"
+                wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"
+                data-left="{{item}}" >   
+                        <text class="horizon-text">{{item}}</text>
+                        <text class="horizon-text translate">{{langList[idx]}}</text>
+                  </view> 
+              </view>
               </scroll-view>
               
               </view>

@@ -19,8 +19,8 @@
     "backgroundColor": "#fff", 
     "navigationBarBackgroundColor": "#fff", 
     "backgroundColorTop": "#fff",
-    "backgroundColorBottom": "black",
-    "backgroundColorContent": "rgba(204, 204, 204, 1)"
+    "backgroundColorBottom": "white",
+    "backgroundColorContent": "#fff"
   }, 
   "usingComponents": {
     "navigation-bar": "/custom-tab-bar",

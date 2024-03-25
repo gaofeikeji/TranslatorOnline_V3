@@ -117,6 +117,8 @@ App({
   },
   updateGlobalLang(updateLang,updateTargetLang){
     
+    app.globalData.currentLang=updateLang;// 
+    app.globalData.currentTargetLang=currentTargetLang;// 
     wx.setStorageSync("currentLang", updateLang); 
     wx.setStorageSync("currentTargetLang", updateTargetLang);  
   },
