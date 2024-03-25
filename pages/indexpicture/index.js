@@ -406,15 +406,10 @@ getMidpoint(a, b) {
   reloadPicinfo(options){
     const tThis=this; 
     if(options.ismultiple==1){
-      const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
-      // 需要重置当前图片信息
-      
-      // tThis.setData({
-      //   langList: []
-      //   }) 
+      const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[]; 
       //console.warn("imagesArr:::",imagesArr);
-      imagesArr.forEach(function(item,key){
-
+      imagesArr.forEach(function(item,key){ 
+        // 动态追加信息
         tThis.getImageInfoByOption(tThis,{
           selectPicturPath:item
         });
@@ -422,37 +417,22 @@ getMidpoint(a, b) {
     }else{      
       this.getImageInfoByOption(tThis,options);
     }
-  },
-  getPictureRate(pic){
-    const sysInfo= wx.getSystemInfoSync()
-    const windowWidth =sysInfo.windowWidth
-    //console.warn("sysInfo:",sysInfo)
-    //console.warn("picpic:",pic)
-    if(pic.width>windowWidth){
-      //console.warn("picpic-rate:",windowWidth/pic.width) 
-      // scale
-      // this.setData({ 
-      //   scale: windowWidth/pic.width,  
-      // });
-    }
-    return {
-      width:0,
-      height:0
-    }
-  },
+  }, 
    calculateCanvasDimensions(imgWidth, imgHeight, canvasWidth, canvasHeight) {
     // 计算图片宽高比
     const imgRatio = imgWidth / imgHeight;
-  
-    // 判断canvas宽度和高度哪个更受限（即较小的那个）
-    let canvasRatio;
-    if (canvasWidth / canvasHeight > imgRatio) {
-      // 宽度受限，按照canvas的高度来缩放图片
-      canvasRatio = canvasHeight / imgHeight;
-    } else {
-      // 高度受限，按照canvas的宽度来缩放图片
-      canvasRatio = canvasWidth / imgWidth;
+    let canvasRatio=0.8;
+    // 图片小于屏幕，放大图片
+    if(imgWidth<canvasWidth){ 
+      canvasRatio=canvasWidth/imgWidth;//*canvasRatio;
+    }else{//缩小图片
+      canvasRatio=imgWidth/canvasWidth;
     }
+    // if (canvasWidth / canvasHeight > imgRatio) {
+    //   canvasRatio = canvasHeight / imgHeight;
+    // } else {
+    //   canvasRatio = canvasWidth / imgWidth;
+    // }
     return {
       canvasRatio: canvasRatio,
       scaledWidth: imgWidth* canvasRatio,
@@ -491,8 +471,7 @@ getMidpoint(a, b) {
           windowWidth: windowWidth, 
           windowHeight: sysInfo.windowHeight-140, //imgWidth / imgHeight
           selectPicturPath: options.selectPicturPath,
-          transform: "transform:scale("+(picRadio.canvasRatio)+")",
-          // scale: (canvasRatio.canvasRatio)<0.3?0.3:(canvasRatio.canvasRatio-0.1)
+          transform: "transform:scale("+(picRadio.canvasRatio)+")"
         })
 
        

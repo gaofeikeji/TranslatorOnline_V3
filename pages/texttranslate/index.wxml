@@ -17,9 +17,9 @@
           </block>
           <!-- 左右对比显示 -->
           <block wx:if="{{ showType ==  62 }}">  
-            <view class="text-container" style="height: {{screenHeight-150}}px;">
+            <view class="text-container">
 
-            <scroll-view class="scroll-translate-left-right" type="list"	scroll-y="true">
+            <scroll-view class="scroll-translate-left-right" type="list"	 style="height: {{screenHeight-150}}px;" scroll-y="true">
                 <view class="lang-left-right">
                   <view class="lang-left">
                     {{fromText}}
@@ -34,8 +34,8 @@
           <!-- 逐行对比显示 -->
           <block wx:if="{{ showType ==  61 }}">  
             <view class="text-container">
-            <scroll-view class="scroll-translate-left-right" type="list"	scroll-y="true" >
-              <view class="lang-left-right" style="height: {{screenHeight-150}}px;" >
+            <scroll-view class="scroll-translate-left-right translate-line" type="list"	scroll-y="true" >
+              <view class="" style="height: {{screenHeight-150}}px;" >
                   
                 <view class=" lang-item  "   bindtap="toImageTextItem"  wx:for-item="item"
                 wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"

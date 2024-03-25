@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏+状态栏
     navBarHeight: app.globalData.navBarHeight, //导航栏高度
     menuBotton: app.globalData.menuBotton, //导航栏距离顶部距离
     menuRight: app.globalData.menuRight, //导航栏距离右侧距离
