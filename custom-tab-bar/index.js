@@ -11,7 +11,7 @@ Component({
     },
     currentTargetLang: { 
       type: String, 
-      value: 'en' 
+      value: 'zh' 
     },
   },
 
@@ -21,8 +21,9 @@ Component({
     langData: app.globalData.langData,  
       editLang:false, 
       updateLang:"auto",
-      updateTargetLang:"en",
+      updateTargetLang:"zh",
       navBarHeight: app.globalData.navBarHeight, //导航栏高度
+      navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏高度
       menuBotton: app.globalData.menuBotton, //导航栏距离顶部距离
       menuRight: app.globalData.menuRight, //导航栏距离右侧距离
       menuWidth: app.globalData.menuWidth, //导航栏距离右侧距离
@@ -35,16 +36,12 @@ Component({
   methods: {
     // 读取语言数据
     getLangList(){ 
-      const langData = wx.getStorageSync("langData");
-      const lang = wx.getStorageSync("lang");
-      const langCode = wx.getStorageSync("langCode"); 
-      if(!langData||!lang||!langCode){
+      const langData = wx.getStorageSync("langData")||app.globalData.langData;
+      if(!langData){
         return false;
-      }
+      }  
       this.setData({
         langData:langData,
-        lang:lang,
-        langCode:langCode, 
       }); 
     },
     // 返回翻译
@@ -75,8 +72,7 @@ Component({
           }, 200);
         }
       }else{
-        
-        console.warn(" wx.点击了一次");
+              console.warn(" wx.点击了一次");
         wx.navigateBack({
           delta: 1,
         }); 
@@ -84,12 +80,8 @@ Component({
     },
       // 是否操作语言
       selectLang(e) {  
-        const lang = wx.getStorageSync("lang");
-        const langCode = wx.getStorageSync("langCode");
-        let langData = wx.setStorageSync("langData")
-        // console.warn("getLangConfig:",lang); console.warn("getLangConfig:",langCode);
-        const tThis = this;
-        if(lang&&langCode){
+        let langData = wx.getStorageSync("langData");
+        if(langData){
           langData = this.getLangList();
         }else{
           // 异步请求并更新语言
@@ -108,7 +100,7 @@ Component({
         let changeLang = {};
         const oldLang= app.getCurrentLang(this);  
         if(dataset.langType=="fromIdx"){//源语言切换
-          if(dataset.index==oldLang.currentTargetLang){
+          if(dataset.index==this.data.updateTargetLang){
             wx.showToast({
               title: '源语言和目标语言不能一致',
               icon: 'success',
@@ -118,7 +110,7 @@ Component({
           }
           changeLang.updateLang=dataset.index;
         }else{//目标语言切换
-          if(dataset.index==oldLang.currentLang){
+          if(dataset.index==this.data.updateLang){
             wx.showToast({
               title: '源语言和目标语言不能一致',
               icon: 'success',
@@ -129,10 +121,7 @@ Component({
 
           changeLang.updateTargetLang=dataset.index;
         } 
-
-        if(dataset){
-
-        }
+ 
          this.setData(changeLang);
       },
       // 提交切换语言

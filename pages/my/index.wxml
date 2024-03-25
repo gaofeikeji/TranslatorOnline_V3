@@ -1,14 +1,10 @@
-
-  <navigation-bar
-title="{{nbTitle}}"
-onytitle="{{true}}"
-canBack="{{true}}" 
-color-animation-duration="2000" 
-color-animation-timing-func="easeIn" style="height: {{statusBarHeight+navBarHeight}}px;display:block;"
-/>  
-
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">  
+<view class="page-container "> 
+  <view class="header" style="height: {{navbarWidthStatus}};">  
+      <!--index.wxml--> 
+      <navigation-bar    canBack="{{true}}" onytitle="{{true}}" title="个人中心"   color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
+   </view>
+   
+   <view class="section"> 
     <view class="user_container" bindtap="userEdit">
       <view class="userinfo">
         <view class="avatar" wx:if="{{!userInfo.avatar}}">
@@ -56,8 +52,9 @@ color-animation-timing-func="easeIn" style="height: {{statusBarHeight+navBarHeig
     </view>
     <!-- version -->
     <view class="version">当前版本：V 1.1.0</view>
-  </view>
-</scroll-view>
+  </view> 
+  
+</view>
  
  
 <vip-member id="pay"></vip-member>

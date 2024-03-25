@@ -1,70 +1,49 @@
 <!--pages/text/index.wxml-->
- 
-    <navigation-bar
-    canBack="{{true}}"
-    currentLang="{{currentLang}}"
-    currentTargetLang="{{currentTargetLang}}" 
-      color-animation-duration="2000" 
-      color-animation-timing-func="easeIn"  style="height: {{statusBarHeight+navBarHeight}}px;display:block;"
-    />  
-  <view class="container " > 
+<view class="header" style="height: {{navbarWidthStatus}};">  
+  <!--index.wxml--> 
+  <navigation-bar    canBack="{{true}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"      color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
+</view>
+
+  <!-- 主体 -->
+  <view class="section"> 
+   <view class="section-box">
+
     <view class="text-container" >
-       <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本" 
-        focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText"  />
-        <!-- 当前输入内容调整 -->
-        <view class="text-block text-right margin-top30"> 
-          <view class="view-inline "></view>
-          <view class="view-inline "></view> 
-          <view class="view-inline text-right">{{fromTextLength}}</view>
-          <view class="view-inline text-left">/{{maxlength}}</view>
-             
-        </view> 
-        <view class="bottom-text" >
-          <view class="flex-cloum " hover-class="none" hover-stop-propagation="false">
-            <view  class="flex-box"    > 
-                <view class="img-text" data-actype="1"  bindtap="textFun">
-                  <view class="flex-box not-wrap">
-                    <image class="flex-img-left"   src="../../images/icon/paste.png" ></image>
-                    粘贴
-                  </view>
-                </view>
-                <view class="img-text"  data-actype="3"  bindtap="textFun">
-                  <view class="flex-box not-wrap" >
-                    <image class="flex-img-left"  src="../../images/icon/clear.png" ></image>
-                    清空
-                  </view>
-                </view>
-            </view>
+      <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本" 
+       focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText"  />
+       
+       <view class="bottom-text" >
+        <view class="img-text" data-actype="1"  bindtap="textFun">
+          <view class="flex-box ">
+            <image class="flex-img-left"   src="../../images/icon/paste.png" ></image>
+            
+            <text class="not-wrap">粘贴</text>
           </view>
-          <view class="flex-cloum" >
-            <view class="img-text flex-box" data-actype="3"  bindtap="textFun" style="transform: translateX(50px);"> 
-                <view class="vipinfo">
-                  <block wx:if="{{!isIOS}}">
-                    <view class="vip_lock" bind:tap="OnClickVipLock" wx:if="{{!subscribe.is_vip}}">
-                      <image class="vip_lock_img" src="/images/vip.svg" />
-                      升级到2000字
-                    </view>
-                  </block>
-                  <block wx:else>
-                    <view class="vip_lock_btn vip_lock "  open-type="contact" wx:if="{{!subscribe.is_vip}}">
-                      <image class="vip_lock_img" src="/images/vip.svg" />
-                      升级到2000字
-                    </view>
-                  </block> 
-                </view>
-              
-            </view>
-          </view>
-          
         </view>
+        <view class="img-text"  data-actype="3"  bindtap="textFun">
+          <view class="flex-box " >
+            <image class="flex-img-left"  src="../../images/icon/clear.png" ></image>
+            <text class="not-wrap">清空</text>
+            
+          </view>
+        </view>
+         
+       </view>
+     </view>
+       
+   </view>
+  </view>
+         
+  <view class="footer footer-btn-box safe-area">          
+    <view class="footer-content">
+      <text class="circle-btn picture-action" data-actype="2"
+    bindtap="textFun">确定翻译</text>
     </view>
-        
   </view>
-        
-  <view class="tab-bar tabbar tab-bottom safe-area transparent">                   
-    <view class="circle-btn picture-action" data-actype="2"
-      bindtap="textFun">确定翻译</view>
-  </view>
+
+
+
+
 
   <view class="" wx:if="{{notVip == 1}}">
     <custom-ad ad_type="{{3}}"></custom-ad>

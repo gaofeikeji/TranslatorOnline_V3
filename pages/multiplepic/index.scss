@@ -1,0 +1,88 @@
+.page-container{
+  background: rgba(204, 204, 204, 1);
+}
+.section{
+  display: flex;
+  padding: 0 30rpx;
+  background: #fff;
+}
+.section-box{
+  display: flex;
+  flex:1;
+}
+.textarea-container { 
+  display: flex;
+  justify-content:  baseline; 
+  align-content:flex-start;
+  width: 100%;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+    flex-wrap:wrap;
+}
+.upload-img { 
+    position: relative;
+     display: flex;
+    width: 158rpx;
+    height: 158rpx;
+    opacity: 1;
+    border-radius: 8rpx;
+    background: rgba(0, 0, 0, 0.05);
+    border:4rpx solid  #eee;
+    vertical-align: top;
+    margin-top:20rpx ;
+}
+.upload-img:not(:last-child){
+  margin-right:30rpx;
+}
+.upload-icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 12;
+}
+
+.upload-item-img {
+  display: flex;
+  flex: 1;
+  width: 158rpx;
+  height: 158rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+} 
+.upload-item-img.border-check{
+    border-color: rgba(31, 113, 255, 0.6);
+
+}
+  
+
+.image-remove-box{ 
+  position: absolute;
+  top:16rpx;
+  right: 16rpx;
+  z-index: 12;
+  width: 30rpx;
+  height: 30rpx;
+}
+.image-remove-box:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+.image-remove{
+  width: 30rpx;
+  height: 30rpx; 
+  } 
+.image-add{
+    width: 48rpx;
+    height: 48rpx;
+    } 
+  
+
+   

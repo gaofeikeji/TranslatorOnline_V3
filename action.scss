@@ -1,0 +1,50 @@
+
+/* 操作容器
+图片翻译文字翻译底部操作
+*/
+.action-container{
+  background: #fff;
+  border-top: 1px solid #ddd;
+  border-top-left-radius: 30rpx;
+  border-top-right-radius: 30rpx; 
+  position: absolute;
+  bottom: 0px;
+  left: 0;              
+  z-index: 200;    
+  margin-bottom: 100px; 
+  width: 100%;
+}
+.action-box{
+  height: 40px;
+  line-height: 40px;
+  display: block;
+  width: 100%;
+  padding: 0 12px; 
+}
+.action-box image{
+  display: inline-block;
+  width: 15rpx;
+  height: 15rpx;
+  margin:0  10px;
+} 
+.action-box image:last-child{
+  float: right;
+}
+.action-box .text-btn{
+  display: inline-block;
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 1; 
+  margin-top: 20rpx;
+   
+}
+.action-box .text-btn.close{
+  margin-right:20rpx;
+  width: 38.5rpx;
+  height: 38.5rpx;
+  opacity: 1;
+  float: right;
+}
+.action-box .text-btn.selected{
+  color: rgba(31, 113, 255, 1) ;
+}

@@ -16,8 +16,6 @@ App({
     x_access_token: null,
     currentNetwork: null,
     globalHost: "https://translate.mp.lighthg.com",
-    url: "https://imgconvert.mp.lighthg.com",
-    apiUrl: "https://aip.baidubce.com",  
     langData: {
       "auto": "自动",
       "zh": "中文",
@@ -48,7 +46,9 @@ App({
     screenHeight: 0,       // 可视区域高度
     currentLang:wx.getStorageSync("currentLang")||"auto",
     currentTargetLang:wx.getStorageSync("currentTargetLang")||"en",
-    selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
+    selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg",
+    totalUploadImages:[],
+    currentUploadImages:0,
  
   },
   onLaunch: function () { 
@@ -56,12 +56,31 @@ App({
     this.setNavBarInfo();
     // this.globalLogin();
   },
+  
+  setNavBarInfo() {
+    // 获取系统信息
+    const systemInfo = wx.getSystemInfoSync();
+    // 胶囊按钮位置信息
+    const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
+    // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度
+    const menuButtonToStatus = (menuButtonInfo.top - systemInfo.statusBarHeight/2); 
+    this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight) * 2 + menuButtonInfo.height+10;
+    this.globalData.navbarWidthStatus = this.globalData.navBarHeight+systemInfo.statusBarHeight;
+    this.globalData.statusBarHeight = systemInfo.statusBarHeight;
+    this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
+    this.globalData.menuLeftwidth = menuButtonInfo.left;
+    this.globalData.screenWidth = menuButtonInfo.screenWidth;
+    this.globalData.screenHeight = systemInfo.screenHeight-this.globalData.navbarWidthStatus;
+    console.error(systemInfo,menuButtonInfo,this.globalData.navBarHeight,this.globalData.navbarWidthStatus);
+ },
   //带定时器的loading
   showModalClose(text,during){ 
-  wx.showLoading({ title: text||"请按照使用说明操作", mask: true });
-  setTimeout(function(){
-    wx.hideLoading();
-  },during);
+        wx.showLoading({ title: text||"请按照使用说明操作", mask: true });
+        if(during){
+          setTimeout(function(){
+            wx.hideLoading();
+          },during); 
+        }
   }, 
   // 获取语言配置
   getLangConfig(callback) { 
@@ -88,7 +107,7 @@ App({
   },
   getCurrentLang(tThis){ 
     this.globalData.currentLang=wx.getStorageSync("currentLang")||"auto";
-    this.globalData.currentTargetLang=wx.getStorageSync("currentTargetLang")||"en";
+    this.globalData.currentTargetLang=wx.getStorageSync("currentTargetLang")||"zh";
     const current=  {
         currentLang: this.globalData.currentLang,
         currentTargetLang: this.globalData.currentTargetLang, 
@@ -101,7 +120,7 @@ App({
     wx.setStorageSync("currentLang", updateLang); 
     wx.setStorageSync("currentTargetLang", updateTargetLang);  
   },
-globalLogin(tThis,customeCall){ 
+  globalLogin(tThis,customeCall){ 
       tThis = tThis||this;
       let currentInstance=this;
       console.log("globalLoginglobalLogin",this.globalData);
@@ -116,7 +135,7 @@ globalLogin(tThis,customeCall){
           avatar: data.avatar,
         };
         tThis.setData({
-          notVip: !data.subscribe.is_vip
+          notVip: data.subscribe.is_vip
         }) 
         currentInstance.globalData.introduceUrl = data.introduceUrl || "";
         wx.setStorageSync("USER_INFO", data);
@@ -148,22 +167,6 @@ globalLogin(tThis,customeCall){
     // 获取当前网络状态
     xy.getNetworkStatus((e) => (this.globalData.currentNetwork = e)); 
   }, 
-  setNavBarInfo() {
-    // 获取系统信息
-    const systemInfo = wx.getSystemInfoSync();
-    // 胶囊按钮位置信息
-    const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
-    // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度
-    console.warn(systemInfo,menuButtonInfo);
-    this.globalData.navBarHeight = (menuButtonInfo.top - systemInfo.statusBarHeight)  + menuButtonInfo.height+(menuButtonInfo.top)/2;
-    this.globalData.statusBarHeight = systemInfo.statusBarHeight;
-    this.globalData.menuBotton = menuButtonInfo.top - systemInfo.statusBarHeight;
-    this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
-    this.globalData.menuHeight = menuButtonInfo.right;
-    this.globalData.menuLeftwidth = menuButtonInfo.left;
-    this.globalData.screenWidth = menuButtonInfo.screenWidth;
-    this.globalData.screenHeight = systemInfo.screenHeight-systemInfo.statusBarHeight;
- },
   userCenterLogin(){ 
     const tThis =  this;
     xy.userLogin((data) => {
@@ -179,6 +182,21 @@ globalLogin(tThis,customeCall){
       wx.setStorageSync("USER_INFO", data);
       tThis.userCenterLoginCallbackIndex&&tThis.userCenterLoginCallbackIndex();
       tThis.userCenterLoginCallbackUserMember&&tThis.userCenterLoginCallbackUserMember();
+    });
+  },
+  
+  // 获取文字提取token
+  getAccessToken(cb) {
+    wx.request({
+      url: this.globalData.hostUrl + "/oauth/2.0/token",
+      data: {
+        grant_type: "client_credentials",
+        client_id: "qcXBy6sbcpTnOLYNsmishjex",
+        client_secret: "Inn2TFM6xhSgKHyQGrCFn3xS3rceFHGK",
+      },
+      success: (res) => {
+        typeof cb == "function" && cb(res.data.access_token);
+      },
     });
   },
   verifyImage: function (url) {
@@ -262,77 +280,7 @@ globalLogin(tThis,customeCall){
         },
       });
     });
-  },
-  // 获取文字提取token
-  getAccessToken(cb) {
-    wx.request({
-      url: this.globalData.apiUrl + "/oauth/2.0/token",
-      data: {
-        grant_type: "client_credentials",
-        client_id: "qcXBy6sbcpTnOLYNsmishjex",
-        client_secret: "Inn2TFM6xhSgKHyQGrCFn3xS3rceFHGK",
-      },
-      success: (res) => {
-        typeof cb == "function" && cb(res.data.access_token);
-      },
-    });
-  },
-  // 识别图片提取文字 （外部接口）
-  async extractText(url) {
-    console.log(url);
-    let base64Image = await xy.imageToBase64(url);
-    return new Promise((resolve, reject) => {
-      wx.request({
-        url: this.globalData.apiUrl +
-          "/rest/2.0/ocr/v1/general_basic?access_token=" +
-          this.globalData.x_access_token,
-        method: "POST",
-        header: {
-          "content-type": "application/x-www-form-urlencoded",
-        },
-        data: {
-          image: base64Image,
-          detect_direction: "true",
-          detect_language: "true",
-        },
-        success: (res) => {
-          console.log("识别成功", res);
-          resolve(res.data);
-        },
-        fail: (err) => reject(err),
-      });
-    });
-  },
-  // 提取图片文字 (自己的接口)
-  extractText2(url) {
-    let that = this;
-    return new Promise((resolve, reject) => {
-      that.uploadFile({ filePath: url, type: 'images' }).then((res) => {
-        if (res.code == 1) {
-          // {{host}}/api/ocr/cloud
-          //           请求参数
-          // Body 请求参数
-          // 复制
-          // {
-          // "url": "http://static-1253713495.cos.ap-chengdu.myqcloud.com/paper_images/655c4fd33ea5a/1.jpg" 
-          // }
-          that.request(that.globalData.globalHost + "/api/ocr/cloud", { url: res.data.url },
-            "POST"
-          ).then((res) => {
-            if (res.code == 1) {
-              resolve(res);
-            } else {
-              reject(res);
-            }
-          }).catch((err) => {
-            reject(err);
-          });
-        } else {
-          reject(res);
-        }
-      });
-    });
-  },
+  },   
 
   // 更新用户信息
   updateUserInfo(userInfo) {
@@ -393,7 +341,7 @@ globalLogin(tThis,customeCall){
       });
     });
   },
-  dowloadFile(text,api){
+  dowloadFile(text,api,customerFilename){
     //
     const req= this.request(api,{
       text:text
@@ -407,26 +355,44 @@ globalLogin(tThis,customeCall){
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
           console.warn("wx.downloadFile:success",res)
           if (res.statusCode === 200) { 
-              wx.showToast({
-                title: "下载成功",
-                icon: "none",
-                duration: 2000,
-              });
+              wx.showModal({
+                title: '下载提示',
+                content: '是否保存文件到本地',
+                success (savaRes) {
+                  if (savaRes.confirm) {
+                    console.log('用户点击确定')
+                    wx.shareFileMessage({
+                      filePath: res.tempFilePath,
+                      fileName: customerFilename||"中英文线上拍照翻译器最新",
+                      success() {},
+                      fail: console.error,
+                    })
+                  } else if (savaRes.cancel) {
+                    wx.showToast({
+                      title: "您已经取消下载……",
+                      icon: "none",
+                      duration: 2000,
+                    });
+                  }
+                }
+              })
               // wx.FileSystemManager.saveFile({
               //   tempFilePath:res.tempFilePath,
               //   success: function(){},
               //   fail: function(){},
               //     complete: function(){},
               // })
-              wx.saveFileToDisk({
-                filePath: res.tempFilePath,
-                success(res) {
-                  console.log("saveFileToDisksaveFileToDisk",res)
-                },
-                fail(res) {
-                  console.error(res)
-                }
-              })
+              // wx.saveFileToDisk({
+              //   filePath: res.tempFilePath,
+              //   success(res) {
+              //     console.log("saveFileToDisksaveFileToDisk",res)
+              //   },
+              //   fail(res) {
+              //     console.error(res)
+              //   }
+              // })
+          }else{
+
           }
         }, 
         fail (res) {

@@ -6,16 +6,19 @@ const app = getApp();
 
   // 检查图片校验并上传 
 export const confirmImginfo = (uploadPath) => {
-  console.warn("confirmImginforesresres",uploadPath);
   return new Promise((resolve, reject) => { 
-    wx.showLoading({ title: uploadPath||"翻译中...", mask: false });
+    console.warn("confirmImginforesresres",uploadPath);
+    // wx.showLoading({ title: uploadPath||"翻译中...", mask: false });
     xy.checkImageSync({
       tempFilePaths: uploadPath,
       instance: null,
       success: (imgRes) => {  
-        wx.hideLoading();
+        // wx.hideLoading(); 
         //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
-              console.warn("takePicture::imgRes::",imgRes) 
+              console.warn("confirmImginfo:takePicture::imgRes::",uploadPath,imgRes,new Date()) 
+              app.globalData.totalUploadImages.push(imgRes.url);
+              app.globalData.currentUploadImages=app.globalData.currentUploadImages+1;
+               console.log(new Date())
               resolve(imgRes.url);  
       },
       fail: (err) => {
@@ -32,6 +35,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏+状态栏
     navBarHeight: app.globalData.navBarHeight, //导航栏高度
     menuHeight: app.globalData.menuHeight, //导航栏高度
     statusBarHeight: app.globalData.statusBarHeight, //状态栏栏高度
@@ -103,18 +107,38 @@ Page({
         isuploading:true, 
         tempFilesArr:tempFilesArr
       });
-      
+      app.totalUploadImages=tempFilesArr;
+
+      let curentLoading=null; 
     //  let resp= await confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
-    Promise.all(tempFilesArr.map(confirmImginfo)).then(uploadImgsUrls => {  
+    // 实时上传的进度提示
+      if(tempFilesArr.length>1){ 
+        curentLoading =setInterval(function(){ 
+          console.warn("tempFilesArr.length>1",tempFilesArr,new Date());
+          const info = "上传中"+ (app.globalData.currentUploadImages+1)+"/"+(tempFilesArr.length);
+          wx.showLoading({ title: info, mask: false }); 
+          },500);
+        }
+     Promise.all(tempFilesArr.map(confirmImginfo)).then(uploadImgsUrls => {  
+      console.warn("uploadMutipleImg:uploadImgsUrls:"+uploadImgsUrls,new Date());
+      app.globalData.totalUploadImages=[];
+      app.globalData.currentUploadImages=0;
+      clearInterval(curentLoading);
+      curentLoading=null;
         tThis.setData({ 
             uploadImgList:uploadImgsUrls
         });
         successCallback&&successCallback(uploadImgsUrls);
       })
-      .catch(error => {
+      .catch(error => {      
         console.error('An error occurred while uploading images:', error);
+        clearInterval(curentLoading);
+        curentLoading=null;
         app.showModalClose("请稍后在尝试，图片校验失败",2000);
       });
+
+      // setTimeout(function(){ 
+      // },2000);
   },
   // 删除指定临时上传的图片
   removeImage(e){ 
@@ -167,6 +191,8 @@ Page({
     }
     wx.showLoading({ title:  "正在解析图片信息，服务器为您疯狂计算中...", mask: false });
     this.uploadMutipleImg(this.data.imgUrlList,function(uploadImgLists){ 
+      app.totalUploadImages=[];
+      app.currentUploadImages=0;
       wx.setStorageSync('currentTranslateImags', uploadImgLists) 
         wx.navigateTo({
           url: "../indexpicture/index?selectPicturPath="+uploadImgLists.join("---")+"&ismultiple=1"

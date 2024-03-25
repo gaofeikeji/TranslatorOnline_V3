@@ -1,81 +1,81 @@
-<!--index.wxml-->  <page-meta>
-<navigation-bar
-canBack="{{false}}"
-currentLang="{{currentLang}}"
-currentTargetLang="{{currentTargetLang}}" 
-    color-animation-duration="2000"
-    color-animation-timing-func="easeIn"
-    class="topnav"
-     style="position: absolute;z-index: 111111;width: 100%;height: {{statusBarHeight+navBarHeight}}px;display:block;"
-  />  </page-meta>
-    
-    <camera  device-position="back" style="top:{{statusBarHeight+navBarHeight}}px;width:100%;height:{{screenHeight-(statusBarHeight+navBarHeight)}}px"   flash="on"  mode="normal" binderror="cam_error"  bindinitdone="initCamera"
-  class="start-image"></camera>  
-      <view class="container {{initCamral?'hidden':''}}"> 
-         <view class="cloum-box" hover-class="none" hover-stop-propagation="false">
-            <view class="row-box" hover-class="none" hover-stop-propagation="false">
-              <view class="cloum-box-item"></view>
-              <view class="cloum-box-item"></view>
-              <view class="cloum-box-item"></view>
-            </view>
-            <view class="row-box" hover-class="none" hover-stop-propagation="false">
-              <view class="cloum-box-item"></view>
-              <view class="cloum-box-item"></view>
-              <view class="cloum-box-item"></view>
-            </view>
-            <view class="row-box" hover-class="none" hover-stop-propagation="false">
-              <view class="cloum-box-item"></view>
-              <view class="cloum-box-item"></view>
-              <view class="cloum-box-item"></view>
-            </view>
-         </view>
-         <text class="system-load-info">相机加载中</text>
-        <view class="sys-info-box">
-         </view> 
-      </view> 
-    <custom-ads ad_type="7" style="height: 100%;">
-      <!-- 底部banner广告 -->
-      <view class="adcontainer">
-           <custom-ads ad_type="3" ad_pos="bottom"></custom-ads> 
-       </view>
-    </custom-ads>
-
-    <block wx:if="{{ initCamral }}">   
-      <button size="mini" class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
-   </block>
- 
-    <!-- 底部导航 -->
-    <view class="tab-bar tabbar tab-bottom safe-area">
-      <view 
-          class="tabbar-item {{ select === index ? 'tabbar-select' : '' }}"
-          wx:for="{{ list }}"  
-          wx:key="index"
-          data-page="{{ item.pagePath }}"  
-          data-index="{{ index }}"
-          data-type="{{ item.type }}"
-          data-notpage="{{ item.notpage }}"
-          bindtap="selectPage"
-      >
-          <block wx:if="{{ item.type === 0 }}">
-              <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
-              <text>{{ item.text }}</text>
-          </block>
-          <block wx:elif="{{ item.type === -1 }}">
-            <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
-            <text>{{ item.text }}</text>
-        </block>
-          <block wx:else>
-              <view class="publish">
-              <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAAAXNSR0IArs4c6QAAARZJREFUaEPtWkEOgjAQZKsPUQLoY+QdvsYH+A59jAJBHyItKUkT7AG2SVcwGS5cNqU7OzOUCZQIXWl6LDrSJSlTkDH3V9PchB6VkNTCuzy/jtdW3ebSto9K4nk/a0JyGmhiiho+nTCJGSGBTqBTRK8FnUAn0OkbAWgCmoAmoAk+B3CK5WM1VMJiV2Ox41QicIqLl7uvRfIFuPjOAjdgU5S/b8JOg/ZZVhqiUyAAqyl/1/V5cCerC6M+h5g784ExmipFOlp4Rnr7dGEcLHY1FhuTQuO1cOwIRBaagCYCKTNVDjqBTqATggI+B/DG5mOFoGAWK9BpFiK4Ex8i0ImPlaw7+SmKTSUC98YuFzvFuhTF3qV+EXJd9lwYVIlg9NySAAAAAElFTkSuQmCC"></image>
+<view class="page-container "> 
+  <view class="header" style="height: {{navbarWidthStatus}};">  
+      <!--index.wxml--> 
+      <navigation-bar    canBack="{{false}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"      color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
+   </view>
+  
+  <!-- 主体 -->
+   <view class="section"> 
+      <camera  device-position="back"   flash="off"  mode="normal"
+       binderror="cam_error"  bindinitdone="initCamera"   class="start-camera "></camera>  
+        <view class=" {{initCamral?(selectPicturPath?'':'hidden'):''}}"> 
+          <view class="cloum-box" hover-class="none" hover-stop-propagation="false">
+              <view class="row-box" hover-class="none" hover-stop-propagation="false">
+                <view class="cloum-box-item"></view>
+                <view class="cloum-box-item"></view>
+                <view class="cloum-box-item"></view>
               </view>
-          </block>
-      </view>
+              <view class="row-box" hover-class="none" hover-stop-propagation="false">
+                <view class="cloum-box-item"></view>
+                <view class="cloum-box-item"></view>
+                <view class="cloum-box-item"></view>
+              </view>
+              <view class="row-box" hover-class="none" hover-stop-propagation="false">
+                <view class="cloum-box-item"></view>
+                <view class="cloum-box-item"></view>
+                <view class="cloum-box-item"></view>
+              </view>
+          </view>
+          <text class="system-load-info">{{initCamral?'相机加载中':(selectPicturPath?'正在解析中……':'相机加载中')}}</text>
+          <image  wx:if="{{selectPicturPath!=''}}" class="customer-select-img" src="{{selectPicturPath}}" mode="aspectFit|aspectFill|widthFix" lazy-load="false" binderror="" bindload="">
+            
+          </image> 
+        </view> 
+  
+  
+      <custom-ads ad_type="7" style="height: 100%;">
+        <!-- 底部banner广告 -->
+        <view class="adcontainer">
+            <custom-ads ad_type="3" ad_pos="bottom"></custom-ads> 
+        </view>
+      </custom-ads>
+  
+      <block wx:if="{{ initCamral }}">   
+        <button size="mini" class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
+    </block>
+  </view>
+  
+  
+  
+  <view class="footer safe-area">
+      <view class="bottom-tab-box" > 
+        <view  class="tab-item {{ select === index ? 'tabbar-select' : '' }}"
+              wx:for="{{ list }}"     wx:key="index"   data-page="{{ item.pagePath }}"    data-index="{{ index }}"
+              data-type="{{ item.type }}"    data-notpage="{{ item.notpage }}"    bindtap="selectPage" >
+              <block wx:if="{{ item.type === 0 }}">
+                  <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+                  <text>{{ item.text }}</text>
+              </block>
+              <block wx:elif="{{ item.type === -1 }}">
+                <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+                <text>{{ item.text }}</text>
+            </block>
+              <block wx:else>
+                  <view class="publish">
+                  <image src="/images/add.png"></image>
+                  </view>
+              </block>
+          </view>
+      <view class="bottom-picture-box  {{showSelectImg?'':'hidden'}}">
+        <view class="picture-box-item" bind:tap="takePicture" >从相册选择图片</view>
+        <view class="picture-box-item" bindtap="takePhotoWithMessage">从聊天记录选择图片</view>
+        <view class="picture-box-cancel" bindtap="cancelPictureSelect">取消</view>
+      </view>  
     </view>
-  <view class="bottom-picture-box {{showSelectImg?'':'hidden'}}">
-    <view class="picture-box-item" bind:tap="takePicture" >从相册选择图片</view>
-    <view class="picture-box-item" bindtap="takePhotoWithMessage">从聊天记录选择图片</view>
-    <view class="picture-box-cancel" bindtap="cancelPictureSelect">取消</view>
-  </view>  
+  </view>
+  
+</view>
+ 
 
 <!-- canvas压缩图片 -->
 <canvas id="mCanvas"  type="2d"
@@ -89,6 +89,4 @@ style="position: fixed; left: -9999px; top: -9999px; width:{{ccWidth}}px;height:
 
          
 <!-- 隐私组件 -->
-<privacy></privacy>
-<!-- 客服 -->
-<customerService type="normal" customerWidth="120px"  direction="right" DistanceFromBottom="80%" />
+<privacy></privacy> 

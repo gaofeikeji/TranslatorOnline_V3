@@ -1,8 +1,13 @@
 {
+  "homeButton": false,
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor":"#fff",
+  "navigationBarTextStyle":"black",
     "usingComponents": {
         "gift_use": "/components/gift_use/gift_use",
         "vip-member":"/components/vip-member/vip-member",
-        "customerService":"/components/customerService/customerService"
+        "customerService":"/components/customerService/customerService",
+        "user-member": "/components/user-member/user-member"
     },
-    "backgroundTextStyle": "dark"
+    "navigationBarTitleText": "个人主页"
 }

@@ -1,58 +1,51 @@
 // pages/indexpicture/index.js
 import * as xy from "../../utils/common.js";
 const app = getApp();
-
-function debounce(func, wait) {
-    let timeoutId;
-    return function(...args) {
-      if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        func.apply(this, args);
-        timeoutId = null;
-      }, wait);
-    };
-  }
+ 
 Page({ 
   /**                  
    * 页面的初始数据
    */
   data: { 
+    navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏高度
+    screenHeight: app.globalData.screenHeight, //可视区域高度  
+    screenWidth: app.globalData.screenWidth , //可视区域高度  
     notVip:false,
     see:false,
     selectPicturPath:app.globalData.selectPicturPath,
     action:false,
     actype:10,//10逐行对比左右布局,11，逐行对比垂直布局; 20复制内容，30导出文件，40显示结果，41隐藏
     currentVisti:0,
-    showResult:0,
+    showResult:1,
     oldfromLang:"",
     oldtoLang:"",
     options:{},
     //底部功能区域
     list: [
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
+        "iconPath": "/images/zhuohangduibi.png",
+        "selectedIconPath": "/images/zhuohangduibi.png",
         "text": "逐行对比",
         "actype": 1,
         "type":0
       },
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAApCAYAAAC/QpA/AAAAAXNSR0IArs4c6QAAAQ5JREFUWEftmNERgjAMQJNJYBNhI3EBcQF1I3ETXMR49SyHsa0JtPoTPksaXl9C71oE4VN1dAGARhiuCkOEw3jEHiWz6h31RLCXxC6NQYJWBrOlhhCcmWKPsyOCcQQvO5vMNFPZVTCZIaBmtg3GG06acS9zl8LnG8848NxBGD5YCGi4nbCd5w7ClNzM2MLegGIwVMgGT6uHcb9YLji2a6thPmq7BqzqaG7dYCaZZibWV2bGzGj3HOsZ6xnrGa0B6xmtMdtnlvSMPzI/595hcMcZTKnUloXHa3MbTMy4mRGbQYTr2sb181OHuNA3eJlycYTyfD0gOphit5hzIn+jmVot/utKJFgmP/jry6IQzAOg+azkFYYJZgAAAABJRU5ErkJggg==",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAApCAYAAAC/QpA/AAAAAXNSR0IArs4c6QAAAQ5JREFUWEftmNERgjAMQJNJYBNhI3EBcQF1I3ETXMR49SyHsa0JtPoTPksaXl9C71oE4VN1dAGARhiuCkOEw3jEHiWz6h31RLCXxC6NQYJWBrOlhhCcmWKPsyOCcQQvO5vMNFPZVTCZIaBmtg3GG06acS9zl8LnG8848NxBGD5YCGi4nbCd5w7ClNzM2MLegGIwVMgGT6uHcb9YLji2a6thPmq7BqzqaG7dYCaZZibWV2bGzGj3HOsZ6xnrGa0B6xmtMdtnlvSMPzI/595hcMcZTKnUloXHa3MbTMy4mRGbQYTr2sb181OHuNA3eJlycYTyfD0gOphit5hzIn+jmVot/utKJFgmP/jry6IQzAOg+azkFYYJZgAAAABJRU5ErkJggg==",
+        "iconPath": "/images/copy.png",
+        "selectedIconPath": "/images/copy.png",
         "text": "复制内容",
         "actype": 20,
         "type":0
       },
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAXRJREFUWEftWNGVAjEIBBvRTm7tSK+B0wbUjlw70Uq4lzzZt0Y2ARJ/7pLfXWAyTCAEocHa7GgghB8AGBDheD/hoYFbwFonT2DXuZ9WAKvAbb7pQBQZk9aIBMf7BUcvAW5w6z0FtoZS4BoWzeDm+ioB4+9egCZwhTSWsI6PM25LP71oV/tzJTAOYwKoZi6kE1YwEMGXsKFUe+IhQISbpcyoweUYTg/H44xN/DZx8r/BsaaW0pfTioU5S5yYVs1JRILtUrW3gFvviUoVgmOhBlhwliukWnBSH15qfaEmomYnrcAFP+q2R/AGLjZraTe5Bq5ljv1G3SWLr1xTy5PAWVuMxIanzqXyCrpL02pqL7xLK3NSZjq4wEpPa6lYds3NGPp7p7XF3PqxUqLVZu6/Ds7LYmeuM+dlwGvXNfdR5sKTgTdAjd3zmWO6vvNNWPXOVhPYYxvBaUdDTwCvDY+h6qHaG8hhN92MXh5ypJHN4bzKZD6C/gK2UJQBoyspTQAAAABJRU5ErkJggg==",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAXRJREFUWEftWNGVAjEIBBvRTm7tSK+B0wbUjlw70Uq4lzzZt0Y2ARJ/7pLfXWAyTCAEocHa7GgghB8AGBDheD/hoYFbwFonT2DXuZ9WAKvAbb7pQBQZk9aIBMf7BUcvAW5w6z0FtoZS4BoWzeDm+ioB4+9egCZwhTSWsI6PM25LP71oV/tzJTAOYwKoZi6kE1YwEMGXsKFUe+IhQISbpcyoweUYTg/H44xN/DZx8r/BsaaW0pfTioU5S5yYVs1JRILtUrW3gFvviUoVgmOhBlhwliukWnBSH15qfaEmomYnrcAFP+q2R/AGLjZraTe5Bq5ljv1G3SWLr1xTy5PAWVuMxIanzqXyCrpL02pqL7xLK3NSZjq4wEpPa6lYds3NGPp7p7XF3PqxUqLVZu6/Ds7LYmeuM+dlwGvXNfdR5sKTgTdAjd3zmWO6vvNNWPXOVhPYYxvBaUdDTwCvDY+h6qHaG8hhN92MXh5ypJHN4bzKZD6C/gK2UJQBoyspTQAAAABJRU5ErkJggg==",
+        "iconPath": "/images/export.png",
+        "selectedIconPath": "/images/export.png",
         "text": "导出结果",  
         "actype": 30,
         "type":0
       },
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAWFJREFUWEftWFEOwjAIBc+k/jpPZncy6696JlHMMNhUA9Uao+xnCaNvb4/utQVhuuaJhhnAQAQriT27I8JunzBJzmJD2zLGmEiwseJxnsZEDiwTJTKC6BcRwvqYME8ktvxMYq2YiDAKQWwFYSICpMnVYhbldI5gIJcDAAb1MFvBDiOuObdGTlXENE1KDozN5EjIaEmtBJ+R82CUFTyMiEHOomAoJ1ZiUUvndFNOGzn7npdYzWvf9kO0kCnHdFWutnx5SHcjV1u+PMS6lvXRCuEh+BHlWleZIBfKeSaz3h7JNqpx/G3X/D8mLGcQfQbwqPeRv/XrFv4w4VaPCuV+Ujm2jOn8C2HCHgOVgzXfv/IMIZ2DMGFPWcPnLm2o3GIFPZUr+3PWimZCGMvOpjbySu/PjH3tz+mvto6UvFrbVci9o2P6Uk+4R9v1ries1ZLdrEXBE0DWhjsptSrnLMdb8HjMGeMfj0YDLck0AAAAAElFTkSuQmCC",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAWFJREFUWEftWFEOwjAIBc+k/jpPZncy6696JlHMMNhUA9Uao+xnCaNvb4/utQVhuuaJhhnAQAQriT27I8JunzBJzmJD2zLGmEiwseJxnsZEDiwTJTKC6BcRwvqYME8ktvxMYq2YiDAKQWwFYSICpMnVYhbldI5gIJcDAAb1MFvBDiOuObdGTlXENE1KDozN5EjIaEmtBJ+R82CUFTyMiEHOomAoJ1ZiUUvndFNOGzn7npdYzWvf9kO0kCnHdFWutnx5SHcjV1u+PMS6lvXRCuEh+BHlWleZIBfKeSaz3h7JNqpx/G3X/D8mLGcQfQbwqPeRv/XrFv4w4VaPCuV+Ujm2jOn8C2HCHgOVgzXfv/IMIZ2DMGFPWcPnLm2o3GIFPZUr+3PWimZCGMvOpjbySu/PjH3tz+mvto6UvFrbVci9o2P6Uk+4R9v1ries1ZLdrEXBE0DWhjsptSrnLMdb8HjMGeMfj0YDLck0AAAAAElFTkSuQmCC",
+        "iconPath": "/images/showresult.png",
+        "selectedIconPath": "/images/hideresult.png",
         "text": "显示结果",  
         "selectedText":"隐藏结果",
         "actype": 40,
@@ -101,25 +94,24 @@ Page({
   // 页面切换 
   selectFunction(e) {
     const { index, actype } = e.currentTarget.dataset;
-    console.warn(e);  
-    console.warn(index,  actype, this.data.actype ); 
+    //console.warn(index,  actype, this.data.actype ); 
     this.showActionBox(actype);
 }, 
 handleLongPress(e) {
-  console.warn("handleLongPress",e);  
+  //console.warn("handleLongPress",e);  
 },
 handleTouchEnd(e) {
-  console.warn("handleTouchEnd",e);   
+  //console.warn("handleTouchEnd",e);   
 },
 handleTouchMove(e) {
-  console.warn("handleTouchMove",e);   
+  //console.warn("handleTouchMove",e);   
 },
 selectVerticle(e) {
   const { index, actype } = e.currentTarget.dataset;
-  console.warn(index,  actype, this.data.actype ); 
+  //console.warn(index,  actype, this.data.actype ); 
   let currentVisti=0;
   if(actype==10){
-    console.log("actype===10");
+    //console.log("actype===10");
     currentVisti=0; 
   }else if(actype==11){
     currentVisti=1; 
@@ -131,8 +123,8 @@ selectVerticle(e) {
 // 文本具体操作
 translateFunction(e) {
     const { index, actype } = e.currentTarget.dataset;
-    console.warn(e);  
-    console.warn(index,  actype, this.data.actype ); 
+    //console.warn(e);  
+    //console.warn(index,  actype, this.data.actype ); 
     if(actype==51){//仅复制原文
       this.copyOriginal();
     }else if(actype==52){//仅复制翻译结果
@@ -142,30 +134,30 @@ translateFunction(e) {
     }else if(actype==71){//导出TXT文件
       
       const currentTxt = this.initialImgText();
-      console.log("actype::currentTxtcurrentTxt",currentTxt)
+      //console.log("actype::currentTxtcurrentTxt",currentTxt)
         if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
           app.showModalClose("开始下载文件……",3000);
-          app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-txt");
+          app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-txt","中英文线上拍照翻译器翻译的纯文本文档.txt");
         }else{
           app.showModalClose("转换的内容为空……",1000);
           return false;
         }
      }else if(actype==72){//导出Word文档
       const currentTxt = this.initialImgText();
-      console.log("actype::",currentTxt)
+      //console.log("actype::",currentTxt)
         if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
           app.showModalClose("开始下载文件……",3000);
-          app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-word");
+          app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-word","中英文线上拍照翻译器翻译的Word文档.docx");
         }else{
           app.showModalClose("转换的内容为空……",1000);
           return false;
         }
       }else if(actype==73){//导出Excel文档
         const currentTxt = this.initialImgText();
-        console.log("actype::",currentTxt)
+        //console.log("actype::",currentTxt)
           if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
             app.showModalClose("开始下载文件……",3000);
-            app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-excel");
+            app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-excel","中英文线上拍照翻译器翻译的Excel文档.excel");
           }else{
             app.showModalClose("转换的内容为空……",1000);
             return false;
@@ -175,8 +167,8 @@ translateFunction(e) {
 //点击图片显示对应视图的段落
 toVerticleHorizonTextItem(e){
   const { left, top ,index,key} = e.currentTarget.dataset;
-  console.warn(e);  
-  console.warn( left, top ,index,key); 
+  //console.warn(e);  
+  //console.warn( left, top ,index,key); 
   this.setData({
     currentSelectX: 0,
     currentSelectY: 0,
@@ -188,8 +180,8 @@ toVerticleHorizonTextItem(e){
   // 当前行切换 
   toImageTextItem(e) {
     const { left, top ,index,key} = e.currentTarget.dataset;
-    console.warn(e);  
-    console.warn( left, top ,index,key); 
+    //console.warn(e);  
+    //console.warn( left, top ,index,key); 
     this.setData({
       currentSelectY: 0,
       currentSelectX: 0,
@@ -225,19 +217,23 @@ showActionBox(actype){
     const oldtoLang =this.data.oldtoLang;
     
     const current= app.getCurrentLang(this);
-    console.log("actype====40老：",oldLang+","+oldtoLang+";新的:"+current.currentLang+"："+current.currentTargetLang);
+    //console.log("actype====40老：",oldLang+","+oldtoLang+";新的:"+current.currentLang+"："+current.currentTargetLang);
     // 嚴格判斷語言是否切換，切換自動幫用戶翻譯數據
     if(oldLang==current.currentLang && oldtoLang==current.currentTargetLang){
     }else{
       // 用戶未修改系統不進行語言操作
       if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")&&oldLang&&oldtoLang){
-        app.showModalClose("檢測到您更改了語言，正在幫您重新翻譯，請稍等",2000);
         // 此处需要校验是否重复检测相同图片
-        if(this.data.options){
-          const oldLangList=this.data.langList;
-          oldLangList.list=[];
+        if(this.data.options){ 
+          wx.showLoading({
+            title: '检测到您修改了配置语言，正在校对中',
+          })
+          
+          // const oldLangList=this.data.langList;
+          // oldLangList.list=[];
+          // 清空之前的图片数据，避免重复追加
           this.setData({
-            langList:oldLangList
+            langList:[]
           })
           this.reloadPicinfo(this.data.options);
         }
@@ -250,12 +246,10 @@ showActionBox(actype){
       see:false,
       oldfromLang:current.currentLang,
       oldtoLang:current.currentTargetLang,
-      see:false,
       scale:this.data.showResult==1?1.8:1
-    })
-      return false;
+    }) 
   }
-  console.warn("actypeactype:",  actype );   
+  //console.warn("actypeactype:",  actype );   
   this.setData({
     actype: actype,
     action:show, 
@@ -269,7 +263,7 @@ getPictureInfo(picUrl,currentImgobj){
   const tThis=this;
   wx.showLoading({ title: "正在翻译中...", mask: true });
   const curent = app.getCurrentLang(tThis);
-  console.warn("getPictureInfogetPictureInfo:",  picUrl , currentImgobj);   
+  //console.warn("getPictureInfogetPictureInfo:",  picUrl , currentImgobj);   
   let pictureInfo = app.request("/api/translate/photo", { 
     "source": curent.currentLang, //来源语音
       "target": curent.currentTargetLang, //目标语言 
@@ -277,19 +271,19 @@ getPictureInfo(picUrl,currentImgobj){
       // "url": "https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg",  
     }, "POST"); 
     pictureInfo.then((res)=>{
-        console.warn("getPictureInfo",res.data);
+        //console.warn("getPictureInfo",res.data);
         wx.hideLoading();
         currentImgobj.list=res.data;
         let oldImageList=tThis.data.langList
         oldImageList.push(currentImgobj);
-        console.warn("oldImageList-update",oldImageList);
+        //console.warn("oldImageList-update",oldImageList);
 
         tThis.setData({
           langList: oldImageList
           }) 
     }).catch(err => {
       wx.hideLoading(); 
-      console.log('err:', err,err.indexOf("err: OCR 服务异常"))
+      //console.log('err:', err,err.indexOf("err: OCR 服务异常"))
       if(err.indexOf("err: OCR 服务异常")==-1){
         app.showModalClose("当前排队的人太多，请稍后重试……",2000);
         setTimeout(function(){
@@ -326,11 +320,11 @@ initialImgText(){
   let originText="";
   let translateText="";
   const langList = this.data.langList;
-  console.warn("this.data.langList:",this.data.langList);
+  //console.warn("this.data.langList:",this.data.langList);
   langList.forEach((item,index)=>{
     item.list.forEach(function(picture,key){
 
-      // console.log("initialImgText:::item,index:",item,index)
+      // //console.log("initialImgText:::item,index:",item,index)
       originText+=picture.single_str_utf8+"\n";
       translateText+=picture.translate+"\n";
     });
@@ -343,19 +337,19 @@ initialImgText(){
 // 复制原文
 copyOriginal(){
   const imgText = this.initialImgText();
-  console.log("copyOriginal:",imgText)
+  //console.log("copyOriginal:",imgText)
   xy.setClipboardData(imgText.originText);
 },
 // 仅复制翻译结果
 copyTranslate(){
   const imgText = this.initialImgText();
-  console.log("copyOriginal:",imgText)
+  //console.log("copyOriginal:",imgText)
   xy.setClipboardData(imgText.translateText);
 },
 // 复制原文和结果
 copyBoth(){
   const imgText = this.initialImgText();
-  console.log("copyOriginal:",imgText)
+  //console.log("copyOriginal:",imgText)
   xy.setClipboardData("原文:\n"+imgText.originText + "\n译文:\n"+ imgText.translateText);   
 },
  
@@ -399,10 +393,10 @@ getMidpoint(a, b) {
       const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
       // 需要重置当前图片信息
       
-      tThis.setData({
-        langList: []
-        }) 
-      console.warn("imagesArr:::",imagesArr);
+      // tThis.setData({
+      //   langList: []
+      //   }) 
+      //console.warn("imagesArr:::",imagesArr);
       imagesArr.forEach(function(item,key){
 
         tThis.getImageInfoByOption(tThis,{
@@ -416,10 +410,10 @@ getMidpoint(a, b) {
   getPictureRate(pic){
     const sysInfo= wx.getSystemInfoSync()
     const windowWidth =sysInfo.windowWidth
-    console.warn("sysInfo:",sysInfo)
-    console.warn("picpic:",pic)
+    //console.warn("sysInfo:",sysInfo)
+    //console.warn("picpic:",pic)
     if(pic.width>windowWidth){
-      console.warn("picpic-rate:",windowWidth/pic.width) 
+      //console.warn("picpic-rate:",windowWidth/pic.width) 
       // scale
       // this.setData({ 
       //   scale: windowWidth/pic.width,  
@@ -448,9 +442,9 @@ getMidpoint(a, b) {
       scaledWidth: imgWidth* canvasRatio,
       scaledHeight: canvasHeight* canvasRatio
     }; 
-  },
+  }, 
   // 构造一张图片结构体
-getImageInfoByOption(tThis,options){
+ getImageInfoByOption(tThis,options){
     if(!options.selectPicturPath){
       app.showModalClose("非法操作,图片不存在",2000);
       setTimeout(function(){
@@ -465,12 +459,12 @@ getImageInfoByOption(tThis,options){
       success (res) { 
         const sysInfo= wx.getSystemInfoSync();
         const windowWidth =sysInfo.windowWidth;
-        console.warn("sysInfo:",sysInfo) ;
+        //console.warn("sysInfo:",sysInfo) ;
         app.globalData.screenWidth=windowWidth;
-        console.log("getImageInfoByOption:",res) 
+        //console.log("getImageInfoByOption:",res) 
 
         // let canvasRatio = tThis.calculateCanvasDimensions(res.width,res.height,windowWidth,sysInfo.windowHeight-140);
-        // console.warn("canvascanvasRatioRatiocanvasRatio",canvasRatio); 
+        // //console.warn("canvascanvasRatioRatiocanvasRatio",canvasRatio); 
         // 获取所以图片信息并添加到当前的结构体中
         tThis.getPictureInfo(options.selectPicturPath,{ 
           selectPicturWidth: res.width, 
@@ -499,13 +493,13 @@ getImageInfoByOption(tThis,options){
   onShow() {    
 
     if (app.globalData.access_token) {
-      console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+      //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
       this.setData({
         notVip: !app.globalData.subscribe.is_vip
       })
     } else {
       app.userCenterLoginCallbackIndex = () => {
-        console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+        //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
         this.setData({
           notVip: !app.globalData.subscribe.is_vip
         })
@@ -516,7 +510,7 @@ getImageInfoByOption(tThis,options){
   methods: {
      
     listenstartMove(event){
-      console.warn("listenstartMove",event)
+      //console.warn("listenstartMove",event)
     }
   },     
    

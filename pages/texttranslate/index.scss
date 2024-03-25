@@ -1,30 +1,44 @@
 /* pages/texttranslate/index.wxss */ 
-.container{
-  display: block;
-   height: 100%;
-}           
-.text-container{
-  height: 100%;
+@import "../../action.scss";
+@import "../index/bottomtab.scss";
+ 
+page{ 
   width: 100%;
-  background: #fff;
-  display: block;
+  height: 100vh;
+}    
+.section{
+  display: flex;
+} 
+.section-box{ 
+  display: flex;
+  width: 100%;
+  background:rgba(204, 204, 204, 1);
+}
+.text-container{
+
+  width: 100%; 
+  flex:1;
   border-bottom-left-radius: 20rpx;
   border-bottom-right-radius: 20rpx;
+  box-sizing: border-box;
+  /* border-radius: 0rpx 0rpx, 20rpx, 20rpx; */
+  padding: 30rpx 30rpx 40rpx 30rpx;
+  margin-bottom: 40rpx;
+  background-color: #fff;
 }  
+
+//  仅显示译文
 .textarea-container{  
-  display: inline-block;
-  background: rgba(0, 0, 0, 0.03); 
+  background: rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex: 1;
+  height: 100%;
   overflow-y: auto;
-  padding: 20rpx;
-  margin: 8rpx;
-  height: 60%;
-  min-height: 580rpx;
-  width: 90%;
-  margin: 40rpx 20rpx;
-  border-radius: 4px;  
-  font-size: 14px;
-  color: #000;
-  line-height: 20px;
+  width: 100%;
+  opacity: 1;
+  border-radius: 8rpx;
+  padding: 28rpx 30rpx 0 30rpx;
+  box-sizing: border-box;
 }
 
 
@@ -36,21 +50,21 @@
   min-width: 690rpx; 
   opacity: 1;
   border-radius: 4rpx;
-  background: rgba(255, 255, 255, 1);
-  
-  /* border: 2rpx solid rgba(0, 0, 0, 0.15); */
+  background: #fff;
+   
   
   box-shadow: 2rpx 2rpx 4rpx  rgba(0, 0, 0, 0.05);
 }
 
-.scroll-translate-left-right{
-  height: 80%;
-  width: 90%;
-  max-height: 500px;
+
+// 左右对比
+.scroll-translate-left-right{ 
+  display: flex;
   margin: 0 auto;
   opacity: 1;
   border-radius: 8px;
   background: rgba(0, 0, 0, 0.03); 
+  box-sizing: border-box; 
 }
 
 .lang-left-right{

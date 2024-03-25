@@ -27,6 +27,7 @@ var t = "?x-oss-process=style/avatar";
   };
 Page({
   data: {
+    navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏+状态栏
     navBarHeight: app.globalData.navBarHeight, //导航栏高度
     menuHeight: app.globalData.menuHeight, //导航栏高度
     statusBarHeight: app.globalData.statusBarHeight, //状态栏栏高度

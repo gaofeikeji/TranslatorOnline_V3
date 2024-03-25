@@ -1,0 +1,201 @@
+/* pages/indexpicture/index.wxss */
+@import "../../action.wxss";
+@import "../index/bottomtab.scss";
+
+page{ 
+  width: 100%;
+  height: 100vh;
+}    
+.section-box{ 
+  display: flex;
+  width: 100%;
+  // height:  calc(100%-85px-90px-env(safe-area-inset-bottom));
+  background:rgba(204, 204, 204, 1);
+}
+.text-container{  
+  background: rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
+  opacity: 1;
+  border-radius: 8rpx;
+  padding: 28rpx 30rpx 0 30rpx;
+  box-sizing: border-box;
+}
+
+/* 解析的图片内容容器 */
+.zoomArea{ 
+  position: relative;
+  margin:0;
+  height: 100%;
+  width: 100%; 
+  text-align: center;
+  background: rgba(204, 204, 204, 1);
+} 
+// 容器的高度觉得拖拽的灵敏度
+.zoomview-box{
+  position: absolute;
+  // background-color: #fff;  
+  
+}
+
+/* 缩放图片容器 */ 
+.media-info-box{ 
+  position: relative;
+  height: 100%;
+  width: 100%; 
+  border-radius: 2%;
+  border: 4rpx solid transparent;
+  margin: 40rpx 0;
+  // transform: scale(0.8);
+} 
+.media-info-box::after{
+  content: "";
+  display: table;
+  clear: both;
+}
+.media-info-box:nth-child(odd){
+  border-color:  #50C464; 
+}
+.media-info-box:nth-child(odd){
+  border-color:  rgba(31, 113, 255, 1); 
+}
+.default-image{
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  filter: blur(1.9px);
+  opacity: 0.3;
+  z-index: 22;
+  pointer-events: none;
+}
+
+
+.media-text-item{ 
+  position: absolute;
+  z-index: 22;
+  box-shadow: none;
+  display: inline-block;
+  pointer-events: none;
+  /* background-color: rgba(245, 33, 33, 0.81); */
+ border: 2rpx solid rgba(255,255,255,0.4);
+  color:rgba(0,0,0,0.5);
+  pointer-events: none;
+  text-align: justify;
+  pointer-events: none;
+} 
+.media-text-item:nth-child(odd){
+  border: 2rpx solid rgba(255,255,255,0.4);
+
+}
+.media-text-item:nth-child(even){
+  border: 2rpx solid rgba(227, 236, 255,1);
+
+}
+.media-text-item.selected{
+  color: #fff ; 
+  box-shadow: 0 0 1px rgba(31, 113, 255, 0.8);
+  background: rgba(56, 148, 209, 0.781);
+  /* background: var(--bg); color: rgb(from var(--bg) calc(1 - r) calc(1 - g) calc(1 - b)); */
+  /* transform: scale(1.2); */
+  pointer-events: none;
+  pointer-events: none;
+}
+ 
+.action-scale{
+  position: absolute;
+  width: 80rpx;
+  height: 150rpx;
+  z-index:146;
+  right:0;
+  top:35%;
+}
+.action-scale .scaleAction{
+  display: block;
+  width: 80rpx;
+  height: 80rpx; 
+  margin: 30rpx 20rpx;
+ transform:  scale (1.4);
+}
+
+/* 显示列表状态 */
+.action-container .action-icon-box{
+  box-sizing: border-box;
+  padding:36rpx 31rpx 32rpx 40rpx ;
+}
+.action-icon-box image.icon-btns{ 
+  display: inline-block;
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 1;  
+  margin-right: 32rpx ;
+  background-repeat: no-repeat;
+} 
+
+.action-icon-box image.icon-btns-close{ 
+  width: 38rpx;
+  height: 38rpx;
+background-image: url("/images/icon/close.png");
+ 
+background-repeat: no-repeat;
+opacity: 1; 
+float: right;
+}
+
+
+
+.action-container {
+  z-index: 1;
+  bottom: 170rpx;
+  margin-bottom:0;
+  .action-only-close{
+    padding:0  11rpx  29rpx 33rpx;
+    .closeBtn {
+          
+    width: 38.5rpx;
+    height: 38.5rpx;
+    }
+  }
+}
+
+.scroll-translate{ 
+  overflow-y:auto ;
+  display: block;
+  padding: 0;
+  border-top: 2rpx solid rgba(0, 0, 0, 0.05);
+  .flex-scroll{
+    display: block; 
+  }
+  .lang-item{
+    flex-shrink: 0;
+    display: block;
+    // flex: 1;
+    // flex-direction: cloum;此处弹性布局移动端会出现无效滚动条情况
+      .horizon-text{
+        box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+        padding: 12rpx 32rpx 20rpx 20rpx;
+        font-size: 28rpx;
+        font-weight: 400;
+        letter-spacing: 0rpx;
+        line-height: 36rpx;
+      }
+  }
+  .lang-verticl-item{
+    display: block;
+    .verticle-text{
+      display: block;
+      .title{
+        display: inline-block;
+      }
+    }
+  }
+}

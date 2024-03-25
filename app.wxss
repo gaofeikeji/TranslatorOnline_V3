@@ -1,31 +1,48 @@
 /* @import './xyui.wxss';
 @import './components.wxss'; */
-/**app.wxss全局page和text内容字体大小*/
-/* page,text{  font-size: 30rpx;} */
-page,text,view,navigator,swiper,swiper-item,image{ 
-  margin: 0px;  padding: 0px;  
-  box-sizing: border-box;
-  font-size: 34rpx;
-  font-weight: 400;
-  letter-spacing: 0rpx;
-  line-height: 49.24rpx;
-  box-shadow: none;
-  border-color: #fff;
-} 
-page,text{  font-size: 24rpx;}
-
-page,text,view,navigator,swiper,swiper-item,image{  
-  /*设置组件全局边距*/  
-  margin: 0px;  padding: 0px;  /*  * 指定元素的宽或高包含padding和border，不包含mmargin。  * 如果不设置默认为content-box，元素的宽或高不包含padding和border  */ 
-   box-sizing: border-box;
-}
-page {
-  height: 100%;
+page{ 
   overflow: hidden;
-  box-sizing: border-box;
-  background-color: #fff;
-  display:block;
 }
+.page-container{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.page-container view,.header view{
+  box-sizing: border-box;
+}
+.header{  
+  background:#fff;
+  padding: 0 0 10rpx 0;
+  box-shadow: 0rpx 0rpx 20rpx  rgba(0, 0, 0, 0.02);
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+} 
+.section{
+  /* background-color: red; */
+  width: 100%; 
+  flex: 1;
+  position: relative;
+  background: rgba(204, 204, 204, 1);
+  /* background-color: blue; */
+} 
+.footer:not(.footer-btn-box){
+  background: #fff;
+  height: 170rpx;
+  width: 100%;
+}
+.footer-btn-box{
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.footer-content{
+  display: flex;
+  padding:60rpx;
+}
+
 .safe-area{
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
@@ -62,33 +79,25 @@ page {
   height:60%;
   width: 60%; 
 }
-
-.container {
-  height: 100%; 
-  align-items: center;
-  justify-content: space-between;
-  /* padding: 180rpx 0; */
-  /* padding: 50rpx 0 0 0; */
-  position: relative;
-} 
+ 
  .circle-btn.picture-action{
   display: inline-block;
-  width: 260rpx !important;
+  width: 260rpx;
   border-radius: 180rpx;
-  height:90rpx !important;
-  line-height: 90rpx !important;
+  height:90rpx;
+  line-height: 90rpx ;
   text-align: center;
-  padding:0 !important;   
+  padding:0;   
   margin: 0 auto;
   box-shadow: 0 0 0 5rpx rgba(31, 113, 255, 1) !important;
   opacity: 1;
   background: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%) !important; 
-  border: 4rpx solid rgba(255, 255, 255, 1) !important;
+  border: 4rpx solid #fff !important;
     
   font-size: 36rpx !important;
   font-weight: bold !important;
   letter-spacing: 0rpx !important;
-  color: rgba(255, 255, 255, 1) !important;
+  color: rgba(255, 255, 255, 1) ;
 }
   
 
@@ -121,67 +130,6 @@ page {
 
 
 
-/* 底部选项卡 */
-.tab-bottom {
-  width: 100%;
-  height: auto;
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 999; 
-  background: #fff;
-  box-shadow: 0rpx 0rpx 20rpx  rgba(0, 0, 0, 0.02);
-  border-top-left-radius: 20rpx;
-  border-top-right-radius: 20rpx;
-}
-.tab-bottom.transparent{
-  background-color: transparent;
-  border-top-color: transparent; 
-  display: block;
-  text-align: center;
-} 
-.tabbar-item {
-    display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 170rpx;
-  opacity: 1;
-}
-
-.tabbar-item image {
-  width: 48rpx;
-  height: 48rpx; 
-  opacity: 1;
-  background-color: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
-}
-
-.tabbar-item text { 
-  margin-top: 16rpx;
-  
-  font-size: 28rpx;
-  font-weight: 400;
-  letter-spacing: 0rpx;
-  line-height: 44rpx;
-  color: rgba(0, 0, 0, 0.45);
-}
-
-.tabbar-item .publish {
-  width: 65rpx;
-  height: 65rpx;
-  background-color: #ff90ba;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: auto; 
-}
-
-.tabbar-select {
-  color: #303030;
-}
 .hidden{
   display: none!important;
 }
@@ -205,93 +153,10 @@ page {
 }
 
 
-/* 操作容器 */
-.action-container{
-  background: #fff;
-  background-color: rgba(255，255，255，1);
-  border-top: 1px solid #ddd;
-  border-top-left-radius: 30rpx;
-  border-top-right-radius: 30rpx; 
-  position: absolute;
-  bottom: 0px;
-  left: 0;              
-  z-index: 200;    
-  padding-bottom: 100px; 
-  width: 100%;
-}
-.action-box{
-  height: 40px;
-  line-height: 40px;
-  display: block;
-  width: 100%;
-  padding: 0 12px; 
-}
-.action-box image{
-  display: inline-block;
-  width: 15rpx;
-  height: 15rpx;
-  margin:0  10px;
-} 
-.action-box image:last-child{
-  float: right;
-}
-.action-box .text-btn{
-  display: inline-block;
-  width: 32rpx;
-  height: 32rpx;
-  opacity: 1; 
-  margin-top: 20rpx;
-   
-}
-.action-box .text-btn.close{
-  margin-right:20rpx;
-  width: 38.5rpx;
-  height: 38.5rpx;
-  opacity: 1;
-  float: right;
-}
-.action-box .text-btn.selected{
-  color: rgba(31, 113, 255, 1) ;
-}
 
 
 
 
-
-.icon-btns{ 
-  display: inline-block;
-  width: 32rpx;
-  height: 32rpx;
-  opacity: 1; 
-  margin: 20rpx 18rpx 0 0;
-  background: #fff;
-  background-repeat: no-repeat;
-}
-.icon-btns.horizon-dark{
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAC6SURBVFiF7ZXNEYIwFAb3y9iHdELsCGwAbUDsSOgEGuF58OdgUEdyYJx5e91J3h7yo21tFyCyjG5stVu4FoANECWOTHSJDUQzShnHN67JGf4IgIluOCsJKPYWJfqhnXGVgfIDQu4GHvD3AdrWZkAn0b9KM0qAOXf3zdhKOQHh04BPPOJy+XYNDwDDSYfEVRZNix+wJ6ufAQ9YPeB2CAOxqCyRZpQSfVFZTGQgki75Ga39HTuO4ziO41wBEqA/B6pNfmoAAAAASUVORK5CYII=");
-}
-.icon-btns.horizon-light{
-
-background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACLSURBVFiF7ZXRDYAgDESfxg3cgR3Y/8Md3IEd/KGJGooJSozx3u+F9iDXMgARmGkjAUvjWQCm3HzNxc7MO72khTvNzQC5uWfA0x5h7FVYBj5jwEIY8ENoehfsBVpS3ro7DlyNod3c2wPxroHXMyADrxuwEHqJtr+gpD82BYn6nNcadfukhBBCCPEfNmJLEcS1kPz4AAAAAElFTkSuQmCC");
-}
-.icon-btns.verticle-dark{
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAABtSURBVEiJ7c0xCoNAEIbRt7A3CMYbeITcwSPb2eUuEStJikDExt44XcK8ZlmYj7+gR3XOG8PJBhRcIyEewS79uIIb2v0/Hdw3eOGDMTJYseD55f2yv2tkLP2HgkuwnSNRRRcYnXGPDKaUUkrHNiEgDdPPbaMbAAAAAElFTkSuQmCC");
-}
-.icon-btns.verticle-light{
-
-background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAACMSURBVEiJ7c0hDsJAFEXR+8hYJLpsgD1gcGjWQVfADqB7QWK6CFAIqEeRYBA8TDXNTIJp/knGzf1PVe0nMCXPoztoltkAkAQbi0lOJPMpGQvjoKr2EVgDSJx+fbZZATfEq9trUTKYBBfDtT845Awg8y4ZC+Og+dbLkvDeqC3pksUOyB1t+xdCCCH8wRflpiAisOi6DAAAAABJRU5ErkJggg==");
-}
-
-.icon-btns-close{ 
-  margin-top: 20rpx;
-  width: 50.5rpx;
-  height: 44.5rpx;
-background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADeSURBVDiNvZXBFcMgCIa/ttnAHdwhO3TcnHvNDu7gDr1UQ4gEXvPa/+JT9AsCQfiRboE9SY0A5Qo4AbNzvlgfeRgHZiB7XrHdomrDyONnADjSIid3ZYx4aWkXNgnOF8EJkWAN1loYJ6egrv5R91qHQitzzHybW7dLAJMAWOAGk2A3bNOZ0YB70ARULxRfq3l8KHAhHVPpuQuOQLNat+AFtqqwPB5B2/y0EclfOtJ0PPXSlMmrnMc6DNVggPUiuGvUNtuGNLCNVIGXXrT6cQuJB18xkhh5mmBfFVWN/9UbFXQre304PgEAAAAASUVORK5CYII=");
- 
-background-repeat: no-repeat;
-opacity: 1; 
-float: right;
-}
 
 
 .scroll-translate{
@@ -316,7 +181,7 @@ float: right;
   font-weight: normal; 
   
 font-size: 28rpx;
-font-weight: 400;
+font-weight: normal;
 letter-spacing: 0rpx;
 line-height: 36rpx;
 color: rgba(0, 0, 0, 1);
@@ -356,7 +221,7 @@ color: rgba(0, 0, 0, 1);
   /* flex-direction: column; */
 }
 .action-container .lang-verticl-item{
-  padding: 10rpx 15rpx;
+  padding: 15rpx 30rpx;
 }
 .action-container .lang-verticl-item .title{ 
   color: rgba(0, 0, 0, 0.7);
@@ -401,8 +266,9 @@ color: rgba(0, 0, 0, 0.7);
 
 /* 通用view 模式btn */
 .action-btn-box{
-  padding: 20rpx;
+  padding: 30rpx;
   width: 100%;
+  box-sizing: border-box;
 }
 .action-btn-box .closeBtn{
   margin-left: 92%;
@@ -442,6 +308,33 @@ box-shadow: 2rpx 2rpx 4rpx  rgba(0, 0, 0, 0.05);
   float: right;
 }
 
-/* .sv_bk_customer{
-  
-} */
+
+
+::-webkit-scrollbar {
+  width: 0px; 
+  height: 0px; 
+  color:#fff;
+
+}
+::-webkit-scrollbar-track {
+
+  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+
+  border-radius: 1px;
+
+  background-color:#e5e5e5;
+
+}
+::-webkit-scrollbar-thumb {
+
+  border-radius: 10px;
+
+  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+
+  background-color:#e5e5e5;
+
+}

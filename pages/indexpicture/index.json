@@ -1,4 +1,7 @@
 {
+  "navigationStyle": "custom",
   "usingComponents": {
+    "customerService": "/components/customerService/customerService",
+    "ToRate": "/components/ToRate/ToRate"
   }
 }

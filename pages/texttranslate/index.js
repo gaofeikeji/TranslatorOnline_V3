@@ -29,29 +29,29 @@ Page({
     //底部功能区域
     list: [
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
+        "iconPath": "/images/icon/tabback.png",
+        "selectedIconPath": "/images/icon/tabback.png",
         "text": "返回编辑",
         "actype": 10,
         "type":0
       },
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADESURBVEiJ7ZXRDYIwGITvDHvQTawbAQuAC6gbAZvgIp4vhBQC/FXBJ763Npcv7Z/mCuwIrYArVH0i7G4c8qtyl8mLqD+RP+8cnPbJM/kYqYgSgA/lm5HmqtNcCveScOEKVRLOsUISbTjjKSO5hDJW3Oe9y9R0DzarcpfJ93dqKFxNcT/jtUwyt7l0kpA0l3nLkxX4hUN+yOOZfeffQKIdN8uG8rmO+f9YYjpcVgCTz2LaxzFQuJitCACk3YYjXlis2915A9O0QEmmKMh4AAAAAElFTkSuQmCC",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAADESURBVEiJ7ZXRDYIwGITvDHvQTawbAQuAC6gbAZvgIp4vhBQC/FXBJ763Npcv7Z/mCuwIrYArVH0i7G4c8qtyl8mLqD+RP+8cnPbJM/kYqYgSgA/lm5HmqtNcCveScOEKVRLOsUISbTjjKSO5hDJW3Oe9y9R0DzarcpfJ93dqKFxNcT/jtUwyt7l0kpA0l3nLkxX4hUN+yOOZfeffQKIdN8uG8rmO+f9YYjpcVgCTz2LaxzFQuJitCACk3YYjXlis2915A9O0QEmmKMh4AAAAAElFTkSuQmCC",
+        "iconPath": "/images/icon/tabcopy.png",
+        "selectedIconPath": "/images/icon/tabcopy.png",
         "text": "复制内容",
         "actype": 20,
         "type":0
       },
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAXRJREFUWEftWNGVAjEIBBvRTm7tSK+B0wbUjlw70Uq4lzzZt0Y2ARJ/7pLfXWAyTCAEocHa7GgghB8AGBDheD/hoYFbwFonT2DXuZ9WAKvAbb7pQBQZk9aIBMf7BUcvAW5w6z0FtoZS4BoWzeDm+ioB4+9egCZwhTSWsI6PM25LP71oV/tzJTAOYwKoZi6kE1YwEMGXsKFUe+IhQISbpcyoweUYTg/H44xN/DZx8r/BsaaW0pfTioU5S5yYVs1JRILtUrW3gFvviUoVgmOhBlhwliukWnBSH15qfaEmomYnrcAFP+q2R/AGLjZraTe5Bq5ljv1G3SWLr1xTy5PAWVuMxIanzqXyCrpL02pqL7xLK3NSZjq4wEpPa6lYds3NGPp7p7XF3PqxUqLVZu6/Ds7LYmeuM+dlwGvXNfdR5sKTgTdAjd3zmWO6vvNNWPXOVhPYYxvBaUdDTwCvDY+h6qHaG8hhN92MXh5ypJHN4bzKZD6C/gK2UJQBoyspTQAAAABJRU5ErkJggg==",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAnCAYAAAB5XdqFAAAAAXNSR0IArs4c6QAAAa5JREFUWEftWO1xwjAMlVgENilsVFgAWKB0o5pNYBHUk4NT25Edc/gj13N+JrL8/BRJz0IIPJtP2sIKtkTwgQTn2zeqkG2N9yhtwiAJ4cf+dr+gY6sPUulhkiZAJZCMBwl2htX1nvgQ1YAiwhmdECNcieAoEKXuF9zx+9BBSpOLCeyMIFsDpQgbDkhjt95TbE0JchVuDnSaC7e/c2RNCZCg/1EdzilYkUkbRa2sNwk8Zv0zSY6IcL194akINW84FevoG/6KLe1Ac1PbGa3OKFeD1spJa42gzHNr62xdzc2g70+WeUK3stUTNwh2xFq1NMCnchs6kxEbHOJQe7T1aO1eP8g8L8SSzmRD060WK/NskE1lXkwJ+SDbyjzhfqR/YCvcE5k3rJFuAtlzy4ikQeb9bazvQTGQ2ZEkOpzcLJdQ3CXsvdcnRjTZrDOaTFWi4f9gVIuPB6glVIIgo/4ExR+SJUYsm5kIVBrz+DIvMLTIBsxypHjsOQ4gTIhDs6iWMk93y4QhmdNSW8q86MCry7zX/uZh4iwmz4zM0/us6kyd+XYxZr0Ntsu818LtWP8C2qAB1K88MiMAAAAASUVORK5CYII=",
+        "iconPath": "/images/icon/tabexport.png",
+        "selectedIconPath": "/images/icon/tabexport.png",
         "text": "导出文件",  
         "actype": 30,
         "type":0
       },
       {
-        "iconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAWFJREFUWEftWFEOwjAIBc+k/jpPZncy6696JlHMMNhUA9Uao+xnCaNvb4/utQVhuuaJhhnAQAQriT27I8JunzBJzmJD2zLGmEiwseJxnsZEDiwTJTKC6BcRwvqYME8ktvxMYq2YiDAKQWwFYSICpMnVYhbldI5gIJcDAAb1MFvBDiOuObdGTlXENE1KDozN5EjIaEmtBJ+R82CUFTyMiEHOomAoJ1ZiUUvndFNOGzn7npdYzWvf9kO0kCnHdFWutnx5SHcjV1u+PMS6lvXRCuEh+BHlWleZIBfKeSaz3h7JNqpx/G3X/D8mLGcQfQbwqPeRv/XrFv4w4VaPCuV+Ujm2jOn8C2HCHgOVgzXfv/IMIZ2DMGFPWcPnLm2o3GIFPZUr+3PWimZCGMvOpjbySu/PjH3tz+mvto6UvFrbVci9o2P6Uk+4R9v1ries1ZLdrEXBE0DWhjsptSrnLMdb8HjMGeMfj0YDLck0AAAAAElFTkSuQmCC",
-        "selectedIconPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAWFJREFUWEftWFEOwjAIBc+k/jpPZncy6696JlHMMNhUA9Uao+xnCaNvb4/utQVhuuaJhhnAQAQriT27I8JunzBJzmJD2zLGmEiwseJxnsZEDiwTJTKC6BcRwvqYME8ktvxMYq2YiDAKQWwFYSICpMnVYhbldI5gIJcDAAb1MFvBDiOuObdGTlXENE1KDozN5EjIaEmtBJ+R82CUFTyMiEHOomAoJ1ZiUUvndFNOGzn7npdYzWvf9kO0kCnHdFWutnx5SHcjV1u+PMS6lvXRCuEh+BHlWleZIBfKeSaz3h7JNqpx/G3X/D8mLGcQfQbwqPeRv/XrFv4w4VaPCuV+Ujm2jOn8C2HCHgOVgzXfv/IMIZ2DMGFPWcPnLm2o3GIFPZUr+3PWimZCGMvOpjbySu/PjH3tz+mvto6UvFrbVci9o2P6Uk+4R9v1ries1ZLdrEXBE0DWhjsptSrnLMdb8HjMGeMfj0YDLck0AAAAAElFTkSuQmCC",
+        "iconPath": "/images/icon/zuoyou.png",
+        "selectedIconPath": "/images/icon/zuoyou.png",
         "text": "左右对比",  
         "actype": 40,
         "type":0
@@ -72,43 +72,6 @@ translateFunction(e) {
       this.copyTranslate();
     }else if(actype==53){//复制原和结果
        this.copyBoth();                 
-    }else if(actype==61){//逐行对比显示
-      showType=actype;
-   }else if(actype==62){//左右对比显示
-    showType=actype;
-    }else if(actype==63){//仅显示译文
-      showType=actype;
-    }else if(actype==71){//导出TXT文件
-      
-    const currentTxt = this.initialImgText();
-    console.log("actype::",currentTxt)
-      if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
-        app.showModalClose("开始下载文件……",3000);
-        app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-txt");
-      }else{
-        app.showModalClose("转换的内容为空……",1000);
-        return false;
-      }
-   }else if(actype==72){//导出Word文档
-    const currentTxt = this.initialImgText();
-    console.log("actype::",currentTxt)
-      if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
-        app.showModalClose("开始下载文件……",3000);
-        app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-word");
-      }else{
-        app.showModalClose("转换的内容为空……",1000);
-        return false;
-      }
-    }else if(actype==73){//导出Excel文档
-      const currentTxt = this.initialImgText();
-      console.log("actype::",currentTxt)
-        if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
-          app.showModalClose("开始下载文件……",3000);
-          app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-excel");
-        }else{
-          app.showModalClose("转换的内容为空……",1000);
-          return false;
-        }
     }else{   
       console.warn("translateFunction:",e);             
     } 
@@ -170,6 +133,7 @@ initialImgText(){
 // 底部导航以及功能切换
 showActionBox(actype){  
   let show = this.data.action?false:true;
+  const tThis=this;  
   if(actype===0){
     show=false;
   }
@@ -181,12 +145,92 @@ showActionBox(actype){
     return false;
   }else if(actype==20){
     console.log("actype====2");
+    wx.showActionSheet({
+      itemList: ["仅复制原文", "仅复制翻译结果", "复制原文和结果"],
+      success: (e) => { 
+        if(e.tapIndex==0){//仅复制原文
+          tThis.copyOriginal();
+        }else if(e.tapIndex==1){//仅复制翻译结果
+          tThis.copyTranslate();
+        }else if(e.tapIndex==2){//复制原和结果
+          tThis.copyBoth();                 
+        }
+      },
+      fail: (err) => {
+        wx.showToast({ title: err, icon: "none" });
+      },
+    });
+    return false;
   }else if(actype==30){
-    console.log("actype====3");
+    console.log("actype====3"); 
+    wx.showActionSheet({
+      itemList: ["导出TXT文件", "导出Word文档", "导出Excel文档"],
+      success: (e) => {  
+        if(e.tapIndex==0){//导出TXT文件
+      
+          const currentTxt = tThis.initialImgText();
+          console.log("actype::",currentTxt)
+            if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
+              app.showModalClose("开始下载文件……",3000);
+              app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-txt","中英文线上拍照翻译器翻译的纯文本文档.txt");
+            }else{
+              app.showModalClose("转换的内容为空……",1000);
+              return false;
+            }
+         }else if(e.tapIndex==1){//导出Word文档
+          const currentTxt = tThis.initialImgText();
+          console.log("actype::",currentTxt)
+            if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
+              app.showModalClose("开始下载文件……",3000);
+              app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-word","中英文线上拍照翻译器翻译的Word文档.docx");
+            }else{
+              app.showModalClose("转换的内容为空……",1000);
+              return false;
+            }
+          }else if(e.tapIndex==2){//导出Excel文档
+            const currentTxt = tThis.initialImgText();
+            console.log("actype::",currentTxt)
+              if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
+                app.showModalClose("开始下载文件……",3000);
+                app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-excel","中英文线上拍照翻译器翻译的Excel文档.excel");
+              }else{
+                app.showModalClose("转换的内容为空……",1000);
+                return false;
+              }
+          }
+      },
+      fail: (err) => {
+        wx.showToast({ title: err, icon: "none" });
+      },
+    });
+    return false;
     show=true;
   }else if(actype==40){
     console.log("actype====3");
-    show=true;
+    show=false;
+    wx.showActionSheet({
+      itemList: ["逐行对比显示", "左右对比显示", "仅显示译文"],
+      success: (e) => { 
+        let showType = null; 
+        if(e.tapIndex==0){//逐行对比显示
+          showType=61;
+        }else if(e.tapIndex==1){//左右对比显示
+          showType=62;
+        }else if(e.tapIndex==2){//仅显示译文
+          showType=63;        
+        }
+            
+        if(showType){ 
+          this.setData({
+            showType: showType,
+            })
+        }
+ 
+      },
+      fail: (err) => {
+        wx.showToast({ title: err, icon: "none" });
+      },
+    }); 
   }else{
     console.error("actype====未记录",actype); 
   }
@@ -237,7 +281,7 @@ toTranslateText(){
       },
       data: {
         text: fromText,
-        target: wx.getStorageSync("currentTargetLang")||"en",
+        target: wx.getStorageSync("currentTargetLang")||"zh",
         source: wx.getStorageSync("currentLang")||"auto",
       },
       success: (res) => {

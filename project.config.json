@@ -19,6 +19,9 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "useCompilerPlugins": [
+      "sass"
+    ],
     "compileWorklet": true,
     "ignoreUploadUnusedFiles": false
   },

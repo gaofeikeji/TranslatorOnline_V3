@@ -148,7 +148,7 @@ page {
   width: 28rpx;
   height: 28rpx;
   margin-left: auto;
-  margin-right: 30rpx;
+  margin-right: 40rpx;
 }
 
 

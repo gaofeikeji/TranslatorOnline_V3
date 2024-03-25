@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏+状态栏
     navBarHeight: app.globalData.navBarHeight, //导航栏高度
     menuHeight: app.globalData.menuHeight, //导航栏高度
     statusBarHeight: app.globalData.statusBarHeight, //状态栏栏高度
@@ -21,10 +22,7 @@ Page({
     // 会员信息
     subscribe: app.globalData.subscribe || {},
   },
-  onLoad(options) {  
-    this.setData({
-      nbTitle: '个人中心', 
-    })
+  onLoad(options) {   
     this.payComponent = this.selectComponent("#pay");
     if(getApp().globalData.access_token){
       this.setData({ subscribe: getApp().globalData.subscribe || {} });
@@ -47,11 +45,11 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo,
     });
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 1
-      })
-    }
+    // if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+    //   this.getTabBar().setData({
+    //     selected: 1
+    //   })
+    // }
     
   },
   openVip: function () {

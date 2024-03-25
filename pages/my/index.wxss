@@ -1,14 +1,8 @@
-.container{
-  background: rgba(247, 247, 247, 1);
-  padding: 5rpx 10rpx;
-}
-
 .user_container {
-  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5rpx 10rpx; 
+  padding: 50rpx 40rpx 40rpx  30rpx; 
 }
 
 .userinfo {
@@ -68,14 +62,12 @@
 }
 
 .system-container{
-  min-width: 710rpx;
-  margin:  0 auto;
+  margin:  0 30rpx;
 }
 
 
 .my_settingbox {
-  min-width: 710rpx;
-  margin:  0 auto;
+  margin:  0 30rpx;
   opacity: 1;
   border-radius: 10rpx;
   background: rgba(255, 255, 255, 1);
@@ -106,12 +98,12 @@
 }
 
 .my_set_item_r {
-  width: 610rpx;
   height: 100%;
-  padding-right: 30rpx;
+  padding-right: 40rpx;
   box-sizing: border-box;
 
   display: flex;
+  flex:1;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -139,4 +131,10 @@
   margin-top: 50rpx;
   font-size: 28rpx;
   color: rgba(0, 0, 0, 0.5);
+} 
+.header{
+  background-color: #fff;
+}
+.section{
+  background-color: rgb(247,247,247);
 }

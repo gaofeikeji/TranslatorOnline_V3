@@ -1,4 +1,8 @@
 {
+  "homeButton": false,
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor":"#fff",
+  "navigationBarTextStyle":"black",
     "usingComponents": {},
     "navigationBarTitleText": "个人信息"
 }

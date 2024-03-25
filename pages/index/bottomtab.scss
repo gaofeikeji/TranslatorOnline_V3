@@ -1,0 +1,59 @@
+
+
+/* 底部选项卡 */
+.bottom-tab-box {
+  width: 100%; 
+  display:flex;
+  align-items: center;
+  justify-content:center;
+  background: #fff;
+  box-shadow: 0rpx 0rpx 20rpx  rgba(0, 0, 0, 0.02);
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  .transparent{
+    background-color: transparent;
+    border-top-color: transparent; 
+    display: block;
+    text-align: center;
+  } 
+  .tab-item  {
+      display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 170rpx;
+    opacity: 1;
+  }
+  
+  .tab-item  image {
+    width: 48rpx;
+    height: 48rpx; 
+    opacity: 1;
+    background-color: linear-gradient(135deg, rgba(31, 113, 255, 0.8) 0%, rgba(31, 113, 255, 1) 100%);
+  }
+  
+  .tab-item  text { 
+    margin-top: 16rpx;
+    font-size: 28rpx;
+    font-weight: normal;
+    letter-spacing: 0rpx;
+    line-height: 44rpx;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  
+  .tab-item  .publish {
+    width: 65rpx;
+    height: 65rpx;
+    background-color: #ff90ba;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: auto; 
+  }
+  
+  .tabbar-select {
+    color: #303030;
+  }
+} 

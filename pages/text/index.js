@@ -6,9 +6,8 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    nbFrontColor: '#16724273',
-    nbBackgroundColor: '#FF0DE0',
+  data: { 
+    navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏+状态栏
     navBarHeight: app.globalData.navBarHeight, //导航栏高度
     menuBotton: app.globalData.menuBotton, //导航栏距离顶部距离
     menuRight: app.globalData.menuRight, //导航栏距离右侧距离
@@ -17,13 +16,13 @@ Page({
     screenHeight: app.globalData.screenHeight, //可视区域高度  
     notVip: false,  
 
-    maxlength: 200,
+    maxlength: 2000,
     isIOS: sys.system.indexOf('iOS') > -1,
     subscribe: app.globalData.subscribe || {},
     fromText:"",//输入框内容
     fromTextLength:0,//输入框内容
   },
-
+  // 注册会员
   OnClickVipLock() {
     this.payComponent.process(() => {
       app.userCenterLoginCallbackOnClickVipLock = () => {
@@ -60,8 +59,18 @@ Page({
         wx.navigateTo({
           url: "/pages/texttranslate/index?text="+resp
         })
-      }else{
-        app.showModalClose("请填写要翻译的内容",3000);
+      }else{ 
+        wx.showModal({
+          title: '提示',
+          content: '请填写要翻译的内容，您当前什么都没有填写',
+          success (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
       }
     }
     // this.setData({
@@ -72,8 +81,18 @@ Page({
 // 监听输入框改变
 updateFormText(e){
   const formdata= e.detail.value;
-  if(this.data.notVip==false&&formdata.length>this.data.maxlength){
-    xy.showModalClose("请充值会员享受更多服务",2000);
+  console.warn(this.data.notVip,formdata.length)
+  if(this.data.notVip==false&&formdata.length==this.data.maxlength){
+   wx.showModal({
+     title: '温馨提醒',
+     content: '普通用户享受2000字，请充值会员享受更多服务',
+     complete: (res) => {
+       if (res.cancel) {
+       }
+       if (res.confirm) {
+       }
+     }
+   })
   }
   this.setData({
     fromText: formdata.substr(0,this.data.maxlength),
@@ -91,7 +110,7 @@ updateFormText(e){
       // console.warn("app.globalData.subscribe.is_vip",capp.globalData.subscribe.is_vip)
       tThis.setData({
         subscribe: capp.globalData.subscribe || {},
-        maxlength: capp.globalData.subscribe.is_vip!=0 ? 2000 : 200,
+        maxlength: capp.globalData.subscribe.is_vip!=0 ? 2000 : 2000,
         notVip: !capp.globalData.subscribe.is_vip
       })
     });

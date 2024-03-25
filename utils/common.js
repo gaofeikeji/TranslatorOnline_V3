@@ -189,6 +189,7 @@ export const checkImageSync = async ({
 }) => {
   try {
     // 信息提示
+    if(message.length>3)
     wx.showLoading({ title: message, mask: true });
     // 图片安全检测之前需要先压缩图片，主要是为了处理图片大于1M的情况
     // const compressRes = await compressImage(tempUrl, instance);
@@ -200,13 +201,11 @@ export const checkImageSync = async ({
       wx.showToast({ title: res.msg, icon: "none", duration: 2000 });
       return false;
     }
-    console.log("uploadFileuploadFileuploadFile：resp");
-    console.log(res);
+    console.log("uploadFileuploadFileuploadFile：resp",res); 
 
     // 图片安全检测
     const verifyRes = await verifyImage(res.data.url);
-    console.log("uploadFile:------", res);
-    console.log("verifyRes:-------", verifyRes);
+    console.log("uploadFile:---verifyRes---", verifyRes); 
     if (verifyRes.code == 1) {
       // 图片安全检测成功
       typeof success === "function" && success(res.data);
@@ -218,7 +217,7 @@ export const checkImageSync = async ({
     // 图片安全检测失败
     typeof fail === "function" && fail(error);
   } finally {
-    wx.hideLoading();
+    // wx.hideLoading();
   }
 };
 

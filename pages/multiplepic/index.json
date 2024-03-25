@@ -1,5 +1,7 @@
 {
+  "navigationStyle": "custom",
   "usingComponents": {
-    "navigation-bar": "/custom-tab-bar"
+    "navigation-bar": "/custom-tab-bar",
+    "vip-member":"/components/vip-member/vip-member"
   }
 }
