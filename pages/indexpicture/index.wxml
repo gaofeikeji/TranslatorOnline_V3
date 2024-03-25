@@ -13,13 +13,13 @@
         style="height:{{screenHeight-85}}px;">
               <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
               style=" width:{{selectPicturWidth*(3+langList.length)}}px;height:{{selectPicturHeight*(3+langList.length)}}px;top:{{-selectPicturHeight*(langList.length+1)}};left: {{-selectPicturWidth*(langList.length)/2}}rpx;">
-              <movable-view direction="all" scale-min="0.001" scale-max="6" 
+              <movable-view direction="all" scale-min="1" scale-max="6" 
               damping="20" inertia="{{false}}" friction="{{0.7}}" class="zoomview-box"
                 style="width:{{selectPicturWidth*(langList.length)}}px;height:{{selectPicturHeight*(langList.length)+20*(langList.length)}}px;" out-of-bounds="{{true}}"
                 inertia="{{true}}" scale="{{true}}" direction="all">
-                <!-- bindscale="linstenerScale"  -->
+                <!-- bindscale="linstenerScale "  -->
                 <view class="media-info-box  {{'text-item'+items.selectPicturPath}}" wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
-                  style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;">
+                  style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;{{items.transform}}">
                   <!-- 显示结果 -->
                   <!-- <block wx:if="{{ showResult ==   1 }}">  
                     </block> -->

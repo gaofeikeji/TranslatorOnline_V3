@@ -192,7 +192,7 @@ toVerticleHorizonTextItem(e){
     //     })
     let currentScrollView = wx.createSelectorQuery().in(this).select(".text-item"+img);
 
-    
+
     // wx.ScrollViewContext.scrollIntoView({
     //   selector: ".text-item"+rate,
     //   duration: 300
@@ -472,12 +472,13 @@ getMidpoint(a, b) {
     }
     wx.getImageInfo({
       src: options.selectPicturPath,
-      success (res) { 
+      success (res) {  
         const sysInfo= wx.getSystemInfoSync();
         const windowWidth =sysInfo.windowWidth;
         //console.warn("sysInfo:",sysInfo) ;
         app.globalData.screenWidth=windowWidth;
         //console.log("getImageInfoByOption:",res) 
+        const picRadio = tThis.calculateCanvasDimensions( res.width,res.height,windowWidth,sysInfo.windowHeight);
 
         // let canvasRatio = tThis.calculateCanvasDimensions(res.width,res.height,windowWidth,sysInfo.windowHeight-140);
         // //console.warn("canvascanvasRatioRatiocanvasRatio",canvasRatio); 
@@ -488,10 +489,12 @@ getMidpoint(a, b) {
           currentSelectX: 0, 
           currentSelectY: 60, 
           windowWidth: windowWidth, 
-          windowHeight: sysInfo.windowHeight-140, 
+          windowHeight: sysInfo.windowHeight-140, //imgWidth / imgHeight
           selectPicturPath: options.selectPicturPath,
+          transform: "transform:scale("+(picRadio.canvasRatio-0.1)+")",
           // scale: (canvasRatio.canvasRatio)<0.3?0.3:(canvasRatio.canvasRatio-0.1)
         })
+
        
       }
     })
