@@ -1,10 +1,5 @@
 
-<view class="page-container "> 
-  <view class="header" style="height: {{navbarWidthStatus}};">  
-      <!--index.wxml--> 
-      <navigation-bar    canBack="{{true}}" onytitle="{{true}}" 
-      title="{{nbTitle}}" color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
-   </view> 
+<view class="page-container ">  
  
    <view class="section"> 
   <form bindsubmit="formSubmit">

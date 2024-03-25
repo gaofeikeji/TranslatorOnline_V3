@@ -1,6 +1,5 @@
 {
   "homeButton": false,
-  "navigationStyle": "custom",
   "navigationBarBackgroundColor":"#fff",
   "navigationBarTextStyle":"black",
     "usingComponents": {

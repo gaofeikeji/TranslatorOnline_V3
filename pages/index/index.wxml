@@ -8,8 +8,8 @@
    <view class="section"> 
       <camera  device-position="back"   flash="off"  mode="normal"
        binderror="cam_error"  bindinitdone="initCamera"   class="start-camera "></camera>  
-        <view class="camral-info-box {{initCamral?(selectPicturPath?'':'hidden-bg'):''}}"> 
-          <view class="cloum-box  {{selectPicturPath?'':'loading-bg'}}" hover-class="none" hover-stop-propagation="false">
+        <view class="camral-info-box {{initCamral?(selectPicturPath?'':'hidden'):''}}"> 
+          <view class="cloum-box  {{showSelectImg?(selectPicturPath==''?'':'hidden'):''}}" hover-class="none" hover-stop-propagation="false">
               <view class="row-box" hover-class="none" hover-stop-propagation="false">
                 <view class="cloum-box-item"></view>
                 <view class="cloum-box-item"></view>

@@ -83,29 +83,29 @@ Page({
       // this.setData({
       //   showSelectImg:  this.data.showSelectImg?false:true
       // })
-    const tThis=this;  
+    const tThis=this;   
     wx.showActionSheet({
-      itemList: ["从相册选择图片", "从聊天记录选择图片"],
+      itemList:app.globalData.isMobile?["从相册选择图片","从聊天记录选择图片"]:["从相册选择图片"],
       success: (e) => {
         if (e.tapIndex == 0) {
           tThis.takePicture();
         } else if (e.tapIndex == 1) {
-          tThis.takePhotoWithMessage();
-          // wx.previewImage({
-          //   urls: [this.data.image_url],
-          //   current: this.data.image_url,
-          // });
+          tThis.takePhotoWithMessage(); 
         }
       },
       fail: (err) => {
         wx.showToast({ title: err, icon: "none" });
       },
     });
+
+
+
       return false; 
     }
     if(type==-1){
       wx.showModal({
         title: '友情提示',
+        showCancel: false,
         content: '感谢您的使用，功能正在完善中，敬请期待……',
         complete: (res) => {
           if (res.cancel) {
@@ -237,54 +237,58 @@ Page({
   //   选择照片
   takePicture(){
     let tThis= this;
-    wx.chooseMedia({
-        count: 10,
-        mediaType: ["image"],
-        sourceType: ["album"],
-        maxDuration: 30,
-        camera: 'back',
-        success(res) {  
-          app.showModalClose("正在为您校对图片信息",600);
-          tThis.setData({  
-            initCamral:true, 
-            selectPicturPath: res.tempFiles[0]['tempFilePath'],
-          });
-            console.warn("当前选中的照片，一张就上传::",res) 
-          if(res.tempFiles.length>1){ 
-            let tempFilesArr= [];
-            res.tempFiles.forEach(function(item){ 
-              tempFilesArr.push( item.tempFilePath);
-            }); 
-            setTimeout(function(){ 
-                tThis.setData({ 
-                  initCamral: true,
-                  selectPicturPath: "",
-                })   
-                wx.navigateTo({
-                  url: "../multiplepic/index?imgupload="+tempFilesArr.join("---")
-                })
-            },300);
-          }else{
-            //單文件上傳(或者拍照)
-              tThis.confirmImginfoSingle(res,res.tempFiles[0]['tempFilePath'],0); 
-          } 
+    wx.authorize({
+      scope: 'scope.writePhotosAlbum',
+      success () {  
+          wx.chooseMedia({
+            count: 9,//苹果6上面count超过9真机会报错
+            mediaType: ["image"],
+            sourceType: ["album"],
+            sizeType: ['original', 'compressed'],
+            success(res) {  
+              app.showModalClose("正在为您校对图片信息",600);
+              tThis.setData({  
+                initCamral:true, 
+                selectPicturPath: res.tempFiles[0]['tempFilePath'],
+              });
+                console.warn("当前选中的照片，一张就上传::",res) 
+              if(res.tempFiles.length>1){ 
+                let tempFilesArr= [];
+                res.tempFiles.forEach(function(item){ 
+                  tempFilesArr.push( item.tempFilePath);
+                }); 
+                setTimeout(function(){ 
+                    tThis.setData({ 
+                      initCamral: true,
+                      selectPicturPath: "",
+                    })   
+                    wx.navigateTo({
+                      url: "../multiplepic/index?imgupload="+tempFilesArr.join("---")
+                    })
+                },300);
+              }else{
+                //單文件上傳(或者拍照)
+                  tThis.confirmImginfoSingle(res,res.tempFiles[0]['tempFilePath'],0); 
+              } 
+                
             
         
-    
-        },
-        fail(res) {
-          console.warn("cancel_fail::",res)  
-          tThis.setData({  
-            initCamral:true, 
-          });
-        },
-        complete(res) { 
-          tThis.setData({   
-            showSelectImg:  false, 
-            selectPicturPath: ""
-          });
-        },
-      })
+            },
+            fail(res) {
+              console.warn("cancel_fail::",res)  
+              tThis.setData({  
+                initCamral:true, 
+              });
+            },
+            complete(res) { 
+              tThis.setData({   
+                showSelectImg:  false, 
+                selectPicturPath: ""
+              });
+            },
+          })
+      }
+    })
   },  
 
 //   选择照片
@@ -342,23 +346,42 @@ takePictureMultiple(){
 },  
 // 查看原图
 viewImage() {
-wx.showActionSheet({
-  itemList: ["重新上传", "查看大图"],
-  success: (e) => {
-    this.takePhoto();
-    // if (e.tapIndex == 0) {
-    //   this.takePhoto();
-    // } else if (e.tapIndex == 1) {
-    //   wx.previewImage({
-    //     urls: [this.data.image_url],
-    //     current: this.data.image_url,
-    //   });
-    // }
-  },
-  fail: (err) => {
-    wx.showToast({ title: err, icon: "none" });
-  },
-});
+  const tThis=this;
+  const showActionBox =()=>{
+          
+        wx.showActionSheet({
+          itemList: ["重新上传", "查看大图"],
+          success: (e) => {
+            tThis.takePhoto();
+            // if (e.tapIndex == 0) {
+            //   this.takePhoto();
+            // } else if (e.tapIndex == 1) {
+            //   wx.previewImage({
+            //     urls: [this.data.image_url],
+            //     current: this.data.image_url,
+            //   });
+            // }
+          },
+          fail: (err) => {
+            wx.showToast({ title: err, icon: "none" });
+          },
+        });
+  };
+  wx.getSystemInfo({
+    success: (res) => {
+      if (res.platform === 'windows' || res.platform === 'mac') {
+        // PC端代码 
+      } else if (res.platform === 'android' || res.platform === 'ios') {
+        // 手机端代码
+        // console.log('This is a mobile platform.');
+      } else {
+        // 其他平台代码
+        // console.log('This is a platform other than PC or mobile.');
+      }
+    }
+  }); 
+
+
 },
 // 检查图片校验并上传
 confirmImginfoSingle(res,uploadPath,ismultiple=0){
@@ -368,57 +391,60 @@ confirmImginfoSingle(res,uploadPath,ismultiple=0){
   })
   console.log("res.tempFiles[0].size:",res) 
   // return  false;
-  wx.showLoading({ title: uploadPath||"翻译中...", mask: false });
-  wx.getImageInfo({
-    src: uploadPath,
-    success (tempinfo) { 
-      tThis.setData({  
-        ccWidth:tempinfo.width,
-        ccHeight:  tempinfo.height, 
-      });
-      console.log("res.tempinfotempinfo:",tempinfo,uploadPath) 
-      wx.showLoading({ title:"正在校验图片信息，请稍等", mask: false });
+  wx.showLoading({ title: "翻译中...", mask: true });
+  
+  xy.checkImageSync({
+    tempFilePaths: uploadPath,
+    instance: tThis,
+    success: (imgRes) => {   
+      //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
+            console.warn("takePicture::imgRes::",imgRes)
+
+        tThis.setData({ 
+          initCamral: true,
+          selectPicturPath: "",
+        })   
+        app.globalData.selectPicturPath=imgRes.url;
+        // wx.setStorageSync('upload_pic_info', netImginfo) 
+          
+        wx.showLoading({ title:"正在校验图片信息，请稍等", mask: true });
+        wx.navigateTo({
+          url: "../indexpicture/index?selectPicturPath=" +imgRes.url+"&ismultipl="+ismultiple
+        })
+        //+"&height="+netImginfo.height+"&width="+netImginfo.width+"&ccheight="+tThis.data.height+"&ccwidth="+tThis.data.width
+        // wx.getImageInfo({
+        //   src: imgRes.url,
+        //   success (netImginfo) {
+        //     // tThis.getPictureRate(res); 
+        //     console.log("getImageInfogetImageInfo:",netImginfo)
+            
+        //   },fail(){
+        //     app.showModalClose("获取图片信息失败，请重新上传",20000)
+        //     wx.hideLoading();
+        //   }
+        // })
+    },
+    fail: (err) => {
+      console.error("checkImageSync::err___");
+      wx.hideLoading();
+      xy.showTip(err.msg);  
+    },
+  });
+  // wx.getImageInfo({
+  //   src: uploadPath,
+  //   success (tempinfo) { 
+  //     tThis.setData({  
+  //       ccWidth:tempinfo.width,
+  //       ccHeight:  tempinfo.height, 
+  //     });
+  //     console.log("res.tempinfotempinfo:",tempinfo,uploadPath) 
+  //     wx.showLoading({ title:"正在校验图片信息，请稍等", mask: true });
       
-        xy.checkImageSync({
-          tempFilePaths: uploadPath,
-          instance: tThis,
-          success: (imgRes) => {  
-            wx.hideLoading();
-            //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
-                  console.warn("takePicture::imgRes::",imgRes)
- 
-              tThis.setData({ 
-                initCamral: true,
-                selectPicturPath: "",
-              })   
-              app.globalData.selectPicturPath=imgRes.url;
-              wx.getImageInfo({
-                src: imgRes.url,
-                success (netImginfo) {
-                  // tThis.getPictureRate(res); 
-                  console.log("getImageInfogetImageInfo:",netImginfo)
-                  wx.setStorageSync('upload_pic_info', netImginfo) 
-                
-                  wx.navigateTo({
-                    url: "../indexpicture/index?selectPicturPath="+imgRes.url+"&ismultipl="+ismultiple+"&height="+netImginfo.height+"&width="+netImginfo.width+"&ccheight="+tThis.data.height+"&ccwidth="+tThis.data.width
-                  })
-                },fail(){
-                  app.showModalClose("获取图片信息失败，请重新上传",20000)
-                  wx.hideLoading();
-                }
-              })
-          },
-          fail: (err) => {
-            console.error("checkImageSync::err___");
-            wx.hideLoading();
-            xy.showTip(err.msg);  
-          },
-        });
-    },fail(){
-      app.showModalClose("获取图片信息失败，请重新上传",2000)
-      wx.hideLoading()
-    }
-  })
+  //   },fail(){
+  //     app.showModalClose("获取图片信息失败，请重新上传",2000)
+  //     wx.hideLoading()
+  //   }
+  // })
 },
 //   选择照片
 takePhotoWithMessage(){

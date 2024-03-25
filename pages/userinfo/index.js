@@ -62,6 +62,7 @@ Page({
     canIUseGetUserProfile: false
   },
   onLoad: function (options) {
+    wx.hideHomeButton();
     this.setData({
       nbTitle: '设置头像和昵称', 
     })

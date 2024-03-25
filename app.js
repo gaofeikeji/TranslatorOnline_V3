@@ -49,6 +49,7 @@ App({
     selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg",
     totalUploadImages:[],
     currentUploadImages:0,
+    isMobile: false,
  
   },
   onLaunch: function () { 
@@ -58,8 +59,14 @@ App({
   },
   
   setNavBarInfo() {
+      
     // 获取系统信息
     const systemInfo = wx.getSystemInfoSync();
+    if (systemInfo.platform === 'android' || systemInfo.platform === 'ios') {
+      this.globalData.isMobile=true;
+    } else if (systemInfo.platform === 'windows' || systemInfo.platform === 'mac') {
+    } else {
+    }
     // 胶囊按钮位置信息
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
     // 导航栏高度 = 状态栏到胶囊的间距（胶囊距上距离-状态栏高度） * 2 + 胶囊高度 + 状态栏高度

@@ -129,6 +129,7 @@ export const verifyImage = (url) => {
     wx.request({
       url: `${isDevelopmentStatusUrl()}/api/mini_api_v2/media_check_multi`,
       method: "POST",
+      timeout:3000,
       header: {
         Authorization: wx.getStorageSync("access_token"),
       },

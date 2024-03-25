@@ -491,7 +491,7 @@ getMidpoint(a, b) {
           windowWidth: windowWidth, 
           windowHeight: sysInfo.windowHeight-140, //imgWidth / imgHeight
           selectPicturPath: options.selectPicturPath,
-          transform: "transform:scale("+(picRadio.canvasRatio-0.1)+")",
+          transform: "transform:scale("+(picRadio.canvasRatio)+")",
           // scale: (canvasRatio.canvasRatio)<0.3?0.3:(canvasRatio.canvasRatio-0.1)
         })
 

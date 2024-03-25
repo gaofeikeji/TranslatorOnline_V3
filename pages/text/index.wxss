@@ -26,8 +26,6 @@ page{
 }  
 .textarea-container{  
   background: rgba(0, 0, 0, 0.03);
-  min-height: 1000rpx;
-  max-height: 100%;
   overflow-y: auto;
   width: 100%;
   opacity: 1;
@@ -74,6 +72,7 @@ page{
 .img-text .not-wrap{
   height: 36rpx;
   line-height:30rpx;
+  color: rgba(0, 0, 0, 0.6);
 }
 .vipinfo{
   display: flex;

@@ -7,15 +7,15 @@
 
     <!-- 当前图片展示容器 -->
     <view  class="section-movable" >
-      <view class="section-box" style="height:{{screenHeight-85}}px">
+      <view class="section-box" style="height:{{screenHeight-85}}px;wiidth:100%;position:relative">
         
         <scroll-view scroll-y type="list" class="section"
         style="height:{{screenHeight-85}}px;">
               <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
-              style=" width:{{selectPicturWidth*(3+langList.length)}}px;height:{{selectPicturHeight*(3+langList.length)}}px;top:{{-selectPicturHeight*(langList.length+1)}};left: {{-selectPicturWidth*(langList.length)/2}}rpx;">
-              <movable-view direction="all" scale-min="1" scale-max="6" 
+              style=" width:{{langList[0]['windowWidth']*(3+langList.length)}}px;height:{{langList[0]['windowHeight']*(3+langList.length)}}px;">
+              <movable-view direction="all" scale-min="1" scale-max="6"  data-www="{{langList[0]['windowWidth']}}"
               damping="20" inertia="{{false}}" friction="{{0.7}}" class="zoomview-box"
-                style="width:{{selectPicturWidth*(langList.length)}}px;height:{{selectPicturHeight*(langList.length)+20*(langList.length)}}px;" out-of-bounds="{{true}}"
+                style="width:{{langList[0]['windowWidth']}}px;height:{{langList[0]['windowHeight']}}px;" out-of-bounds="{{true}}"
                 inertia="{{true}}" scale="{{true}}" direction="all">
                 <!-- bindscale="linstenerScale "  -->
                 <view class="media-info-box  {{'text-item'+items.selectPicturPath}}" wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
@@ -142,12 +142,11 @@
     </block>
     <!-- 复制内容-->
     <block wx:if="{{ actype ==   20 }}">
-      <view class="action-btn-box">
-       
-        <view class="action-only-close">
-
-          <text class="closeBtn" data-actype="0" bindtap="selectFunction">X</text>
-        </view>
+      <view class="action-icon-box action-close-box"> 
+        <image src="/images/icon/close.png" class="icon-btns-close" data-actype="0" bindtap="selectFunction"></image>
+      </view>
+      <view class="action-btn-box"> 
+        
         <view class="action-btn" data-actype="51" bindtap="translateFunction">仅复制原文</view>
         <view class="action-btn" data-actype="52" bindtap="translateFunction">仅复制翻译结果</view>
         <view class="action-btn" data-actype="53" bindtap="translateFunction">复制原和结果</view>
@@ -157,9 +156,8 @@
     <block wx:if="{{ actype ==   30 }}">
 
       <view class="action-btn-box">
-        <view class="action-only-close">
-
-          <text class="closeBtn" data-actype="0" bindtap="selectFunction">X</text>
+        <view class="action-icon-box action-close-box"> 
+          <image src="/images/icon/close.png" class="icon-btns-close" data-actype="0" bindtap="selectFunction"></image>
         </view>
         <view class="action-btn" data-actype="71" bindtap="translateFunction">导出TXT文件</view>
         <view class="action-btn" data-actype="72" bindtap="translateFunction">导出Word文档</view>

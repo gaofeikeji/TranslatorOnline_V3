@@ -23,6 +23,7 @@ Page({
     subscribe: app.globalData.subscribe || {},
   },
   onLoad(options) {   
+    wx.hideHomeButton();
     this.payComponent = this.selectComponent("#pay");
     if(getApp().globalData.access_token){
       this.setData({ subscribe: getApp().globalData.subscribe || {} });

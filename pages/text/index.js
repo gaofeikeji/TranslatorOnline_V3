@@ -71,6 +71,7 @@ Page({
       }else{ 
         wx.showModal({
           title: '提示',
+          showCancel:false,
           content: '请填写要翻译的内容，您当前什么都没有填写',
           success (res) {
             if (res.confirm) {
@@ -94,6 +95,7 @@ updateFormText(e){
   if(this.data.notVip==false&&formdata.length==this.data.maxlength){
    wx.showModal({
      title: '温馨提醒',
+     showCancel:false,
      content: '普通用户享受2000字，请充值会员享受更多服务',
      complete: (res) => {
        if (res.cancel) {
@@ -111,10 +113,15 @@ updateFormText(e){
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(){ 
+  onLoad(options){ 
     // 注册pay组件
     this.payComponent = this.selectComponent("#pay");
     const tThis=this;
+    if(options.text){
+      tThis.setData({
+        fromText: options.text,
+      })
+    }
     app.globalLogin(this,function(data,capp){ 
       // console.warn("app.globalData.subscribe.is_vip",capp.globalData.subscribe.is_vip)
       tThis.setData({

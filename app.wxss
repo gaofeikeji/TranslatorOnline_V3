@@ -17,16 +17,13 @@ page{
 .header{  
   background:#fff;
   padding: 0 0 10rpx 0;
-  box-shadow: 0rpx 0rpx 20rpx  rgba(0, 0, 0, 0.02);
-  border-bottom-left-radius: 20rpx;
-  border-bottom-right-radius: 20rpx;
 } 
 .section{
   /* background-color: red; */
   width: 100%; 
   flex: 1;
   position: relative;
-  background: rgba(204, 204, 204, 1);
+  /* background: rgba(204, 204, 204, 1); */
   /* background-color: blue; */
 } 
 .footer:not(.footer-btn-box){
@@ -267,7 +264,7 @@ color: rgba(0, 0, 0, 0.7);
 
 /* 通用view 模式btn */
 .action-btn-box{
-  padding: 30rpx;
+  padding: 15rpx;
   width: 100%;
   box-sizing: border-box;
 }
@@ -289,7 +286,7 @@ color: rgba(0, 0, 0, 0.7);
 background: rgba(255, 255, 255, 1); 
 border: 2rpx solid rgba(0, 0, 0, 0.15);
 box-shadow: 2rpx 2rpx 4rpx  rgba(0, 0, 0, 0.05);
-  width: 90%;
+  width: 92%;
   height: 90rpx;
   line-height: 90rpx;
   opacity: 1;

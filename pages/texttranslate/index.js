@@ -138,9 +138,12 @@ showActionBox(actype){
   }
   // 返回编辑
   if(actype==10){
-    wx.navigateBack({
-      delta: 1,
-    }); 
+    wx.navigateTo({
+      url: "/pages/text/index?text="+tThis.data.fromText
+    })
+    // wx.navigateBack({
+    //   delta: 1,
+    // });     
     return false;
   }else if(actype==20){
     console.log("actype====2");

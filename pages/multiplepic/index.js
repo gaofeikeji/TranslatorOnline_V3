@@ -116,7 +116,7 @@ Page({
         curentLoading =setInterval(function(){ 
           console.warn("tempFilesArr.length>1",tempFilesArr,new Date());
           const info = "上传中"+ (app.globalData.currentUploadImages+1)+"/"+(tempFilesArr.length);
-          wx.showLoading({ title: info, mask: false }); 
+          wx.showLoading({ title: info, mask: true }); 
           },500);
         }
      Promise.all(tempFilesArr.map(confirmImginfo)).then(uploadImgsUrls => {  
@@ -189,7 +189,7 @@ Page({
       app.showModalClose("请上传图片后操作",2000);
       return false;
     }
-    wx.showLoading({ title:  "正在解析图片信息，服务器为您疯狂计算中...", mask: false });
+    wx.showLoading({ title:  "正在解析图片信息，服务器为您疯狂计算中...", mask: true });
     this.uploadMutipleImg(this.data.imgUrlList,function(uploadImgLists){ 
       app.totalUploadImages=[];
       app.currentUploadImages=0;

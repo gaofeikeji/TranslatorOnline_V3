@@ -61,6 +61,7 @@ page{
 .scroll-translate-left-right{ 
   display: flex;
   flex: 1;
+  height: 100%;
   margin: 0 auto;
   opacity: 1;
   border-radius: 8px;
@@ -101,7 +102,7 @@ page{
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 900;  
+  z-index: 400;  
 }
  
 .lang-item-block { 
@@ -122,3 +123,9 @@ page{
   color: rgba(0, 0, 0,1); 
 }
   
+.footer{
+  background: #fff;
+  height: 170rpx;
+  width: 100%;
+  z-index: 333;
+}

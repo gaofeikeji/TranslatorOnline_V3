@@ -5,19 +5,19 @@
    </view>
 
   <!--  -->                                 
-  <view class="section " >  
+  <view class="section " style="height: {{screenHeight-150}}px;">  
     <view class="section-box"> 
           <!-- 仅显示译文 -->
           <block wx:if="{{ showType ==  63 }}">  
-            <view class="text-container" > 
-                <textarea class="textarea-container"  maxlength="{{isVip?-1:2000}}"
+            <view class="text-container" style="height: {{screenHeight-150}}px;"> 
+                <textarea class="textarea-container"   maxlength="{{isVip?-1:2000}}"
                   placeholder="请输入需要翻译的文本" 
                 focus="{{false}}" value="{{toText?toText:fromText}}" /> 
             </view>
           </block>
           <!-- 左右对比显示 -->
           <block wx:if="{{ showType ==  62 }}">  
-            <view class="text-container">
+            <view class="text-container" style="height: {{screenHeight-150}}px;">
 
             <scroll-view class="scroll-translate-left-right" type="list"	scroll-y="true">
                 <view class="lang-left-right">
@@ -35,7 +35,7 @@
           <block wx:if="{{ showType ==  61 }}">  
             <view class="text-container">
             <scroll-view class="scroll-translate-left-right" type="list"	scroll-y="true" >
-              <view class="lang-left-right" style="min-height: {{screenHeight-150}}px;" >
+              <view class="lang-left-right" style="height: {{screenHeight-150}}px;" >
                   
                 <view class=" lang-item  "   bindtap="toImageTextItem"  wx:for-item="item"
                 wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"

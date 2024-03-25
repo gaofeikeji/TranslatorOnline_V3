@@ -8,8 +8,9 @@
   <view class="section"> 
    <view class="section-box">
 
-    <view class="text-container" >
-      <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本" 
+    <view class="text-container">
+      <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本"   style="min-height: {{screenHeight-150-30}}px;"
+      
        focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText"  />
        
        <view class="bottom-text" >

@@ -28,16 +28,17 @@ page{
 /* 解析的图片内容容器 */
 .zoomArea{ 
   position: relative;
-  margin:0;
-  height: 100%;
-  width: 100%; 
+  margin:0; 
   text-align: center;
   background: rgba(204, 204, 204, 1);
+  background: red;
 } 
 // 容器的高度觉得拖拽的灵敏度
 .zoomview-box{
   position: absolute;
+  z-index: 10;
   // background-color: #fff;  
+  background-color: blue;  
   
 }
 
@@ -129,6 +130,9 @@ page{
 .action-container .action-icon-box{
   box-sizing: border-box;
   padding:36rpx 31rpx 32rpx 40rpx ;
+  display: block;
+  height: 100rpx;
+  align-items: center;
 }
 .action-icon-box image.icon-btns{ 
   display: inline-block;
@@ -138,21 +142,16 @@ page{
   margin-right: 32rpx ;
   background-repeat: no-repeat;
 } 
-
 .action-icon-box image.icon-btns-close{ 
   width: 38rpx;
   height: 38rpx;
-background-image: url("/images/icon/close.png");
- 
-background-repeat: no-repeat;
-opacity: 1; 
-float: right;
-}
+  opacity: 1; 
+  float: right;
+} 
 
 
 
-.action-container {
-  z-index: 1;
+.action-container { 
   bottom: 150rpx;
   // bottom: 170rpx;
   margin-bottom:0;
