@@ -23,7 +23,6 @@ export const confirmImginfo = (uploadPath) => {
       },
       fail: (err) => {
         console.error("checkImageSync::err___");
-        wx.hideLoading();
         xy.showTip(err);   
         reject(err);
       },
@@ -136,7 +135,7 @@ Page({
         console.error('An error occurred while uploading images:', error);
         clearInterval(app.globalData.globalTimer);
         curentLoading=null;
-        app.showModalClose("请稍后在尝试，图片校验失败",2000);
+        app.showModalClose("请稍后在尝试，图片校验失败",4000);
       });
 
       // setTimeout(function(){ 

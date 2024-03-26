@@ -32,10 +32,10 @@
  
   <!-- 语言容器 --> 
 <view class="section-box-lang {{editLang?'edit-lang':''}}"
- style="height: {{screenHeight+(canBack?0:-85)}}px;top:{{navbarWidthStatus}}px;left:0;z-index: 500;">     
+ style="height: {{screenHeight+(canBack?0:-75)}}px;top:{{navbarWidthStatus}}px;left:0;z-index: 500;">     
   <!-- 源语言 -->
    <view  class="lang-flex-item "  > 
-      <view class="scroll-box" style="height: {{screenHeight-80}}px;" type="list"	scroll-y="true" >
+      <view class="scroll-box" style="height: {{screenHeight-132}}px;" type="list"	scroll-y="true" >
           <view class="lang-box form-scroll">
             <view   class="lang-item {{updateLang==idx?'selected':''}}" bind:tap="fromIdxChange"  wx:for-index="idx" 
           wx:for="{{langData}}" wx:key="*this"  data-lang-type="fromIdx"  

@@ -114,22 +114,26 @@ App({
       },
     });
   },
-  getCurrentLang(tThis){ 
-    this.globalData.currentLang=wx.getStorageSync("currentLang")||"auto";
-    this.globalData.currentTargetLang=wx.getStorageSync("currentTargetLang")||"zh";
+  getCurrentLang(tThis,instance){ 
+    const currentLang=wx.getStorageSync("currentLang")||"auto";
+    const currentTargetLang=wx.getStorageSync("currentTargetLang")||"zh";
     const current=  {
-        currentLang: this.globalData.currentLang,
-        currentTargetLang: this.globalData.currentTargetLang, 
+        currentLang: currentLang,
+        currentTargetLang: currentTargetLang, 
       };
     tThis&&tThis.setData(current)
     return current;
   },
   updateGlobalLang(updateLang,updateTargetLang){
     
-    app.globalData.currentLang=updateLang;// 
-    app.globalData.currentTargetLang=currentTargetLang;// 
+    // this.globalData.currentLang=updateLang;// 
+    // this.globalData.currentTargetLang=currentTargetLang;// 
     wx.setStorageSync("currentLang", updateLang); 
     wx.setStorageSync("currentTargetLang", updateTargetLang);  
+    return {
+      currentLang:updateLang,
+      currentTargetLang:updateTargetLang
+    }
   },
   globalLogin(tThis,customeCall){ 
       tThis = tThis||this;

@@ -13,18 +13,7 @@ page{
   background:rgba(204, 204, 204, 1);
   overflow: auto;
 }
-.text-container{  
-  background: rgba(0, 0, 0, 0.03);
-  display: flex;
-  flex: 1;
-  height: 100%;
-  overflow-y: auto;
-  width: 100%;
-  opacity: 1;
-  border-radius: 8rpx;
-  padding: 28rpx 30rpx 0 30rpx;
-  box-sizing: border-box;
-}
+
 
 /* 解析的图片内容容器 */
 .zoomArea{ 
@@ -32,7 +21,7 @@ page{
   margin:0; 
   // text-align: center;
   background: rgba(204, 204, 204, 1);
-  background: red;
+  // background: red;
   // display: flex;
   // align-items: center;
   // justify-content: center;
@@ -41,7 +30,7 @@ page{
 .zoomview-box{
   z-index:20;
   // background-color: #fff;  
-  background-color: blue;  
+  // background-color: blue;  
   display: block;
   
 }
@@ -58,13 +47,16 @@ page{
   border-color:  #fff; 
   text-fill-color:#000;
   -webkit-text-fill-color: #000;
-  z-index:1;
-  // transform: scale(0.8);
+  z-index:1; 
+  // filter: blur(1.3px);
   pointer-events: none;
 } 
  
+.media-info-box:nth-child(even){
+  border:4rpx solid  #004DD1; 
+}
 .media-info-box:nth-child(odd){
-  border-color:  rgba(31, 113, 255, 1); 
+  border:4rpx  rgba(31, 113, 255, 1); 
 }
 .default-image{
   padding: 0;
@@ -86,9 +78,9 @@ page{
   z-index: 22;
   box-shadow: none;
   display: inline-block;
-  /* background-color: rgba(245, 33, 33, 0.81); */
- border: 2rpx solid rgba(255,255,255,0.4);
-  color:rgba(0,0,0,0.5);
+ background-color: rgba(255,255,255,0.9);  
+  // border: 2rpx solid rgba(255,255,255,0.4);
+  color:rgba(0,0,0,0);
   pointer-events: none;
   text-align: justify;
   pointer-events: none; 
@@ -97,21 +89,19 @@ page{
   pointer-events: none;
   pointer-events: painted;
 } 
-.media-text-item:nth-child(odd){
-  border: 2rpx solid rgba(169,236,125,1);
+// .media-text-item:nth-child(odd){
+//   border: 2rpx solid rgba(169,236,125,1);
 
-}
-.media-text-item:nth-child(even){
-  border: 2rpx solid rgba(106,28,255,1);
+// }
+// .media-text-item:nth-child(even){
+//   border: 2rpx solid rgba(106,28,255,1);
 
-}
+// }
 .media-text-item.selected{
-  color: #fff ; 
-  box-shadow: 0 0 1px rgba(31, 113, 255, 0.8);
-  background: rgba(56, 148, 209, 0.781);
-  /* background: var(--bg); color: rgb(from var(--bg) calc(1 - r) calc(1 - g) calc(1 - b)); */
-  /* transform: scale(1.2); */
+  border: 2rpx solid rgba(0, 0, 0, 0.5);
+  background:  rgba(31, 113, 255, 0.9);
   pointer-events: none;
+  color: #fff!important; 
 }
 .action-scale{
   position: absolute;
@@ -155,7 +145,9 @@ page{
 
 
 .action-container { 
-  bottom: 150rpx;
+  bottom: 135rpx;
+  padding-bottom: 20rpx;
+  background-color: #fff;
   // bottom: 170rpx;
   margin-bottom:0;
   .action-only-close{

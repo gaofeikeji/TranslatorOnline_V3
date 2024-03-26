@@ -210,7 +210,7 @@ Page({
     app.globalLogin(this,function(){
       tThis.systemCamaraPower();
     });
-    app.getCurrentLang(this);
+    app.getCurrentLang(this,app);
 
   },
   onShow(){ 

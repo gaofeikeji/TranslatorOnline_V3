@@ -150,7 +150,10 @@ Component({
           newLang['currentTargetLang']=updateTargetLang;
         wx.setStorageSync("currentLang", updateLang); 
         wx.setStorageSync("currentTargetLang", updateTargetLang); 
-        app.updateGlobalLang(updateLang,updateTargetLang);
+        const updata = app.updateGlobalLang(updateLang,updateTargetLang); 
+        app.globalData.currentLang=updateLang;// 
+        app.globalData.currentTargetLang=updateTargetLang;//
+
         newLang.editLang=this.data.editLang?false:true;
         this.setData(newLang);
         console.warn("updateTranslateLang::",wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang"));  
@@ -160,7 +163,7 @@ Component({
       },
       // 撤销语言修改语言
       oldTranslateLang(){ 
-        app.showModalClose("未切换语言...",300);
+        // app.showModalClose("未切换语言...",300);
         this.setData({editLang:this.data.editLang?false:true});
       } 
   }

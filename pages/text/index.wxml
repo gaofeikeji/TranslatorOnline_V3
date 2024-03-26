@@ -1,49 +1,163 @@
 <!--pages/text/index.wxml-->
-<view class="header" style="height: {{navbarWidthStatus}};">  
-  <!--index.wxml--> 
-  <navigation-bar    canBack="{{true}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"      color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
-</view>
+<view class="page-container "> 
+    <view class="header" style="height: {{navbarWidthStatus}};">  
+      <!--index.wxml--> 
+      <navigation-bar    canBack="{{true}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"      color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
+    </view>
 
   <!-- 主体 -->
-  <view class="section"> 
+  <view class="section" style="height: {{screenHeight}}px;"> 
    <view class="section-box">
+      <!-- 编辑状态 -->
+      <block  wx:if="{{currentSTate == 1 }}">
+              
+          <view class="text-container" style="height: {{screenHeight-150}}px;" >
+            <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本"   
+            
+            focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText"  />
+            
+            <view class="bottom-text" >
+              <view class="img-text" data-actype="1"  bindtap="textFun">
+                <view class="flex-box ">
+                  <image class="flex-img-left"   src="../../images/icon/paste.png" ></image>
+                  
+                  <text class="not-wrap">粘贴</text>
+                </view>
+              </view>
+              <view class="img-text"  data-actype="3"  bindtap="textFun">
+                <view class="flex-box " >
+                  <image class="flex-img-left"  src="../../images/icon/clear.png" ></image>
+                  <text class="not-wrap">清空</text>
+                  
+                </view>
+              </view>
+              
+            </view>
+          </view>
+      </block>  
+     <block  wx:if="{{currentSTate==2 }}">
+          <!-- 仅显示译文 -->
+          <block wx:if="{{ showType ==  63 }}">  
+            <view class="text-container" style="height: {{screenHeight-150}}px;" > 
+                <textarea class="textarea-container"   maxlength="{{isVip?-1:2000}}"
+                  placeholder="请输入需要翻译的文本"  style="height: {{screenHeight-180}}px;" 
+                focus="{{false}}" value="{{toText?toText:fromText}}" /> 
+            </view>
+          </block>
+          <!-- 左右对比显示 -->
+          <block wx:if="{{ showType ==  62 }}">  
+            <view class="text-container"style="height: {{screenHeight-150}}px;">
 
-    <view class="text-container">
-      <textarea class="textarea-container" maxlength="{{maxlength}}" placeholder="请输入需要翻译的文本"   style="min-height: {{screenHeight-150-30}}px;"
-      
-       focus="{{focus}}" value="{{fromText}}" bindinput="updateFormText"  />
-       
-       <view class="bottom-text" >
-        <view class="img-text" data-actype="1"  bindtap="textFun">
-          <view class="flex-box ">
-            <image class="flex-img-left"   src="../../images/icon/paste.png" ></image>
-            
-            <text class="not-wrap">粘贴</text>
-          </view>
-        </view>
-        <view class="img-text"  data-actype="3"  bindtap="textFun">
-          <view class="flex-box " >
-            <image class="flex-img-left"  src="../../images/icon/clear.png" ></image>
-            <text class="not-wrap">清空</text>
-            
-          </view>
-        </view>
-         
-       </view>
-     </view>
-       
+            <scroll-view class="scroll-translate-left-right " type="list"	scroll-y="true">
+                <view class="lang-left-right"  >
+                  <view class="lang-left">
+                    {{fromText}}
+                  </view>
+                  <view class="lang-right translate-text">
+                    {{toText}}
+                  </view>
+                </view>
+              </scroll-view>
+            </view>
+          </block>
+          <!-- 逐行对比显示 -->
+          <block wx:if="{{ showType ==  61 }}" >  
+            <view class="text-container" style="height: {{screenHeight-150}}px;">
+            <scroll-view class="scroll-translate-left-right translate-line" type="list"	scroll-y="true" >
+              <view class=""  >
+                  
+                <view class=" lang-item  "   bindtap="toImageTextItem"  wx:for-item="item"
+                wx:for="{{fromList}}" wx:key="*this"    wx:for-index="idx"
+                data-left="{{item}}" >   
+                        <text class="horizon-text">{{item}}</text>
+                        <text class="horizon-text translate">{{langList[idx]}}</text>
+                  </view> 
+              </view>
+              </scroll-view>
+              
+              </view>
+          </block>
+    </block>   
+
+
    </view>
   </view>
          
-  <view class="footer footer-btn-box safe-area">          
+  <view class="footer footer-btn-box safe-area"  wx:if="{{currentSTate == 1 }}">          
     <view class="footer-content">
       <text class="circle-btn picture-action" data-actype="2"
     bindtap="textFun">确定翻译</text>
     </view>
   </view>
 
+ 
+  <view  wx:if="{{currentSTate != 1 }}" class="footer  safe-area">
+    <view class="bottom-tab-box">
+           <view 
+           class="tab-item  {{ select === index ? 'tabbar-select' : '' }}"
+           wx:for="{{ list }}"  
+           wx:key="index"
+           data-index="{{ index }}"
+           data-actype="{{ item.actype }}"
+           bindtap="selectFunction">
+           <block wx:if="{{ item.type === 0 }}">
+               <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
+               <text>{{ select === index ?(item.selectedText||item.text):(item.text) }}</text>
+           </block>
+           <block wx:else>
+               <view class="publish">
+               <image src="/images/add.png"></image>
+               </view>
+           </block>
+       </view>
+    </view>
+  
+  </view>
 
+ 
 
+</view>
+
+  <!-- 操作容器 -->
+  <view wx:if="{{currentSTate != 1 }}"  class="action-container {{action?'':'hidden'}}">  
+  <!-- 复制内容-->
+  <block wx:if="{{ actype ==   20 }}">
+      <view class="action-btn-box"> 
+          <view style="display: block;text-align: right;">
+            <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+          </view>
+          <view class="action-btn"  data-actype="51"  bindtap="translateFunction" >仅复制原文</view>
+          <view class="action-btn"  data-actype="52"  bindtap="translateFunction" >仅复制翻译结果</view>
+          <view class="action-btn"  data-actype="53"  bindtap="translateFunction"  >复制原和结果</view>
+      </view>
+      </block> 
+  <!-- 导出文件 -->
+  <block wx:if="{{ actype ==   30 }}">
+             
+    <view class="action-btn-box"> 
+      <view style="display: block;text-align: right;">
+    
+      <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+      </view> 
+          <view class="action-btn" data-actype="71"  bindtap="translateFunction" >导出TXT文件</view>
+          <view class="action-btn" data-actype="72"  bindtap="translateFunction" >导出Word文档</view>
+          <view class="action-btn" data-actype="73"  bindtap="translateFunction"  >导出Excel文档</view>
+      </view>
+  </block> 
+    <!-- 显示模式 -->
+    <block wx:if="{{ actype ==   40 }}"> 
+      <view class="action-btn-box"> 
+        <view style="display: block;text-align: right;">
+          <text class="closeBtn" data-actype="0"  bindtap="selectFunction">X</text>
+          
+        </view>
+        <view class="action-btn {{showType==61?'selected':''}}"   data-actype="61"  bindtap="translateFunction" >逐行对比显示</view> 
+        <view class="action-btn {{showType==62?'selected':''}}"  data-actype="62"  bindtap="translateFunction" >左右对比显示</view>
+        <view class="action-btn {{showType==63?'selected':''}}"  data-actype="63"  bindtap="translateFunction"  >仅显示译文</view>
+    </view>
+  </block> 
+  </view>      
+  
 
 
   <view class="" wx:if="{{notVip == 1}}">
