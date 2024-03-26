@@ -19,7 +19,9 @@ Page({
     showResult:1,
     oldfromLang:"",
     oldtoLang:"",
+    isSingleImages:true,
     options:{},
+    countImages:0,
     //底部功能区域
     list: [
       {
@@ -76,6 +78,7 @@ Page({
     //   }]
     // }
   ],
+  multipleList:[],
     istranslate:true,  
     scale:1, 
     ccWidth:0,
@@ -84,12 +87,13 @@ Page({
     selectPicturHeight: 600,
     currentSelectItem:"",
     currentSelectX:20,
-    currentSelectY:40,
-    screenWidth:app.globalData.screenWidth,
+    currentSelectY:40, 
     lastScale: 1,
     toBase64_url: "",
     scene: "template_unlock_image",
     startTouches: [],
+    totalHeight: app.globalData.screenHeight-140,   
+    totalWidth: app.globalData.screenWidth ,  
   }, 
   // 页面切换 
   selectFunction(e) {
@@ -274,7 +278,7 @@ showActionBox(actype){
     })
 },
 // 图片具体文字内容识别
-getPictureInfo(picUrl,currentImgobj){
+getPictureInfo(picUrl,currentImgobj,key){
 //  picUrl="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg";
   const tThis=this;
   wx.showLoading({ title: "正在翻译中...", mask: true });
@@ -290,13 +294,27 @@ getPictureInfo(picUrl,currentImgobj){
         //console.warn("getPictureInfo",res.data);
         wx.hideLoading();
         currentImgobj.list=res.data;
-        let oldImageList=tThis.data.langList
-        oldImageList.push(currentImgobj);
-        //console.warn("oldImageList-update",oldImageList);
-
-        tThis.setData({
-          langList: oldImageList
-          }) 
+        // 单独图直接替换
+        if(this.data.isSingleImages){ 
+          tThis.setData({
+            langList: [currentImgobj]
+            }) 
+        }else{
+          console.warn("multipleImage",key); 
+            let multipleList=tThis.data.multipleList;
+            multipleList.push(currentImgobj); 
+          //  完成所有请求更新全部信息(重新渲染)
+              if(app.globalData.currentPictureInfoCount==tThis.data.countImages){ 
+                  //  let oldImageList=tThis.data.langList;
+                   tThis.setData({
+                    langList: multipleList
+                     }) 
+              }else{
+                tThis.setData({
+                  multipleList: multipleList
+                  }) 
+              }
+        }
     }).catch(err => {
       wx.hideLoading(); 
       //console.log('err:', err,err.indexOf("err: OCR 服务异常"))
@@ -388,7 +406,6 @@ getMidpoint(a, b) {
     this.rateComponent = this.selectComponent("#rate");
     // app.userCenterLogin();
     // xy.showTip("服务器正在解析资源"); 
-    app.globalData.selectPicturPath=options.selectPicturPath;
       this.setData({
       options: options
     })
@@ -402,20 +419,78 @@ getMidpoint(a, b) {
     });
     
   },
+  // 默认先展示图片列表，数据后渲染
+  initPictureListFirst(){
+
+  },
+  // 计算所有图片总宽高
+  adjustTotalHeightMaxWidth(ImageArr){
+    let totalWidth=0;
+    let totalHeight=0;
+    ImageArr.forEach(function(item,index){
+      totalWidth=totalWidth+item.selectPicturWidth;
+      totalHeight=totalHeight+item.selectPicturHeight;
+    });
+    this.setData({ 
+      totalWidth:totalWidth,
+      totalHeight:totalHeight,
+      screenWidth:app.globalData.screenWidth
+      })
+      console.warn("totalWidth,totalHeight::",totalWidth,totalHeight);
+    return {
+      totalWidth:totalWidth,
+      totalHeight:totalHeight,
+    }
+  },
   //是否重写获取数据（用户存在切换语言操作）
   reloadPicinfo(options){
     const tThis=this; 
     if(options.ismultiple==1){
-      const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[]; 
+      const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
+      
+      tThis.setData({
+        isSingleImages:false, 
+        countImages: imagesArr.length
+      }) 
       //console.warn("imagesArr:::",imagesArr);
       imagesArr.forEach(function(item,key){ 
+        app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
+
         // 动态追加信息
         tThis.getImageInfoByOption(tThis,{
-          selectPicturPath:item
-        });
+          selectPicturPath:item,
+        },function(selectPicturPath,picObj,key){
+          const ImageArr=tThis.data.langList;
+          ImageArr.unshift(picObj);
+          console.warn("getImageInfoByOptiongetImageInfoByOptionMultiple",picObj,key)
+          tThis.setData({
+            langList: ImageArr,
+            countImages: imagesArr.length,
+            })
+            if(key==imagesArr.length){
+
+              const imgObg= tThis.adjustTotalHeightMaxWidth(ImageArr);
+            }
+             tThis.getPictureInfo(selectPicturPath,picObj,key);
+        },key+1);
       });
-    }else{      
-      this.getImageInfoByOption(tThis,options);
+    }else{       
+     this.getImageInfoByOption(tThis,options, function(selectPicturPath,picObj,key){
+      app.globalData.currentPictureInfoCount=1;
+      console.warn("getImageInfoByOptiongetImageInfoByOption",picObj)
+      const ImageArr=[];
+      ImageArr.unshift(picObj);
+      console.warn("getImageInfoByOptiongetImageInfoByOption",ImageArr)
+      const imgObg= tThis.adjustTotalHeightMaxWidth(ImageArr);
+      tThis.setData({
+        langList: ImageArr,
+        countImages: 1,
+        // totalWidth:imgObg.totalWidth,
+        // totalHeight:imgObg.totalHeight,
+        })
+      tThis.getPictureInfo(selectPicturPath,picObj,key);
+     },1)
+    //  callBack&&callBack(options.selectPicturPath,picObj,key);
     }
   }, 
    calculateCanvasDimensions(imgWidth, imgHeight, canvasWidth, canvasHeight) {
@@ -424,9 +499,9 @@ getMidpoint(a, b) {
     let canvasRatio=0.8;
     // 图片小于屏幕，放大图片
     if(imgWidth<canvasWidth){ 
-      canvasRatio=canvasWidth/imgWidth;//*canvasRatio;
+      canvasRatio=imgWidth/canvasWidth;//*canvasRatio;
     }else{//缩小图片
-      canvasRatio=imgWidth/canvasWidth;
+      canvasRatio=canvasWidth/imgWidth;
     }
     // if (canvasWidth / canvasHeight > imgRatio) {
     //   canvasRatio = canvasHeight / imgHeight;
@@ -440,14 +515,14 @@ getMidpoint(a, b) {
     }; 
   }, 
   // 构造一张图片结构体
- getImageInfoByOption(tThis,options){
+ getImageInfoByOption(tThis,options,callBack,key){
     if(!options.selectPicturPath){
       app.showModalClose("非法操作,图片不存在",2000);
       setTimeout(function(){
         wx.navigateTo({
           url: '../index/index'
         })
-      },2000)
+      },1000)
       return false;
     }
     wx.getImageInfo({
@@ -456,25 +531,30 @@ getMidpoint(a, b) {
         const sysInfo= wx.getSystemInfoSync();
         const windowWidth =sysInfo.windowWidth;
         //console.warn("sysInfo:",sysInfo) ;
-        app.globalData.screenWidth=windowWidth;
-        //console.log("getImageInfoByOption:",res) 
-        const picRadio = tThis.calculateCanvasDimensions( res.width,res.height,windowWidth,sysInfo.windowHeight);
+        // app.globalData.screenWidth=windowWidth; 
+        const picRadio = tThis.calculateCanvasDimensions( res.width,res.height,windowWidth,sysInfo.windowHeight-140);
 
         // let canvasRatio = tThis.calculateCanvasDimensions(res.width,res.height,windowWidth,sysInfo.windowHeight-140);
         // //console.warn("canvascanvasRatioRatiocanvasRatio",canvasRatio); 
         // 获取所以图片信息并添加到当前的结构体中
-        tThis.getPictureInfo(options.selectPicturPath,{ 
+        const picObj={ 
           selectPicturWidth: res.width, 
           selectPicturHeight: res.height, 
           currentSelectX: 0, 
-          currentSelectY: 60, 
+          currentSelectY: 60,  
           windowWidth: windowWidth, 
           windowHeight: sysInfo.windowHeight-140, //imgWidth / imgHeight
-          selectPicturPath: options.selectPicturPath,
-          transform: "transform:scale("+(picRadio.canvasRatio)+")"
-        })
+          selectPicturPath: options.selectPicturPath, 
+          canvasRatio: picRadio.canvasRatio, 
+          transform: "transform-origin: 0  -50%;transform:scale("+(picRadio.canvasRatio)+","+(picRadio.canvasRatio)+") translate(0，"+((res.height*picRadio.canvasRatio)+20)+")"
 
+        };
+        // 异步获取图片信息
+        callBack&&callBack(options.selectPicturPath,picObj,key);
        
+      },
+      fail:function(){
+        return falses
       }
     })
   },

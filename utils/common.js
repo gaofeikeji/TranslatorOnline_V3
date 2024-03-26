@@ -140,6 +140,12 @@ export const verifyImage = (url) => {
       success: (res) => {
         resolve(res.data);
       },
+      fail:(err) => {
+        wx.showLoading({
+          title: '当前排队时间较长，请稍后再试',
+        })
+        reject(err);
+      },
       reject: (err) => reject(err),
     });
   });

@@ -102,6 +102,7 @@ Page({
   }, 
   // 开始上传所以临时文件到服务器
   uploadMutipleImg(tempFilesArr,successCallback){ 
+    wx.showLoading({ title:  "正在解析图片信息，服务器为您疯狂计算中...", mask: true });
     let tThis= this;
       tThis.setData({  
         isuploading:true, 
@@ -109,11 +110,12 @@ Page({
       });
       app.totalUploadImages=tempFilesArr;
 
-      let curentLoading=null; 
+      clearInterval(app.globalData.globalTimer);
+      app.globalData.globalTimer=null; 
     //  let resp= await confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
     // 实时上传的进度提示
       if(tempFilesArr.length>1){ 
-        curentLoading =setInterval(function(){ 
+        app.globalData.globalTimer =setInterval(function(){ 
           console.warn("tempFilesArr.length>1",tempFilesArr,new Date());
           const info = "上传中"+ (app.globalData.currentUploadImages+1)+"/"+(tempFilesArr.length);
           wx.showLoading({ title: info, mask: true }); 
@@ -123,8 +125,8 @@ Page({
       console.warn("uploadMutipleImg:uploadImgsUrls:"+uploadImgsUrls,new Date());
       app.globalData.totalUploadImages=[];
       app.globalData.currentUploadImages=0;
-      clearInterval(curentLoading);
-      curentLoading=null;
+      clearInterval(app.globalData.globalTimer);
+      app.globalData.globalTimer=null;
         tThis.setData({ 
             uploadImgList:uploadImgsUrls
         });
@@ -132,7 +134,7 @@ Page({
       })
       .catch(error => {      
         console.error('An error occurred while uploading images:', error);
-        clearInterval(curentLoading);
+        clearInterval(app.globalData.globalTimer);
         curentLoading=null;
         app.showModalClose("请稍后在尝试，图片校验失败",2000);
       });

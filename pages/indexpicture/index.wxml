@@ -7,19 +7,31 @@
 
     <!-- 当前图片展示容器 -->
     <view  class="section-movable" >
-      <view class="section-box" style="height:{{screenHeight-85}}px;wiidth:100%;position:relative">
-        
-        <scroll-view scroll-y type="list" class="section"
-        style="height:{{screenHeight-85}}px;">
+      <view class="section-box" style="height:{{screenHeight-85}}px;width:100%;position:relative">
+        <!-- <block  wx:if="{{isSingleImages }}">
+          <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
+          style=" width:{{langList[0]['windowWidth']*(3+langList.length)}}px;height:{{langList[0]['windowHeight']*(3+langList.length)}}px;">
+          <movable-view direction="all" scale-min="1" scale-max="6"  data-www="{{langList[0]['windowWidth']}}"
+          damping="20" inertia="{{false}}" friction="{{0.7}}" class="zoomview-box"
+            style="width:{{langList[0]['windowWidth']}}px;height:{{langList[0]['windowHeight']}}px;" out-of-bounds="{{true}}"
+            inertia="{{true}}" scale="{{true}}" direction="all">
+            </movable-view>
+            </movable-area> 
+        </block> -->
+        <!-- <block wx:else> -->
+          
               <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
-              style=" width:{{langList[0]['windowWidth']*(3+langList.length)}}px;height:{{langList[0]['windowHeight']*(3+langList.length)}}px;">
-              <movable-view direction="all" scale-min="1" scale-max="6"  data-www="{{langList[0]['windowWidth']}}"
-              damping="20" inertia="{{false}}" friction="{{0.7}}" class="zoomview-box"
-                style="width:{{langList[0]['windowWidth']}}px;height:{{langList[0]['windowHeight']}}px;" out-of-bounds="{{true}}"
-                inertia="{{true}}" scale="{{true}}" direction="all">
+              style=" width:{{(totalWidth)}}px;height:{{(totalHeight)}}px;">
+              <movable-view direction="all" scale-min="0.1" scale-max="6"  data-www="{{totalWidth}}"  damping="5" inertia="{{false}}"  
+              friction="{{0.7}}" class="zoomview-box"
+             
+                style="width:{{screenWidth}}px;height:{{screenHeight-140}}px;"  out-of-bounds="{{true}}" 
+                inertia="{{false}}" scale="{{true}}" direction="all">
                 <!-- bindscale="linstenerScale "  -->
-                <view class="media-info-box  {{'text-item'+items.selectPicturPath}}" wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
-                  style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;{{items.transform}}">
+                <!-- <view style="background: yellow;height: 600px;width: 300px;"></view> -->
+                <view class="media-info-box  {{'text-item'+items.selectPicturPath}}" 
+                wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
+                  style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;margin-top:0px;{{items['transform']}};background:url('{{items.selectPicturPath||''}}');">
                   <!-- 显示结果 -->
                   <!-- <block wx:if="{{ showResult ==   1 }}">  
                     </block> -->
@@ -42,16 +54,15 @@
     
                   <block wx:if="{{ showResult ==   0 }}">
                   </block>
-                  <image class="default-image"
-                    style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;"
+                  <!-- <image class="default-image" mode="aspectFill"
+                    style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;{{items['transform']}}"
                     src="{{items.selectPicturPath||''}}"></image>
-                  <!-- bind:tap="viewImage" -->
-    
+     -->
                 </view>
               </movable-view>
             </movable-area>  
-              </scroll-view>
          
+        <!-- </block> -->
           </view>
     </view>
 

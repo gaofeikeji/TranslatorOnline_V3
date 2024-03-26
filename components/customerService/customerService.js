@@ -32,11 +32,10 @@ Component({
 
 
   data: {
-    customerWidth:"130px",
-    customerClass:"sv_bk_customer",
+    // customerWidth:"130px",
+    // customerClass:"sv_bk_customer",
     image_src: './kf.png',
-    direction: 'left',
-    DistanceFromBottom: '30%',
+    // direction: 'left', 
     sv_image_pre: '',
     show_sv_image_pre: false,
     url: "https://usercenter.mp.lighthg.com/api/config/default",

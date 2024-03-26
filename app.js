@@ -50,6 +50,8 @@ App({
     totalUploadImages:[],
     currentUploadImages:0,
     isMobile: false,
+    currentPictureInfoCount: 0,
+    globalTimer:null
  
   },
   onLaunch: function () { 
@@ -76,7 +78,7 @@ App({
     this.globalData.statusBarHeight = systemInfo.statusBarHeight;
     this.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
     this.globalData.menuLeftwidth = menuButtonInfo.left;
-    this.globalData.screenWidth = menuButtonInfo.screenWidth;
+    this.globalData.screenWidth = systemInfo.screenWidth;
     this.globalData.screenHeight = systemInfo.screenHeight-this.globalData.navbarWidthStatus;
     console.error(systemInfo,menuButtonInfo,this.globalData.navBarHeight,this.globalData.navbarWidthStatus);
  },
@@ -108,7 +110,7 @@ App({
         }
       },
       fail: (err) => {
-        console.log(err);
+        //console.log(err);
       },
     });
   },
@@ -132,7 +134,7 @@ App({
   globalLogin(tThis,customeCall){ 
       tThis = tThis||this;
       let currentInstance=this;
-      console.log("globalLoginglobalLogin",this.globalData);
+      //console.log("globalLoginglobalLogin",this.globalData);
     // 用户中心access_token
     if (!this.globalData.access_token) {
       xy.userLogin((data) => {
@@ -154,9 +156,9 @@ App({
       });
     }else{
       
-      console.log("globalLoginglobalLogin",this.globalData);
+      //console.log("globalLoginglobalLogin",this.globalData);
       currentInstance.userCenterLoginCallbackIndex = () => {
-        console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+        //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
         tThis.setData({
           notVip: !app.globalData.subscribe.is_vip
         }); 
@@ -193,7 +195,19 @@ App({
       tThis.userCenterLoginCallbackUserMember&&tThis.userCenterLoginCallbackUserMember();
     });
   },
-  
+  getImageInfo(img,callbak){
+     wx.getImageInfo({
+      src: 'images/a.jpg',
+      success (res) {
+        console.log(res.width,res.height) 
+        callbak&&callbak(res);
+      },
+      fail (res) {
+        console.log(res.width)
+        console.log(res.height) 
+      }
+    })
+  },
   // 获取文字提取token
   getAccessToken(cb) {
     wx.request({
@@ -278,13 +292,13 @@ App({
           type: data.type,
         },
         success: function (res) {
-          console.log("上传成功", res);
+          //console.log("上传成功", res);
           let resData = JSON.parse(res.data);
           resolve(resData);
         },
         fail: function (err) {
           wx.hideLoading();
-          console.log("上传失败", err);
+          //console.log("上传失败", err);
           reject(err);
         },
       });
@@ -330,7 +344,7 @@ App({
             resolve(res.data);
           } else {
             reject(res.data.msg);
-            console.log("请求失败", res.data.msg);
+            //console.log("请求失败", res.data.msg);
             wx.showToast({
               title: res.data.msg,
               icon: "none",
@@ -369,7 +383,7 @@ App({
                 content: '是否保存文件到本地',
                 success (savaRes) {
                   if (savaRes.confirm) {
-                    console.log('用户点击确定')
+                    //console.log('用户点击确定')
                     wx.shareFileMessage({
                       filePath: res.tempFilePath,
                       fileName: customerFilename||"中英文线上拍照翻译器最新",
@@ -394,7 +408,7 @@ App({
               // wx.saveFileToDisk({
               //   filePath: res.tempFilePath,
               //   success(res) {
-              //     console.log("saveFileToDisksaveFileToDisk",res)
+              //     //console.log("saveFileToDisksaveFileToDisk",res)
               //   },
               //   fail(res) {
               //     console.error(res)
@@ -415,10 +429,10 @@ App({
         }
       });
       downloadTask.onProgressUpdate((res) => {
-        console.log('下载进度',res)
-        console.log('下载进度', res.progress)
-        console.log('已经下载的数据长度', res.totalBytesWritten)
-        console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+        //console.log('下载进度',res)
+        //console.log('下载进度', res.progress)
+        //console.log('已经下载的数据长度', res.totalBytesWritten)
+        //console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
       })
       
       // downloadTask.abort() // 取消下载任务
@@ -483,9 +497,9 @@ App({
             content: '请前往系统配置打开相机权限享受更佳的体验',
             success (res) {
               if (res.confirm) {
-                console.log('用户点击确定')
+                //console.log('用户点击确定')
               } else if (res.cancel) {
-                console.log('用户点击取消')
+                //console.log('用户点击取消')
               }
             }
           })

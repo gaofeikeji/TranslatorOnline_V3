@@ -7,10 +7,11 @@ page{
   height: 100vh;
 }    
 .section-box{ 
-  display: flex;
+  // display: flex;
   width: 100%;
   // height:  calc(100%-85px-90px-env(safe-area-inset-bottom));
   background:rgba(204, 204, 204, 1);
+  overflow: auto;
 }
 .text-container{  
   background: rgba(0, 0, 0, 0.03);
@@ -29,39 +30,39 @@ page{
 .zoomArea{ 
   position: relative;
   margin:0; 
-  text-align: center;
+  // text-align: center;
   background: rgba(204, 204, 204, 1);
   background: red;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 } 
 // 容器的高度觉得拖拽的灵敏度
 .zoomview-box{
-  position: absolute;
-  z-index: 10;
+  z-index:20;
   // background-color: #fff;  
   background-color: blue;  
+  display: block;
   
 }
 
 /* 缩放图片容器 */ 
 .media-info-box{ 
   position: relative;
-  height: 100%;
-  width: 100%; 
+  left: 0;
+  top: 0;
+  // left: -23%;
+  // top: -13%;
   border: 4rpx solid transparent;
   margin: 40rpx 0;
+  border-color:  #fff; 
   text-fill-color:#000;
   -webkit-text-fill-color: #000;
-  z-index:400;
+  z-index:1;
   // transform: scale(0.8);
+  pointer-events: none;
 } 
-.media-info-box::after{
-  content: "";
-  display: table;
-  clear: both;
-}
-.media-info-box{
-  border-color:  #fff; 
-}
+ 
 .media-info-box:nth-child(odd){
   border-color:  rgba(31, 113, 255, 1); 
 }
@@ -85,7 +86,6 @@ page{
   z-index: 22;
   box-shadow: none;
   display: inline-block;
-  pointer-events: none;
   /* background-color: rgba(245, 33, 33, 0.81); */
  border: 2rpx solid rgba(255,255,255,0.4);
   color:rgba(0,0,0,0.5);
@@ -93,6 +93,9 @@ page{
   text-align: justify;
   pointer-events: none; 
   word-wrap: break-word;
+  text-overflow: hidden;
+  pointer-events: none;
+  pointer-events: painted;
 } 
 .media-text-item:nth-child(odd){
   border: 2rpx solid rgba(169,236,125,1);

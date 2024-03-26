@@ -126,10 +126,7 @@
     background-color: #fff;
     -webkit-tap-highlight-color: transparent;
   }
-  lang-box .lang-item:after{
-    content: "";
-    clear: both;
-  }
+ 
   .lang-box .lang-item:first-child{
     margin-top: 32rpx;
   }
