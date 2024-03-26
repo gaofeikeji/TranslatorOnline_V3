@@ -89,7 +89,10 @@ page{
   text-justify: distribute;
   pointer-events: none; 
   word-wrap: break-word;
-  text-overflow: hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+
   pointer-events: none;
   word-spacing: -5px;
   letter-spacing:-2px; 

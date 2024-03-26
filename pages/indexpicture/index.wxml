@@ -25,7 +25,7 @@
                   <block wx:if="{{ showResult ==   1 }}">  
                     <block wx:for="{{ items.list }}" wx:for-item="item" wx:key="i">
       
-                        <text data-rate="{{ item.single_rate }}" style="font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.75}}px;min-width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)*0.95}}px;line-height:{{item.single_str_utf8.length>=item.translate.length?(item.bottom-item.top)*0.5:(item.right-item.left)/item.single_str_utf8.length/2}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/6}}px; "
+                        <text data-rate="{{ item.single_rate }}" style="font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.75}}px;width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)*0.95}}px;line-height:{{item.single_str_utf8.length>=item.translate.length?(item.bottom-item.top)*0.5:(item.right-item.left)/item.single_str_utf8.length/2}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/6}}px; "
                           class="media-text-item {{'text-item'+single_rate}}  {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
                           bindtap="toVerticleHorizonTextItem" data-top="{{item.top}}" data-left="{{item.left}}">
                           <block wx:if="{{ showResult ==0 }}">
