@@ -7,23 +7,13 @@
 
     <!-- 当前图片展示容器 -->
     <view  class="section-movable" >
-      <view class="section-box" style="height:{{screenHeight-85}}px;width:100%;position:relative">
-        <!-- <block  wx:if="{{isSingleImages }}">
-          <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
-          style=" width:{{langList[0]['windowWidth']*(3+langList.length)}}px;height:{{langList[0]['windowHeight']*(3+langList.length)}}px;">
-          <movable-view direction="all" scale-min="1" scale-max="6"  data-www="{{langList[0]['windowWidth']}}"
-          damping="20" inertia="{{false}}" friction="{{0.7}}" class="zoomview-box"
-            style="width:{{langList[0]['windowWidth']}}px;height:{{langList[0]['windowHeight']}}px;" out-of-bounds="{{true}}"
-            inertia="{{true}}" scale="{{true}}" direction="all">
-            </movable-view>
-            </movable-area> 
-        </block> -->
-        <!-- <block wx:else> -->
-            
+      <view class="section-box" style="height:{{screenHeight-85}}px;width:100%;position:relative">  
               <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
-              style=" width:{{(totalWidth*2)}}px;height:{{(totalHeight*2)}}px;">
+              style=" width:{{(isSingleImages?totalWidth*4:totalWidth*(countImages+1))}}px;height:{{(isSingleImages?totalWidth*4:totalHeight*(countImages+1))}}px;">
               <movable-view direction="all" scale-min="0.01"   data-www="{{totalWidth}}" 
-               damping="5" inertia="{{false}}"     friction="{{0.7}}" class="zoomview-box" 
+               damping="5" inertia="{{false}}"     friction="{{0.7}}" class="zoomview-box"  scale-value="{{isSingleImages?1:0.3}}"
+               x="{{isSingleImages?'10rpx':'100rpx'}}"
+               y="{{isSingleImages?'10rpx':'100rpx'}}"
                 style="width:{{screenWidth}}px;height:{{(screenHeight-140)}}px;"  out-of-bounds="{{true}}" 
                 inertia="{{false}}" scale="{{true}}" direction="all">
                 <!-- bindscale="linstenerScale "  -->

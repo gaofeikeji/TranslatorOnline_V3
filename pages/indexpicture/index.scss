@@ -18,6 +18,7 @@ page{
 /* 解析的图片内容容器 */
 .zoomArea{ 
   position: relative;
+  z-index:30;
   margin:0; 
   // text-align: center;
   background: rgba(204, 204, 204, 1);
@@ -28,10 +29,11 @@ page{
 } 
 // 容器的高度觉得拖拽的灵敏度
 .zoomview-box{
-  z-index:20;
+  z-index:22;
   // background-color: #fff;  
   // background-color: blue;  
   display: block;
+  pointer-events: none;
   
 }
 
@@ -50,6 +52,7 @@ page{
   z-index:1; 
   // filter: blur(1.3px);
   pointer-events: none;
+  background-color: yellow;
 } 
  
 .media-info-box:nth-child(even){

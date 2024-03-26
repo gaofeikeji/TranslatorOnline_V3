@@ -307,7 +307,8 @@ getPictureInfo(picUrl,currentImgobj,key){
                   //  let oldImageList=tThis.data.langList;
                    tThis.setData({
                     langList: multipleList
-                     }) 
+                     });
+                     wx.hideLoading();
                      console.warn("multipleList:::",multipleList);
               }else{
                 tThis.setData({
@@ -445,7 +446,7 @@ getMidpoint(a, b) {
   //是否重写获取数据（用户存在切换语言操作）
   reloadPicinfo(options){
     const tThis=this; 
-    // 斗图模式异步获取
+    //多图模式异步获取
     const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
     if(options.ismultiple==1&&imagesArr.length>1){ 
       
@@ -472,7 +473,7 @@ getMidpoint(a, b) {
               const imgObg= tThis.adjustTotalHeightMaxWidth(ImageArr);
             }
             app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
-            //  tThis.getPictureInfo(selectPicturPath,picObj,key);
+             tThis.getPictureInfo(selectPicturPath,picObj,key);
         },key+1);
       });
     }else{//单图模式        
@@ -504,6 +505,7 @@ getMidpoint(a, b) {
       canvasRatio=canvasWidth/imgWidth;
     }
     console.warn("sysInfossss2d:",imgWidth, imgHeight, canvasWidth, canvasHeight,imgHeight/imgWidth,canvasWidth/canvasHeight) ;
+    console.warn("sysInfossss2d:",this.data.screenWidth,canvasRatio) ;
     return {
       canvasRatio: canvasRatio,
       scaledWidth: imgWidth* canvasRatio,
@@ -518,7 +520,7 @@ getMidpoint(a, b) {
       transformStr="transform-origin: 0 0 0;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") "+" translate(10%,15%)"
     }else{
       console.warn("reduceImageTransform::",isSingle,res,picRadio);
-      transformStr=  "transform-origin: 10 100 0;transform:scale("+(picRadio.canvasRatio*0.6)+","+(picRadio.canvasRatio*0.8)+") translate("+(res.width*picRadio.canvasRatio)+"，-"+((res.height*picRadio.canvasRatio)+20)+")"
+      transformStr=  "transform-origin: 0 -50%;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+((res.width*picRadio.canvasRatio)/4+20)+"px，-"+((res.height*picRadio.canvasRatio)/4+20)+"px)"
     }
     return transformStr;
   },
