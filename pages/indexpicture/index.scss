@@ -86,11 +86,15 @@ page{
   color:rgba(0,0,0,0);
   pointer-events: none;
   text-align: justify;
+  text-justify: distribute;
   pointer-events: none; 
   word-wrap: break-word;
   text-overflow: hidden;
   pointer-events: none;
-  pointer-events: painted;
+  word-spacing: -5px;
+  letter-spacing:-2px; 
+  text-align: left;
+  // pointer-events: painted;
 } 
 // .media-text-item:nth-child(odd){
 //   border: 2rpx solid rgba(169,236,125,1);
