@@ -1,6 +1,7 @@
 {
   "navigationStyle": "custom",
   "usingComponents": {
+    "navigation-bar": "/custom-tab-bar",
     "customerService": "/components/customerService/customerService",
     "ToRate": "/components/ToRate/ToRate",
     "action":"/components/actionToDo/actionToDo"

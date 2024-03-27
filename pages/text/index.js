@@ -82,7 +82,7 @@ Page({
     const tThis=this;
     const { index, actype } = e.currentTarget.dataset;
     console.warn(e);  
-    console.warn("textFun", actype); 
+    //console.warn("textFun", actype); 
     if(actype==3){//清空剪贴板
       xy.setClipboardData("");
       tThis.setData({           
@@ -97,7 +97,7 @@ Page({
       });
     }else if(actype=="2"){//确认翻译
       const resp = tThis.data.fromText;
-      console.warn("fromText::", resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
+      //console.warn("fromText::", resp,wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang")); 
       if(resp!=""){ 
         xy.checkTextSync({
           content: resp,
@@ -135,7 +135,7 @@ Page({
 // 监听输入框改变
 updateFormText(e){
   const formdata= e.detail.value;
-  console.warn(this.data.notVip,formdata.length)
+  // console.warn(this.data.notVip,formdata.length)
   if(this.data.notVip==false&&formdata.length==this.data.maxlength){
    wx.showModal({
      title: '温馨提醒',
@@ -167,7 +167,7 @@ updateFormText(e){
       })
     }
     app.globalLogin(this,function(data,capp){ 
-      // console.warn("app.globalData.subscribe.is_vip",capp.globalData.subscribe.is_vip)
+      // //console.warn("app.globalData.subscribe.is_vip",capp.globalData.subscribe.is_vip)
       tThis.setData({
         subscribe: capp.globalData.subscribe || {},
         maxlength: capp.globalData.subscribe.is_vip!=0 ? 2000 : 2000,
@@ -202,7 +202,6 @@ translateFunction(e) {
     }  else if(actype==71){//导出TXT文件
       
           const currentTxt = this.initialImgText();
-          console.log("actype::",currentTxt)
             if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
               app.showModalClose("开始下载文件……",3000);
               app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-txt","中英文线上拍照翻译器翻译的纯文本文档.txt");
@@ -212,7 +211,6 @@ translateFunction(e) {
             }
          }else if(actype==72){//导出Word文档
           const currentTxt = this.initialImgText();
-          console.log("actype::",currentTxt)
             if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
               app.showModalClose("开始下载文件……",3000);
               app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-word","中英文线上拍照翻译器翻译的Word文档.docx");
@@ -222,7 +220,6 @@ translateFunction(e) {
             }
           }else if(actype==73){//导出Excel文档
             const currentTxt = this.initialImgText();
-            console.log("actype::",currentTxt)
               if(currentTxt.translateText&&currentTxt.translateText.length>0){ 
                 app.showModalClose("开始下载文件……",3000);
                 app.dowloadFile(currentTxt.translateText,"/api/tools/text-to-excel","中英文线上拍照翻译器翻译的Excel文档.excel");
@@ -231,7 +228,7 @@ translateFunction(e) {
                 return false;
               }
           }else{   
-      console.warn("translateFunction:",e);             
+      //console.warn("translateFunction:",e);             
     } 
     // 是否切换当前显示模板 
     if(showType){ 
@@ -262,21 +259,20 @@ initialImgText(){
   // 复制原文
   copyOriginal(){
     const imgText = this.initialImgText();
-    console.log("copyOriginal:",imgText)
     xy.setClipboardData(imgText.originText);
     this.showActionBox(0);
   },
   // 仅复制翻译结果
   copyTranslate(){
     const imgText = this.initialImgText();
-    console.log("copyOriginal:",imgText)
+    // console.log("copyOriginal:",imgText)
     xy.setClipboardData(imgText.translateText);
     this.showActionBox(0);
   },
   // 复制原文和结果
   copyBoth(){
     const imgText = this.initialImgText();
-    console.log("copyOriginal:",imgText)
+    // console.log("copyOriginal:",imgText)
     xy.setClipboardData("原文:\n"+imgText.originText + "\n译文:\n"+ imgText.translateText);   
     this.showActionBox(0);
   },
@@ -308,7 +304,6 @@ showActionBox(actype){
     // });     
     return false;
   }else if(actype==20){
-    console.log("actype====2");
     // wx.showActionSheet({
     //   itemList: ["仅复制原文", "仅复制翻译结果", "复制原文和结果"],
     //   success: (e) => { 
@@ -326,7 +321,6 @@ showActionBox(actype){
     // });
     // return false;
   }else if(actype==30){
-    console.log("actype====3"); 
     // wx.showActionSheet({
     //   itemList: ["导出TXT文件", "导出Word文档", "导出Excel文档"],
     //   success: (e) => {  
@@ -370,7 +364,6 @@ showActionBox(actype){
     // return false;
     show=true;
   }else if(actype==40){
-    console.log("actype====3");
     show=true;
     // wx.showActionSheet({
     //   itemList: ["逐行对比显示", "左右对比显示", "仅显示译文"],
@@ -398,7 +391,7 @@ showActionBox(actype){
   }else{
     console.error("actype====未记录",actype); 
   }
-  console.warn("actypeactype:",  actype );   
+  //console.warn("actypeactype:",  actype );   
   this.setData({
     actype: actype,
     action:show,
@@ -458,7 +451,7 @@ toTranslateText(){
           currentSTate:2,
         }) 
        const textObj= tThis.initialImgText();
-       console.warn("initialImgText:::",textObj);
+       //console.warn("initialImgText:::",textObj);
        tThis.setData({
           fromList:textObj.fromList,
           langList:textObj.langList,
