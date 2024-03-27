@@ -311,6 +311,7 @@ getPictureInfo(picUrl,currentImgobj,key){
                      wx.hideLoading();
                      console.warn("multipleList:::",multipleList);
               }else{
+                app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
                 tThis.setData({
                   multipleList: multipleList
                   });
@@ -464,7 +465,7 @@ getMidpoint(a, b) {
           const ImageArr=tThis.data.langList;
           // ||app.globalData.currentPictureInfoCount==tThis.data.countImages
           ImageArr.unshift(picObj);
-          console.warn("getImageInfoByOptiongetImageInfoByOptionMultiple",picObj,ImageArr,key)
+          console.warn("getImageInfoByOptiongetImageInfoByOptionMultiple",picObj,ImageArr,key);
             tThis.setData({
               langList: ImageArr,
               countImages: imagesArr.length,
@@ -472,7 +473,6 @@ getMidpoint(a, b) {
             if(key==imagesArr.length-1){ // 需要 
               const imgObg= tThis.adjustTotalHeightMaxWidth(ImageArr);
             }
-            app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
              tThis.getPictureInfo(selectPicturPath,picObj,key);
         },key+1);
       });

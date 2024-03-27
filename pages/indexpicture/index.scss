@@ -32,8 +32,7 @@ page{
   z-index:22;
   // background-color: #fff;  
   // background-color: blue;  
-  display: block;
-  pointer-events: none;
+  display: block; 
   
 }
 
@@ -87,7 +86,6 @@ page{
   pointer-events: none;
   text-align: justify;
   text-justify: distribute;
-  pointer-events: none; 
   word-wrap: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -97,6 +95,7 @@ page{
   word-spacing: -5px;
   letter-spacing:-2px; 
   text-align: left;
+  pointer-events: none; 
   // pointer-events: painted;
 } 
 // .media-text-item:nth-child(odd){
