@@ -2,11 +2,13 @@
 <view class="page-container "> 
     <view class="header" style="height: {{navbarWidthStatus}};">  
       <!--index.wxml--> 
-      <navigation-bar    canBack="{{true}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"      color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
+      <navigation-bar    canBack="{{true}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"  
+          bind:callFun="listenLanguge" 
+         color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
     </view>
 
   <!-- 主体 -->
-  <view class="section" style="height: {{screenHeight}}px;"> 
+  <view class="section" style="height: {{screenHeight-150}}px;"> 
    <view class="section-box">
       <!-- 编辑状态 -->
       <block  wx:if="{{currentSTate == 1 }}">

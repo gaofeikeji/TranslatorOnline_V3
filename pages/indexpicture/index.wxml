@@ -1,7 +1,8 @@
 <view class="page-container "> 
       <view class="header" style="height: {{navbarWidthStatus}};">  
-        <!--index.wxml--> 
-        <navigation-bar    canBack="{{true}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"      color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
+        <navigation-bar    canBack="{{true}}"   currentLang="{{currentLang}}"  currentTargetLang="{{currentTargetLang}}"   
+        bind:callFun="listenLanguge" 
+        color-animation-duration="2000"       color-animation-timing-func="easeIn"    />  
       </view>
 
 
@@ -11,21 +12,20 @@
       
               <movable-area  scale-area="{{true}}" id="zoomArea" class="zoomArea"
               style=" width:{{(isSingleImages?totalWidth*4:totalWidth*(countImages+1))}}px;height:{{(isSingleImages?totalWidth*4:totalHeight*(countImages+1))}}px;">
-              <movable-view direction="all" scale-min="0.01"   data-www="{{totalWidth}}" 
+              <movable-view direction="all" scale-min="0.001"   data-www="{{totalWidth}}" 
               scale-value="{{isSingleImages?1:0.3}}"
                damping="5" inertia="{{false}}"     friction="{{0.7}}" class="zoomview-box"  
                x="{{isSingleImages?'30rpx':'60rpx'}}"
                y="{{isSingleImages?'10rpx':'100rpx'}}"
                 style="width:{{screenWidth}}px;height:{{(screenHeight-140)}}px;"  out-of-bounds="{{true}}" 
                 inertia="{{false}}" scale="{{true}}" direction="all">
-                <!-- bindscale="linstenerScale "  -->
-                <!-- <view style="background: yellow;height: 600px;width: 300px;"></view> -->
+            
                 <view class="media-info-box  {{'text-item'+items.selectPicturPath}}" 
-                wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
+                wx:for="{{ langList }}" wx:for-item="items" wx:key="*this"
                   style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;margin-top:0px;{{items['transform']}};background:url('{{items.selectPicturPath||''}}');">
                   <!-- 显示结果 -->
                       <block wx:if="{{ showResult ==   1 }}">  
-                        <block wx:for="{{ items.list }}" wx:for-item="item" wx:key="i">
+                        <block wx:for="{{ items.list }}" wx:for-item="item" wx:key="*this">
           
                           <block wx:if="{{notVip || isAllowSee}}"> 
                             <text data-rate="{{ item.single_rate }}" style="font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.75}}px;width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)*0.95}}px;line-height:{{item.single_str_utf8.length>=item.translate.length?(item.bottom-item.top)*0.5:(item.right-item.left)/item.single_str_utf8.length/2}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/6}}px; "
@@ -43,9 +43,7 @@
                             <view style="width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)}}px;left:{{item.left }}px;top:{{item.top+(item.bottom-item.top)/3}}px; "
                               class="media-text-item lock"  bindtap="toVerticleHorizonTextItem"
                               data-top="{{item.top}}" data-left="{{item.left}}">
-                              <!-- <image style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/6:(item.bottom-item.top)>45?28:(item.bottom-item.top)}}px;width:{{(item.bottom-item.top)>30?12:(item.bottom-item.top)*0.8}}px;"  class="lock-info" src="/images/lockvip.png" mode=""/>
-                              <text style="font-size:{{(item.single_str_utf8.length)<8?(item.right-item.left)/8:(item.bottom-item.top)>45?28:(item.bottom-item.top)*0.7}}px;" 
-                                class="" selectable="false" space="false" decode="false">次数用尽，解锁查看</text> -->
+                             
                                     <image class="" style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/7:(item.bottom-item.top)>45?28:(item.bottom-item.top)*0.6}}px;width:{{(item.bottom-item.top)>30?15:(item.bottom-item.top)*0.7}}px;"  src="/images/lockvip.png"   mode="heightFix" lazy-load="false" binderror="" bindload=""> 
                                     </image>
                                     <image class=""style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/6:((item.bottom-item.top)*0.6)}}px;"   src="/images/lock.png"   mode="heightFix" lazy-load="false" binderror="" bindload=""> 
@@ -57,30 +55,19 @@
                         </block>
                       
           
-                  <!-- <block wx:if="{{notVip}}">
-                  </block>
-                  <block wx:else>
-                    <view>
-
-                    </view>
-                  </block>  -->
-                  <!-- <block wx:if="{{ showResult ==   0 }}">
-                  </block> -->
-                  <!-- <image class="default-image" mode="aspectFill"
-                    style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;{{items['transform']}}"
-                    src="{{items.selectPicturPath||''}}"></image>
-     -->
+                   
                 </view>
               </movable-view>
             </movable-area>  
-             
-        <!-- </block> -->
+              
           </view>
     </view>
 
+
+    <!-- 操作面板 -->
     <view class="footer safe-area">
       <view class="bottom-tab-box" > 
-          <view class="tab-item   {{ select === index ? 'tabbar-select' : '' }}" wx:for="{{ list }}" wx:key="index"
+          <view class="tab-item   {{ select === index ? 'tabbar-select' : '' }}" wx:for="{{ list }}" wx:key="*this"
               data-index="{{ index }}" data-actype="{{ item.actype }}" bindtap="selectFunction">
               <block wx:if="{{ item.type === 0 }}">
                 <image src="{{ select === index ?  item.selectedIconPath : item.iconPath }}"></image>
@@ -96,6 +83,8 @@
           </view>
         </view>
     </view>
+
+
 </view> 
  
  

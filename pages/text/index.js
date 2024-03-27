@@ -286,7 +286,8 @@ initialImgText(){
 }, 
 // 底部导航以及功能切换
 showActionBox(actype){  
-  let show = this.data.action?false:true;
+  // let show = this.data.action?false:true;
+  let show = this.data.action?(this.data.actype==actype?false:true):true;
   const tThis=this;  
   if(actype===0){
     show=false;
@@ -398,6 +399,14 @@ showActionBox(actype){
     see:show?true:false,
     scale:actype==0?(this.data.scale<0.5?0.3:0.8):1//需要添加缩放比例记录，或者采用图片等比设置，
     })
+},
+// 子组件回调语言改变
+listenLanguge(){
+  if(this.data.currentSTate==1){
+    return false;
+  }else{ 
+  this.toTranslateText();
+  }
 },
 toTranslateText(){
   const tThis = this;

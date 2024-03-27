@@ -34,6 +34,13 @@ Component({
       menuLeftwidth: app.globalData.menuLeftwidth , //可视区域高度  
   }, 
   methods: {
+    lifetimes: {
+      attached: function () {
+        console.log("执行初始化 attached")
+      },
+      detached: function () { 
+      },
+    },
     // 读取语言数据
     getLangList(){ 
       const langData = wx.getStorageSync("langData")||app.globalData.langData;
@@ -157,6 +164,8 @@ Component({
         newLang.editLang=this.data.editLang?false:true;
         this.setData(newLang);
         console.warn("updateTranslateLang::",wx.getStorageSync("currentTargetLang"), wx.getStorageSync("currentLang"));  
+        this.triggerEvent('callFun');
+        // this.triggerEvent('callFun');
         // this.selectLang();
         //提交数据到服务器
         //……………………

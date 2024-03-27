@@ -18,7 +18,7 @@ Page({
     selectPicturPath:app.globalData.selectPicturPath,
     action:false,
     actype:10,//10逐行对比左右布局,11，逐行对比垂直布局; 20复制内容，30导出文件，40显示结果，41隐藏
-    currentVisti:0,
+    currentVisti:0,//排列方式
     showResult:1,
     oldfromLang:"",
     oldtoLang:"",
@@ -228,7 +228,7 @@ toVerticleHorizonTextItem(e){
   },
 // 底部导航以及功能切换
 showActionBox(actype){  
-  let show = this.data.action?false:true;
+  let show = this.data.action?(this.data.actype==actype?false:true):true;
   let currentVisti =0;
   if(actype===0){
     show=false;
@@ -249,27 +249,25 @@ showActionBox(actype){
     const current= app.getCurrentLang(this);
     //console.log("actype====40老：",oldLang+","+oldtoLang+";新的:"+current.currentLang+"："+current.currentTargetLang);
     // 嚴格判斷語言是否切換，切換自動幫用戶翻譯數據
-    if(oldLang==current.currentLang && oldtoLang==current.currentTargetLang){
-    }else{
-      // 用戶未修改系統不進行語言操作
-      if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")&&oldLang&&oldtoLang){
-        // 此处需要校验是否重复检测相同图片
-        if(this.data.options){ 
-          wx.showLoading({
-            title: '检测到您修改了配置语言，正在校对中',
-          })
-          
-          // const oldLangList=this.data.langList;
-          // oldLangList.list=[];
-          // 清空之前的图片数据，避免重复追加
-          this.setData({
-            langList:[]
-          })
-          this.reloadPicinfo(this.data.options);
-        }
+    // if(oldLang==current.currentLang && oldtoLang==current.currentTargetLang){
+    // }else{
+      // 用戶未修改系統不進行語言操作(已经添加修改语言的异步获取的操作，暂时排除)
+      // if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")&&oldLang&&oldtoLang){
+      //   // 此处需要校验是否重复检测相同图片
+      //   if(this.data.options){ 
+      //     wx.showLoading({
+      //       title: '检测到您修改了配置语言，正在校对中',
+      //     })
+           
+      //     // 清空之前的图片数据，避免重复追加
+      //     this.setData({
+      //       langList:[]
+      //     })
+      //     this.reloadPicinfo(this.data.options);
+      //   }
          
-      }
-    }
+      // }
+    // }
     this.setData({
       actype: actype, 
       showResult: this.data.showResult==1?0:1, 
@@ -286,7 +284,7 @@ showActionBox(actype){
     see:show?true:false,
     scale:actype==0?(this.data.scale<0.5?0.8:0.9):1//需要添加缩放比例记录，或者采用图片等比设置，
     })
-},
+}, 
 // 图片具体文字内容识别
 getPictureInfo(picUrl,currentImgobj,key){ 
   const tThis=this;
@@ -335,6 +333,9 @@ getPictureInfo(picUrl,currentImgobj,key){
     }).catch(err => {
       // wx.hideLoading(); 
       console.log('err:', err);
+      setTimeout(function(){
+        wx.hideLoading();
+      },2000);
       return false;
       if(err&&err.indexOf("err: OCR 服务异常")==-1){
         app.showModalClose("当前排队的人太多，请稍后重试……",2000);
@@ -407,9 +408,20 @@ copyBoth(){
   /**
    * 生命周期函数--监听页面加载
    */
-  
+    
+  // 子组件回调语言改变
+  listenLanguge(){
+    console.log("listenLanguge--");
+    if(this.data.isAllowSee){ 
+      this.data.options&&this.reloadPicinfo(this.data.options); 
+    }
+  },
   onLoad(options) {  
     this.actionComponent = this.selectComponent("#action");
+    // options={
+    //   ismultiple:1,
+    //   selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/3.jpg",
+    // };
     this.setData({
       options: options
     })
@@ -452,6 +464,11 @@ copyBoth(){
     app.globalData.totalUploadImages=[];
     app.globalData.currentUploadImages=[];
     app.globalData.currentPictureInfoCount=0;
+     //重置列表
+    this.setData({ 
+      langList:[],
+      countImages:0,
+    })
     const tThis=this; 
     //多图模式异步获取
     const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
@@ -583,20 +600,7 @@ copyBoth(){
    * 生命周期函数--监听页面显示
    */
   onShow() {    
-
-    // if (app.globalData.access_token) {
-    //   //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-    //   this.setData({
-    //     notVip: !app.globalData.subscribe.is_vip
-    //   })
-    // } else {
-    //   app.userCenterLoginCallbackIndex = () => {
-    //     //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-    //     this.setData({
-    //       notVip: !app.globalData.subscribe.is_vip
-    //     })
-    //   };
-    // }
+ 
 
   },
   methods: {
@@ -670,6 +674,7 @@ copyBoth(){
     // 判断权限是否通过
   neeDToaction(actype){
     const tThis=this;
+    // this.data.isAllowSee=true;//仅测试开启
     if(this.data.isAllowSee){
       tThis.showActionBox(actype); 
       wx.hideLoading();
