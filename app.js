@@ -203,12 +203,11 @@ App({
      wx.getImageInfo({
       src: 'images/a.jpg',
       success (res) {
-        console.log(res.width,res.height) 
+        // console.log(res.width,res.height) 
         callbak&&callbak(res);
       },
       fail (res) {
-        console.log(res.width)
-        console.log(res.height) 
+        console.log("getImageInfo:") 
       }
     })
   },
@@ -374,13 +373,13 @@ App({
       text:text
     },"POST");
     req.then(function(data){
-        console.warn("dowloadWord:",data,data.data.url)
+        // console.warn("dowloadWord:",data,data.data.url)
         const downloadTask = wx.downloadFile({
         url:data.data.url,
         timeout:6000,
         success (res) { 
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-          console.warn("wx.downloadFile:success",res)
+          // console.warn("wx.downloadFile:success",res)
           if (res.statusCode === 200) { 
               wx.showModal({
                 title: '下载提示',
@@ -402,29 +401,14 @@ App({
                     });
                   }
                 }
-              })
-              // wx.FileSystemManager.saveFile({
-              //   tempFilePath:res.tempFilePath,
-              //   success: function(){},
-              //   fail: function(){},
-              //     complete: function(){},
-              // })
-              // wx.saveFileToDisk({
-              //   filePath: res.tempFilePath,
-              //   success(res) {
-              //     //console.log("saveFileToDisksaveFileToDisk",res)
-              //   },
-              //   fail(res) {
-              //     console.error(res)
-              //   }
-              // })
+              }) 
           }else{
 
           }
         }, 
         fail (res) {
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-          console.warn("wx.downloadFile:fail",res) 
+          // console.warn("wx.downloadFile:fail",res) 
           wx.showToast({
             title: "下载失败请稍后重试",
             icon: "none",
@@ -432,11 +416,7 @@ App({
           });
         }
       });
-      downloadTask.onProgressUpdate((res) => {
-        //console.log('下载进度',res)
-        //console.log('下载进度', res.progress)
-        //console.log('已经下载的数据长度', res.totalBytesWritten)
-        //console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+      downloadTask.onProgressUpdate((res) => { 
       })
       
       // downloadTask.abort() // 取消下载任务

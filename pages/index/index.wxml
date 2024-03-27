@@ -31,14 +31,7 @@
             
           </image> 
         </view> 
-  
-  
-      <custom-ads ad_type="7" style="height: 100%;">
-        <!-- 底部banner广告 -->
-        <view class="adcontainer">
-            <custom-ads ad_type="3" ad_pos="bottom"></custom-ads> 
-        </view>
-      </custom-ads>
+   
   
       <block wx:if="{{ initCamral }}">   
         <button size="mini" class="circle-btn picture-action" bindtap="takePhoto">拍摄翻译</button>
@@ -81,11 +74,7 @@
 <canvas id="mCanvas"  type="2d"
 style="position: fixed; left: -9999px; top: -9999px; width:{{ccWidth}}px;height:{{ccHeight}}px;"></canvas>
   
-
-<view class="ad_back" wx:if="{{notVip == 1}}">
-  <custom-ad ad_type="{{3}}"></custom-ad>
-          
-</view>
+ 
 
          
 <!-- 隐私组件 -->

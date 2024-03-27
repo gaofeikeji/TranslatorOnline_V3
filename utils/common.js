@@ -208,11 +208,11 @@ export const checkImageSync = async ({
       wx.showToast({ title: res.msg, icon: "none", duration: 2000 });
       return false;
     }
-    console.log("uploadFileuploadFileuploadFile：resp",res); 
+    // console.log("uploadFileuploadFileuploadFile：resp",res); 
 
     // 图片安全检测
     const verifyRes = await verifyImage(res.data.url);
-    console.log("uploadFile:---verifyRes---", verifyRes); 
+    // console.log("uploadFile:---verifyRes---", verifyRes); 
     if (verifyRes.code == 1) {
       // 图片安全检测成功
       typeof success === "function" && success(res.data);

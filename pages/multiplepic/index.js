@@ -7,18 +7,18 @@ const app = getApp();
   // 检查图片校验并上传 
 export const confirmImginfo = (uploadPath) => {
   return new Promise((resolve, reject) => { 
-    console.warn("confirmImginforesresres",uploadPath);
-    // wx.showLoading({ title: uploadPath||"翻译中...", mask: false });
+    // console.warn("confirmImginforesresres",uploadPath); 
     xy.checkImageSync({
       tempFilePaths: uploadPath,
       instance: null,
       success: (imgRes) => {  
         // wx.hideLoading(); 
         //  imgRes['url']="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg"
-              console.warn("confirmImginfo:takePicture::imgRes::",uploadPath,imgRes,new Date()) 
+              // console.warn("confirmImginfo:takePicture::imgRes::",uploadPath,imgRes,new Date()) 
               app.globalData.totalUploadImages.push(imgRes.url);
-              app.globalData.currentUploadImages=app.globalData.currentUploadImages+1;
-               console.log(new Date())
+              app.globalData.currentUploadImages.unshift(imgRes.url);
+              app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
+              //  console.log(new Date())
               resolve(imgRes.url);  
       },
       fail: (err) => {
@@ -77,7 +77,7 @@ Page({
         maxDuration: 30,
         camera: 'back',
         success(res) { 
-          console.warn("chooseMediachooseMedia",res) 
+          // console.warn("chooseMediachooseMedia",res) 
           const tempFiles = res.tempFiles;
           const imgUrlList =tThis.data.imgUrlList;
           tempFiles.forEach(function(item){
@@ -87,7 +87,7 @@ Page({
             imgList:tThis.data.imgList.concat(tempFiles),
             imgUrlList:imgUrlList
           })
-          console.log("currentTotalImages",tThis.data.imgList,tThis.data.imgUrlList);
+          // console.log("currentTotalImages",tThis.data.imgList,tThis.data.imgUrlList);
         },
         fail(res) {
           console.warn("cancel_fail::",res)  
@@ -101,7 +101,7 @@ Page({
   }, 
   // 开始上传所以临时文件到服务器
   uploadMutipleImg(tempFilesArr,successCallback){ 
-    wx.showLoading({ title:  "正在解析图片信息，服务器为您疯狂计算中...", mask: true });
+    wx.showLoading({ title:  "正在解析图片中...", mask: true });
     let tThis= this;
       tThis.setData({  
         isuploading:true, 
@@ -114,21 +114,23 @@ Page({
     //  let resp= await confirmImginfo(res,res.tempFiles[0]['tempFilePath']);
     // 实时上传的进度提示
       if(tempFilesArr.length>1){ 
+        
+        app.globalData.totalUploadImages=[];
+        app.globalData.currentUploadImages=[];
+        app.globalData.currentPictureInfoCount=0;
         app.globalData.globalTimer =setInterval(function(){ 
-          console.warn("tempFilesArr.length>1",tempFilesArr,new Date());
-          const info = "上传中"+ (app.globalData.currentUploadImages+1)+"/"+(tempFilesArr.length);
-          wx.showLoading({ title: info, mask: true }); 
+          // console.warn("tempFilesArr.length>1",tempFilesArr,new Date());
+          const info = "上传中"+ (app.globalData.currentPictureInfoCount==0?1:app.globalData.currentPictureInfoCount)+"/"+(tempFilesArr.length);
+            wx.showLoading({ title: info, mask: true }); 
           },500);
         }
      Promise.all(tempFilesArr.map(confirmImginfo)).then(uploadImgsUrls => {  
-      console.warn("uploadMutipleImg:uploadImgsUrls:"+uploadImgsUrls,new Date());
-      app.globalData.totalUploadImages=[];
-      app.globalData.currentUploadImages=0;
-      clearInterval(app.globalData.globalTimer);
-      app.globalData.globalTimer=null;
-        tThis.setData({ 
-            uploadImgList:uploadImgsUrls
-        });
+      // console.warn("uploadMutipleImg:uploadImgsUrls:"+uploadImgsUrls,new Date()); 
+        clearInterval(app.globalData.globalTimer);
+        app.globalData.globalTimer=null;
+          tThis.setData({ 
+              uploadImgList:uploadImgsUrls
+          });
         successCallback&&successCallback(uploadImgsUrls);
       })
       .catch(error => {      
@@ -144,8 +146,7 @@ Page({
   // 删除指定临时上传的图片
   removeImage(e){ 
     const { path } = e.currentTarget.dataset;
-    console.warn("removeImage：path"); 
-    console.warn(e);  
+    // console.warn("removeImage：path");  
     // 删除图片地址已经更新图片地址结构体
     const updateImgalist=this.data.imgList.filter(function(item){
 
@@ -163,8 +164,7 @@ Page({
   },
   // 记录当前选择
   translateCurrent(e){ 
-    const { path } = e.currentTarget.dataset;
-    console.warn("path",path);  
+    const { path } = e.currentTarget.dataset; 
     this.setData({
         selectedpic:path 
       });
@@ -173,7 +173,7 @@ Page({
       urls:this.data.imgUrlList,
       current: path,
       success:function(){
-        console.warn("previewImage",path);  
+        // console.warn("previewImage",path);  
 
       },
       fail:function(){
@@ -185,15 +185,21 @@ Page({
   // 翻译文件，批量上传操作，此操作消耗性能，（后续添加一个本地图片md5校验的方法，排除重复图片）
   goToTranslate(e){
     
-    console.warn("path");  
-    if(this.data.imgList.length==0){ 
-      app.showModalClose("请上传图片后操作",2000);
+    if(this.data.imgList.length==0){  
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '请上传图片后操作',
+        success (res) { 
+        }
+      })
       return false;
     }
-    wx.showLoading({ title:  "正在解析图片信息，服务器为您疯狂计算中...", mask: true });
+    wx.showLoading({ title:  "正在解析图片中...", mask: true });
     this.uploadMutipleImg(this.data.imgUrlList,function(uploadImgLists){ 
-      app.totalUploadImages=[];
-      app.currentUploadImages=0;
+      app.globalData.totalUploadImages=[];
+      app.globalData.currentUploadImages=[];
+      app.globalData.currentPictureInfoCount=0;
       wx.setStorageSync('currentTranslateImags', uploadImgLists) 
         wx.navigateTo({
           url: "../indexpicture/index?selectPicturPath="+uploadImgLists.join("---")+"&ismultiple=1"

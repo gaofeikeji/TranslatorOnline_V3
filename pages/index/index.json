@@ -2,8 +2,6 @@
   "component": true,
   "navigationStyle": "custom",
   "usingComponents": {
-    "navigation-bar": "/custom-tab-bar",
-    "customerService": "/components/customerService/customerService",
-    "ToRate": "/components/ToRate/ToRate"
+    "navigation-bar": "/custom-tab-bar"
   }
 }

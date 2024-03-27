@@ -51,9 +51,8 @@ page{
   z-index:1; 
   // filter: blur(1.3px);
   pointer-events: none;
-  background-color: yellow;
+  // background-color: yellow;
 } 
- 
 .media-info-box:nth-child(even){
   border:4rpx solid  #004DD1; 
 }
@@ -97,6 +96,29 @@ page{
   text-align: left;
   pointer-events: none; 
   // pointer-events: painted;
+}
+
+.media-text-item.lock{   
+  background: rgba(31, 113, 255, 0.9); 
+  border: 2rpx solid rgba(0, 0, 0, 0.5); 
+  padding: 0 10rpx;
+  border-radius: 2rpx;
+  filter: blur(0rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: painted;
+  .lock-info{
+    display: inline-block;   
+    vertical-align: baseline; 
+    margin-top: 6px;
+  } 
+  text{ 
+    color: #fff;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
 } 
 // .media-text-item:nth-child(odd){
 //   border: 2rpx solid rgba(169,236,125,1);

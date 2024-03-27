@@ -23,11 +23,7 @@
     "backgroundColorContent": "#fff"
   }, 
   "usingComponents": {
-    "navigation-bar": "/custom-tab-bar",
-    "privacy": "/components/privacy/privacy",
-    "add-tips": "/components/add-tips/index",
-    "wxPay": "/components/wx-pay/index",
-    "custom-ad": "/components/custom-ads/index"
+    "privacy": "/components/privacy/privacy"
   } ,
   "plugins": {
     "wxacommentplugin": {

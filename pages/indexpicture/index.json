@@ -2,6 +2,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "customerService": "/components/customerService/customerService",
-    "ToRate": "/components/ToRate/ToRate"
+    "ToRate": "/components/ToRate/ToRate",
+    "action":"/components/actionToDo/actionToDo"
   }
 }

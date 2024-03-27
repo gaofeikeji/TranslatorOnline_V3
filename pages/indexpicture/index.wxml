@@ -8,11 +8,13 @@
     <!-- 当前图片展示容器 -->
     <view  class="section-movable" >
       <view class="section-box" style="height:{{screenHeight-85}}px;width:100%;position:relative">  
-              <movable-area scale-area="{{true}}" id="zoomArea" class="zoomArea"
+      
+              <movable-area  scale-area="{{true}}" id="zoomArea" class="zoomArea"
               style=" width:{{(isSingleImages?totalWidth*4:totalWidth*(countImages+1))}}px;height:{{(isSingleImages?totalWidth*4:totalHeight*(countImages+1))}}px;">
               <movable-view direction="all" scale-min="0.01"   data-www="{{totalWidth}}" 
-               damping="5" inertia="{{false}}"     friction="{{0.7}}" class="zoomview-box"  scale-value="{{isSingleImages?1:0.3}}"
-               x="{{isSingleImages?'10rpx':'60rpx'}}"
+              scale-value="{{isSingleImages?1:0.3}}"
+               damping="5" inertia="{{false}}"     friction="{{0.7}}" class="zoomview-box"  
+               x="{{isSingleImages?'30rpx':'60rpx'}}"
                y="{{isSingleImages?'10rpx':'100rpx'}}"
                 style="width:{{screenWidth}}px;height:{{(screenHeight-140)}}px;"  out-of-bounds="{{true}}" 
                 inertia="{{false}}" scale="{{true}}" direction="all">
@@ -22,25 +24,46 @@
                 wx:for="{{ langList }}" wx:for-item="items" wx:key="selectPicturPath"
                   style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;margin-top:0px;{{items['transform']}};background:url('{{items.selectPicturPath||''}}');">
                   <!-- 显示结果 -->
-                  <block wx:if="{{ showResult ==   1 }}">  
-                    <block wx:for="{{ items.list }}" wx:for-item="item" wx:key="i">
-      
-                        <text data-rate="{{ item.single_rate }}" style="font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.75}}px;width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)*0.95}}px;line-height:{{item.single_str_utf8.length>=item.translate.length?(item.bottom-item.top)*0.5:(item.right-item.left)/item.single_str_utf8.length/2}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/6}}px; "
-                          class="media-text-item {{'text-item'+single_rate}}  {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
-                          data-top="{{item.top}}" data-left="{{item.left}}">
-                          <block wx:if="{{ showResult ==0 }}">
-                            {{item.single_str_utf8}}
+                      <block wx:if="{{ showResult ==   1 }}">  
+                        <block wx:for="{{ items.list }}" wx:for-item="item" wx:key="i">
+          
+                          <block wx:if="{{notVip || isAllowSee}}"> 
+                            <text data-rate="{{ item.single_rate }}" style="font-size:{{item.single_str_utf8.length>item.translate.length?(item.right-item.left)/item.single_str_utf8.length:(item.bottom-item.top)*0.75}}px;width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)*0.95}}px;line-height:{{item.single_str_utf8.length>=item.translate.length?(item.bottom-item.top)*0.5:(item.right-item.left)/item.single_str_utf8.length/2}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/6}}px; "
+                              class="media-text-item {{'text-item'+single_rate}}  {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
+                              data-top="{{item.top}}" data-left="{{item.left}}">
+                                    <block wx:if="{{ showResult ==0 }}">
+                                      {{item.single_str_utf8}}
+                                    </block>
+                                    <block wx:else>
+                                      {{item.translate}} 
+                                    </block>
+                            </text>
                           </block>
                           <block wx:else>
-                            {{item.translate}}
-        
+                            <view style="width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)}}px;left:{{item.left }}px;top:{{item.top+(item.bottom-item.top)/3}}px; "
+                              class="media-text-item lock"  bindtap="toVerticleHorizonTextItem"
+                              data-top="{{item.top}}" data-left="{{item.left}}">
+                              <!-- <image style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/6:(item.bottom-item.top)>45?28:(item.bottom-item.top)}}px;width:{{(item.bottom-item.top)>30?12:(item.bottom-item.top)*0.8}}px;"  class="lock-info" src="/images/lockvip.png" mode=""/>
+                              <text style="font-size:{{(item.single_str_utf8.length)<8?(item.right-item.left)/8:(item.bottom-item.top)>45?28:(item.bottom-item.top)*0.7}}px;" 
+                                class="" selectable="false" space="false" decode="false">次数用尽，解锁查看</text> -->
+                                    <image class="" style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/7:(item.bottom-item.top)>45?28:(item.bottom-item.top)*0.6}}px;width:{{(item.bottom-item.top)>30?15:(item.bottom-item.top)*0.7}}px;"  src="/images/lockvip.png"   mode="heightFix" lazy-load="false" binderror="" bindload=""> 
+                                    </image>
+                                    <image class=""style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/6:((item.bottom-item.top)*0.6)}}px;"   src="/images/lock.png"   mode="heightFix" lazy-load="false" binderror="" bindload=""> 
+                                    </image>
+                            </view>
+                          </block>  
+            
                           </block>
-                        </text>
-        
-                      </block>
-                    </block>
-                  
-    
+                        </block>
+                      
+          
+                  <!-- <block wx:if="{{notVip}}">
+                  </block>
+                  <block wx:else>
+                    <view>
+
+                    </view>
+                  </block>  -->
                   <!-- <block wx:if="{{ showResult ==   0 }}">
                   </block> -->
                   <!-- <image class="default-image" mode="aspectFill"
@@ -50,7 +73,7 @@
                 </view>
               </movable-view>
             </movable-area>  
-         
+             
         <!-- </block> -->
           </view>
     </view>
@@ -74,10 +97,7 @@
         </view>
     </view>
 </view> 
-
-<view class="" wx:if="{{notVip == 1}}">
-  <custom-ad ad_type="{{3}}"></custom-ad>
-</view>
+ 
  
 
 <!-- 操作容器 -->
@@ -176,10 +196,7 @@
 
 
 
-<!-- 支付 -->
-<vip-member id="pay"></vip-member>
+<action id="action" action_info="{{actions}}" />  
 <!-- 客服 -->
 <customerService direction="right" DistanceFromBottom="80%" />
-<ToRate id="rate" scene="{{scene}}" canShow="{{show_rate}}" rateScene="{{rateScene}}" alwaysShow="{{true}}"
-  bind:RateShowSuccess="onRateShowSuccess" bind:RateShowFail="onRateShowFail" bind:RateSuccess="onRateSuccess"
-  bind:RateFail="onRateFail" />
+ 

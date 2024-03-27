@@ -1,5 +1,6 @@
 // pages/indexpicture/index.js
 import * as xy from "../../utils/common.js";
+const { adVideoUtils } = require('../../components/custom-ads/Rewarded-Ads/index.js')
 const app = getApp();
  
 Page({ 
@@ -11,6 +12,8 @@ Page({
     screenHeight: app.globalData.screenHeight, //可视区域高度  
     screenWidth: app.globalData.screenWidth , //可视区域高度  
     notVip:false,
+    isAllowSee:false,//是否允许查看
+    actions:{},//动作信息
     see:false,
     selectPicturPath:app.globalData.selectPicturPath,
     action:false,
@@ -95,11 +98,24 @@ Page({
     totalHeight: app.globalData.screenHeight-140,   
     totalWidth: app.globalData.screenWidth ,  
   }, 
-  // 页面切换 
+  // 底部功能切换，判断用户动作权限 
   selectFunction(e) {
     const { index, actype } = e.currentTarget.dataset;
     //console.warn(index,  actype, this.data.actype ); 
-    this.showActionBox(actype);
+    const tThis=this;
+    wx.showLoading({
+      title: '请稍等……',
+    })
+    const actions=this.data.actions;
+   // console.warn("actions:",this.data.actions);
+    if(actions.before_action_type==0){//成功
+        tThis.setData({
+          "isAllowSee":true
+        })
+    } 
+    
+    this.neeDToaction(actype);
+
 }, 
 handleLongPress(e) {
   //console.warn("handleLongPress",e);  
@@ -173,13 +189,7 @@ toVerticleHorizonTextItem(e){
   const { left, top ,index,key} = e.currentTarget.dataset;
   //console.warn(e);  
   //console.warn( left, top ,index,key); 
-  this.setData({
-    currentSelectX: 0,
-    currentSelectY: 0,
-    currentSelectItem: top+":"+left,
-    scale:1, 
-    actype:1
-    }) 
+  this.neeDToaction(40);
 },
   // 当前行切换 
   toImageTextItem(e) {
@@ -192,7 +202,7 @@ toVerticleHorizonTextItem(e){
 
     //   }).exec((res) => {
     //     const scrollView = res[0].node;
-    //       console.warn("toImageTextItem:",res);
+    //      // console.warn("toImageTextItem:",res);
     //     })
     let currentScrollView = wx.createSelectorQuery().in(this).select(".text-item"+img);
 
@@ -288,38 +298,44 @@ getPictureInfo(picUrl,currentImgobj,key){
       "target": curent.currentTargetLang, //目标语言 
       "url": picUrl,  
     }, "POST"); 
+    let multipleList=tThis.data.multipleList;
     pictureInfo.then((res)=>{
         //console.warn("getPictureInfo",res.data);
         // wx.hideLoading();
         currentImgobj.list=res.data;
        
-        if(this.data.isSingleImages){  // 单独图直接替换构造体
+        if(tThis.data.isSingleImages){  // 单独图直接替换构造体
           tThis.setData({
             langList: [currentImgobj]
             }); 
-            console.warn("multipleList::isSingleImages:",multipleList);
+           // console.warn("multipleList::isSingleImages:",multipleList);
+            wx.hideLoading();
         }else{
-          console.warn("multipleImage:multipleList",key,app.globalData.currentPictureInfoCount,tThis.data.countImages); 
-            let multipleList=tThis.data.multipleList;
+          const totalUploadImages=app.globalData.totalUploadImages;
+          totalUploadImages.unshift(picUrl);
+         // console.warn("multipleList:BACK::",totalUploadImages);
+          app.globalData.totalUploadImages=totalUploadImages;
+         // console.warn("multipleImage:multipleList",key,app.globalData.currentPictureInfoCount,tThis.data.countImages); 
+          app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
             multipleList.push(currentImgobj); 
           //  完成所有请求更新全部信息(重新渲染)
-              if(key==tThis.data.countImages||app.globalData.currentPictureInfoCount==tThis.data.countImages){ 
-                  //  let oldImageList=tThis.data.langList;
-                   tThis.setData({
-                    langList: multipleList
-                     });
-                     wx.hideLoading();
-                     console.warn("multipleList:::",multipleList);
-              }else{
-                app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
-                tThis.setData({
-                  multipleList: multipleList
-                  });
-              }
+            if(totalUploadImages.length==tThis.data.countImages&&app.globalData.currentPictureInfoCount==tThis.data.countImages){ 
+                //  let oldImageList=tThis.data.langList;
+                  tThis.setData({
+                  langList: multipleList
+                    });
+                    wx.hideLoading();
+                   // console.warn("multipleList:BACK::",multipleList);
+            }else{
+              tThis.setData({
+                langList: multipleList
+                });
+            }
         }
     }).catch(err => {
-      wx.hideLoading(); 
-      //console.log('err:', err,err.indexOf("err: OCR 服务异常"))
+      // wx.hideLoading(); 
+      console.log('err:', err);
+      return false;
       if(err&&err.indexOf("err: OCR 服务异常")==-1){
         app.showModalClose("当前排队的人太多，请稍后重试……",2000);
         setTimeout(function(){
@@ -387,33 +403,20 @@ copyBoth(){
   const imgText = this.initialImgText();
   //console.log("copyOriginal:",imgText)
   xy.setClipboardData("原文:\n"+imgText.originText + "\n译文:\n"+ imgText.translateText);   
-},
- 
-// 辅助函数
-getDistance(a, b) {
-  return Math.sqrt(Math.pow(a.clientX - b.clientX, 2) + Math.pow(a.clientY - b.clientY, 2));
-},
-getMidpoint(a, b) {
-  return {
-    x: (a.clientX + b.clientX) / 2,
-    y: (a.clientY + b.clientY) / 2,
-  };
-},
+}, 
   /**
    * 生命周期函数--监听页面加载
    */
   
   onLoad(options) {  
-    this.payComponent = this.selectComponent("#pay");
-    this.rateComponent = this.selectComponent("#rate");
-    // app.userCenterLogin();
-    // xy.showTip("服务器正在解析资源"); 
-      this.setData({
+    this.actionComponent = this.selectComponent("#action");
+    this.setData({
       options: options
     })
    let tThis=this;
     app.globalLogin(this,function(){
       app.getCurrentLang(tThis);
+      tThis.getActions();//初始化动作信息
       // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
       // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
       //主动根据请求体中的信息来判断加载资源信息
@@ -438,7 +441,7 @@ getMidpoint(a, b) {
       totalHeight:ImageArr.length==1?totalHeight*3:totalHeight,
       screenWidth:app.globalData.screenWidth
       })
-      console.warn("totalWidth,totalHeight::",totalWidth,totalHeight);
+     // console.warn("totalWidth,totalHeight::",totalWidth,totalHeight);
     return {
       totalWidth:totalWidth,
       totalHeight:totalHeight,
@@ -446,6 +449,9 @@ getMidpoint(a, b) {
   },
   //是否重写获取数据（用户存在切换语言操作）
   reloadPicinfo(options){
+    app.globalData.totalUploadImages=[];
+    app.globalData.currentUploadImages=[];
+    app.globalData.currentPictureInfoCount=0;
     const tThis=this; 
     //多图模式异步获取
     const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
@@ -462,10 +468,9 @@ getMidpoint(a, b) {
         tThis.getImageInfoByOption(tThis,{
           selectPicturPath:item,
         },function(selectPicturPath,picObj,key){
-          const ImageArr=tThis.data.langList;
-          // ||app.globalData.currentPictureInfoCount==tThis.data.countImages
+          const ImageArr=tThis.data.langList; 
           ImageArr.unshift(picObj);
-          console.warn("getImageInfoByOptiongetImageInfoByOptionMultiple",picObj,ImageArr,key);
+         // console.warn("getImageInfoByOptiongetImageInfoByOptionMultiple",picObj,ImageArr,key);
             tThis.setData({
               langList: ImageArr,
               countImages: imagesArr.length,
@@ -481,7 +486,7 @@ getMidpoint(a, b) {
       app.globalData.currentPictureInfoCount=1;
       const ImageArr=[];
       ImageArr.unshift(picObj);
-      console.warn("getImageInfoByOptiongetImageInfoByOption",picObj,ImageArr) 
+     // console.warn("getImageInfoByOptiongetImageInfoByOption",picObj,ImageArr) 
       const imgObg= tThis.adjustTotalHeightMaxWidth(ImageArr);
       tThis.setData({
         langList: ImageArr,
@@ -504,8 +509,8 @@ getMidpoint(a, b) {
     }else{//缩小图片
       canvasRatio=canvasWidth/imgWidth;
     }
-    console.warn("sysInfossss2d:",imgWidth, imgHeight, canvasWidth, canvasHeight,imgHeight/imgWidth,canvasWidth/canvasHeight) ;
-    console.warn("sysInfossss2d:",this.data.screenWidth,canvasRatio) ;
+   // console.warn("sysInfossss2d:",imgWidth, imgHeight, canvasWidth, canvasHeight,imgHeight/imgWidth,canvasWidth/canvasHeight) ;
+   // console.warn("sysInfossss2d:",this.data.screenWidth,canvasRatio) ;
     return {
       canvasRatio: canvasRatio,
       scaledWidth: imgWidth* canvasRatio,
@@ -519,7 +524,7 @@ getMidpoint(a, b) {
     if(isSingle){
       transformStr="transform-origin: 0 0 0;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") "+" translate(10%,15%)"
     }else{
-      console.warn("reduceImageTransform::",isSingle,res,picRadio);
+     // console.warn("reduceImageTransform::",isSingle,res,picRadio);
       transformStr=  "transform-origin: 0 -50%;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+((res.width*picRadio.canvasRatio)/4+20)+"px，-"+((res.height*picRadio.canvasRatio)/4+20)+"px)"
     }
     return transformStr;
@@ -540,7 +545,7 @@ getMidpoint(a, b) {
       success (res) {  
         const sysInfo= wx.getSystemInfoSync();
         const windowWidth =sysInfo.windowWidth;
-        console.warn("sysInfossss:",res,options.selectPicturPath,res.width,res.height,windowWidth,sysInfo.windowHeight,sysInfo) ;
+       // console.warn("sysInfossss:",res,options.selectPicturPath,res.width,res.height,windowWidth,sysInfo.windowHeight,sysInfo) ;
         // app.globalData.screenWidth=windowWidth; 
         const picRadio = tThis.calculateCanvasDimensions( res.width,res.height,windowWidth,(sysInfo.windowHeight-100));
  
@@ -579,19 +584,19 @@ getMidpoint(a, b) {
    */
   onShow() {    
 
-    if (app.globalData.access_token) {
-      //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-      this.setData({
-        notVip: !app.globalData.subscribe.is_vip
-      })
-    } else {
-      app.userCenterLoginCallbackIndex = () => {
-        //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
-        this.setData({
-          notVip: !app.globalData.subscribe.is_vip
-        })
-      };
-    }
+    // if (app.globalData.access_token) {
+    //   //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+    //   this.setData({
+    //     notVip: !app.globalData.subscribe.is_vip
+    //   })
+    // } else {
+    //   app.userCenterLoginCallbackIndex = () => {
+    //     //console.log('app.globalData.subscribe.is_vip', app.globalData.subscribe)
+    //     this.setData({
+    //       notVip: !app.globalData.subscribe.is_vip
+    //     })
+    //   };
+    // }
 
   },
   methods: {
@@ -635,4 +640,58 @@ getMidpoint(a, b) {
   onShareAppMessage() {
 
   },   
+  // 获取最新动作信息
+  getActions(callback) {
+    const sys = wx.getSystemInfoSync();
+    const tThis=this;
+      wx.request({
+        url: app.globalData.globalHost + "/api/user/actions",
+        method: "GET",
+        header: {
+          Authorization: app.globalData.access_token,
+          "x-device-brand": sys.brand || "unknown",
+          "x-device-path": getCurrentPages()[getCurrentPages().length - 1].route,
+          "x-device-model": sys.model || "unknown",
+          "x-device-system": sys.system || "unknown",
+          "x-device-network": getApp().globalData.currentNetwork || "unknown",
+        },
+        success: (res) => {
+          console.log("会员动作", res);
+          tThis.setData({
+            actions: res.data.data,
+            isAllowSee:res.data.data.before_action_type==0?true:false
+          });    
+       
+          callback&&callback();
+
+        },
+      });
+    },  
+    // 判断权限是否通过
+  neeDToaction(actype){
+    const tThis=this;
+    if(this.data.isAllowSee){
+      tThis.showActionBox(actype); 
+      wx.hideLoading();
+    }else{
+      this.doPre(()=>{  
+        tThis.setData({
+          "isAllowSee":true
+        })
+        tThis.showActionBox(actype);
+        wx.hideLoading();
+      })
+
+    }
+  },
+      //------------------------------- 支付 --------------------------------
+  doPre(successCallback) {
+    wx.showLoading({ title: '加载中', mask: true })
+    this.actionComponent.savePre(() => {
+      console.log('成功执行回调')
+      successCallback();
+    })
+  },
+
+
 })
