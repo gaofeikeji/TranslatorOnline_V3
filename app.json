@@ -11,7 +11,8 @@
     "pages/userinfo/index",
     "pages/recommend/index",
     "pages/introduce/introduce",
-    "pages/multiplepic/index"
+    "pages/multiplepic/index",
+    "pages/indexpictureA/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

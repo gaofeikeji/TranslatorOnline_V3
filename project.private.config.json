@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/indexpictureA/index",
+          "pathName": "pages/indexpictureA/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/multiplepic/index?imgupload=https://static-1253713495.cos.ap-chengdu.myqcloud.com/vote/desc/BKRUNQoSeSg5dMFWVTEtw6t7XlYVIDRh7HAdurLQ.jpg",
           "pathName": "pages/multiplepic/index",
           "query": "",
@@ -22,6 +29,17 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "pages/indexpictureA/index",
+          "pathName": "pages/indexpictureA/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
         },
         {
           "name": "pages/indexpicture/index",

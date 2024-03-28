@@ -7,11 +7,11 @@ page{
   height: 100vh;
 }    
 .section-box{ 
-  // display: flex;
+  display: flex;
   width: 100%;
   // height:  calc(100%-85px-90px-env(safe-area-inset-bottom));
   background:rgba(204, 204, 204, 1);
-  overflow: auto;
+  overflow-x: hidden;
   // scroll-snap-type: x mandatory;
   // scroll-snap-align: start; 
   // -webkit-overflow-scrolling: touch;
@@ -21,36 +21,30 @@ page{
 /* 解析的图片内容容器 */
 .zoomArea{ 
   position: relative;
-  z-index:33;
-  margin:0; 
+  z-index:222;
   // text-align: center;
   background: rgba(204, 204, 204, 1);
-  // background: red;
-  overflow-y: scroll;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
+  // overflow-y: scroll;
+  // overflow-x: scroll;
+  // -webkit-overflow-scrolling: touch;
+  pointer-events: painted;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 } 
-// 容器的高度觉得拖拽的灵敏度
+// 容器的高度决定拖拽的灵敏度
 .zoomview-box{
   z-index:333;
   // background-color: #fff;  
-  // background-color: blue;  
   display: block; 
-  // pointer-events: painted;
-// overflow-x: hidden;
-// pointer-events:none;
+  pointer-events: painted;
+// overflow-x: hidden; 
 }
 
 /* 缩放图片容器 */ 
 .media-info-box{ 
-  position: relative;
-  left: 0;
-  top: 0;
-  // left: -23%;
-  // top: -13%;
+  position: relative; 
   z-index:10;
   border: 4rpx solid transparent;
   margin: 40rpx 0;
@@ -59,7 +53,7 @@ page{
   -webkit-text-fill-color: #000; 
   // filter: blur(1.3px);
   pointer-events: none;
-  // background-color: yellow;
+  pointer-events: painted;
 } 
 .media-info-box:nth-child(even){
   border:4rpx solid  #004DD1; 
@@ -88,7 +82,6 @@ page{
   box-shadow: none;
   display: inline-block;
  background-color: rgba(255,255,255,0.9);  
- background-color: pink;
   // border: 2rpx solid rgba(255,255,255,0.4);
   color:rgba(0,0,0,0);
   pointer-events: none;
@@ -116,6 +109,7 @@ page{
   display: flex;
   align-items: center;
   justify-content: center;
+  
   .lock-info{
     display: inline-block;   
     vertical-align: baseline; 

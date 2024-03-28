@@ -25,6 +25,8 @@ Page({
     isSingleImages:true,
     options:{},
     countImages:0,
+    checkPictureRate:0.8,
+    widthRadio:0.8,
     //底部功能区域
     list: [
       {
@@ -98,6 +100,38 @@ Page({
     totalHeight: app.globalData.screenHeight-140,   
     totalWidth: app.globalData.screenWidth ,  
   }, 
+  
+  /**
+   * 生命周期函数--监听页面加载
+   */
+    
+  // 子组件回调语言改变
+  listenLanguge(){
+    console.log("listenLanguge--");
+    if(this.data.isAllowSee){ 
+      this.data.options&&this.reloadPicinfo(this.data.options); 
+    }
+  },
+  onLoad(options) {  
+    this.actionComponent = this.selectComponent("#action");
+    // options={
+    //   ismultiple:1,
+    //   selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/3.jpg",
+    // };
+    this.setData({
+      options: options
+    })
+   let tThis=this;
+    app.globalLogin(this,function(){
+      app.getCurrentLang(tThis);
+      tThis.getActions();//初始化动作信息
+      // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
+      // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
+      //主动根据请求体中的信息来判断加载资源信息
+      tThis.reloadPicinfo(options); 
+    });
+    
+  },
   // 底部功能切换，判断用户动作权限 
   selectFunction(e) {
     const { index, actype } = e.currentTarget.dataset;
@@ -246,28 +280,7 @@ showActionBox(actype){
     const oldLang = this.data.oldfromLang;
     const oldtoLang =this.data.oldtoLang;
     show=false;
-    const current= app.getCurrentLang(this);
-    //console.log("actype====40老：",oldLang+","+oldtoLang+";新的:"+current.currentLang+"："+current.currentTargetLang);
-    // 嚴格判斷語言是否切換，切換自動幫用戶翻譯數據
-    // if(oldLang==current.currentLang && oldtoLang==current.currentTargetLang){
-    // }else{
-      // 用戶未修改系統不進行語言操作(已经添加修改语言的异步获取的操作，暂时排除)
-      // if(wx.getStorageSync("currentLang")&&wx.getStorageSync("currentTargetLang")&&oldLang&&oldtoLang){
-      //   // 此处需要校验是否重复检测相同图片
-      //   if(this.data.options){ 
-      //     wx.showLoading({
-      //       title: '检测到您修改了配置语言，正在校对中',
-      //     })
-           
-      //     // 清空之前的图片数据，避免重复追加
-      //     this.setData({
-      //       langList:[]
-      //     })
-      //     this.reloadPicinfo(this.data.options);
-      //   }
-         
-      // }
-    // }
+    const current= app.getCurrentLang(this); 
     this.setData({
       actype: actype, 
       showResult: this.data.showResult==1?0:1, 
@@ -322,6 +335,7 @@ getPictureInfo(picUrl,currentImgobj,key){
                   tThis.setData({
                   langList: multipleList
                     });
+                    // const imgObg= tThis.adjustTotalHeightMaxWidth(multipleList);
                     wx.hideLoading();
                    // console.warn("multipleList:BACK::",multipleList);
             }else{
@@ -329,6 +343,7 @@ getPictureInfo(picUrl,currentImgobj,key){
                 langList: multipleList
                 });
             }
+            const imgObg= tThis.adjustTotalHeightMaxWidth(multipleList);
         }
     }).catch(err => {
       // wx.hideLoading(); 
@@ -405,37 +420,6 @@ copyBoth(){
   //console.log("copyOriginal:",imgText)
   xy.setClipboardData("原文:\n"+imgText.originText + "\n译文:\n"+ imgText.translateText);   
 }, 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-    
-  // 子组件回调语言改变
-  listenLanguge(){
-    console.log("listenLanguge--");
-    if(this.data.isAllowSee){ 
-      this.data.options&&this.reloadPicinfo(this.data.options); 
-    }
-  },
-  onLoad(options) {  
-    this.actionComponent = this.selectComponent("#action");
-    // options={
-    //   ismultiple:1,
-    //   selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/3.jpg",
-    // };
-    this.setData({
-      options: options
-    })
-   let tThis=this;
-    app.globalLogin(this,function(){
-      app.getCurrentLang(tThis);
-      tThis.getActions();//初始化动作信息
-      // app.globalData.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
-      // options.selectPicturPath="https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg";
-      //主动根据请求体中的信息来判断加载资源信息
-      tThis.reloadPicinfo(options); 
-    });
-    
-  },
   // 默认先展示图片列表，数据后渲染
   initPictureListFirst(){
 
@@ -446,14 +430,27 @@ copyBoth(){
     let totalHeight=0;
     ImageArr.forEach(function(item,index){
       // totalWidth=totalWidth+item.selectPicturWidth;
-      totalHeight=totalHeight+item.selectPicturHeight;
+      console.warn(item);
+      totalHeight+=item.selectPicturHeight;
     });
-    const maxWidth=Math.max.apply(null, ImageArr.map(item => item.selectPicturWidth));
+    const maxWidth=Math.max.apply(null, ImageArr.map(item => {
+          // console.log(item.age)
+          return item.selectPicturWidth;
+      })); 
+      // const canvasRatio =this.calculateCanvasDimensions(maxWidth,totalHeight,totalWidth,totalHeight).canvasRatio;
+      const canvasRatio =this.calculateCanvasDimensions(maxWidth,totalHeight,this.data.screenWidth,totalHeight).canvasRatio;
+      const widthRadio=this.data.screenWidth/maxWidth;
+      const heightRadio= this.data.screenHeight/totalHeight;
     this.setData({ 
       totalWidth:maxWidth,
       totalHeight:totalHeight,
+      widthRadio:widthRadio,
+      heightRadio:heightRadio,
+      checkPictureRate:widthRadio-0.1,
+      // checkPictureRate:"transform-origin: center center;transform:scale("+(widthRadio*0.8)+","+(heightRadio*0.8)+")",
       screenWidth:app.globalData.screenWidth
       })
+      console.warn(ImageArr,maxWidth,totalHeight,app.globalData.screenWidth,this.data.checkPictureRate);
      // console.warn("totalWidth,totalHeight::",totalWidth,totalHeight);
     return {
       totalWidth:totalWidth,
@@ -493,9 +490,6 @@ copyBoth(){
               langList: ImageArr,
               countImages: imagesArr.length,
               })
-            if(key==imagesArr.length-1){ // 需要 
-              const imgObg= tThis.adjustTotalHeightMaxWidth(ImageArr);
-            }
              tThis.getPictureInfo(selectPicturPath,picObj,key);
         },key+1);
       });
@@ -540,14 +534,10 @@ copyBoth(){
     const isSingle =this.data.isSingleImages;
     let transformStr="";
     if(isSingle){
-      transformStr="transform-origin: 0 0 0;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") "+" translate(10%,15%)"
+         transformStr=  "transform-origin: center center;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+")"
+        //  transformStr=  "transform-origin: center center;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+((res.width*picRadio.canvasRatio)/2+20)+"px，-"+((res.height*picRadio.canvasRatio)/2+20)+"px)"
     }else{
-      // transformStr=  "transform-origin: 0 0 0;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+((res.width*picRadio.canvasRatio)/4+20)+"px，-"+((res.height)*this.data.countImages+20)+"px)"
-      transformStr=  "transform-origin: 0 -50%;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+((res.width*picRadio.canvasRatio)/4+20)+"px，-"+((res.height*picRadio.canvasRatio)/4+20)+"px)"
-     // console.warn("reduceImageTransform::",isSingle,res,picRadio);
-      // transformStr=  "transform-origin: 0 -90%;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+((res.width*picRadio.canvasRatio)/3.5)+"px，-"+((res.height*picRadio.canvasRatio)/3+20)+"px)"
-      // transformStr=  "transform-origin: 0 -90%;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+((res.width*picRadio.canvasRatio)/3.5)+"px，-"+((res.height*picRadio.canvasRatio)/3+20)+"px)"
-      // transformStr=  "transform-origin: 0 -90%;transform:scale("+(picRadio.canvasRatio*0.8)+","+(picRadio.canvasRatio*0.8)+") translate(-"+this.data.totalWidth+"px，-"+this.data.totalWidth+"px)"
+         transformStr=  "transform-origin: center center;transform:scale("+(picRadio.canvasRatio*0.6)+","+(picRadio.canvasRatio*0.6)+") translate(-"+((res.width*picRadio.canvasRatio)/4+20)+"px，-"+((res.height*picRadio.canvasRatio)/4+20)+"px)" 
     }
     return transformStr;
   },
