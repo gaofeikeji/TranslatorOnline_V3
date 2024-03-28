@@ -11,14 +11,12 @@
       <view class="section-box" style="height:{{screenHeight-85}}px;width:100%;position:relative">  
       
               <movable-area  scale-area="{{true}}"  class="zoomArea" 
-              style="width:{{totalHeight*3}}px;height:{{totalHeight*3}}px;">
-
-              <movable-view direction="all"  class="zoomview-box" 
-                style="width:{{totalWidth}}px;height:{{totalHeight}}px;" 
-                scale-value="{{checkPictureRate}}" data-vvalue="{{widthRadio}}" hover-stop-propagation
-                scale-min="0.1" scale-max="5" damping="5"  friction="5" 	
-                x="{{(screenWidth-totalWidth*checkPictureRate)/2}}" 
-                y="{{(screenHeight-140-totalHeight*checkPictureRate)/2}}px"
+              style="width:{{(totalWidth>totalHeight?totalWidth:totalHeight)*3}}px;height:{{(totalWidth>totalHeight?totalWidth:totalHeight)*3}}px;margin-left: -{{totalWidth*1}}px;margin-top: -{{totalHeight*1}}px;"> 
+              <movable-view direction="all"  class="zoomview-box"  x="10" y="10px" 
+                style="width:{{totalWidth}}px;height:{{totalHeight}}px;margin-right: -{{totalWidth*1}}px;margin-bottom: -{{totalHeight*1}}px;"  scale-value="{{checkPictureRate}}"
+                 data-vvalue="{{widthRadio}}" hover-stop-propagation
+                scale-min="0.1" scale-max="5" damping="1"  friction="{{false}}" 	animation="{{false}}" 
+                 bindchange="movableChange" bindscale="bindscale"
                  out-of-bounds="{{true}}"    inertia="{{false}}" scale="{{true}}" direction="all" >
                 
                 <view   wx:for="{{ langList }}" wx:for-item="items"    class="media-info-box "   

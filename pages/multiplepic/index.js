@@ -22,9 +22,15 @@ export const confirmImginfo = (uploadPath) => {
               resolve(imgRes.url);  
       },
       fail: (err) => {
+        // 失败也需要添加到完成列表
+        app.globalData.totalUploadImages.push(uploadPath);
+        app.globalData.currentUploadImages.unshift(uploadPath);
+        app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
         console.error("checkImageSync::err___");
         xy.showTip(err);   
+       
         reject(err);
+
       },
     });
   });
@@ -139,9 +145,7 @@ Page({
         curentLoading=null;
         app.showModalClose("请稍后在尝试，图片校验失败",4000);
       });
-
-      // setTimeout(function(){ 
-      // },2000);
+ 
   },
   // 删除指定临时上传的图片
   removeImage(e){ 

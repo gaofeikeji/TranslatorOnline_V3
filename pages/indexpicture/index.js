@@ -27,6 +27,9 @@ Page({
     countImages:0,
     checkPictureRate:0.8,
     widthRadio:0.8,
+    // 相对于顶部
+    translateX:10,
+    translateY:30,
     //底部功能区域
     list: [
       {
@@ -83,7 +86,7 @@ Page({
     //   }]
     // }
   ],
-  multipleList:[],
+  multipleList:[],//多图上传任务
     istranslate:true,  
     scale:1, 
     ccWidth:0,
@@ -114,6 +117,7 @@ Page({
   },
   onLoad(options) {  
     this.actionComponent = this.selectComponent("#action");
+    // 测试使用
     // options={
     //   ismultiple:1,
     //   selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/3.jpg",
@@ -310,40 +314,23 @@ getPictureInfo(picUrl,currentImgobj,key){
       "url": picUrl,  
     }, "POST"); 
     let multipleList=tThis.data.multipleList;
-    pictureInfo.then((res)=>{
-        //console.warn("getPictureInfo",res.data);
-        // wx.hideLoading();
-        currentImgobj.list=res.data;
-       
+    pictureInfo.then((res)=>{ 
+        currentImgobj.list=res.data; 
         if(tThis.data.isSingleImages){  // 单独图直接替换构造体
           tThis.setData({
             langList: [currentImgobj]
             }); 
-           // console.warn("multipleList::isSingleImages:",multipleList);
             wx.hideLoading();
         }else{
           const totalUploadImages=app.globalData.totalUploadImages;
           totalUploadImages.unshift(picUrl);
-         // console.warn("multipleList:BACK::",totalUploadImages);
           app.globalData.totalUploadImages=totalUploadImages;
-         // console.warn("multipleImage:multipleList",key,app.globalData.currentPictureInfoCount,tThis.data.countImages); 
           app.globalData.currentPictureInfoCount=app.globalData.currentPictureInfoCount+1;
             multipleList.push(currentImgobj); 
-          //  完成所有请求更新全部信息(重新渲染)
-            if(totalUploadImages.length==tThis.data.countImages&&app.globalData.currentPictureInfoCount==tThis.data.countImages){ 
-                //  let oldImageList=tThis.data.langList;
-                  tThis.setData({
-                  langList: multipleList
-                    });
-                    // const imgObg= tThis.adjustTotalHeightMaxWidth(multipleList);
-                    wx.hideLoading();
-                   // console.warn("multipleList:BACK::",multipleList);
-            }else{
-              tThis.setData({
-                langList: multipleList
-                });
-            }
-            const imgObg= tThis.adjustTotalHeightMaxWidth(multipleList);
+          //  仅更新临时数组
+          tThis.setData({
+            multipleList: multipleList
+            });
         }
     }).catch(err => {
       // wx.hideLoading(); 
@@ -382,6 +369,30 @@ getPictureInfo(picUrl,currentImgobj,key){
       })
     })
     
+},
+// 监听上传
+listenerUpload(){
+  const tThis=this;
+  const totalUploadImages=app.globalData.totalUploadImages;
+  const multipleList = tThis.data.multipleList;
+  console.log("listenerUpload:",totalUploadImages,tThis.data.countImages,app.globalData.currentPictureInfoCount,tThis.data.countImages,multipleList);
+
+  if(app.globalData.currentPictureInfoCount==tThis.data.countImages||totalUploadImages.length==app.globalData.currentPictureInfoCount){ 
+    const errCount=app.globalData.currentPictureInfoCount-totalUploadImages.length;
+    if(errCount!==0){
+      app.showModalClose("失败了"+errCount+"个",2000);
+      clearInterval(app.globalData.globalTimer);
+      app.globalData.globalTimer=null;
+    }
+    //  let oldImageList=tThis.data.langList;
+      tThis.setData({
+      langList: multipleList
+        });
+        wx.hideLoading();
+       tThis.adjustTotalHeightMaxWidth(multipleList);
+       clearInterval(app.globalData.globalTimer);
+       app.globalData.globalTimer=null;
+    }
 },
 //初始化图片信息
 initialImgText(){ 
@@ -424,6 +435,14 @@ copyBoth(){
   initPictureListFirst(){
 
   },
+  movableChange(e){
+   const  {x, y, source} = e.detail
+    console.error("movableChange",e,x, y, source);
+  },
+  bindscale(e){
+   const  {x, y, source} = e.detail 
+    console.error("bindscale",e,x, y, source);
+  },
   // 计算所有图片总宽高
   adjustTotalHeightMaxWidth(ImageArr){
     let totalWidth=this.data.screenWidth;
@@ -446,7 +465,11 @@ copyBoth(){
       totalHeight:totalHeight,
       widthRadio:widthRadio,
       heightRadio:heightRadio,
-      checkPictureRate:widthRadio-0.1,
+      // translateX:(this.data.screenWidth-totalWidth*(widthRadio-0.1))/2+"px",
+      translateX:10+"px",
+      translateY:100+"px",
+      // translateY:(totalHeight*(widthRadio-0.1)>this.data.screenHeight-140?20:(this.data.screenHeight-140-totalHeight*(widthRadio-0.1))/2)+"px",
+      checkPictureRate:widthRadio>0.5?widthRadio*0.5:widthRadio-0.1,
       // checkPictureRate:"transform-origin: center center;transform:scale("+(widthRadio*0.8)+","+(heightRadio*0.8)+")",
       screenWidth:app.globalData.screenWidth
       })
@@ -470,15 +493,17 @@ copyBoth(){
     const tThis=this; 
     //多图模式异步获取
     const imagesArr = options.selectPicturPath?options.selectPicturPath.split("---"):[];
-    if(options.ismultiple==1&&imagesArr.length>1){ 
-      
+    if(options.ismultiple==1&&imagesArr.length>1){  
       tThis.setData({
         isSingleImages:false, 
         countImages: imagesArr.length
       }) 
       //console.warn("imagesArr:::",imagesArr);
-      imagesArr.forEach(function(item,key){ 
-
+      // /监听上传任务
+      clearInterval(app.globalData.globalTimer); 
+      app.globalData.globalTimer=null; 
+      app.globalData.globalTimer =setInterval(tThis.listenerUpload,500); 
+      imagesArr.forEach(function(item,key){  
         // 动态追加信息
         tThis.getImageInfoByOption(tThis,{
           selectPicturPath:item,
