@@ -17,7 +17,7 @@
                damping="25" inertia="{{false}}"     friction="{{20}}" class="zoomview-box"  
                x="{{isSingleImages?'30rpx':'60rpx'}}"
                y="{{isSingleImages?'10rpx':-totalHeight*0.8+'px'}}"
-                style="width:{{screenWidth}}px;height:{{totalHeight}}px;"  out-of-bounds="{{true}}" 
+                style="width:{{isSingleImages?screenWidth:totalWidth*1.5}}px;height:{{isSingleImages?screenHeight:totalHeight*1.3}}px;"  out-of-bounds="{{true}}" 
                 inertia="{{false}}" scale="{{true}}" direction="all">
             
                 <view class="media-info-box  {{'text-item'+items.selectPicturPath}}" 
