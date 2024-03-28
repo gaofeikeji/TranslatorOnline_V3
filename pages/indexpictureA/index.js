@@ -1,13 +1,42 @@
 // pages/indexpicture/index.js
 import * as xy from "../../utils/common.js";
-const { adVideoUtils } = require('../../components/custom-ads/Rewarded-Ads/index.js')
+const { adVideoUtils } = require('../../components/custom-ads/Rewarded-Ads/index.js');
+import MinaTouch from './minitouch'; //引入mina-touch
 const app = getApp();
- 
-Page({ 
+function debounce(func, delay) {
+  let timer = null;
+  return function() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, arguments);
+    }, delay);
+  };
+} 
+function throttle(func, wait) {
+  let timeout;
+  return function() {
+    const context = this;
+    const args = arguments;
+    if (!timeout) {
+      timeout = setTimeout(function() {
+        func.apply(context, args);
+        timeout = null;
+      }, wait);
+    }
+  }
+} 
+var angle = 0,
+  zoom = 1,translateY=0,translateX=0;
+
+Page({  
   /**                  
    * 页面的初始数据
    */
   data: { 
+    angle: 0,
+    zoom: 1, 
+    translateX: 0,
+    translateY: 1,
     navbarWidthStatus: app.globalData.navbarWidthStatus, //导航栏高度
     screenHeight: app.globalData.screenHeight, //可视区域高度  
     screenWidth: app.globalData.screenWidth , //可视区域高度  
@@ -418,6 +447,7 @@ copyBoth(){
   },
   onLoad(options) {  
     this.actionComponent = this.selectComponent("#action");
+    this.initTouch();
     // options={
     //   ismultiple:1,
     //   selectPicturPath:"https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/1.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/2.jpg---https://mpss-1321136695.cos.ap-shanghai.myqcloud.com/paper_images/65ee7471bc067/3.jpg",
@@ -435,6 +465,83 @@ copyBoth(){
       tThis.reloadPicinfo(options); 
     });
     
+  },
+  initTouch(){
+    const that = this;
+    new MinaTouch(this, 'touch1', {
+      //会创建this.touch1指向实例对象
+      touchStart: function () {},
+      touchMove: function (e) {
+         console.log("touchMove>>>",e); 
+        //  throttle(function(e){
+           
+         const touch0=e.touches[0];
+         if(e.touches.length>1){
+            
+          const touch1=e.touches[1];
+          translateX=-(touch1.pageX-touch0.pageX);
+          translateY=-(touch1.pageY-touch0.pageY);
+            that.setData({
+                zoom:zoom,
+                translateX:translateX,
+                translateY:translateY,
+              });
+          // }, 500);
+         }
+        // that.setData({
+        //   zoom
+        // });
+      },
+      touchEnd: function () {},
+      touchCancel: function () {},
+      multipointStart: function (evt) {}, //一个手指以上触摸屏幕触发
+      multipointEnd: function () {}, //当手指离开，屏幕只剩一个手指或零个手指触发(一开始只有一根手指也会触发)
+      tap: function () {}, //点按触发，覆盖下方3个点击事件，doubleTap时触发2次
+      doubleTap: function () {}, //双击屏幕触发
+      longTap: function () {}, //长按屏幕750ms触发
+      singleTap: function () {}, //单击屏幕触发，包括长按
+      // rotate: function (evt) {
+      //   //evt.angle代表两个手指旋转的角度
+      //   console.log(evt.angle);
+      //   angle = that.data.angle + evt.angle;
+      // },
+      pinch: function (evt) {
+        //evt.zoom代表两个手指缩放的比例(多次缩放的累计值),evt.singleZoom代表单次回调中两个手指缩放的比例
+        console.log('pinch:' + evt.zoom);
+        zoom = evt.zoom;
+        that.setData({
+          zoom,
+        });
+      },
+      pressMove: function (evt) {
+        //evt.deltaX和evt.deltaY代表在屏幕上移动的距离,evt.target可以用来判断点击的对象
+        // console.log(evt.target);
+        // console.log(evt.deltaX);
+    // console.log("pressMove",evt.deltaX,evt.deltaY); 
+    //     throttle(function(){
+    //       that.pressView(evt.deltaX,evt.deltaY,e)
+    //     }, 500);
+      },
+      swipe: function (evt) {
+        //在touch结束触发，evt.direction代表滑动的方向 ['Up','Right','Down','Left']
+        // console.log("swipe:" + evt.direction);
+      },
+    });
+  },
+  pressView(deltaX,deltaY,e) {
+    let translateX = this.data.translateX;
+    let translateY = this.data.translateY;
+    console.log("pressView----",deltaX,deltaY,translateX,translateY,e); 
+    translateX -= deltaX;
+    translateY -= deltaY;
+    console.log("pressView----",translateX,translateY,e); 
+
+    // if (translateX < 0) translateX = 0;
+    // if (translateX > 200) translateX = 200;
+    this.setData({
+      translateX:translateX,
+      translateY:translateY,
+    });
   },
   // 默认先展示图片列表，数据后渲染
   initPictureListFirst(){
@@ -672,7 +779,7 @@ copyBoth(){
           });    
        
     
-          // this.setData({isAllowSee:true,notVip:true});//仅测试开启
+          this.setData({isAllowSee:true,notVip:true});//仅测试开启
           callback&&callback();
 
         },

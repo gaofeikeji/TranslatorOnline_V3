@@ -25,7 +25,7 @@ page{
   margin:0; 
   // text-align: center;
   background: rgba(204, 204, 204, 1);
-  // background: red;
+  background: red;
   overflow-y: scroll;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
@@ -67,21 +67,6 @@ page{
 .media-info-box:nth-child(odd){
   border:4rpx  rgba(31, 113, 255, 1); 
 }
-.default-image{
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-  pointer-events: none;
-  filter: blur(1.3px);
-  // opacity: 0.3;
-  z-index: 2;
-  pointer-events: none;
-}
-
-
 .media-text-item{ 
   position: absolute;
   z-index: 22;
@@ -131,6 +116,63 @@ page{
   }
 
 } 
+
+.multiple-container{
+  position: relative;
+  width: 100%;
+  z-index: 300;
+}
+.multiple-box{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; 
+  background: red;
+  z-index: 100;
+  pointer-events: auto;
+  
+  .multiple{
+    transform: scale(0.6);
+    transform-origin: 0 0 0;
+    // transform:translate(10%,55%);
+    position: relative;
+    z-index: 11;
+    border:8rpx solid  aqua;
+    margin-bottom: 30rpx;
+    pointer-events: none;
+    background-color: yellow;
+            
+        .default-image{
+          padding: 0;
+          margin: 0;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 2;
+          pointer-events: none;
+          filter: blur(1.3px);
+          opacity: 0.9;
+          z-index: 2;
+          pointer-events: none;
+        }
+
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // .media-text-item:nth-child(odd){
 //   border: 2rpx solid rgba(169,236,125,1);
 

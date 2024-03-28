@@ -9,8 +9,8 @@
     <!-- 当前图片展示容器 -->
     <view  class="section-movable" >
       <view class="section-box" style="height:{{screenHeight-85}}px;width:100%;position:relative">  
-      
-              <movable-area  scale-area="{{true}}" id="zoomArea" class="zoomArea"
+              <block wx:if="{{isSingleImages}}">
+                <movable-area  scale-area="{{true}}" id="zoomArea" class="zoomArea"
               style=" width:{{(isSingleImages?totalWidth*3:totalWidth*(countImages+1))}}px;height:{{(isSingleImages?totalHeight*3:totalHeight*(countImages+2))}}px;">
               <movable-view direction="all" scale-min="0.001"   data-www="{{totalWidth}}" 
               scale-value="{{isSingleImages?1:0.3}}"
@@ -59,7 +59,61 @@
                 </view>
               </movable-view>
             </movable-area>  
+              </block>
+              <block wx:else>
+                <view class="multiple-container" style="width:{{screenWidth}}px;height:{{totalHeight*1.5}}px;">
+                  
+                  <view class="multiple-box" 
+                  catchtouchstart="touch1.start"
+                  catchtouchmove="touch1.move" 
+                  catchtouchend="touch1.end" 
+                  catchtouchcancel="touch1.cancel"
+                  style="width:{{screenWidth*1.5}}px;height:{{totalHeight}}px;transform:translate({{translateX}}px {{translateY}}px) scale({{zoom}});">
+                    <view  
+                    class="media-info-box multiple  {{'text-item'+items.selectPicturPath}}" 
+                    wx:for="{{ langList }}" wx:for-item="items"  
+                      style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;margin-top:0px;transform:scale(0.8) translate(10px,{{selectPicturHeight*0.05}}px);">
+                      <!-- 显示结果 -->
+                          <block wx:if="{{ showResult ==   1 }}">  
+                            <block wx:for="{{ items.list }}" wx:for-item="item"  >
               
+                              <block wx:if="{{notVip || isAllowSee}}"> 
+                                <text data-rate="{{ item.single_rate }}"  style="font-size:{{item.single_str_utf8.length>item.translate.length?((item.right-item.left)/item.single_str_utf8.length*0.7):((item.bottom-item.top)*0.7)}}px;width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)*0.95}}px;line-height:{{item.single_str_utf8.length>=item.translate.length?(item.bottom-item.top)*0.45:(item.right-item.left)/item.single_str_utf8.length/2}}px;left:{{item.left }}px;top:{{item.top-(item.bottom-item.top)/5.5}}px;"
+                                  class="media-text-item {{'text-item'+item.single_rate}}  {{currentSelectItem==(item.top+':'+item.left)?'selected':''}}"
+                                  data-top="{{item.top}}" data-left="{{item.left}}">
+                                        <block wx:if="{{ showResult ==0 }}">
+                                          {{item.single_str_utf8}}
+                                        </block>
+                                        <block wx:else>
+                                          {{item.translate}} 
+                                        </block>
+                                </text>
+                              </block>
+                              <block wx:else>
+                                <view style="width:{{item.right-item.left}}px;height:{{(item.bottom-item.top)}}px;left:{{item.left }}px;top:{{item.top+(item.bottom-item.top)/3}}px; "
+                                  class="media-text-item lock"  bindtap="toVerticleHorizonTextItem"
+                                  data-top="{{item.top}}" data-left="{{item.left}}">
+                                 
+                                        <image class="" style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/7:(item.bottom-item.top)>45?28:(item.bottom-item.top)*0.6}}px;width:{{(item.bottom-item.top)>30?15:(item.bottom-item.top)*0.7}}px;"  src="/images/lockvip.png"   mode="heightFix" lazy-load="false" binderror="" bindload=""> 
+                                        </image>
+                                        <image class=""style="height:{{(item.single_str_utf8.length)<8?(item.right-item.left)/6:((item.bottom-item.top)*0.6)}}px;"   src="/images/lock.png"   mode="heightFix" lazy-load="false" binderror="" bindload=""> 
+                                        </image>
+                                </view>
+                              </block>  
+                
+                              </block>
+                            </block>
+                          
+                            <image class="default-image" mode="aspectFill"
+                            style="width:{{items.selectPicturWidth}}px;height:{{items.selectPicturHeight}}px;"
+                            src="{{items.selectPicturPath||''}}"></image>
+                       
+                    </view>
+                  </view>
+
+                </view>
+
+              </block>
           </view>
     </view>
 
